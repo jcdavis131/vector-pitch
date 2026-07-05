@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vector Pitch — the daily player Chimera</title>
+<meta name="description" content="Guess the fused World Cup player built from two tournaments of stats. Context-honest, zero tracking, one puzzle a day.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#9917;</text></svg>">
+<link rel="stylesheet" href="assets/pitch.css">
+</head>
+<body>
+
+<header class="vp-header">
+  <div class="vp-header__brand">
+    <span class="vp-logo">VECTOR<span class="vp-logo__accent">PITCH</span></span>
+  </div>
+  <div class="vp-stats" id="header-stats">
+    <div class="vp-stat">
+      <span class="vp-stat__num" id="puzzle-day">—</span>
+      <span class="vp-stat__label">day</span>
+    </div>
+    <div class="vp-stat">
+      <span class="vp-stat__num" id="streak-num">0</span>
+      <span class="vp-stat__label">streak</span>
+    </div>
+    <div class="vp-stat">
+      <span class="vp-stat__num" id="guesses-left-num">6</span>
+      <span class="vp-stat__label">left</span>
+    </div>
+  </div>
+  <button class="vp-help-btn" id="help-btn" type="button" aria-haspopup="dialog" aria-controls="help-modal" title="How to play">?</button>
+</header>
+
+<main id="app">
+
+  <section id="panel-chimera" class="vp-panel">
+
+    <div class="vp-card vp-prompt" id="prompt-card">
+      <div class="vp-prompt__eyebrow" id="puzzle-number">Vector Pitch #—</div>
+      <p class="vp-prompt__text" id="prompt-text">Loading today's Chimera&hellip;</p>
+      <p class="vp-prompt__scouting" id="scouting-line"></p>
+    </div>
+
+    <div class="vp-card vp-guessbar">
+      <div class="vp-autocomplete" id="chimera-autocomplete">
+        <input
+          type="text"
+          id="chimera-input"
+          class="vp-input"
+          placeholder="Type a player, e.g. Kylian Mbappé (WC 2022 &middot; FRA &middot; FWD)"
+          autocomplete="off"
+          aria-autocomplete="list"
+          aria-controls="chimera-suggestions"
+          aria-expanded="false"
+          disabled
+        >
+        <ul class="vp-suggestions" id="chimera-suggestions" role="listbox" hidden></ul>
+      </div>
+      <button class="vp-btn vp-btn--primary" id="chimera-submit" disabled>Guess</button>
+    </div>
+
+    <div class="vp-card vp-warmth" id="warmth-card" hidden>
+      <div class="vp-warmth__bars" id="warmth-bars" aria-hidden="true"></div>
+      <div class="vp-warmth__closest" id="warmth-closest">Closest: &mdash;</div>
+    </div>
+
+    <div class="vp-card vp-poshint" id="pos-hint-card" hidden>
+      <span class="vp-poshint__label">Position hint</span>
+      <span class="vp-poshint__chip" id="pos-hint-value">&mdash;</span>
+    </div>
+
+    <div class="vp-card vp-result" id="result-card" hidden>
+      <div class="vp-scoreboard" id="scoreboard">
+        <div class="vp-scoreboard__pct" id="scoreboard-pct">0%</div>
+        <div class="vp-scoreboard__sub">match on last guess</div>
+      </div>
+
+      <p class="vp-story" id="story-caption"></p>
+      <p class="vp-guess__line vp-guess__line--quick" id="quick-coaching-line"></p>
+      <p class="vp-guess__line" id="cluster-line"></p>
+
+      <details class="vp-fullreport" id="full-report">
+        <summary class="vp-fullreport__summary">Full scouting report &#9662;</summary>
+        <div class="vp-fullreport__body">
+          <div class="vp-section-label">The pitch &mdash; zone presence</div>
+          <div class="vp-pitches" id="pitches-row">
+            <div class="vp-pitch-block">
+              <div class="vp-pitch-block__label">The Chimera</div>
+              <canvas class="vp-pitch" id="pitch-target" width="315" height="204" aria-label="Full-pitch diagram of the Chimera's attacking and defensive zone presence"></canvas>
+            </div>
+            <div class="vp-pitch-block">
+              <div class="vp-pitch-block__label" id="pitch-guess-label">Your guess</div>
+              <canvas class="vp-pitch" id="pitch-guess" width="315" height="204" aria-label="Full-pitch diagram of your guess's attacking and defensive zone presence"></canvas>
+            </div>
+          </div>
+          <div class="vp-pitch-legend">
+            <span><span class="vp-legend-swatch vp-legend-swatch--orange"></span>attack &mdash; zone fills &amp; arrows, &sigma;-labeled</span>
+            <span><span class="vp-legend-swatch vp-legend-swatch--hatch"></span>defense &mdash; 45&deg; hatch</span>
+          </div>
+
+          <div class="vp-section-label">Dimensional breakdown &mdash; &sigma; vs tournament, all 16 dimensions</div>
+          <div class="vp-breakdown" id="breakdown-chart" role="img" aria-label="Diverging bar chart comparing the Chimera and your guess across all 16 stat dimensions in sigmas"></div>
+          <div class="vp-pitch-legend">
+            <span><span class="vp-legend-swatch vp-legend-swatch--orange"></span>the Chimera</span>
+            <span><span class="vp-legend-swatch vp-legend-swatch--blue"></span>your guess</span>
+          </div>
+          <p class="vp-guess__line" id="coaching-line"></p>
+        </div>
+      </details>
+    </div>
+
+    <div class="vp-card vp-reveal" id="reveal-card" hidden>
+      <h2 class="vp-reveal__title" id="reveal-title">Revealed</h2>
+      <div class="vp-reveal__body" id="reveal-body"></div>
+      <button class="vp-btn vp-btn--accent" id="share-btn">Share result</button>
+      <div class="vp-reveal__copied" id="share-copied" hidden>Copied to clipboard.</div>
+    </div>
+
+    <details class="vp-card vp-mapcard" id="map-details" open>
+      <summary class="vp-mapcard__label">3D pitch map <span class="vp-mapcard__hint">(drag to rotate &middot; wheel/pinch to zoom)</span></summary>
+      <div class="vp-mapcard__body">
+        <div class="vp-map-wrap">
+          <canvas id="pitch-map" class="vp-map" width="600" height="600" aria-label="3D starfield of all World Cup players colored by position, with the Chimera target marker and your guesses pinned"></canvas>
+          <button class="vp-map-pause" id="map-pause-btn" type="button" title="Pause rotation">Pause</button>
+          <button class="vp-map-color" id="map-color-btn" type="button" title="Toggle dot coloring">Color: position</button>
+          <div class="vp-map-axes" id="map-axes">PC1 / PC2 / PC3 of the tournament-normalized stat space</div>
+        </div>
+        <div class="vp-mapcard__legend" id="map-legend"></div>
+      </div>
+    </details>
+
+    <ol class="vp-guesslist" id="guess-list" aria-live="polite"></ol>
+
+  </section>
+
+  <div class="vp-loading" id="loading-banner">Loading vectors&hellip;</div>
+  <div class="vp-error" id="error-banner" hidden></div>
+
+</main>
+
+<div class="vp-modal-backdrop" id="help-backdrop" hidden>
+  <div class="vp-modal" id="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-title">
+    <h2 id="help-title">How to play</h2>
+    <ol class="vp-modal__list">
+      <li>Each day two real World Cup players are fused: one lends the attacking-output profile, the other the duel/defensive profile.</li>
+      <li>Guess any player; you get a % match, a pitch comparison, and directional coaching in sigmas.</li>
+      <li>92%+ match &mdash; or naming either component &mdash; wins. 6 guesses. New chimera at midnight UTC.</li>
+      <li>After your 3rd guess, a position hint (DEF / MID / FWD) unlocks.</li>
+    </ol>
+    <p class="vp-modal__telemetry" id="telemetry-note">Anonymous play events (round counts only) help tune the game.</p>
+    <button class="vp-btn vp-btn--primary" id="help-close" type="button">Got it</button>
+  </div>
+</div>
+
+<footer class="vp-footer" id="footer">
+  Vectors: per-90 minutes, z-scored within tournament (context-honest) &middot; &mdash; &middot; built &mdash; &middot; no tracking
+</footer>
+
+<script src="assets/game.js" defer></script>
+</body>
+</html>
