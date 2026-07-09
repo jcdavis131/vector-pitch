@@ -1,0 +1,16 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "pitch.jcamd.com" }],
+      "destination": "https://pitch.dumbmodel.com/",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "pitch.jcamd.com" }],
+      "destination": "https://pitch.dumbmodel.com/:path*",
+      "permanent": true
+    }
+  ]
+}
