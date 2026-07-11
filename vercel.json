@@ -1,18 +1,35 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/model", "destination": "/model.html" }
+    {
+      "source": "/model",
+      "destination": "/model.html"
+    },
+    {
+      "source": "/dashboard",
+      "destination": "/dashboard.html"
+    }
   ],
   "redirects": [
     {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "pitch.jcamd.com" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "pitch.jcamd.com"
+        }
+      ],
       "destination": "https://pitch.dumbmodel.com/:path*",
       "permanent": true
     },
     {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "vector-pitch.vercel.app" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "vector-pitch.vercel.app"
+        }
+      ],
       "destination": "https://pitch.dumbmodel.com/:path*",
       "permanent": false
     }
