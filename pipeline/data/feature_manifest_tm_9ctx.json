@@ -1,0 +1,103 @@
+{
+  "built": "2026-07-10",
+  "features": [
+    "GOALS_P90",
+    "XG_P90",
+    "FINISHING_P90",
+    "KEY_PASSES_P90",
+    "ASSISTS_P90",
+    "PASSES_CMP_P90",
+    "PASS_CMP_PCT",
+    "PROG_CARRY_P90",
+    "DRIBBLES_P90",
+    "PRESSURES_P90",
+    "TACKLES_P90",
+    "INTERCEPTIONS_P90",
+    "RECOVERIES_P90",
+    "CROSSES_P90",
+    "FOULS_WON_P90",
+    "FOULS_CONV_P90"
+  ],
+  "families": {
+    "GOALS_P90": "attacking",
+    "XG_P90": "attacking",
+    "FINISHING_P90": "attacking",
+    "ASSISTS_P90": "attacking",
+    "KEY_PASSES_P90": "attacking",
+    "CROSSES_P90": "attacking",
+    "PASSES_CMP_P90": "passing_control",
+    "PASS_CMP_PCT": "passing_control",
+    "PROG_CARRY_P90": "passing_control",
+    "DRIBBLES_P90": "passing_control",
+    "FOULS_WON_P90": "passing_control",
+    "PRESSURES_P90": "defending_duel",
+    "TACKLES_P90": "defending_duel",
+    "INTERCEPTIONS_P90": "defending_duel",
+    "RECOVERIES_P90": "defending_duel",
+    "FOULS_CONV_P90": "defending_duel"
+  },
+  "family_lists": {
+    "attacking": [
+      "GOALS_P90",
+      "XG_P90",
+      "FINISHING_P90",
+      "ASSISTS_P90",
+      "KEY_PASSES_P90",
+      "CROSSES_P90"
+    ],
+    "passing_control": [
+      "PASSES_CMP_P90",
+      "PASS_CMP_PCT",
+      "PROG_CARRY_P90",
+      "DRIBBLES_P90",
+      "FOULS_WON_P90"
+    ],
+    "defending_duel": [
+      "PRESSURES_P90",
+      "TACKLES_P90",
+      "INTERCEPTIONS_P90",
+      "RECOVERIES_P90",
+      "FOULS_CONV_P90"
+    ]
+  },
+  "contexts": [
+    "Copa America 2024",
+    "Euro 2020",
+    "Euro 2024",
+    "La Liga 2018/2019",
+    "La Liga 2020/2021",
+    "Premier League 2015/2016",
+    "Serie A 2015/2016",
+    "WC 2018",
+    "WC 2022"
+  ],
+  "n_rows": 2295,
+  "n_features": 16,
+  "n_contexts": 9,
+  "coverage": {
+    "attacking": 1.0,
+    "passing_control": 1.0,
+    "defending_duel": 1.0
+  },
+  "normalization": "per-90 rates, z-scored within each competition-season (context-honest)",
+  "matches_processed": 1091,
+  "matches_failed": 0,
+  "feature_labels": {
+    "GOALS_P90": "finishing volume",
+    "XG_P90": "expected goals (shot quality)",
+    "FINISHING_P90": "finishing (xG overperformance)",
+    "KEY_PASSES_P90": "chance creation",
+    "ASSISTS_P90": "assists",
+    "PASSES_CMP_P90": "passing volume",
+    "PASS_CMP_PCT": "passing accuracy",
+    "PROG_CARRY_P90": "progressive carrying",
+    "DRIBBLES_P90": "dribbling / take-ons",
+    "PRESSURES_P90": "pressing intensity",
+    "TACKLES_P90": "tackling",
+    "INTERCEPTIONS_P90": "interceptions",
+    "RECOVERIES_P90": "ball recovery",
+    "CROSSES_P90": "crossing",
+    "FOULS_WON_P90": "fouls drawn",
+    "FOULS_CONV_P90": "fouls committed"
+  }
+}

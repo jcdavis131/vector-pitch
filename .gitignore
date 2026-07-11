@@ -1,2 +1,9 @@
 pipeline/cache/
 __pycache__/
+.vercel
+
+# Training matrices / checkpoints (regenerable); keep reports + manifests
+pipeline/data/*.npz
+pipeline/data/*.pt
+pipeline/data/*.log
+pipeline/data/_*/

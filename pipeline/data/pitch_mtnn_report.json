@@ -1,0 +1,137 @@
+{
+  "model": "PitchMTNN v1.1 (position SupCon)",
+  "status": "SOTA \u2014 beats shipped PCA(3) on 4/4; beats PCA(16) oracle on pos-cluster; ties oracle on knn5/nn_role within 0.3pp",
+  "built": "2026-07-10",
+  "summary": "Hill-climb step: added supervised contrastive loss on position labels (--con-w 0.5). Leave-one-competition-out on tm_9ctx improves all three role-recovery metrics vs v1 baseline and closes the PCA(16) oracle gap on pos-cluster (+5.1pp over oracle). Recon MAE slightly worse than v1 (0.496 vs 0.477) but still beats PCA(3). Final export retrained on tm_full; live vectors.json untouched. Pre-con backups: pitch_mtnn_pre_con.pt, pitch_mtnn_embeddings_pre_con.json.",
+  "architecture": {
+    "type": "Multi-Tower Neural Network (matches vector-gridiron convention)",
+    "towers": [
+      "attacking (6 feat)",
+      "passing_control (5 feat)",
+      "defending_duel (5 feat)"
+    ],
+    "tower": "ResidualTower (Linear->LN->GELU->Dropout->Linear + skip, d_tower=16)",
+    "fusion": "GatedFusion (attention-weighted + sigmoid-gated towers + context embedding -> 24-d, L2-normalized)",
+    "heads": [
+      "archetype CE (k-means(8) labels)",
+      "profile reconstruction (16-d smooth-L1)",
+      "position SupCon (DEF/MID/FWD)"
+    ],
+    "embedding_dim": 24,
+    "loss": "arch_w * CE + prof_w * smooth_l1 + con_w * SupCon  (arch_w=1.0, prof_w=0.5, con_w=0.5)",
+    "augmentation": "family-drop (0.15)"
+  },
+  "config_best": {
+    "d_emb": 24,
+    "d_tower": 16,
+    "arch_w": 1.0,
+    "prof_w": 0.5,
+    "con_w": 0.5,
+    "dropout": 0.2,
+    "wd": 0.001,
+    "lr": 0.002,
+    "family_drop": 0.15,
+    "epochs": 250
+  },
+  "evaluation": {
+    "method": "leave-one-competition-out CV (9 folds on tm_9ctx)",
+    "eval_matrix": "tm_9ctx.npz (2295 rows, 9 contexts) \u2014 detail in tm_9ctx_con05_report.json",
+    "baseline_v1_no_con": {
+      "pos_cluster_acc": 0.7265,
+      "knn5_pos_acc": 0.7621,
+      "nn_role_coherence": 0.7217,
+      "recon_mae": 0.4773
+    },
+    "metrics_vs_shipped_PCA3": {
+      "pos_cluster_acc": {
+        "mtnn": 0.797,
+        "pca3": 0.7008,
+        "delta": "+0.0962",
+        "win": true
+      },
+      "knn5_pos_acc": {
+        "mtnn": 0.7894,
+        "pca3": 0.6857,
+        "delta": "+0.1037",
+        "win": true
+      },
+      "nn_role_coherence": {
+        "mtnn": 0.7492,
+        "pca3": 0.6314,
+        "delta": "+0.1178",
+        "win": true
+      },
+      "recon_mae": {
+        "mtnn": 0.4956,
+        "pca3": 0.52,
+        "delta": "-0.0244 (lower better)",
+        "win": true
+      }
+    },
+    "vs_v1_baseline": {
+      "pos_cluster_acc": {
+        "v1": 0.7265,
+        "v1_1": 0.797,
+        "delta": "+0.0705"
+      },
+      "knn5_pos_acc": {
+        "v1": 0.7621,
+        "v1_1": 0.7894,
+        "delta": "+0.0273"
+      },
+      "nn_role_coherence": {
+        "v1": 0.7217,
+        "v1_1": 0.7492,
+        "delta": "+0.0275"
+      },
+      "recon_mae": {
+        "v1": 0.4773,
+        "v1_1": 0.4956,
+        "delta": "+0.0183 (slightly worse)"
+      }
+    },
+    "oracle_reference": {
+      "PCA16": {
+        "pos_cluster": 0.7457,
+        "knn5": 0.7905,
+        "nn_role": 0.7518
+      },
+      "mtnn_v1_1": {
+        "pos_cluster": 0.797,
+        "knn5": 0.7894,
+        "nn_role": 0.7492
+      },
+      "verdict": "BEATS PCA(16) on pos-cluster (+5.1pp); within 0.11pp knn5 and 0.26pp nn_role"
+    },
+    "verdict": "beats shipped PCA(3) on 4/4; promotes over v1 on role metrics"
+  },
+  "export_artifacts": {
+    "embedding": "assets/pitch_mtnn_embeddings.json \u2014 2430 players x 24-d L2-normalized e_p",
+    "checkpoint": "pipeline/data/pitch_mtnn.pt",
+    "backups_pre_con": [
+      "pipeline/data/pitch_mtnn_pre_con.pt",
+      "assets/pitch_mtnn_embeddings_pre_con.json"
+    ],
+    "reports": [
+      "pipeline/data/tm_9ctx_con05_report.json",
+      "pipeline/data/tm_9ctx_report_baseline.json"
+    ]
+  },
+  "verify_commands": [
+    "python pipeline/train_mtnn.py --matrix tm_9ctx.npz --epochs 250 --d-emb 24 --con-w 0.5 --tag con05",
+    "python pipeline/train_mtnn.py --matrix tm_full.npz --save-final --skip-cv --epochs 250 --d-emb 24 --con-w 0.5",
+    "python -c \"import json,numpy as np; d=json.load(open('assets/pitch_mtnn_embeddings.json',encoding='utf-8')); E=np.array([p['e_p'] for p in d['players']]); print(len(d['players']), E.shape, np.linalg.norm(E,axis=1).min(), np.linalg.norm(E,axis=1).max())\""
+  ],
+  "next_steps": {
+    "unified_reload": "Re-export unified matrix / re-run Stage 1 warm-start if e_p change should propagate (optional; shipped unified.json still uses prior e_p until rebuild).",
+    "future_pitch": "Tune con_w (0.25/0.75); deeper towers; more StatsBomb seasons."
+  },
+  "metrics_source": "selection_holdout_LOO",
+  "deploy": {
+    "mode": "final_refit_all_data",
+    "metrics_source": "selection_holdout_LOO",
+    "note": "CV metrics from tm_9ctx LOO; shipped e_p from tm_full full-corpus refit.",
+    "promoted_at": "2026-07-11",
+    "embedding": "assets/pitch_mtnn_embeddings.json"
+  }
+}
