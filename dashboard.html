@@ -29,6 +29,15 @@
     </div>
   </section>
 
+  <section class="dash-card" id="manim" style="border:2px solid #111;background:#FFFEF7">
+    <div class="card-head"><h2>Manim — precise math animations for pitch MTNN</h2><span class="card-meta">manim 0.20.1 + manimgl 1.7.2 • same engine as hoops • solo</span></div>
+    <p class="novice-text">Reused hoops MTNNFlow but for 633 WC tournaments: 16 dims attack/def zone presence. Pitch diagrams = Manim vectors with LaTeX sigma labels. <code>pip install manimgl</code> → OpenGL rendering, vector graphics, 3D starfield PC1/2/3. Video shows how z-score within tournament makes Mbappé 2022 vs Klose 2014 fair — then KV cache 8× compression lets us hold 633×16 on phone at 7-8 tok/s.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;margin-top:10px">
+      <div style="border:2px solid #111;border-radius:8px;overflow:hidden"><video autoplay loop muted playsinline controls src="assets/manim/MTNNFlow.mp4" style="width:100%;aspect-ratio:16/9"></video><div style="padding:8px;font-size:11px;background:#111;color:#fff">MTNNFlow — 17 families (pitch analogy 16 dims) → towers 160→32 → 48 L2 → pitch zones</div></div>
+      <div style="border:2px solid #111;border-radius:8px;overflow:hidden"><video autoplay loop muted playsinline controls src="assets/manim/KVCompression.mp4" style="width:100%;aspect-ratio:16/9"></video><div style="padding:8px;font-size:11px;background:#1a0a0a;color:#fff">KV 8× → fixed 18MB phone-ready for 600×600 map</div></div>
+    </div>
+  </section>
+
   <section class="dash-card" id="gather">
     <div class="card-head"><h2>01 Gather — StatsBomb World Cup 633 tournaments</h2><span class="card-meta">WC 2018+2022 • vectors.json • pitch_mtnn_embeddings.json</span></div>
     <div class="grid-2">
