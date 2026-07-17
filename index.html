@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Vector Pitch — the daily player Chimera</title>
-<meta name="description" content="Guess the fused World Cup player built from two tournaments of stats. Context-honest, zero tracking, one puzzle a day.">
+<title>Vector Pitch — Guess The Player, daily World Cup</title>
+<meta name="description" content="Guess today's mystery World Cup player in 6 tries. Wordle for soccer, context-honest. Chimera hard mode.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#9917;</text></svg>">
 <link rel="stylesheet" href="assets/pitch.css">
 <link rel="stylesheet" href="assets/responsive.css">
@@ -38,7 +38,7 @@
 
     <div class="vp-card vp-prompt" id="prompt-card">
       <div class="vp-prompt__eyebrow" id="puzzle-number">Vector Pitch #—</div>
-      <p class="vp-prompt__text" id="prompt-text">Loading today's Chimera&hellip;</p>
+      <p class="vp-prompt__text" id="prompt-text">Loading today's Mystery Player…</p>
       <p class="vp-prompt__scouting" id="scouting-line"></p>
     </div>
 
@@ -86,8 +86,8 @@
           <div class="vp-section-label">The pitch &mdash; zone presence</div>
           <div class="vp-pitches" id="pitches-row">
             <div class="vp-pitch-block">
-              <div class="vp-pitch-block__label">The Chimera</div>
-              <canvas class="vp-pitch" id="pitch-target" width="315" height="204" aria-label="Full-pitch diagram of the Chimera's attacking and defensive zone presence"></canvas>
+              <div class="vp-pitch-block__label">Target</div>
+              <canvas class="vp-pitch" id="pitch-target" width="315" height="204" aria-label="Full-pitch diagram of the target's attacking and defensive zone presence"></canvas>
             </div>
             <div class="vp-pitch-block">
               <div class="vp-pitch-block__label" id="pitch-guess-label">Your guess</div>
@@ -102,7 +102,7 @@
           <div class="vp-section-label">Dimensional breakdown &mdash; &sigma; vs tournament, all 16 dimensions</div>
           <div class="vp-breakdown" id="breakdown-chart" role="img" aria-label="Diverging bar chart comparing the Chimera and your guess across all 16 stat dimensions in sigmas"></div>
           <div class="vp-pitch-legend">
-            <span><span class="vp-legend-swatch vp-legend-swatch--orange"></span>the Chimera</span>
+            <span><span class="vp-legend-swatch vp-legend-swatch--orange"></span>target</span>
             <span><span class="vp-legend-swatch vp-legend-swatch--blue"></span>your guess</span>
           </div>
           <p class="vp-guess__line" id="coaching-line"></p>
@@ -121,7 +121,7 @@
       <summary class="vp-mapcard__label">3D pitch map <span class="vp-mapcard__hint">(drag to rotate &middot; wheel/pinch to zoom)</span></summary>
       <div class="vp-mapcard__body">
         <div class="vp-map-wrap">
-          <canvas id="pitch-map" class="vp-map" width="600" height="600" aria-label="3D starfield of all World Cup players colored by position, with the Chimera target marker and your guesses pinned"></canvas>
+          <canvas id="pitch-map" class="vp-map" width="600" height="600" aria-label="3D starfield of all World Cup players colored by position, with the target marker and your guesses pinned"></canvas>
           <button class="vp-map-pause" id="map-pause-btn" type="button" title="Pause rotation">Pause</button>
           <button class="vp-map-color" id="map-color-btn" type="button" title="Toggle dot coloring">Color: position</button>
           <div class="vp-map-axes" id="map-axes">PC1 / PC2 / PC3 of the tournament-normalized stat space</div>
@@ -141,21 +141,20 @@
 
 <div class="vp-modal-backdrop" id="help-backdrop" hidden>
   <div class="vp-modal" id="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-title">
-    <h2 id="help-title">How to play</h2>
+    <h2 id="help-title">How to play — Guess The Player</h2>
     <ol class="vp-modal__list">
-      <li>Each day two real World Cup players are fused: one lends the attacking-output profile, the other the duel/defensive profile.</li>
-      <li>Guess any player; you get a % match, a pitch comparison, and directional coaching in sigmas.</li>
-      <li>92%+ match &mdash; or naming either component &mdash; wins. 6 guesses. New chimera at midnight UTC.</li>
-      <li>After your 3rd guess, a position hint (DEF / MID / FWD) unlocks.</li>
+      <li>Each day one World Cup player (2018 or 2022) is the mystery target.</li>
+      <li>Guess any player; you get a % match, a pitch comparison, and coaching.</li>
+      <li>Exact name + tournament wins. 6 guesses. New at midnight UTC.</li>
+      <li>After 3 guesses, position hint (DEF / MID / FWD). After 5, archetype hint.</li>
+      <li>Hard mode: <a href="?mode=chimera_hard">Chimera 8+8 fusion, 92% wins</a>.</li>
     </ol>
     <p class="vp-modal__telemetry" id="telemetry-note">Anonymous play events (round counts only) help tune the game.</p>
     <button class="vp-btn vp-btn--primary" id="help-close" type="button">Got it</button>
   </div>
 </div>
 
-<footer class="vp-footer" id="footer">
-  Vectors: per-90 minutes, z-scored within tournament (context-honest) &middot; &mdash; &middot; built &mdash; &middot; no tracking
-</footer>
+<footer class="vp-footer" id="footer">© 2026 Vector Pitch · pitch.dumbmodel.com</footer>
 
 <script src="assets/game.js" defer></script>
 </body>

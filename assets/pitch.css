@@ -1,8 +1,4 @@
-/* Vector Pitch — World Cup dark theme (fleet-aligned neobrutalism)
-   Deep pitch green-black + chalk white ink, 2px ink borders, hard offset
-   block shadows, bold uppercase labels, mono numerals. Color reserved for
-   DATA: orange = the Chimera / attack, blue = your guess / defense,
-   status greens/reds for match heat. Ported from Vector Hoops' hoops.css. */
+/* Vector Pitch — World Cup dark theme */
 
 :root{
   --paper: #0a1510;

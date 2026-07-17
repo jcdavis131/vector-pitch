@@ -1,5 +1,4 @@
-// dashboard.js — dumbmodel Lab
-// Solo personal project, no connection to employer, built with public/free-tier only
+/* Vector Pitch Lab */
 (function(){
   const $ = (s, r=document)=>r.querySelector(s);
   const $$ = (s, r=document)=>[...r.querySelectorAll(s)];

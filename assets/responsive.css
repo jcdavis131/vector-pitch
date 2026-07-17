@@ -1,12 +1,4 @@
-/* Vector Pitch — assets/responsive.css
- * Mobile-first fluid layer. Loads after pitch.css.
- * Mirrors vector-hoops responsive.css discipline:
- *  - --page-gutter fluid, safe-area-aware
- *  - 44px touch targets
- *  - iOS 16px input to avoid zoom
- *  - scoped svg/canvas responsiveness (no blanket svg rule)
- *  - bottom safe-area padding
- */
+/* Vector Pitch — responsive layer */
 
 :root{
   --page-gutter: clamp(12px, 4vw, 20px);
@@ -15,11 +7,8 @@
   --touch-min: 44px;
 }
 
-/* Global media */
 img{ max-width:100%; height:auto; }
 
-/* Do NOT blanket svg/canvas — pitch maps, zone charts set own aspect.
-   Scope to known containers only. */
 .vp-breakdown svg,
 .vp-pitches canvas,
 .vp-map,
@@ -27,7 +16,6 @@ img{ max-width:100%; height:auto; }
   max-width:100%;
 }
 
-/* Header: fluid + safe */
 .vp-header{
   padding-inline: max(var(--page-gutter), env(safe-area-inset-left));
   padding-block: 10px;
@@ -46,7 +34,6 @@ img{ max-width:100%; height:auto; }
   flex:0 0 auto;
 }
 
-/* Main shell */
 main{
   width:min(100%, var(--layout-max));
   max-width:var(--layout-max);
@@ -55,7 +42,6 @@ main{
   box-sizing:border-box;
 }
 
-/* Cards */
 .vp-card{
   padding: clamp(12px, 2.5vw, 16px);
   width:100%;
@@ -63,7 +49,6 @@ main{
   min-width:0;
 }
 
-/* Inputs / guessbar: 16px prevents iOS auto-zoom on focus */
 .vp-input{
   font-size:16px;
   min-height:var(--touch-min);
@@ -92,7 +77,6 @@ main{
   .vp-btn{ width:auto; }
 }
 
-/* Suggestions: large tap targets, momentum scroll */
 .vp-suggestions{
   max-height:min(48vh, 320px);
   overflow-y:auto;
@@ -105,7 +89,6 @@ main{
   padding:10px 12px;
 }
 
-/* Pitch diagrams: stack on narrow */
 .vp-pitches{
   display:grid;
   gap:12px;
@@ -121,7 +104,6 @@ main{
   aspect-ratio: 315 / 204;
 }
 
-/* Breakdown chart */
 .vp-breakdown{
   overflow-x:auto;
   -webkit-overflow-scrolling:touch;
@@ -133,7 +115,6 @@ main{
   height:auto;
 }
 
-/* 3D map */
 .vp-map-wrap{
   position:relative;
   width:100%;
@@ -146,7 +127,7 @@ main{
   height:auto;
   aspect-ratio:1;
   max-height:min(70vh, 600px);
-  touch-action:none; /* let JS handle drag/zoom */
+  touch-action:none;
 }
 .vp-map-pause,
 .vp-map-color{
@@ -154,7 +135,6 @@ main{
   touch-action:manipulation;
 }
 
-/* Footer: safe area */
 .vp-footer{
   padding:12px var(--page-gutter);
   padding-bottom: max(12px, env(safe-area-inset-bottom));
@@ -163,7 +143,6 @@ main{
   line-height:1.4;
 }
 
-/* Modal */
 .vp-modal-backdrop{
   padding: var(--page-gutter);
   padding-top: max(var(--page-gutter), env(safe-area-inset-top));
@@ -178,14 +157,12 @@ main{
   -webkit-overflow-scrolling:touch;
 }
 
-/* Tiny phones */
 @media (max-width:360px){
   .vp-stats{ font-size:13px; }
   .vp-stat{ padding:4px 7px; }
   .vp-stat__num{ font-size:15px; }
 }
 
-/* Wide desktop: slightly larger max */
 @media (min-width:1280px){
   :root{ --layout-max: 800px; }
 }
