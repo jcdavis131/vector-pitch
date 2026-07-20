@@ -62,10 +62,22 @@ EXCLUDE_GOALKEEPERS = True  # GK stats (shots/passes/pressures) break the outfie
 # ---------------------------------------------------------------------------
 
 FEATURES = [
-    "GOALS_P90", "XG_P90", "FINISHING_P90", "KEY_PASSES_P90", "ASSISTS_P90",
-    "PASSES_CMP_P90", "PASS_CMP_PCT", "PROG_CARRY_P90", "DRIBBLES_P90",
-    "PRESSURES_P90", "TACKLES_P90", "INTERCEPTIONS_P90", "RECOVERIES_P90",
-    "CROSSES_P90", "FOULS_WON_P90", "FOULS_CONV_P90",
+    "GOALS_P90",
+    "XG_P90",
+    "FINISHING_P90",
+    "KEY_PASSES_P90",
+    "ASSISTS_P90",
+    "PASSES_CMP_P90",
+    "PASS_CMP_PCT",
+    "PROG_CARRY_P90",
+    "DRIBBLES_P90",
+    "PRESSURES_P90",
+    "TACKLES_P90",
+    "INTERCEPTIONS_P90",
+    "RECOVERIES_P90",
+    "CROSSES_P90",
+    "FOULS_WON_P90",
+    "FOULS_CONV_P90",
 ]
 LABELS = {
     "GOALS_P90": "finishing volume",
@@ -91,6 +103,7 @@ LABELS = {
 # Cached fetch layer
 # ---------------------------------------------------------------------------
 
+
 def cache_path(name: str) -> Path:
     return CACHE / name
 
@@ -112,9 +125,11 @@ def fetch_json(url: str, cache_name: str, note: str = ""):
             time.sleep(SLEEP_BETWEEN_FETCHES)
             return data
         except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError) as e:
-            wait = 2 ** attempt
-            print(f"  fetch {note or cache_name}: attempt {attempt + 1}/4 failed "
-                  f"({type(e).__name__}: {e}); sleeping {wait}s")
+            wait = 2**attempt
+            print(
+                f"  fetch {note or cache_name}: attempt {attempt + 1}/4 failed "
+                f"({type(e).__name__}: {e}); sleeping {wait}s"
+            )
             time.sleep(wait)
     print(f"  fetch {note or cache_name}: EXHAUSTED retries -- skipping")
     return None
@@ -123,6 +138,7 @@ def fetch_json(url: str, cache_name: str, note: str = ""):
 # ---------------------------------------------------------------------------
 # Position grouping (StatsBomb's 24 position names -> GK/DEF/MID/FWD)
 # ---------------------------------------------------------------------------
+
 
 def position_group(name: str | None) -> str:
     if not name:
@@ -150,13 +166,29 @@ def parse_clock(s: str) -> float:
 # Per-match processing
 # ---------------------------------------------------------------------------
 
+
 class PlayerAgg:
     __slots__ = (
-        "name", "team", "minutes", "pos_minutes",
-        "shots", "goals", "xg", "key_passes", "assists",
-        "passes_att", "passes_cmp", "prog_carry", "dribbles",
-        "pressures", "tackles", "interceptions", "recoveries",
-        "crosses", "fouls_won", "fouls_committed",
+        "assists",
+        "crosses",
+        "dribbles",
+        "fouls_committed",
+        "fouls_won",
+        "goals",
+        "interceptions",
+        "key_passes",
+        "minutes",
+        "name",
+        "passes_att",
+        "passes_cmp",
+        "pos_minutes",
+        "pressures",
+        "prog_carry",
+        "recoveries",
+        "shots",
+        "tackles",
+        "team",
+        "xg",
     )
 
     def __init__(self, name: str, team: str):
@@ -183,13 +215,17 @@ class PlayerAgg:
 
 
 def match_end_seconds(events: list[dict]) -> float:
-    ends = [e["minute"] * 60 + e["second"] for e in events
-            if e["type"]["name"] == "Half End" and e.get("period", 0) <= 4]
+    ends = [
+        e["minute"] * 60 + e["second"]
+        for e in events
+        if e["type"]["name"] == "Half End" and e.get("period", 0) <= 4
+    ]
     return max(ends) if ends else 95 * 60.0  # sane fallback
 
 
-def process_lineups(lineups: list[dict], end_seconds: float,
-                     agg: dict[int, PlayerAgg]) -> None:
+def process_lineups(
+    lineups: list[dict], end_seconds: float, agg: dict[int, PlayerAgg]
+) -> None:
     for team in lineups:
         team_name = team["team_name"]
         for pl in team["lineup"]:
@@ -296,6 +332,7 @@ def process_events(events: list[dict], agg: dict[int, PlayerAgg]) -> None:
 # Main build
 # ---------------------------------------------------------------------------
 
+
 def main() -> None:
     t_start = time.time()
     print("fetching competitions.json ...")
@@ -319,7 +356,9 @@ def main() -> None:
             continue
         matches = fetch_json(
             f"{BASE}matches/{COMPETITION_ID}/{season_id}.json",
-            f"matches_{season_id}.json", note=f"{label} match list")
+            f"matches_{season_id}.json",
+            note=f"{label} match list",
+        )
         if not matches:
             print(f"WARNING: could not fetch match list for {label} -- skipping")
             continue
@@ -328,10 +367,16 @@ def main() -> None:
         tourn_agg: dict[int, PlayerAgg] = {}
         for i, m in enumerate(matches):
             mid = m["match_id"]
-            lineups = fetch_json(f"{BASE}lineups/{mid}.json",
-                                  f"lineups_{mid}.json", note=f"{label} lineups {mid}")
-            events = fetch_json(f"{BASE}events/{mid}.json",
-                                 f"events_{mid}.json", note=f"{label} events {mid}")
+            lineups = fetch_json(
+                f"{BASE}lineups/{mid}.json",
+                f"lineups_{mid}.json",
+                note=f"{label} lineups {mid}",
+            )
+            events = fetch_json(
+                f"{BASE}events/{mid}.json",
+                f"events_{mid}.json",
+                note=f"{label} events {mid}",
+            )
             if not lineups or not events:
                 fetch_fail_count += 1
                 continue
@@ -341,20 +386,26 @@ def main() -> None:
             match_count += 1
             if (i + 1) % 16 == 0 or i == len(matches) - 1:
                 elapsed = time.time() - t_start
-                print(f"  {label}: {i + 1}/{len(matches)} matches processed "
-                      f"({elapsed:.0f}s elapsed)")
+                print(
+                    f"  {label}: {i + 1}/{len(matches)} matches processed "
+                    f"({elapsed:.0f}s elapsed)"
+                )
 
         for pid, a in tourn_agg.items():
             all_players[(pid, label)] = a
 
     if not all_players:
-        raise SystemExit("no player data aggregated -- aborting honestly "
-                          "(network wall hit before any match processed; "
-                          "cache is per-file and resumable, re-run)")
+        raise SystemExit(
+            "no player data aggregated -- aborting honestly "
+            "(network wall hit before any match processed; "
+            "cache is per-file and resumable, re-run)"
+        )
 
     if fetch_fail_count:
-        print(f"WARNING: {fetch_fail_count} match file(s) failed to fetch "
-              f"(cached files persist; re-run to retry)")
+        print(
+            f"WARNING: {fetch_fail_count} match file(s) failed to fetch "
+            f"(cached files persist; re-run to retry)"
+        )
 
     # ---- filter to minutes-qualified outfield players, build per-90 rows ----
     rows: list[dict] = []
@@ -384,10 +435,17 @@ def main() -> None:
             "FOULS_WON_P90": a.fouls_won / m90,
             "FOULS_CONV_P90": a.fouls_committed / m90,
         }
-        rows.append({
-            "player_id": pid, "name": a.name, "season": season,
-            "team": a.team, "pos": pos, "minutes": a.minutes, **vals,
-        })
+        rows.append(
+            {
+                "player_id": pid,
+                "name": a.name,
+                "season": season,
+                "team": a.team,
+                "pos": pos,
+                "minutes": a.minutes,
+                **vals,
+            }
+        )
 
     if not rows:
         raise SystemExit("no player-seasons met the minutes threshold -- aborting")
@@ -438,38 +496,53 @@ def main() -> None:
 
     players = []
     for i, r in enumerate(rows):
-        players.append({
-            "id": i,
-            "name": r["name"], "season": r["season"], "team": r["team"],
-            "pos": r["pos"],
-            "v": [round(float(z), 3) for z in Z[i]],
-            "x": round(float(P[i, 0]), 4), "y": round(float(P[i, 1]), 4),
-            "z": round(float(P[i, 2]), 4),
-            "c": int(lab[i]),
-        })
+        players.append(
+            {
+                "id": i,
+                "name": r["name"],
+                "season": r["season"],
+                "team": r["team"],
+                "pos": r["pos"],
+                "v": [round(float(z), 3) for z in Z[i]],
+                "x": round(float(P[i, 0]), 4),
+                "y": round(float(P[i, 1]), 4),
+                "z": round(float(P[i, 2]), 4),
+                "c": int(lab[i]),
+            }
+        )
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps({
-        "built": time.strftime("%Y-%m-%d"),
-        "seasons": [label for label, _ in TOURNAMENTS],
-        "normalization": "per-90 minutes, z-scored within tournament (context-honest)",
-        "features": FEATURES, "featureLabels": LABELS,
-        "clusters": cluster_names,
-        "players": players,
-        "attribution": "Data: StatsBomb Open Data (statsbomb.com) -- free data license, attribution required",
-    }, separators=(",", ":")), encoding="utf-8")
+    OUT.write_text(
+        json.dumps(
+            {
+                "built": time.strftime("%Y-%m-%d"),
+                "seasons": [label for label, _ in TOURNAMENTS],
+                "normalization": "per-90 minutes, z-scored within tournament (context-honest)",
+                "features": FEATURES,
+                "featureLabels": LABELS,
+                "clusters": cluster_names,
+                "players": players,
+                "attribution": "Data: StatsBomb Open Data (statsbomb.com) -- free data license, attribution required",
+            },
+            separators=(",", ":"),
+        ),
+        encoding="utf-8",
+    )
 
     # ---- audit assertions: never ship a dirty file ----
     assert len({(p["name"], p["season"]) for p in players}) <= len(players)
     assert all(len(p["v"]) == d for p in players), "vector length"
     assert all(all(-4.0001 <= v <= 4.0001 for v in p["v"]) for p in players), "clip"
-    assert all(0 <= p["x"] <= 1 and 0 <= p["y"] <= 1 and 0 <= p["z"] <= 1
-               for p in players), "map range"
+    assert all(
+        0 <= p["x"] <= 1 and 0 <= p["y"] <= 1 and 0 <= p["z"] <= 1 for p in players
+    ), "map range"
 
     elapsed = time.time() - t_start
-    print(f"wrote {OUT.name}: {len(players)} player-tournament rows from "
-          f"{match_count} matches, {K} archetypes, {d} features "
-          f"({elapsed:.0f}s total)")
+    print(
+        f"wrote {OUT.name}: {len(players)} player-tournament rows from "
+        f"{match_count} matches, {K} archetypes, {d} features "
+        f"({elapsed:.0f}s total)"
+    )
     for k, nm in enumerate(cluster_names):
         print(f"  cluster {k}: {nm} ({int((lab == k).sum())} players)")
 
