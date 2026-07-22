@@ -1,6 +1,8 @@
 /* Vector Pitch — game.js v6
  * Pivot: Main = Guess The Player (single tournament-season), Chimera as hard mode ?mode=chimera_hard
  * Zero deps, zero build. Loads assets/vectors.json
+ * Optional layer: assets/difficulty_calibration.json (offline modeled difficulty,
+ * shown in the on-device stats card; the game never depends on it).
  *
  * Modes:
  *  - guess (default): single player target weighted by popularity if available, else uniform. Exact win.
@@ -16,6 +18,7 @@
   'use strict';
 
   var DATA_URL = 'assets/vectors.json';
+  var DIFF_URL = 'assets/difficulty_calibration.json';
   var EPOCH_DATE = '2026-07-05';
   var MAX_GUESSES = 6;
   var WIN_SIMILARITY = 0.92; // chimera only
@@ -135,6 +138,7 @@
   function puzzleNumber(todayStr) { return daysBetweenUTC(EPOCH_DATE, todayStr) + 1; }
 
   var DATA = null;
+  var DIFFICULTY = null;
   var CENTROIDS = null;
   var CLUSTER_XYZ = null;
   var TARGET = null;
@@ -427,6 +431,75 @@
   }
 
   function renderStreak() { els.streakNum.textContent = String(STATE.streak); }
+
+  // ---------------------------------------------------------------------
+  // On-device stats panel (localStorage only) + modeled difficulty
+  // ---------------------------------------------------------------------
+  function computeLocalStats() {
+    var days = STATE.days || {};
+    var played = 0, solved = 0, guessSum = 0;
+    Object.keys(days).forEach(function (k) {
+      var rec = days[k];
+      if (!rec || !rec.done) return;
+      played++;
+      if (rec.won) { solved++; guessSum += rec.guesses.length; }
+    });
+    return {
+      played: played,
+      solved: solved,
+      solveRate: played > 0 ? solved / played : null,
+      avgGuesses: solved > 0 ? guessSum / solved : null
+    };
+  }
+
+  function renderStatsPanel() {
+    if (!els.statsGrid) return;
+    var s = computeLocalStats();
+    function tile(num, label) {
+      return '<div class="vp-stattile"><span class="vp-stattile__num">' + num +
+        '</span><span class="vp-stattile__label">' + label + '</span></div>';
+    }
+    els.statsGrid.innerHTML =
+      tile(String(s.played), 'played') +
+      tile(s.solveRate == null ? '—' : Math.round(s.solveRate * 100) + '%', 'solve rate') +
+      tile(s.avgGuesses == null ? '—' : s.avgGuesses.toFixed(1), 'avg guesses') +
+      tile(String(STATE.streak), 'streak');
+    renderDifficultyLine();
+  }
+
+  function difficultyTier(es) {
+    if (es >= 0.80) return 'EASY';
+    if (es >= 0.60) return 'MEDIUM';
+    if (es >= 0.40) return 'HARD';
+    return 'BRUTAL';
+  }
+
+  function renderDifficultyLine() {
+    if (!els.statsDifficulty) return;
+    if (GAME_MODE !== 'guess' || !DIFFICULTY || !TARGET || !TARGET.player) {
+      els.statsDifficulty.hidden = true;
+      return;
+    }
+    var entry = DIFFICULTY.targets && DIFFICULTY.targets[TARGET.player.id];
+    if (!entry || entry.id !== TARGET.player.id) { els.statsDifficulty.hidden = true; return; }
+    var tier = difficultyTier(entry.expected_solve);
+    var pct = Math.round(entry.expected_solve * 100);
+    els.statsDifficulty.hidden = false;
+    els.statsDifficulty.innerHTML =
+      '<span class="vp-poshint__label">Today’s puzzle</span>' +
+      '<span class="vp-diffchip vp-diffchip--' + tier.toLowerCase() + '">' + tier + '</span>' +
+      '<span class="vp-statscard__est">modeled ' + pct + '% solve — estimate from vector structure, not telemetry</span>';
+  }
+
+  function loadDifficulty() {
+    fetch(DIFF_URL).then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    }).then(function (json) {
+      DIFFICULTY = json;
+      renderDifficultyLine();
+    }).catch(function () { /* difficulty layer is optional; the game never depends on it */ });
+  }
 
   // ---------------------------------------------------------------------
   // Autocomplete
@@ -925,6 +998,7 @@
 
     renderWarmth(rec);
     renderHints(rec);
+    renderStatsPanel();
 
     if (rec.guesses.length > 0) {
       var last = rec.guesses[rec.guesses.length - 1];
@@ -1317,6 +1391,8 @@
     els.fullReport = document.getElementById('full-report');
     els.posHintCard = document.getElementById('pos-hint-card');
     els.posHintValue = document.getElementById('pos-hint-value');
+    els.statsGrid = document.getElementById('stats-grid');
+    els.statsDifficulty = document.getElementById('stats-difficulty');
   }
 
   function setupChimeraInputs() {
@@ -1370,6 +1446,7 @@
       resumeIfDone();
       renderMap();
       startMapLoopIfNeeded();
+      loadDifficulty();
 
       // Update page title per mode
       document.title = GAME_MODE === 'guess' ? 'Vector Pitch — Guess The Player' : 'Vector Pitch — Chimera Hard';

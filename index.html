@@ -117,6 +117,15 @@
       <div class="vp-reveal__copied" id="share-copied" hidden>Copied to clipboard.</div>
     </div>
 
+    <details class="vp-card vp-statscard" id="stats-details" open>
+      <summary class="vp-statscard__label">Your stats <span class="vp-statscard__hint">(this device only)</span></summary>
+      <div class="vp-statscard__body">
+        <div class="vp-statsgrid" id="stats-grid"></div>
+        <div class="vp-statscard__difficulty" id="stats-difficulty" hidden></div>
+        <p class="vp-statscard__note" id="stats-note">Stats live in this browser's local storage &mdash; your device only, nothing leaves this page. Difficulty is a model estimate computed offline from the player-vector space, not measured telemetry.</p>
+      </div>
+    </details>
+
     <details class="vp-card vp-mapcard" id="map-details" open>
       <summary class="vp-mapcard__label">3D pitch map <span class="vp-mapcard__hint">(drag to rotate &middot; wheel/pinch to zoom)</span></summary>
       <div class="vp-mapcard__body">

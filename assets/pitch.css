@@ -557,6 +557,92 @@ main{
   border: 1px solid var(--ink);
 }
 
+/* ---------- on-device stats card ---------- */
+
+.vp-statscard{ padding: 12px 16px; }
+.vp-statscard > summary{
+  cursor: pointer;
+  list-style: none;
+}
+.vp-statscard > summary::-webkit-details-marker{ display: none; }
+.vp-statscard__label{
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+}
+.vp-statscard__hint{
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 400;
+  color: var(--ink-muted);
+}
+.vp-statscard__body{ margin-top: 10px; }
+
+.vp-statsgrid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+@media (max-width: 419px){
+  .vp-statsgrid{ grid-template-columns: repeat(2, 1fr); }
+}
+.vp-stattile{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.2;
+  padding: 8px 4px;
+  background: var(--panel-dark);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  font-family: var(--mono);
+}
+.vp-stattile__num{
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.vp-stattile__label{
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  font-weight: 700;
+}
+
+.vp-statscard__difficulty{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+.vp-diffchip{
+  font-family: var(--mono);
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--paper);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+.vp-diffchip--easy{ background: var(--hot); }
+.vp-diffchip--medium{ background: var(--warm); }
+.vp-diffchip--hard{ background: var(--data-orange); }
+.vp-diffchip--brutal{ background: var(--cold); }
+.vp-statscard__est{ font-size: 12px; color: var(--ink-soft); }
+
+.vp-statscard__note{
+  margin: 10px 0 0;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
 /* ---------- how-to-play modal ---------- */
 
 .vp-modal-backdrop{
