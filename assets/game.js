@@ -1,8 +1,10 @@
 /* Vector Pitch — game.js v6
  * Pivot: Main = Guess The Player (single tournament-season), Chimera as hard mode ?mode=chimera_hard
  * Zero deps, zero build. Loads assets/vectors.json
- * Optional layer: assets/difficulty_calibration.json (offline modeled difficulty,
- * shown in the on-device stats card; the game never depends on it).
+ * Optional layer: assets/difficulty_calibration.json (offline modeled difficulty).
+ * When present it feeds the stats card AND gates the daily rotation: out-of-band
+ * picks (flag set) are held back by redrawing the same seeded stream, max
+ * MAX_GATE_REROLLS. Absent/failed -> gate off, raw pick ships (game still works).
  *
  * Modes:
  *  - guess (default): single player target weighted by popularity if available, else uniform. Exact win.
@@ -198,10 +200,12 @@
   }
 
   // Guess main: single player
-  function buildSingleTargetFromRng(rng, pool) {
-    pool = pool || DATA.players;
+  function pickSingleIndexFromRng(rng, pool) {
     // Weighted pick if DATA.weights exists (array parallel to players) or DATA.popularity map
     // For pitch, uniform. Keep hook for future popularity.
+    // Consumes exactly ONE rng() draw on every path: the rotation gate below
+    // redraws this same stream, so the draw count per attempt must stay fixed
+    // (and pipeline/build_difficulty.py mirrors it draw-for-draw).
     var weights = null;
     if (DATA.weights && DATA.weights.length === pool.length) weights = DATA.weights;
     var idx;
@@ -219,6 +223,34 @@
     }
     if (idx < 0) idx = 0;
     if (idx >= pool.length) idx = pool.length - 1;
+    return idx;
+  }
+
+  var MAX_GATE_REROLLS = 8; // bounded: after this the last draw ships even if out-of-band
+
+  function difficultyFlagFor(playerId) {
+    // Calibration flag for a player id:
+    //   null                    -> calibrated in-band
+    //   'too_hard' / 'too_easy' -> calibrated out-of-band
+    //   undefined               -> no flag info (calibration absent/misaligned)
+    if (!DIFFICULTY || !DIFFICULTY.targets) return undefined;
+    var entry = DIFFICULTY.targets[playerId];
+    if (!entry || entry.id !== playerId || entry.flag === undefined) return undefined;
+    return entry.flag;
+  }
+
+  function buildSingleTargetFromRng(rng, pool) {
+    pool = pool || DATA.players;
+    var idx = pickSingleIndexFromRng(rng, pool);
+    // Rotation gate: hold back targets whose difficulty flag is out-of-band
+    // (difficulty_calibration.json), redrawing the SAME seeded stream so every
+    // client lands on the same gated pick. Missing flag info never holds a
+    // pick -- absence of evidence is not out-of-band.
+    for (var rerolls = 0; rerolls < MAX_GATE_REROLLS; rerolls++) {
+      var flag = difficultyFlagFor(pool[idx].id);
+      if (flag === null || flag === undefined) break;
+      idx = pickSingleIndexFromRng(rng, pool);
+    }
     var p = pool[idx];
     // Defensive copy vector
     var vec = p.v.slice();
@@ -491,14 +523,13 @@
       '<span class="vp-statscard__est">modeled ' + pct + '% solve — estimate from vector structure, not telemetry</span>';
   }
 
-  function loadDifficulty() {
-    fetch(DIFF_URL).then(function (res) {
+  function fetchDifficulty() {
+    // Resolves to null on any failure: the layer stays optional -- without it
+    // the rotation gate is off and the raw daily pick ships.
+    return fetch(DIFF_URL).then(function (res) {
       if (!res.ok) throw new Error('HTTP ' + res.status);
       return res.json();
-    }).then(function (json) {
-      DIFFICULTY = json;
-      renderDifficultyLine();
-    }).catch(function () { /* difficulty layer is optional; the game never depends on it */ });
+    }).catch(function () { return null; });
   }
 
   // ---------------------------------------------------------------------
@@ -1419,11 +1450,15 @@
   function init() {
     initDom();
     setupHelp();
-    fetch(DATA_URL).then(function (res) {
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      return res.json();
-    }).then(function (json) {
-      DATA = json;
+    Promise.all([
+      fetch(DATA_URL).then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      }),
+      fetchDifficulty() // must settle BEFORE the target build: the rotation gate reads its flags
+    ]).then(function (loaded) {
+      DATA = loaded[0];
+      DIFFICULTY = loaded[1];
       var k = DATA.clusters.length;
       var dims = DATA.features.length;
       CENTROIDS = computeCentroids(DATA.players, k, dims);
@@ -1446,7 +1481,7 @@
       resumeIfDone();
       renderMap();
       startMapLoopIfNeeded();
-      loadDifficulty();
+      renderDifficultyLine();
 
       // Update page title per mode
       document.title = GAME_MODE === 'guess' ? 'Vector Pitch — Guess The Player' : 'Vector Pitch — Chimera Hard';

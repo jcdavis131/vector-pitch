@@ -37,11 +37,14 @@ NO fame/coverage prior is applied: the repo carries no popularity data
 be dishonest. Famous players therefore land mid-scale unless their
 statistical profile itself is distinctive.
 
-Upcoming rotation: the daily target is deterministic (game.js seeds
-xmur3->mulberry32 with 'vector-pitch:{date}'). The RNG is replicated
-here bit-for-bit (parity-tested in tests/test_difficulty.py), so the
-next UPCOMING_DAYS days are resolved and any day outside the band is
-flagged IN THE JSON ONLY -- rotation logic is deliberately untouched.
+Rotation gate: the daily target is deterministic (game.js seeds
+xmur3->mulberry32 with 'vector-pitch:{date}') and game.js now HOLDS BACK
+out-of-band targets: while the drawn target's flag is set, the same
+seeded stream is redrawn, bounded at MAX_GATE_REROLLS (then the last
+draw ships rather than spinning). The RNG and the gate are replicated
+here draw-for-draw (parity-tested in tests/test_difficulty.py), so the
+next UPCOMING_DAYS days are resolved through the same gate; each row
+records the ungated raw_id next to the id that actually ships.
 
 Run:  python pipeline/build_difficulty.py
 """
@@ -52,6 +55,7 @@ import datetime
 import json
 import sys
 import time
+from collections.abc import Callable
 from pathlib import Path
 
 import numpy as np
@@ -67,6 +71,7 @@ WEIGHTS = {"warm_crowd": 0.30, "nn10_sim": 0.20, "scout_pool": 0.25, "salience":
 BAND = (0.40, 0.80)  # steering-program expected-solve band
 ANCHOR_SOLVE = 0.60  # corpus-median target maps here (band midpoint)
 SLOPE = 5.0  # logistic slope per unit difficulty score
+MAX_GATE_REROLLS = 8  # matches game.js: gate gives up after this, never spins
 UPCOMING_DAYS = 56
 EPOCH_DATE = "2026-07-05"  # game.js EPOCH_DATE (puzzle #1)
 
@@ -100,12 +105,53 @@ def mulberry32_first(seed: int) -> float:
     return ((t ^ (t >> 14)) & M32) / 4294967296
 
 
+def mulberry32_stream(seed: int) -> Callable[[], float]:
+    """Successive mulberry32 draws for one seed (game.js closure semantics);
+    the first call returns exactly mulberry32_first(seed)."""
+    a = seed & M32
+
+    def draw() -> float:
+        nonlocal a
+        a = (a + 0x6D2B79F5) & M32
+        t = _imul(a ^ (a >> 15), (1 | a) & M32)
+        t = ((t + _imul(t ^ (t >> 7), (61 | t) & M32)) ^ t) & M32
+        return ((t ^ (t >> 14)) & M32) / 4294967296
+
+    return draw
+
+
 def daily_target_index(date_str: str, n_players: int) -> int:
-    """Index game.js buildSingleDailyTarget picks for a UTC date (guess mode,
-    uniform -- vectors.json ships no weights)."""
+    """Ungated index game.js draws first for a UTC date (guess mode, uniform
+    -- vectors.json ships no weights). The rotation gate may redraw past it;
+    use gated_daily_target_index for the target that actually ships."""
     r = mulberry32_first(xmur3_seed("vector-pitch:" + date_str))
     idx = int(r * n_players)
     return min(max(idx, 0), n_players - 1)
+
+
+def gated_daily_target_index(
+    date_str: str, n_players: int, flags: dict[int, str | None] | None
+) -> tuple[int, int]:
+    """game.js rotation gate, replicated draw-for-draw: while the picked
+    target's calibration flag is out-of-band (non-None), redraw the same
+    daily stream, bounded at MAX_GATE_REROLLS (the last draw then ships
+    unchecked rather than spinning). flags=None -- no calibration artifact
+    -- disables the gate entirely; an id absent from flags carries no
+    evidence and is never held. Returns (index, rerolls_used)."""
+    rng = mulberry32_stream(xmur3_seed("vector-pitch:" + date_str))
+
+    def draw() -> int:
+        idx = int(rng() * n_players)
+        return min(max(idx, 0), n_players - 1)
+
+    idx = draw()
+    if flags is None:
+        return idx, 0
+    rerolls = 0
+    while rerolls < MAX_GATE_REROLLS and flags.get(idx) is not None:
+        idx = draw()
+        rerolls += 1
+    return idx, rerolls
 
 
 # ---------------------------------------------------------------------------
@@ -216,10 +262,12 @@ def main() -> None:
         )
 
     today = datetime.datetime.now(datetime.UTC).date()
+    flags_by_id = {t["id"]: t["flag"] for t in targets}
     upcoming = []
     for k in range(UPCOMING_DAYS):
         day = (today + datetime.timedelta(days=k)).isoformat()
-        idx = daily_target_index(day, n)
+        raw_idx = daily_target_index(day, n)
+        idx, rerolls = gated_daily_target_index(day, n, flags_by_id)
         day_es = float(es[idx])
         epoch = datetime.date.fromisoformat(EPOCH_DATE)
         puzzle_no = (datetime.date.fromisoformat(day) - epoch).days + 1
@@ -228,6 +276,8 @@ def main() -> None:
                 "date": day,
                 "puzzle_number": puzzle_no,
                 "id": idx,
+                "raw_id": raw_idx,
+                "gate_rerolls": rerolls,
                 "difficulty_score": round(float(scores[idx]), 4),
                 "expected_solve": round(day_es, 4),
                 "in_band": band_flag(day_es) is None,
@@ -271,8 +321,11 @@ def main() -> None:
             "rotation_note": (
                 "upcoming[] resolves the deterministic daily seed "
                 "('vector-pitch:{date}', xmur3->mulberry32, replicated "
-                "bit-for-bit) and flags out-of-band days in this JSON only; "
-                "rotation logic is unchanged"
+                "bit-for-bit) THROUGH the rotation gate game.js applies: "
+                "out-of-band picks (flag set) are held back and the same "
+                f"stream is redrawn, up to {MAX_GATE_REROLLS} rerolls (then "
+                "the last draw ships). raw_id is the ungated draw, id the "
+                "target that actually ships"
             ),
         },
         "band": {"lo": BAND[0], "hi": BAND[1]},
@@ -301,6 +354,10 @@ def main() -> None:
     assert sum(out["summary"]["expected_solve_histogram"]["counts"]) == n
     assert len(upcoming) == UPCOMING_DAYS
     assert all(0 <= u["id"] < n for u in upcoming), "upcoming id range"
+    assert all(0 <= u["raw_id"] < n for u in upcoming), "upcoming raw_id range"
+    assert all(
+        u["in_band"] or u["gate_rerolls"] == MAX_GATE_REROLLS for u in upcoming
+    ), "gate must land in band unless the reroll budget is exhausted"
 
     elapsed = time.time() - t_start
     in_band_pct = 100.0 * out["summary"]["n_in_band"] / n
@@ -310,8 +367,10 @@ def main() -> None:
         f"({elapsed:.1f}s)"
     )
     flagged = [u for u in upcoming if not u["in_band"]]
+    gated = sum(1 for u in upcoming if u["gate_rerolls"] > 0)
     print(
-        f"upcoming {UPCOMING_DAYS} days: {len(flagged)} outside the "
+        f"upcoming {UPCOMING_DAYS} days: gate held back {gated} raw picks; "
+        f"{len(flagged)} still outside the "
         f"{int(BAND[0] * 100)}-{int(BAND[1] * 100)}% band"
     )
     for u in flagged:

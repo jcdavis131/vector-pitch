@@ -17,12 +17,15 @@ sys.path.insert(0, str(ROOT))
 
 from pipeline.build_difficulty import (  # noqa: E402
     BAND,
+    MAX_GATE_REROLLS,
     band_flag,
     compute_components,
     daily_target_index,
     difficulty_scores,
     expected_solve,
+    gated_daily_target_index,
     mulberry32_first,
+    mulberry32_stream,
     xmur3_seed,
 )
 
@@ -42,6 +45,17 @@ JS_PARITY_FIXTURES = {
     "2026-07-22": 255,
     "2026-07-23": 86,
     "2026-07-24": 215,
+}
+
+# Recorded the same way (game.js RNG functions verbatim under node v24), but
+# taking the first FOUR draws of each daily stream as floor(r*633). The
+# rotation gate redraws the SAME stream, so multi-draw parity is what keeps
+# the Python replica honest.
+JS_STREAM_FIXTURES = {
+    "2026-07-05": [490, 600, 187, 490],
+    "2026-07-22": [255, 343, 246, 24],
+    "2026-07-23": [86, 337, 408, 356],
+    "2026-08-01": [133, 164, 376, 597],
 }
 
 
@@ -81,6 +95,60 @@ def test_expected_solve_monotone_decreasing_in_difficulty():
     assert np.all((es > 0.0) & (es < 1.0))
 
 
+def test_mulberry32_stream_parity_with_game_js():
+    n = len(VECTORS["players"])
+    assert n == 633, "fixtures were recorded for the 633-player corpus"
+    for date, expected in JS_STREAM_FIXTURES.items():
+        rng = mulberry32_stream(xmur3_seed("vector-pitch:" + date))
+        assert [int(rng() * n) for _ in expected] == expected, date
+
+
+def test_mulberry32_stream_first_draw_matches_single_draw_helper():
+    seed = xmur3_seed("vector-pitch:2026-07-22")
+    assert mulberry32_stream(seed)() == mulberry32_first(seed)
+
+
+# Rotation-gate tests use 2026-07-22, whose stream draws 255, 343, 246, ...
+# (JS_STREAM_FIXTURES above), so held-back outcomes are exact.
+
+
+def test_gate_in_band_first_pick_passes():
+    assert gated_daily_target_index("2026-07-22", 633, {255: None}) == (255, 0)
+
+
+def test_gate_holds_back_out_of_band_pick():
+    # 255 flagged -> held; the next draw of the same stream (343) ships
+    idx, rerolls = gated_daily_target_index("2026-07-22", 633, {255: "too_easy"})
+    assert (idx, rerolls) == (343, 1)
+    # 255 and 343 both flagged -> two rerolls, 246 ships
+    idx, rerolls = gated_daily_target_index(
+        "2026-07-22", 633, {255: "too_hard", 343: "too_easy"}
+    )
+    assert (idx, rerolls) == (246, 2)
+
+
+def test_gate_bounded_when_everything_flagged():
+    flags = dict.fromkeys(range(633), "too_hard")
+    idx, rerolls = gated_daily_target_index("2026-07-22", 633, flags)
+    assert rerolls == MAX_GATE_REROLLS, "gate must give up, never spin"
+    # the (1 + MAX_GATE_REROLLS)th draw ships even though it is out-of-band
+    rng = mulberry32_stream(xmur3_seed("vector-pitch:2026-07-22"))
+    last_draw = [int(rng() * 633) for _ in range(MAX_GATE_REROLLS + 1)][-1]
+    assert idx == last_draw
+
+
+def test_gate_missing_calibration_disables_gate():
+    # flags=None means no calibration artifact at all: the raw pick ships
+    raw = daily_target_index("2026-07-22", 633)
+    assert gated_daily_target_index("2026-07-22", 633, None) == (raw, 0)
+
+
+def test_gate_missing_flag_never_holds():
+    # id absent from flags: no evidence about the item, so it is never held
+    raw = daily_target_index("2026-07-22", 633)
+    assert gated_daily_target_index("2026-07-22", 633, {}) == (raw, 0)
+
+
 def test_band_flag_edges():
     assert band_flag(BAND[0] - 0.001) == "too_hard"
     assert band_flag(BAND[0]) is None
@@ -110,3 +178,12 @@ def test_shipped_calibration_schema():
         assert u["in_band"] == (u["flag"] is None)
         # upcoming rows must agree with the per-target table
         assert u["expected_solve"] == targets[u["id"]]["expected_solve"]
+        # rotation-gate audit: raw_id is the ungated draw, id the gated pick
+        assert u["raw_id"] == daily_target_index(u["date"], len(players))
+        assert 0 <= u["gate_rerolls"] <= MAX_GATE_REROLLS
+        if u["gate_rerolls"] == 0:
+            assert u["id"] == u["raw_id"]
+        else:
+            assert targets[u["raw_id"]]["flag"] is not None
+        if u["gate_rerolls"] < MAX_GATE_REROLLS:
+            assert u["in_band"], "gate must land in band unless budget exhausted"
