@@ -15,8 +15,8 @@
   <header class="dash-header">
     <div class="dash-eyebrow">pitch.dumbmodel.com Lab • MTNN for World Cup Chimera</div>
     <h1 class="dash-title">Vector Pitch <span class="accent">Lab</span></h1>
-    <p class="dash-subtitle">Exact MTNN behind daily <b>WC Chimera</b> — <b>633 player-tournaments 2018+2022</b> StatsBomb per-90 tournament-z → <b>16 dims attack/def zone presence</b> → <b>pitch diagrams + 3D PC1/PC2/PC3 starfield</b> → coaching in σ. From Ava dashboard YaRN charts.</p>
-    <div class="dash-controls"><div class="toggle-group"><button class="toggle-btn is-active" data-level="novice">🌱 Novice</button><button class="toggle-btn" data-level="expert">🧠 Expert</button></div><div class="dash-status-pill"><span class="dot dot--live"></span> 633 tournaments • 16-d • pitch diagrams • 3D map drag/zoom • 92% match wins</div></div>
+    <p class="dash-subtitle">Exact MTNN behind daily <b>WC Chimera</b> — <b>633 player-tournaments 2018+2022</b> StatsBomb per-90 tournament-z → <b>16 dims attack/def zone presence</b> → <b>pitch diagrams + 3D PC1/PC2/PC3 starfield</b> → coaching in σ.</p>
+    <div class="dash-controls"><div class="toggle-group"><button class="toggle-btn is-active" data-level="novice">🌱 Novice</button><button class="toggle-btn" data-level="expert">🧠 Expert</button></div><div class="dash-status-pill"><span class="dot dot--live"></span> 633 tournaments • 16-d • pitch diagrams • 3D map drag/zoom • 92% cosine to win</div></div>
   </header>
 
   <section class="dash-pipeline">
@@ -24,18 +24,16 @@
       <div class="pipe-step is-done"><span class="step-num">01</span><b>Gather</b><i>StatsBomb per-90</i></div><div class="pipe-arrow">→</div>
       <div class="pipe-step is-done"><span class="step-num">02</span><b>Clean</b><i>tournament σ 16-d</i></div><div class="pipe-arrow">→</div>
       <div class="pipe-step is-done"><span class="step-num">03</span><b>Train</b><i>vectors.json embeddings</i></div><div class="pipe-arrow">→</div>
-      <div class="pipe-step is-done"><span class="step-num">04</span><b>Eval</b><i>92% match + pitch coaching</i></div><div class="pipe-arrow">→</div>
+      <div class="pipe-step is-done"><span class="step-num">04</span><b>Eval</b><i>92% cosine + pitch coaching</i></div><div class="pipe-arrow">→</div>
       <div class="pipe-step is-done"><span class="step-num">05</span><b>Deploy</b><i>canvas pitch + 3D map</i></div>
     </div>
   </section>
 
   <section class="dash-card" id="manim" style="border:2px solid #111;background:#FFFEF7">
     <div class="card-head"><h2>Manim — precise math animations for pitch MTNN</h2><span class="card-meta">manim • precise math animations</span></div>
-    <p class="novice-text">Reused hoops MTNNFlow but for 633 WC tournaments: 16 dims attack/def zone presence. Pitch diagrams = Manim vectors with LaTeX sigma labels. <code>pip install manimgl</code> → OpenGL rendering, vector graphics, 3D starfield PC1/2/3. Video shows how z-score within tournament makes Mbappé 2022 vs Klose 2014 fair — then KV cache 8× compression lets us hold 633×16 on phone at 7-8 tok/s.</p>
+    <p class="novice-text">Reused hoops MTNNFlow but for 633 WC tournaments: 16 dims attack/def zone presence. Pitch diagrams = Manim vectors with LaTeX sigma labels. <code>pip install manimgl</code> → OpenGL rendering, vector graphics, 3D starfield PC1/2/3. Video shows how z-score within tournament makes Mbappé 2022 vs Klose 2014 fair. The full 633×16 vector set ships as a static JSON that runs entirely client-side — no backend.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;margin-top:10px">
-      <div style="border:2px solid #111;border-radius:8px;overflow:hidden"><video autoplay loop muted playsinline controls src="assets/manim/MTNNFlow.mp4" style="width:100%;aspect-ratio:16/9"></video><div style="padding:8px;font-size:11px;background:#111;color:#fff">MTNNFlow — 17 families (pitch analogy 16 dims) → towers 160→32 → 48 L2 → pitch zones</div></div>
-      <div style="border:2px solid #111;border-radius:8px;overflow:hidden"><video autoplay loop muted playsinline controls src="assets/manim/KVCompression.mp4" style="width:100%;aspect-ratio:16/9"></video><div style="padding:8px;font-size:11px;background:#1a0a0a;color:#fff">KV 8× → fixed 18MB phone-ready for 600×600 map</div></div>
-    </div>
+      <div style="border:2px solid #111;border-radius:8px;overflow:hidden"><video autoplay loop muted playsinline controls src="assets/manim/MTNNFlow.mp4" style="width:100%;aspect-ratio:16/9"></video><div style="padding:8px;font-size:11px;background:#111;color:#fff">MTNNFlow — 3 role families / 16 dims → per-family towers → gated fusion → 16-d vector space → pitch zones</div></div>    </div>
   </section>
 
   <section class="dash-card" id="gather">
@@ -44,13 +42,13 @@
       <div>
         <p class="novice-text">We pull StatsBomb per-90 minutes, z-scored <b>within tournament</b> (context-honest) — so Mbappé 2022 vs Klose 2014 compare fairly. 633 player-tournaments → 16 dimensions: attack zone fills & arrows σ-labeled + defense 45° hatch. Each day two real players fused: one lends attacking-output, other duel/defensive profile.</p>
         <div class="metrics"><div class="metric"><b>633</b><span>player-tournaments</span></div><div class="metric"><b>2018+2022</b><span>WC</span></div><div class="metric"><b>16-d</b><span>stat space</span></div><div class="metric"><b>per-90 σ</b><span>per tournament</span></div></div>
-        <p class="expert-text" data-expert>Files: pitch_mtnn_embeddings.json, pitch_mtnn_embeddings_pre_con.json, vectors.json 633 entries. Cleaning: per-tournament z, 16 dims, zone presence model. Game prompt: Two real WC players fused, 6 guesses, 92%+ match or naming either component wins, position hint after 3rd guess DEF/MID/FWD.</p>
+        <p class="expert-text" data-expert>Files: pitch_mtnn_embeddings.json, pitch_mtnn_embeddings_pre_con.json, vectors.json 633 entries. Cleaning: per-tournament z, 16 dims, zone presence model. Game prompt: Two real WC players fused, 6 guesses, 92%+ cosine similarity or naming either component wins, position hint after 3rd guess DEF/MID/FWD.</p>
       </div>
       <div class="code-panel">
         <div class="code-head">vectors.json sample <button class="copy">copy</button></div>
         <pre><code>{"player": "Kylian Mbappé (WC 2022 · FRA · FWD)",
  "attack_zone": [0.8, 1.2 σ], "def_hatch": [-0.3],
- "embedding": [48-d L2], "PC1/2/3": [0.21, -0.4, 0.12]}</code></pre>
+ "v": [16-d z-scored], "PC1/2/3": [0.21, -0.4, 0.12]}</code></pre>
         <canvas id="pitchMini" width="315" height="204" style="background:#0a2a12;border-radius:8px;margin-top:8px"></canvas>
       </div>
     </div>
@@ -63,33 +61,33 @@
         <p class="novice-text">Raw per-90 drifts by tournament (VAR era). We z-score within each WC → tournament σ. Then map to pitch zones: attack orange fills & arrows labeled in σ, defense 45° hatch. Breakdown shows 16 dims diverging bars Chimera orange vs your guess blue → coaching line.</p>
         <ul class="checklist"><li>✅ Per-tournament σ — context-honest</li><li>✅ 16 dims — zone presence model</li><li>✅ Position hint after 3 guesses</li><li>✅ Coaching in σ directional</li><li>✅ 3D starfield PC1/2/3 of tournament-normed space</li></ul>
       </div>
-      <div class="chart-box"><div class="chart-head">Diverging bar example (16 dims)</div><canvas id="eraChart" width="400" height="160"></canvas><div class="legend"><span class="leg" style="background:#E69F00"></span>Chimera <span class="leg" style="background:#0072B2"></span>your guess</div></div>
+      <div class="chart-box"><div class="chart-head">Breakdown — 16-d diverging σ bars</div><p class="novice-text" style="margin:8px 0">Rendered live in the game: for each of the 16 dims, Chimera (orange) vs your guess (blue) shown as the σ gap — the coaching signal.</p><div class="legend"><span class="leg" style="background:#E69F00"></span>Chimera <span class="leg" style="background:#0072B2"></span>your guess</div></div>
     </div>
   </section>
 
   <section class="dash-card" id="train">
     <div class="card-head"><h2>03 Train — embeddings powering pitch diagrams</h2><span class="card-meta">pitch_mtnn_embeddings 633 • 3D map drag rotate wheel/pinch zoom • color:position</span></div>
     <div class="grid-3">
-      <div class="train-col"><h4>Embeddings</h4><div class="metric-row"><span>dim</span><b>48-d L2-norm (same as hoops arch)</b></div><div class="metric-row"><span>PCs</span><b>PC1/2/3 for 3D starfield</b></div><div class="metric-row"><span>color modes</span><b>position, tournament</b></div><div class="metric-row"><span>dots</span><b>633 tournaments colored by position</b></div></div>
+      <div class="train-col"><h4>Embeddings</h4><div class="metric-row"><span>dim</span><b>16-d z-scored (cosine match space)</b></div><div class="metric-row"><span>PCs</span><b>PC1/2/3 for 3D starfield</b></div><div class="metric-row"><span>color modes</span><b>position, tournament</b></div><div class="metric-row"><span>dots</span><b>633 tournaments colored by position</b></div></div>
       <div class="train-col"><h4>Game uses</h4><div class="metric-row"><span>Warmth bars</span><b>closest match %</b></div><div class="metric-row"><span>Pitch canvas</span><b>315×204 attack vs defense</b></div><div class="metric-row"><span>Breakdown</span><b>16-d diverging σ chart</b></div><div class="metric-row"><span>Map</span><b>600×600 3D starfield + guess pins</b></div></div>
-      <div class="train-col"><h4>SOTA adds from hoops</h4><div class="metric-row"><span>Procrustes</span><b>tournament align option</b></div><div class="metric-row"><span>RealMLP</span><b>robust for outliers (hat-tricks)</b></div><div class="metric-row"><span>ONNX</span><b>exportable same pipeline</b></div><canvas id="lossChart" width="320" height="80"></canvas></div>
+      <div class="train-col"><h4>SOTA adds from hoops</h4><div class="metric-row"><span>Procrustes</span><b>tournament align option</b></div><div class="metric-row"><span>RealMLP</span><b>robust for outliers (hat-tricks)</b></div><div class="metric-row"><span>ONNX</span><b>exportable same pipeline</b></div></div>
     </div>
   </section>
 
   <section class="dash-card" id="eval">
-    <div class="card-head"><h2>04 Eval — 92% wins, coaching, scouting</h2><span class="card-meta">Daily puzzle resets midnight UTC • 6 guesses • anonymous telemetry round counts only</span></div>
+    <div class="card-head"><h2>04 Eval — 92% cosine wins, coaching, scouting</h2><span class="card-meta">Daily puzzle resets midnight UTC • 6 guesses • anonymous telemetry round counts only</span></div>
     <div class="grid-2">
       <div>
         <table class="eval-table"><thead><tr><th>Feature</th><th>MTNN powers</th><th>Player sees</th></tr></thead><tbody>
-          <tr><td>Warmth</td><td>48-d cosine nearest</td><td class="pass">% match + closest name</td></tr>
+          <tr><td>Warmth</td><td>16-d cosine nearest</td><td class="pass">% match + closest name</td></tr>
           <tr><td>Pitch diagrams</td><td>zone presence model</td><td class="pass">orange attack σ + hatch defense</td></tr>
           <tr><td>Breakdown</td><td>16-d diverging bars</td><td class="pass">Chimera vs guess coaching</td></tr>
           <tr><td>3D map</td><td>PC1/2/3 starfield</td><td class="pass">drag rotate, position color</td></tr>
-          <tr><td>Win</td><td>92%+ or component</td><td class="pass">share result, streak</td></tr>
+          <tr><td>Win</td><td>≥92% cosine or component</td><td class="pass">share result, streak</td></tr>
         </tbody></table>
-        <p class="novice-text">Guess any player; you get % match, pitch comparison, directional coaching in sigmas. 92%+ or naming either component wins.</p>
+        <p class="novice-text">Guess any player; you get a % cosine match, pitch comparison, directional coaching in sigmas. A cosine similarity of 92%+ — or naming either component — wins.</p>
       </div>
-      <div class="chart-box"><div class="chart-head">Deploy bundle</div><div class="metric-row"><span>game.js</span><b>autocomplete + warmth</b></div><div class="metric-row"><span>pitch.css</span><b>responsive 44px touch</b></div><div class="metric-row"><span>vectors.json</span><b>633 embeddings</b></div><div class="metric-row"><span>free-tier</span><b>zero backend, no tracking</b></div><canvas id="evalChart" width="320" height="80"></canvas></div>
+      <div class="chart-box"><div class="chart-head">Deploy bundle</div><div class="metric-row"><span>game.js</span><b>autocomplete + warmth</b></div><div class="metric-row"><span>pitch.css</span><b>responsive 44px touch</b></div><div class="metric-row"><span>vectors.json</span><b>633 embeddings</b></div><div class="metric-row"><span>free-tier</span><b>zero backend, no tracking</b></div></div>
     </div>
   </section>
 </main>
