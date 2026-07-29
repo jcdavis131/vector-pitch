@@ -1,8 +1,16 @@
 :root{
-  --ink:#111; --bg:#FFFBF0; --card:#FFF; --ok:#009E73; --warn:#E69F00; --bad:#D55E00;
+  /* Scoped as --dash-ink (not --ink): this file loads alongside pitch.css on
+     dashboard.html, and pitch.css's shared .vp-header/.vp-logo/.vp-footer
+     already consume a page-wide --ink for the dark game shell (#f5f5f0 on
+     #101f16 surface). An unscoped --ink:#111 here would win the cascade
+     (dashboard.css loads after pitch.css) and repaint that shared nav logo
+     to near-black-on-dark-green — about 1.1:1 contrast, unreadable. This
+     dashboard's own light card system keeps its near-black ink under its
+     own name instead. */
+  --dash-ink:#111; --bg:#FFFBF0; --card:#FFF; --ok:#009E73; --warn:#E69F00; --bad:#D55E00;
   --blue:#0072B2; --sky:#56B4E9; --pink:#CC79A7; --yellow:#F0E442;
-  --border:2px solid var(--ink);
-  --shadow:4px 4px 0 var(--ink);
+  --border:2px solid var(--dash-ink);
+  --shadow:4px 4px 0 var(--dash-ink);
   --radius:14px;
 }
 body{ background:var(--bg); font-family: Inter, system-ui, sans-serif; color:#101010; }
@@ -28,7 +36,7 @@ body{ background:var(--bg); font-family: Inter, system-ui, sans-serif; color:#10
 
 .dash-card{ background:var(--card); border:var(--border); border-radius:var(--radius); box-shadow:var(--shadow); padding:16px; margin-bottom:16px; }
 .card-head{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; align-items:baseline; border-bottom:1px dashed #ccc; padding-bottom:8px; margin-bottom:12px; }
-.card-head h2{ margin:0; font-size:20px; } .card-badge{ font-size:11px; padding:3px 8px; border-radius:999px; background:var(--yellow); border:1px solid var(--ink); font-weight:800; } .card-meta{ font-size:12px; color:#666; }
+.card-head h2{ margin:0; font-size:20px; } .card-badge{ font-size:11px; padding:3px 8px; border-radius:999px; background:var(--yellow); border:1px solid var(--dash-ink); font-weight:800; } .card-meta{ font-size:12px; color:#666; }
 .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; } @media(max-width:860px){ .grid-2{ grid-template-columns:1fr; } }
 .grid-3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; } @media(max-width:1000px){ .grid-3{ grid-template-columns:1fr; } }
 
@@ -44,7 +52,7 @@ body{ background:var(--bg); font-family: Inter, system-ui, sans-serif; color:#10
 .copy{ border:1px solid #333; background:#222; color:#ddd; border-radius:6px; padding:2px 8px; font-size:11px; cursor:pointer; }
 .code-panel pre{ margin:0; padding:10px; overflow:auto; font-size:12px; line-height:1.5; }
 .chart-mini{ padding:8px; } .bar{ height:18px; background:#eee; border-radius:6px; margin:4px 0; overflow:hidden; border:1px solid #ddd; }
-.bar span{ display:block; height:100%; background:var(--ink); color:#fff; font-size:11px; line-height:18px; padding-left:6px; white-space:nowrap; }
+.bar span{ display:block; height:100%; background:var(--dash-ink); color:#fff; font-size:11px; line-height:18px; padding-left:6px; white-space:nowrap; }
 
 .checklist{ list-style:none; padding:0; margin:8px 0; display:grid; gap:6px; } .checklist li{ font-size:13px; padding:6px 8px; border:1px solid #ddd; border-radius:8px; background:#fff; }
 
@@ -55,9 +63,9 @@ body{ background:var(--bg); font-family: Inter, system-ui, sans-serif; color:#10
 .train-col h4{ margin:0 0 8px; font-size:13px; text-transform:uppercase; letter-spacing:0.06em; }
 .metric-row{ display:flex; justify-content:space-between; gap:8px; font-size:12px; padding:4px 0; border-bottom:1px dashed #eee; } .metric-row b{ font-size:12px; text-align:right; max-width:60%; word-break:break-word; }
 
-.mini-charts{ display:grid; gap:6px; } .spark{ height:8px; background:var(--ink); border-radius:4px; margin-top:3px; }
+.mini-charts{ display:grid; gap:6px; } .spark{ height:8px; background:var(--dash-ink); border-radius:4px; margin-top:3px; }
 
-.eval-table{ width:100%; border-collapse:collapse; font-size:12px; } .eval-table th{ text-align:left; font-size:11px; text-transform:uppercase; color:#666; border-bottom:2px solid var(--ink); padding:4px; } .eval-table td{ padding:6px 4px; border-bottom:1px solid #eee; } .pass{ color:var(--ok); font-weight:800; } .fail{ color:var(--bad); font-weight:800; }
+.eval-table{ width:100%; border-collapse:collapse; font-size:12px; } .eval-table th{ text-align:left; font-size:11px; text-transform:uppercase; color:#666; border-bottom:2px solid var(--dash-ink); padding:4px; } .eval-table td{ padding:6px 4px; border-bottom:1px solid #eee; } .pass{ color:var(--ok); font-weight:800; } .fail{ color:var(--bad); font-weight:800; }
 
 .small-pre{ font-size:11px; background:#f7f7f5; padding:8px; border-radius:8px; overflow:auto; white-space:pre-wrap; }
 

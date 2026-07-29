@@ -7,7 +7,11 @@
   let level = 'novice';
   function setLevel(l){
     level = l;
-    $$('.toggle-btn[data-level]').forEach(b=>b.classList.toggle('is-active', b.dataset.level===l));
+    $$('.toggle-btn[data-level]').forEach(b=>{
+      const active = b.dataset.level===l;
+      b.classList.toggle('is-active', active);
+      b.setAttribute('aria-pressed', String(active));
+    });
     $$('[data-novice]').forEach(el=>el.style.display = l==='novice' ? '' : '');
     $$('[data-expert]').forEach(el=>el.style.display = l==='expert' ? '' : 'none');
     localStorage.setItem('dash-level', l);
