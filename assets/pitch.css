@@ -9,8 +9,11 @@
   --hairline: #24352a;
   --panel-dark: #0d1f13;
 
-  --data-orange: #eb6834;  /* Chimera / attack */
-  --data-blue: #2a78d6;    /* your guess / defense */
+  /* Fargekart dark tints. The light-ground values would be unreadable here —
+     fjord at #1b45a7 is 2.08:1 on this paper — so each hue ships a tint per
+     ground. See vector-hub/assets/hub.css for the full rationale. */
+  --data-orange: #da4e34;  /* korall — Chimera / attack,  4.54:1 */
+  --data-blue: #4b78e2;    /* fjord  — your guess / defense, 4.51:1 */
   --hot: #3ddc71;
   --warm: #e0b400;
   --cold: #ff5c5c;
