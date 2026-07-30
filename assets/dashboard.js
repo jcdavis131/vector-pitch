@@ -14,7 +14,10 @@
     });
     $$('[data-novice]').forEach(el=>el.style.display = l==='novice' ? '' : '');
     $$('[data-expert]').forEach(el=>el.style.display = l==='expert' ? '' : 'none');
-    localStorage.setItem('dash-level', l);
+    // this runs on every toggle click; a restricted webview (Safari private
+    // mode on older versions, some in-app browsers) throws on setItem, which
+    // would otherwise propagate out of the click handler uncaught
+    try{ localStorage.setItem('dash-level', l); }catch{}
   }
   $$('.toggle-btn[data-level]').forEach(b=>b.addEventListener('click',()=>setLevel(b.dataset.level)));
   setLevel(localStorage.getItem('dash-level')||'novice');
