@@ -19,8 +19,16 @@ Honest small-data regime: heavy dropout (0.3), high weight decay (1e-3), small n
 family-drop augmentation. If it can't beat PCA on 633 rows, that confirms the need for
 the expanded corpus (already fetching in the background).
 
-Run:  python pipeline/train_mtnn.py [--epochs 200] [--d-emb 24]
-Requires: pipeline/data/train_matrix.npz + feature_manifest.json (from build_features.py)
+Run:  python pipeline/train_mtnn.py [--epochs 200] [--d-emb 24] [--matrix tm_full.npz]
+Requires: pipeline/data/{matrix}.npz + feature_manifest_{matrix-stem}.json
+(from build_features.py). Default --matrix is tm_full.npz (11 contexts incl.
+WC 2022, 2,430 rows) -- the file that actually produced the shipped
+assets/pitch_mtnn_embeddings.json. The plain train_matrix.npz this docstring
+used to point at (2026-07-30: found stale, 2,738 rows across only 10
+contexts, missing WC 2022 entirely) has no matching feature_manifest_*.json
+on disk any more -- running with it crashes at manifest load, it was not
+silently wrong, it was just broken. Left on disk as-is (not deleted; someone
+may know why it diverged) but no longer the default.
 """
 
 from __future__ import annotations
@@ -567,8 +575,11 @@ def main() -> int:
     ap.add_argument(
         "--matrix",
         type=str,
-        default="train_matrix.npz",
-        help="matrix file in pipeline/data to train on",
+        default="tm_full.npz",
+        help="matrix file in pipeline/data to train on (default tm_full.npz: "
+        "the file that actually produced the shipped embeddings, 2,430 rows / "
+        "11 contexts incl. WC 2022; train_matrix.npz is a stale snapshot with "
+        "no matching manifest -- passing it crashes at load, see module docstring)",
     )
     ap.add_argument(
         "--save-final",
