@@ -288,14 +288,15 @@ def train_fold(
     dropout=0.2,
     wd=1e-3,
     lr=2e-3,
+    seed=SEED,
     d_tower=16,
 ):
-    torch.manual_seed(SEED)
-    np.random.seed(SEED)
+    torch.manual_seed(seed)
+    np.random.seed(seed)
     Xtr_t = torch.tensor(X[tr], dtype=torch.float32, device=device)
     Xte_t = torch.tensor(X[te], dtype=torch.float32, device=device)
     # k-means archetype labels on TRAIN only (avoid leakage), assigned to all via centroids
-    _arch_lab_tr, arch_cent = kmeans(X[tr], N_ARCH, SEED)
+    _arch_lab_tr, arch_cent = kmeans(X[tr], N_ARCH, seed)
     d_to_cent = ((X[:, None, :] - arch_cent[None]) ** 2).sum(-1)
     arch_lab = d_to_cent.argmin(1)
     arch_tr_t = torch.tensor(arch_lab[tr], dtype=torch.long, device=device)
@@ -313,7 +314,7 @@ def train_fold(
     opt = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=wd)
     ctx_tr = torch.tensor(ctx_ids[tr], dtype=torch.long, device=device)
     ctx_te = torch.tensor(ctx_ids[te], dtype=torch.long, device=device)
-    rng = np.random.default_rng(SEED)
+    rng = np.random.default_rng(seed)
     best_loss, best_state, bad, patience = 1e9, None, 0, 30
     n_tr = int(tr.sum())
 
@@ -382,13 +383,13 @@ def train_fold(
 
     pos_tr_arr = pos[tr]
     pos_te_arr = pos[te]
-    acc_mtnn, _ = position_cluster_acc(emb_tr, pos_tr_arr, emb_te, pos_te_arr)
+    acc_mtnn, _ = position_cluster_acc(emb_tr, pos_tr_arr, emb_te, pos_te_arr, seed=seed)
     nn_mtnn = nn_role_coherence(emb_tr, pos_tr_arr, emb_te, pos_te_arr)
     knn5_mtnn = knn_position_acc(emb_tr, pos_tr_arr, emb_te, pos_te_arr)
     recon_mtnn = float(np.mean(np.abs(prof_te - X[te])))
 
     # PCA baseline on the SAME split — raw 16-d (full rank, the shipped comps space)
-    acc_pca, _ = position_cluster_acc(X[tr], pos_tr_arr, X[te], pos_te_arr)
+    acc_pca, _ = position_cluster_acc(X[tr], pos_tr_arr, X[te], pos_te_arr, seed=seed)
     nn_pca = nn_role_coherence(X[tr], pos_tr_arr, X[te], pos_te_arr)
     knn5_pca = knn_position_acc(X[tr], pos_tr_arr, X[te], pos_te_arr)
     recon_pca3 = pca_recon_mae(X[tr], X[te], k=3)
@@ -396,7 +397,7 @@ def train_fold(
 
     # PCA(3) — the SHIPPED pitch-game map/archetype space (the real Gate-1 bar)
     P_tr, P_te = pca_project(X[tr], X[te], k=3)
-    acc_pca3, _ = position_cluster_acc(P_tr, pos_tr_arr, P_te, pos_te_arr)
+    acc_pca3, _ = position_cluster_acc(P_tr, pos_tr_arr, P_te, pos_te_arr, seed=seed)
     nn_pca3 = nn_role_coherence(P_tr, pos_tr_arr, P_te, pos_te_arr)
     knn5_pca3 = knn_position_acc(P_tr, pos_tr_arr, P_te, pos_te_arr)
 
@@ -433,10 +434,10 @@ def train_final_and_export(
     state_dict to pipeline/data/pitch_mtnn.pt. Does NOT touch assets/vectors.json
     (the live pitch game keeps its PCA(3)+k-means(8) contract).
     """
-    torch.manual_seed(SEED)
-    np.random.seed(SEED)
+    torch.manual_seed(args.seed)
+    np.random.seed(args.seed)
     n = len(X)
-    arch_lab, _ = kmeans(X, N_ARCH, SEED)
+    arch_lab, _ = kmeans(X, N_ARCH, args.seed)
     Xt = torch.tensor(X, dtype=torch.float32, device=device)
     ctx_t = torch.tensor(ctx_ids, dtype=torch.long, device=device)
     arch_t = torch.tensor(arch_lab, dtype=torch.long, device=device)
@@ -449,7 +450,7 @@ def train_final_and_export(
         d_tower=args.d_tower,
     ).to(device)
     opt = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.wd)
-    rng = np.random.default_rng(SEED)
+    rng = np.random.default_rng(args.seed)
 
     def batch_fam(idx):
         xs = {f: Xt[idx][:, slices[f]] for f in slices}
@@ -604,10 +605,18 @@ def main() -> int:
         default="",
         help="optional report suffix (writes {stem}_{tag}_report.json)",
     )
+    # SEED WAS A MODULE CONSTANT WITH NO FLAG, so every experiment ever run on this
+    # model was one seed against one seed. That is the design that would have
+    # reported vector-equities' sector_acc +0.0265 as a win when its own arm spread
+    # was 0.0209. Default is 7, the previous hardcoded value, so behaviour is
+    # unchanged unless the flag is passed — this removes a measurement blocker, it
+    # does not change any result.
+    ap.add_argument("--seed", type=int, default=7,
+                    help="random seed; vary it to measure the noise floor before believing any A/B")
     args = ap.parse_args()
     t0 = time.time()
-    torch.manual_seed(SEED)
-    np.random.seed(SEED)
+    torch.manual_seed(args.seed)
+    np.random.seed(args.seed)
 
     npz = np.load(DATA / args.matrix, allow_pickle=True)
     X = npz["X"]
@@ -673,6 +682,7 @@ def main() -> int:
             dropout=args.dropout,
             wd=args.wd,
             lr=args.lr,
+            seed=args.seed,
             d_tower=args.d_tower,
         )
         r["hold_context"] = manifest["contexts"][hold]
