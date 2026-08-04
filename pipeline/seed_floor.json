@@ -1,0 +1,180 @@
+{
+ "question": "What is the pitch MTNN's seed-to-seed noise floor, and does the shipped 'beats PCA(3) on 4/4 metrics' verdict survive it?",
+ "why_this_did_not_exist_before": "SEED was a module constant with no flag, so every experiment ever run against this trainer was one seed against one seed. vector-pitch 38d68f4 added --seed and threaded it through all seven stochastic steps. This is the first seed sweep this model has ever had.",
+ "how_it_was_run": "5 seeds x 11 leave-one-context-out folds, in an ISOLATED COPY of the repo at a scratch path. The real trainer writes assets/pitch_mtnn_embeddings.json, the embedding dumbmodel.com cites, so the copy was checksummed against the real asset before and after: 88002e0d75ca012d both times, UNTOUCHED. ~551s per seed on the 4080.",
+ "seeds": [
+  7,
+  11,
+  13,
+  17,
+  19
+ ],
+ "n_rows": 2430,
+ "n_folds": 11,
+ "d_emb": 24,
+ "flag_is_not_vacuous": {
+  "numeric_fields_compared": 195,
+  "fields_that_differ_between_seed_7_and_11": 79,
+  "note": "Verified by running, not by inspection. The commit that added the flag said verified-by-inspection-only and this is the check it deferred."
+ },
+ "per_metric_floor": {
+  "pos_cluster_acc_mtnn": {
+   "mean": 0.7205,
+   "sd": 0.0095,
+   "min": 0.7117,
+   "max": 0.7359,
+   "unpaired_MDE_5v5": 0.0167
+  },
+  "knn5_pos_acc_mtnn": {
+   "mean": 0.7499,
+   "sd": 0.0089,
+   "min": 0.7367,
+   "max": 0.7615,
+   "unpaired_MDE_5v5": 0.0156
+  },
+  "nn_role_mtnn": {
+   "mean": 0.7125,
+   "sd": 0.006,
+   "min": 0.7065,
+   "max": 0.7213,
+   "unpaired_MDE_5v5": 0.0105
+  },
+  "recon_mae_mtnn": {
+   "mean": 0.4784,
+   "sd": 0.0024,
+   "min": 0.4753,
+   "max": 0.4817,
+   "unpaired_MDE_5v5": 0.0042
+  },
+  "pos_cluster_acc_pca3": {
+   "mean": 0.6856,
+   "sd": 0.0073,
+   "min": 0.6753,
+   "max": 0.6938,
+   "unpaired_MDE_5v5": 0.0129
+  },
+  "knn5_pos_acc_pca3": {
+   "mean": 0.681,
+   "sd": 0.0,
+   "min": 0.681,
+   "max": 0.681,
+   "unpaired_MDE_5v5": 0.0
+  },
+  "nn_role_pca3": {
+   "mean": 0.6411,
+   "sd": 0.0,
+   "min": 0.6411,
+   "max": 0.6411,
+   "unpaired_MDE_5v5": 0.0
+  },
+  "recon_mae_pca3": {
+   "mean": 0.5195,
+   "sd": 0.0,
+   "min": 0.5195,
+   "max": 0.5195,
+   "unpaired_MDE_5v5": 0.0
+  },
+  "pos_cluster_acc_pca16": {
+   "mean": 0.7266,
+   "sd": 0.0036,
+   "min": 0.7237,
+   "max": 0.7324,
+   "unpaired_MDE_5v5": 0.0064
+  },
+  "knn5_pos_acc_pca16": {
+   "mean": 0.7874,
+   "sd": 0.0,
+   "min": 0.7874,
+   "max": 0.7874,
+   "unpaired_MDE_5v5": 0.0
+  },
+  "nn_role_pca16": {
+   "mean": 0.7312,
+   "sd": 0.0,
+   "min": 0.7312,
+   "max": 0.7312,
+   "unpaired_MDE_5v5": 0.0
+  }
+ },
+ "THREE_OF_FOUR_PCA3_BASELINES_ARE_EXACTLY_DETERMINISTIC": {
+  "knn5_pos_acc_pca3": 0.0,
+  "nn_role_pca3": 0.0,
+  "recon_mae_pca3": 0.0,
+  "pos_cluster_acc_pca3": 0.0073,
+  "why_the_fourth_moves": "pos_cluster_acc is SCORED by k-means, and 38d68f4 threaded the seed into the evaluation clustering as well as the model. That is correct -- a seed sweep should move everything the reported number depends on -- but it has a consequence worth stating: on that one metric 'MTNN beats PCA(3)' compares two noisy numbers, while on the other three it compares a noisy number to a fixed one. Different comparisons, different floors."
+ },
+ "shipped_verdict_survives": {
+  "beats_pca3_count_per_seed": [
+   4,
+   4,
+   4,
+   4,
+   4
+  ],
+  "verdict": "STABLE. 4 of 4 on all five seeds.",
+  "margins_vs_pca3": {
+   "pos_cluster_acc": {
+    "mean": 0.0349,
+    "sd_of_differences": 0.0086,
+    "paired_MDE_n5": 0.0089,
+    "seeds_won": 5,
+    "margin_over_MDE": 3.9,
+    "verdict": "mtnn WINS"
+   },
+   "knn5_pos_acc": {
+    "mean": 0.0689,
+    "sd_of_differences": 0.0089,
+    "paired_MDE_n5": 0.0092,
+    "seeds_won": 5,
+    "margin_over_MDE": 7.5,
+    "verdict": "mtnn WINS"
+   },
+   "nn_role": {
+    "mean": 0.0714,
+    "sd_of_differences": 0.006,
+    "paired_MDE_n5": 0.0062,
+    "seeds_won": 5,
+    "margin_over_MDE": 11.5,
+    "verdict": "mtnn WINS"
+   }
+  },
+  "recon_mae_vs_pca3": {
+   "mean": 0.0411,
+   "sd_of_differences": 0.0024,
+   "paired_MDE_n5": 0.0024,
+   "seeds_won": 5,
+   "margin_over_MDE": 16.8,
+   "verdict": "mtnn WINS"
+  }
+ },
+ "BUT_IT_LOSES_TO_PCA16": {
+  "margins_vs_pca16": {
+   "pos_cluster_acc": {
+    "mean": -0.0061,
+    "sd_of_differences": 0.0087,
+    "paired_MDE_n5": 0.009,
+    "seeds_won": 1,
+    "margin_over_MDE": 0.7,
+    "verdict": "INDISTINGUISHABLE"
+   },
+   "knn5_pos_acc": {
+    "mean": -0.0375,
+    "sd_of_differences": 0.0089,
+    "paired_MDE_n5": 0.0092,
+    "seeds_won": 0,
+    "margin_over_MDE": 4.1,
+    "verdict": "pca16 WINS"
+   },
+   "nn_role": {
+    "mean": -0.0187,
+    "sd_of_differences": 0.006,
+    "paired_MDE_n5": 0.0062,
+    "seeds_won": 0,
+    "margin_over_MDE": 3.0,
+    "verdict": "pca16 WINS"
+   }
+  },
+  "reading": "The shipped claim is 'beats the SHIPPED PCA(3) baseline', and that is true and now seed-verified. It is not 'beats a linear baseline'. PCA(16) is computed by the same script, printed in the same summary, and beats the 24-d MTNN on knn5 role accuracy by 0.0375 (0 of 5 seeds, 4.2x the paired MDE) and on NN role coherence by 0.0187 (0 of 5 seeds, 3.0x). On pos-cluster accuracy the two are indistinguishable at this n. A reader who takes '4/4' as 'the neural model is the better embedding' would be wrong; what it means is 'better than the 3-component baseline that shipped'."
+ },
+ "how_to_use_this": "Any future pitch A/B must clear the paired MDE for the metric it moves, using sd OF DIFFERENCES across shared seeds -- not the per-arm sd, which is roughly 7x looser here. Do not size a paired experiment with the unpaired formula; that error was made and corrected in vector-hoops/pipeline/seed_floor.json CORRECTION_paired_floor."
+}
