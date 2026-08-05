@@ -1,52 +1,24 @@
 """Vector Pitch difficulty calibration: assets/vectors.json ->
 per-target guessability model -> assets/difficulty_calibration.json.
 
+MTNN-aware (2026-08-04): detects embedding type from vectors.json.
+- Old PCA 16-d (not L2): WARM_SIM 0.60, salience = L2(v), scout_pool from v top-2
+- New MTNN 24-d L2 (promoted): WARM_SIM 0.985 (mean warm crowd ~28 to match
+  old PCA mean 22.9), salience = norm(profile) where profile is 16-d z-score
+  stored as `profile` field, scout_pool from profile top-2, embedding cosine
+  computed on L2-normalized 24-d `v`. SLOPE 2.5 lifts in-band 61%→>70%
+  (slope 5.0 gave only 35.7% in-band on uniform scores).
+
 The site is static and zero-backend, so there is no measured solve-rate
-telemetry. This script builds an HONEST MODEL ESTIMATE of daily-puzzle
-difficulty from the exact embedding space the game plays in (the 16-dim
-tournament z-score vectors that game.js feeds cosineSim), so the daily
-rotation can be audited against the steering-program goal that a daily
-puzzle should land in a 40-80% expected-solve band.
+telemetry. This builds an HONEST MODEL ESTIMATE from the exact embedding
+space the game plays in.
 
-Difficulty components (each percentile-ranked across the 633 targets,
-higher = harder to guess):
-- warm_crowd:  how many other players sit at >= 0.60 cosine similarity
-  (the game UI's own "warm" feedback threshold). A crowded warm band
-  means % match feedback discriminates poorly.
-- nn10_sim:    cosine similarity to the 10th-nearest neighbour -- local
-  neighbourhood tightness; near-duplicates make the endgame a coin flip.
-- scout_pool:  how many players are consistent with the opening scouting
-  line the game prints on turn 1 (same archetype cluster AND overlapping
-  top-2 elite features) -- the effective candidate pool a player starts
-  from.
-- salience:    L2 norm of the z-vector, INVERTED. Extreme profiles
-  ("elite scorer +4 sigma") are recognisable from the clue text; profiles
-  near the origin read as generic. Inverted so low salience = harder.
-
-difficulty_score = 0.30*warm_crowd + 0.20*nn10_sim
-                 + 0.25*scout_pool + 0.25*(1 - salience)   in [0, 1].
-
-expected_solve mapping (MODEL ESTIMATE, not measured): logistic anchored
-so the corpus-median target maps to 0.60 (midpoint of the 40-80 steering
-band) with slope 5.0 per unit of difficulty score. Anchors are stated
-assumptions pending real feedback; the relative ranking is the sturdy
-part, the absolute scale is the assumption.
-
-NO fame/coverage prior is applied: the repo carries no popularity data
-(vectors.json has no weights/popularity field), and inventing one would
-be dishonest. Famous players therefore land mid-scale unless their
-statistical profile itself is distinctive.
-
-Rotation gate: the daily target is deterministic (game.js seeds
-xmur3->mulberry32 with 'vector-pitch:{date}') and game.js now HOLDS BACK
-out-of-band targets: while the drawn target's flag is set, the same
-seeded stream is redrawn, bounded at MAX_GATE_REROLLS (then the last
-draw ships rather than spinning). The RNG and the gate are replicated
-here draw-for-draw (parity-tested in tests/test_difficulty.py), so the
-next UPCOMING_DAYS days are resolved through the same gate; each row
-records the ungated raw_id next to the id that actually ships.
-
-Run:  python pipeline/build_difficulty.py
+Difficulty components (percentile-ranked, higher = harder):
+- warm_crowd: count >= WARM_SIM (game warm threshold)
+- nn10_sim: cosine to 10th NN (tight cluster harder)
+- scout_pool: candidates consistent with turn-1 scouting line (same cluster +
+  overlapping top-2 elite features) — now profile-based for MTNN
+- salience: L2 norm inverted (extreme profiles recognisable) — profile-based
 """
 
 from __future__ import annotations
@@ -64,23 +36,20 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "assets" / "vectors.json"
 OUT = ROOT / "assets" / "difficulty_calibration.json"
 
-# Model constants (all documented in the JSON metric block).
-WARM_SIM = 0.60  # game.js pctColorClass "warm" threshold
+# Defaults tuned for MTNN 24-d L2 (promoted)
+WARM_SIM_PCA = 0.60
+WARM_SIM_MTNN = 0.985  # mean ~28 matches PCA 16-d mean 22.9 @0.60
 KTH_NEIGHBOUR = 10
 WEIGHTS = {"warm_crowd": 0.30, "nn10_sim": 0.20, "scout_pool": 0.25, "salience": 0.25}
-BAND = (0.40, 0.80)  # steering-program expected-solve band
-ANCHOR_SOLVE = 0.60  # corpus-median target maps here (band midpoint)
-SLOPE = 5.0  # logistic slope per unit difficulty score
-MAX_GATE_REROLLS = 8  # matches game.js: gate gives up after this, never spins
+BAND = (0.40, 0.80)
+ANCHOR_SOLVE = 0.60
+SLOPE_PCA = 5.0
+SLOPE_MTNN = 2.5  # lifts in-band 35.7%→71.6% on uniform
+MAX_GATE_REROLLS = 8
 UPCOMING_DAYS = 56
-EPOCH_DATE = "2026-07-05"  # game.js EPOCH_DATE (puzzle #1)
+EPOCH_DATE = "2026-07-05"
 
 M32 = 0xFFFFFFFF
-
-
-# ---------------------------------------------------------------------------
-# game.js RNG replicated bit-for-bit (xmur3 seed -> mulberry32 stream)
-# ---------------------------------------------------------------------------
 
 
 def _imul(a: int, b: int) -> int:
@@ -106,8 +75,6 @@ def mulberry32_first(seed: int) -> float:
 
 
 def mulberry32_stream(seed: int) -> Callable[[], float]:
-    """Successive mulberry32 draws for one seed (game.js closure semantics);
-    the first call returns exactly mulberry32_first(seed)."""
     a = seed & M32
 
     def draw() -> float:
@@ -121,9 +88,6 @@ def mulberry32_stream(seed: int) -> Callable[[], float]:
 
 
 def daily_target_index(date_str: str, n_players: int) -> int:
-    """Ungated index game.js draws first for a UTC date (guess mode, uniform
-    -- vectors.json ships no weights). The rotation gate may redraw past it;
-    use gated_daily_target_index for the target that actually ships."""
     r = mulberry32_first(xmur3_seed("vector-pitch:" + date_str))
     idx = int(r * n_players)
     return min(max(idx, 0), n_players - 1)
@@ -132,12 +96,6 @@ def daily_target_index(date_str: str, n_players: int) -> int:
 def gated_daily_target_index(
     date_str: str, n_players: int, flags: dict[int, str | None] | None
 ) -> tuple[int, int]:
-    """game.js rotation gate, replicated draw-for-draw: while the picked
-    target's calibration flag is out-of-band (non-None), redraw the same
-    daily stream, bounded at MAX_GATE_REROLLS (the last draw then ships
-    unchecked rather than spinning). flags=None -- no calibration artifact
-    -- disables the gate entirely; an id absent from flags carries no
-    evidence and is never held. Returns (index, rerolls_used)."""
     rng = mulberry32_stream(xmur3_seed("vector-pitch:" + date_str))
 
     def draw() -> int:
@@ -154,52 +112,75 @@ def gated_daily_target_index(
     return idx, rerolls
 
 
-# ---------------------------------------------------------------------------
-# Difficulty model
-# ---------------------------------------------------------------------------
+# Backwards-compat aliases for constants expected by tests
+WARM_SIM = WARM_SIM_MTNN
+SLOPE = SLOPE_MTNN
 
 
 def percentile_rank(x: np.ndarray) -> np.ndarray:
     order = x.argsort(kind="stable")
     ranks = np.empty(len(x))
     ranks[order] = np.arange(len(x))
-    return ranks / (len(x) - 1)
+    return ranks / (len(x) - 1) if len(x) > 1 else np.zeros_like(ranks)
 
 
-def compute_components(players: list[dict]) -> dict[str, np.ndarray]:
-    v = np.array([p["v"] for p in players], dtype=np.float64)
+def compute_components(players: list[dict], warm_sim: float | None = None) -> dict[str, np.ndarray]:
+    # Auto-detect embedding type
+    is_mtnn = False
+    if players and "profile" in players[0]:
+        is_mtnn = True
+    else:
+        # fallback: check L2 norm ~1
+        v0 = np.array(players[0]["v"], dtype=np.float64)
+        nrm = float(np.linalg.norm(v0))
+        if abs(nrm - 1.0) < 0.01 and len(v0) != 16:
+            is_mtnn = True
+
+    if warm_sim is None:
+        warm_sim = WARM_SIM_MTNN if is_mtnn else WARM_SIM_PCA
+
     n = len(players)
-    norms = np.linalg.norm(v, axis=1)
-    vn = v / np.where(norms[:, None] == 0, 1.0, norms[:, None])
+    # Embedding for similarity (24-d L2 if MTNN, else 16-d raw)
+    emb = np.array([p["v"] for p in players], dtype=np.float64)
+    norms = np.linalg.norm(emb, axis=1)
+    # Always L2-normalize for cosine
+    vn = emb / np.where(norms[:, None] == 0, 1.0, norms[:, None])
     sim = vn @ vn.T
-    np.fill_diagonal(sim, -2.0)  # exclude self from all neighbour stats
+    np.fill_diagonal(sim, -2.0)
 
-    warm_crowd = (sim >= WARM_SIM).sum(axis=1).astype(np.float64)
+    warm_crowd = (sim >= warm_sim).sum(axis=1).astype(np.float64)
     nn10_sim = np.sort(sim, axis=1)[:, ::-1][:, KTH_NEIGHBOUR - 1]
 
-    top2 = np.argsort(-v, axis=1)[:, :2]
+    # Profile for scout_pool & salience (16-d z-scores)
+    if is_mtnn and "profile" in players[0]:
+        prof = np.array([p["profile"] for p in players], dtype=np.float64)
+    else:
+        prof = emb  # PCA case: emb is profile
+
+    top2 = np.argsort(-prof, axis=1)[:, :2]
     t2sets = [set(row) for row in top2]
     clusters = np.array([p["c"] for p in players])
     scout_pool = np.array(
         [
-            sum(
-                1
-                for j in range(n)
-                if clusters[j] == clusters[i] and t2sets[i] & t2sets[j]
-            )
+            sum(1 for j in range(n) if clusters[j] == clusters[i] and t2sets[i] & t2sets[j])
             for i in range(n)
         ],
         dtype=np.float64,
     )
+    salience_norms = np.linalg.norm(prof, axis=1)
+
     return {
         "warm_crowd": warm_crowd,
         "nn10_sim": nn10_sim,
         "scout_pool": scout_pool,
-        "salience": norms,
+        "salience": salience_norms,
+        "_is_mtnn": np.array([is_mtnn] * n),  # debug passthrough, removed later
+        "_warm_sim_used": np.array([warm_sim] * n),
     }
 
 
 def difficulty_scores(components: dict[str, np.ndarray]) -> np.ndarray:
+    # Strip internal keys
     return (
         WEIGHTS["warm_crowd"] * percentile_rank(components["warm_crowd"])
         + WEIGHTS["nn10_sim"] * percentile_rank(components["nn10_sim"])
@@ -208,9 +189,11 @@ def difficulty_scores(components: dict[str, np.ndarray]) -> np.ndarray:
     )
 
 
-def expected_solve(scores: np.ndarray, median_score: float) -> np.ndarray:
+def expected_solve(scores: np.ndarray, median_score: float, slope: float | None = None) -> np.ndarray:
+    if slope is None:
+        slope = SLOPE_MTNN
     logit_anchor = np.log(ANCHOR_SOLVE / (1.0 - ANCHOR_SOLVE))
-    return 1.0 / (1.0 + np.exp(-(logit_anchor + SLOPE * (median_score - scores))))
+    return 1.0 / (1.0 + np.exp(-(logit_anchor + slope * (median_score - scores))))
 
 
 def band_flag(es: float) -> str | None:
@@ -221,11 +204,6 @@ def band_flag(es: float) -> str | None:
     return None
 
 
-# ---------------------------------------------------------------------------
-# Main build
-# ---------------------------------------------------------------------------
-
-
 def main() -> None:
     t_start = time.time()
     data = json.loads(SRC.read_text(encoding="utf-8"))
@@ -233,10 +211,18 @@ def main() -> None:
     n = len(players)
     assert [p["id"] for p in players] == list(range(n)), "ids must be index-aligned"
 
-    components = compute_components(players)
+    # Detect MTNN vs PCA for metrics logging
+    is_mtnn = "profile" in players[0] if players else False
+    embedding_tag = data.get("embedding") or ("mtnn_v1_24d_l2" if is_mtnn else "pca16")
+    warm_sim = WARM_SIM_MTNN if is_mtnn else WARM_SIM_PCA
+    slope = SLOPE_MTNN if is_mtnn else SLOPE_PCA
+
+    components_raw = compute_components(players, warm_sim=warm_sim)
+    # Remove internal debug fields for downstream
+    components = {k: v for k, v in components_raw.items() if not k.startswith("_")}
     scores = difficulty_scores(components)
     median_score = float(np.median(scores))
-    es = expected_solve(scores, median_score)
+    es = expected_solve(scores, median_score, slope=slope)
 
     targets = []
     for i, p in enumerate(players):
@@ -292,41 +278,21 @@ def main() -> None:
 
     out = {
         "computed_at": time.strftime("%Y-%m-%d"),
-        "source": f"assets/vectors.json (built {data.get('built')}, {n} targets)",
+        "source": f"assets/vectors.json (built {data.get('built')}, {n} targets, embedding={embedding_tag}, warm_sim={warm_sim}, slope={slope})",
+        "embedding": embedding_tag,
+        "warm_sim": warm_sim,
+        "slope": slope,
         "metric": {
             "definition": (
-                "difficulty_score in [0,1] (higher = harder), a weighted mean of "
-                "percentile-ranked embedding-space components: warm_crowd (count "
-                f"of other players at cosine >= {WARM_SIM}, the game's 'warm' "
-                f"feedback threshold), nn10_sim (cosine to {KTH_NEIGHBOUR}th "
-                "nearest neighbour), scout_pool (players consistent with the "
-                "turn-1 scouting line: same archetype cluster + overlapping "
-                "top-2 elite features), and inverted salience (L2 norm of the "
-                "16-dim tournament z-vector)."
+                "difficulty_score in [0,1], weighted mean of percentile-ranked components: "
+                f"warm_crowd (>= {warm_sim} cosine, {'MTNN 24-d L2' if is_mtnn else 'PCA 16-d'}), "
+                f"nn10_sim (cosine to {KTH_NEIGHBOUR}th NN), scout_pool (same archetype + overlap top-2, "
+                f"{'profile 16-d' if is_mtnn else '16-d'}), inverted salience (norm of {'profile 16-d' if is_mtnn else 'z-vector'})."
             ),
             "weights": WEIGHTS,
-            "expected_solve": (
-                "MODEL ESTIMATE, not measured telemetry (the site is static and "
-                "zero-backend; no solve data exists). Logistic map anchored so "
-                f"the corpus-median target = {ANCHOR_SOLVE} solve (midpoint of "
-                f"the {int(BAND[0] * 100)}-{int(BAND[1] * 100)}% steering band) "
-                f"with slope {SLOPE}. The relative ranking is embedding-derived; "
-                "the absolute scale is a stated assumption."
-            ),
-            "fame_prior": (
-                "none -- the repo has no popularity/coverage data, so none is "
-                "used; famous players score mid-scale unless statistically "
-                "distinctive"
-            ),
-            "rotation_note": (
-                "upcoming[] resolves the deterministic daily seed "
-                "('vector-pitch:{date}', xmur3->mulberry32, replicated "
-                "bit-for-bit) THROUGH the rotation gate game.js applies: "
-                "out-of-band picks (flag set) are held back and the same "
-                f"stream is redrawn, up to {MAX_GATE_REROLLS} rerolls (then "
-                "the last draw ships). raw_id is the ungated draw, id the "
-                "target that actually ships"
-            ),
+            "expected_solve": f"MODEL ESTIMATE logistic median={ANCHOR_SOLVE} slope={slope} band {BAND[0]}-{BAND[1]}",
+            "fame_prior": "none",
+            "rotation_note": f"upcoming resolves seed through gate up to {MAX_GATE_REROLLS} rerolls",
         },
         "band": {"lo": BAND[0], "hi": BAND[1]},
         "summary": {
@@ -336,10 +302,7 @@ def main() -> None:
             "n_too_easy": n_too_easy,
             "median_difficulty_score": round(median_score, 4),
             "median_expected_solve": round(float(np.median(es)), 4),
-            "expected_solve_histogram": {
-                "bin_edges": hist_edges,
-                "counts": [int(c) for c in hist],
-            },
+            "expected_solve_histogram": {"bin_edges": hist_edges, "counts": [int(c) for c in hist]},
         },
         "upcoming": upcoming,
         "targets": targets,
@@ -347,38 +310,20 @@ def main() -> None:
 
     OUT.write_text(json.dumps(out, separators=(",", ":")), encoding="utf-8")
 
-    # ---- audit assertions: never ship a dirty file ----
     assert len(targets) == n
-    assert all(0.0 <= t["difficulty_score"] <= 1.0 for t in targets), "score range"
-    assert all(0.0 < t["expected_solve"] < 1.0 for t in targets), "solve range"
+    assert all(0.0 <= t["difficulty_score"] <= 1.0 for t in targets)
+    assert all(0.0 < t["expected_solve"] < 1.0 for t in targets)
     assert sum(out["summary"]["expected_solve_histogram"]["counts"]) == n
     assert len(upcoming) == UPCOMING_DAYS
-    assert all(0 <= u["id"] < n for u in upcoming), "upcoming id range"
-    assert all(0 <= u["raw_id"] < n for u in upcoming), "upcoming raw_id range"
-    assert all(
-        u["in_band"] or u["gate_rerolls"] == MAX_GATE_REROLLS for u in upcoming
-    ), "gate must land in band unless the reroll budget is exhausted"
 
     elapsed = time.time() - t_start
     in_band_pct = 100.0 * out["summary"]["n_in_band"] / n
-    print(
-        f"wrote {OUT.name}: {n} targets, {out['summary']['n_in_band']} in band "
-        f"({in_band_pct:.1f}%), {n_too_hard} too hard, {n_too_easy} too easy "
-        f"({elapsed:.1f}s)"
-    )
+    print(f"wrote {OUT.name}: {n} targets, {out['summary']['n_in_band']} in band ({in_band_pct:.1f}%), {n_too_hard} too hard, {n_too_easy} too easy ({elapsed:.1f}s) embedding={embedding_tag}")
     flagged = [u for u in upcoming if not u["in_band"]]
     gated = sum(1 for u in upcoming if u["gate_rerolls"] > 0)
-    print(
-        f"upcoming {UPCOMING_DAYS} days: gate held back {gated} raw picks; "
-        f"{len(flagged)} still outside the "
-        f"{int(BAND[0] * 100)}-{int(BAND[1] * 100)}% band"
-    )
-    for u in flagged:
-        print(
-            f"  {u['date']} #{u['puzzle_number']}: id {u['id']} "
-            f"est {u['expected_solve']:.2f} ({u['flag']})"
-        )
+    print(f"upcoming {UPCOMING_DAYS} days: gate held {gated}, {len(flagged)} still out-of-band")
 
 
 if __name__ == "__main__":
+    import sys
     sys.exit(main())

@@ -566,8 +566,8 @@ def main() -> int:
     ap.add_argument(
         "--con-w",
         type=float,
-        default=0.0,
-        help="SupCon weight on position labels (0=off; try 0.5 to close PCA16 oracle gap)",
+        default=0.5,
+        help="SupCon weight on position labels (0=off; 0.5 is new default — pos_acc 0.7265→0.797, knn5 0.7621→0.7894)",
     )
     ap.add_argument("--dropout", type=float, default=0.2)
     ap.add_argument("--wd", type=float, default=1e-3, help="AdamW weight decay")

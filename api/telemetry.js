@@ -5,7 +5,10 @@ module.exports = async (req, res) => {
   const key = process.env.SYNTH_API_KEY;
   if (!key) return res.status(200).json({ ok: false, note: "telemetry not configured" });
   const { event, userRef, detail } = req.body || {};
-  const ALLOWED = new Set(["vp-start", "vp-guess", "vp-win", "vp-loss", "vp-share"]);
+  const ALLOWED = new Set([
+    "vp-start", "vp-guess", "vp-win", "vp-loss", "vp-share",
+    "vp-chimera-start", "vp-chimera-guess", "vp-chimera-win", "vp-chimera-loss",
+  ]);
   if (!ALLOWED.has(event)) return res.status(400).json({ error: "unknown event" });
   try {
     await fetch("https://api-production-3dea.up.railway.app/v1/exhaust", {
@@ -14,7 +17,7 @@ module.exports = async (req, res) => {
       body: JSON.stringify({
         source: "vector-pitch", kind: "interaction", consent: true,
         payload: { event, userRef: String(userRef || "").slice(0, 16),
-                   detail: String(detail || "").slice(0, 40) },
+                   detail: typeof detail === "object" ? JSON.stringify(detail).slice(0,80) : String(detail || "").slice(0, 80) },
       }),
     });
   } catch (e) { /* telemetry never breaks the game */ }

@@ -148,6 +148,25 @@
   var TODAY = utcDateString();
   var els = {};
 
+  function isMtnn() { return DATA && DATA.embedding && DATA.embedding.indexOf('mtnn') === 0; }
+  function getEmbeddingVec(p) {
+    if (!p) return null;
+    if (Array.isArray(p)) return p;
+    if (p.e_p && p.e_p.length) return p.e_p;
+    if (p.v && p.v.length) return p.v;
+    return null;
+  }
+  function getProfileVec(p) {
+    if (!p) return null;
+    if (Array.isArray(p)) return p;
+    if (p.profile && p.profile.length) return p.profile;
+    if (p.v && p.v.length === 16) return p.v;
+    if (p.v && p.v.length === 24 && p.profile) return p.profile;
+    // fallback: if only 24-d available, slice first 16 as pseudo-profile (better than crash)
+    if (p.v && p.v.length > 16) return p.v.slice(0, 16);
+    return p.v;
+  }
+
   function computeCentroids(players, k, dims) {
     var sums = []; var counts = [];
     for (var c = 0; c < k; c++) { sums.push(new Array(dims).fill(0)); counts.push(0); }
@@ -155,7 +174,9 @@
       var p = players[i];
       var s = sums[p.c];
       if (!s) continue;
-      for (var d = 0; d < dims; d++) s[d] += p.v[d];
+      var vec = getEmbeddingVec(p);
+      if (!vec) continue;
+      for (var d = 0; d < dims; d++) s[d] += vec[d];
       counts[p.c]++;
     }
     for (var c2 = 0; c2 < k; c2++) {
@@ -252,13 +273,15 @@
       idx = pickSingleIndexFromRng(rng, pool);
     }
     var p = pool[idx];
-    // Defensive copy vector
-    var vec = p.v.slice();
+    // Defensive copy vector — MTNN: v is 24-d embedding for retrieval, profile is 16-d for UI
+    var vec = getEmbeddingVec(p).slice();
+    var profileVec = getProfileVec(p);
     var cIdx = (typeof p.c === 'number') ? p.c : nearestCentroidIdx(vec, CENTROIDS);
     return {
       mode: 'guess',
       player: p,
       vector: vec,
+      profileVector: profileVec ? profileVec.slice() : null,
       clusterIdx: cIdx,
       posHint: p.pos,
       team: p.team
@@ -271,7 +294,7 @@
     return buildSingleTargetFromRng(rng, DATA.players);
   }
 
-  // Chimera hard: 8/8 fusion
+  // Chimera hard: 8/8 fusion (PCA) or 12/12 fusion (MTNN 24-d)
   function buildChimeraTargetFromRng(rng) {
     var players = DATA.players;
     var a, b, tries = 0;
@@ -280,14 +303,24 @@
       var ib = Math.floor(rng() * players.length);
       a = players[ia]; b = players[ib];
       tries++;
-    } while (tries < 2000 && (a === b || cosineSim(a.v, b.v) >= 0.3));
-    var vector = new Array(a.v.length);
-    for (var i = 0; i < vector.length; i++) vector[i] = i < A_COUNT ? a.v[i] : b.v[i];
+    } while (tries < 2000 && (a === b || cosineSim(getEmbeddingVec(a), getEmbeddingVec(b)) >= 0.3));
+    var aEmb = getEmbeddingVec(a), bEmb = getEmbeddingVec(b);
+    var dim = aEmb.length;
+    var split = dim === 24 ? 12 : A_COUNT; // MTNN 24-d -> 12+12, PCA 16-d -> 8+8
+    var vector = new Array(dim);
+    for (var i = 0; i < vector.length; i++) vector[i] = i < split ? aEmb[i] : bEmb[i];
     var clusterIdx = nearestCentroidIdx(vector, CENTROIDS);
-    var normA = halfNorm(a.v, 0, A_COUNT);
-    var normB = halfNorm(b.v, A_COUNT, vector.length);
+    var normA = halfNorm(aEmb, 0, split);
+    var normB = halfNorm(bEmb, split, dim);
     var posHint = normA >= normB ? a.pos : b.pos;
-    return { mode: 'chimera', a: a, b: b, vector: vector, clusterIdx: clusterIdx, posHint: posHint };
+    // also keep profile fusion for UI if available
+    var aProf = getProfileVec(a), bProf = getProfileVec(b);
+    var profileFusion = null;
+    if (aProf && bProf) {
+      profileFusion = new Array(aProf.length);
+      for (var j = 0; j < profileFusion.length; j++) profileFusion[j] = j < 8 ? aProf[j] : bProf[j];
+    }
+    return { mode: 'chimera', a: a, b: b, vector: vector, profileVector: profileFusion, clusterIdx: clusterIdx, posHint: posHint };
   }
 
   function buildChimeraDailyTarget(dateStr) {
@@ -390,7 +423,8 @@
 
   function renderScoutingLine() {
     if (!TARGET) return;
-    els.scoutingLine.textContent = buildScoutingLine(TARGET.vector, TARGET.clusterIdx, GAME_MODE);
+    var vec = TARGET.profileVector || TARGET.vector;
+    els.scoutingLine.textContent = buildScoutingLine(vec, TARGET.clusterIdx, GAME_MODE);
   }
 
   // ---------------------------------------------------------------------
@@ -1037,14 +1071,16 @@
       if (!lastPlayer) return; // safety
       els.resultCard.hidden = false;
       els.scoreboardPct.textContent = Math.round(last.sim * 100) + '%';
-      var targetZones = renderPitch(els.pitchTarget, TARGET.vector);
-      var guessZones = renderPitch(els.pitchGuess, lastPlayer.v);
+      var targetProfile = TARGET.profileVector || getProfileVec(TARGET.player) || TARGET.vector;
+      var guessProfile = getProfileVec(lastPlayer);
+      var targetZones = renderPitch(els.pitchTarget, targetProfile);
+      var guessZones = renderPitch(els.pitchGuess, guessProfile);
       els.pitchGuessLabel.textContent = 'Your guess: ' + last.name;
       els.storyCaption.textContent = storyCaption(targetZones, guessZones, GAME_MODE === 'guess');
-      els.quickCoachingLine.textContent = coachingLineTop1(TARGET.vector, lastPlayer.v);
-      renderBreakdown(TARGET.vector, lastPlayer.v, last.name);
+      els.quickCoachingLine.textContent = coachingLineTop1(targetProfile, guessProfile);
+      renderBreakdown(targetProfile, guessProfile, last.name);
       els.clusterLine.innerHTML = clusterLine(lastPlayer);
-      els.coachingLine.textContent = coachingLine(TARGET.vector, lastPlayer.v);
+      els.coachingLine.textContent = coachingLine(targetProfile, guessProfile);
     }
 
     if (rec.done) {
@@ -1098,7 +1134,7 @@
     // prevent duplicate guess id (exact player-tournament)
     var dup = rec.guesses.some(function (g) { return g.id === p.id; });
     if (dup) { els.chimeraInput.value = ''; pendingChimeraSelection = null; els.chimeraSubmit.disabled = true; return; }
-    var sim = cosineSim(TARGET.vector, p.v);
+    var sim = cosineSim(TARGET.vector, getEmbeddingVec(p));
     var entry = { id: p.id, name: playerKey(p), sim: sim };
     rec.guesses.push(entry);
     track(GAME_MODE === 'guess' ? 'vp-guess' : 'vp-chimera-guess', { turn: rec.guesses.length, sim: sim });
@@ -1460,7 +1496,9 @@
       DATA = loaded[0];
       DIFFICULTY = loaded[1];
       var k = DATA.clusters.length;
-      var dims = DATA.features.length;
+      var embDim = (DATA.players[0] && DATA.players[0].v) ? DATA.players[0].v.length : DATA.features.length;
+      // MTNN 24-d retrieval, PCA 16-d legacy — centroids in embedding space
+      var dims = embDim;
       CENTROIDS = computeCentroids(DATA.players, k, dims);
       CLUSTER_XYZ = computeClusterXYZ(DATA.players, k);
       TARGET = buildDailyTargetForMode(TODAY);
