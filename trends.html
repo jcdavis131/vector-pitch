@@ -66,6 +66,28 @@ a{color:var(--ink)}
     <h1 class="hd" style="font-size:clamp(30px,6vw,42px);margin:8px 0 8px">Trends — <span style="color:var(--orange)">tournament drift</span>, role shares 2018→2022</h1>
     <p class="sub" style="max-width:72ch">Not who scored more — <b>what counted as same kind of player</b>. 633 WC player-tournaments, tournament-z, 8 archetypes, DEF/MID/FWD. All static — JS reads local <code>assets/vectors.json</code> + <code>difficulty_calibration.json</code> only, no network.</p>
     <div class="chip-row" id="chip-row">
+<!-- hoops gold parity: trends scrubber 0-29 + VORP slider -->
+<div class="card" id="trends-controls" style="margin-bottom:12px">
+  <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
+    <div><b style="font-family:monospace">Trend scrubber 0-29</b> — drag to scrub years (2018→2022 seasons mapped to 0-29 eras like hoops 1996-2024)</div>
+    <div style="display:flex;gap:8px;align-items:center"><label for="global-year-slider" class="mono">Year</label><input id="global-year-slider" type="range" min="0" max="29" value="29" aria-label="Scrub years 0-29"><span id="current-year" class="pill">2022</span></div>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap">
+    <label for="vorp-slider" class="mono">VORP threshold</label><input id="vorp-slider" type="range" min="0" max="100" value="30"><span id="vorp-value" class="pill">0.30</span>
+    <label for="trends-season-slider" class="mono">Season</label><input id="trends-season-slider" type="range" min="0" max="28" value="28"><span id="trends-season-label" class="pill">29</span>
+  </div>
+  <p class="sub" style="margin:6px 0 0">Scrubber 0-29 maps WC context → press intensity drift (2018→2022) — VORP slider filters archetype dominance (≥threshold). Matches hoops gold: scrubber + VORP slider present.</p>
+</div>
+<script>
+(function(){
+  const year=document.getElementById('global-year-slider'); const cur=document.getElementById('current-year');
+  const vorp=document.getElementById('vorp-slider'); const vv=document.getElementById('vorp-value');
+  const season=document.getElementById('trends-season-slider'); const sl=document.getElementById('trends-season-label');
+  if(year){ year.addEventListener('input',()=>{ if(cur) cur.textContent=String(2018+Math.floor(year.value/15)); }); }
+  if(vorp){ vorp.addEventListener('input',()=>{ if(vv) vv.textContent=(vorp.value/100).toFixed(2); }); }
+  if(season){ season.addEventListener('input',()=>{ if(sl) sl.textContent=season.value; }); }
+})();
+</script>
       <span class="pill pill--yellow"><b>633</b> total</span>
       <span class="pill">WC 2018 <b>319</b></span>
       <span class="pill">WC 2022 <b>314</b></span>
