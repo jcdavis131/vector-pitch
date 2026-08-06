@@ -8,6 +8,22 @@
     {
       "source": "/dashboard",
       "destination": "/dashboard.html"
+    },
+    {
+      "source": "/play",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/players",
+      "destination": "/players.html"
+    },
+    {
+      "source": "/methods",
+      "destination": "/methods.html"
+    },
+    {
+      "source": "/trends",
+      "destination": "/trends.html"
     }
   ],
   "redirects": [

@@ -1,0 +1,68 @@
+/* Vector Pitch Player Profile — dark, hoops v28 lineage */
+.pp-search-wrap{
+  position:relative;
+  background:var(--surface);
+  border:2.2px solid var(--ink);
+  border-radius:14px;
+  box-shadow:3px 3px 0 var(--ink);
+  padding:10px 10px 8px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin-bottom:12px;
+}
+.pp-search-top{display:flex;gap:8px;align-items:center}
+.pp-search-top .input{flex:1 1 auto;font-weight:800;font-size:16px;background:var(--surface)}
+.pp-btn{border:2.2px solid var(--ink);border-radius:999px;background:var(--surface);box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.06em;padding:0 12px;min-height:44px;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;color:var(--ink)}
+.pp-btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+.pp-btn--ink{background:var(--ink);color:var(--paper)}
+.pp-btn--yellow{background:var(--yellow);color:#0a1510}
+.pp-quick-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.pp-quick-label{font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-right:2px}
+.pp-quick-chip{border:1.6px solid var(--ink);border-radius:999px;padding:3px 9px;background:var(--surface);font-family:var(--mono);font-size:11px;font-weight:800;cursor:pointer;box-shadow:1px 1px 0 var(--ink);color:var(--ink)}
+.pp-quick-chip:hover{background:var(--panel)}
+.pp-section{margin-top:2px}
+.pp-section-head{font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin:14px 2px 8px;display:flex;align-items:center;gap:8px}
+.pp-section-head::after{content:'';flex:1 1 auto;height:1.5px;background:var(--hairline)}
+
+.pp-badges-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(146px,1fr));gap:8px}
+.pp-badge{border:2.2px solid var(--ink);border-radius:12px;padding:8px 10px 7px;background:var(--surface);box-shadow:2px 2px 0 var(--ink);display:flex;flex-direction:column;gap:4px;position:relative;overflow:hidden}
+.pp-badge__top{display:flex;justify-content:space-between;align-items:center;gap:6px}
+.pp-badge__name{font-family:var(--mono);font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;line-height:1.15;color:var(--ink)}
+.pp-badge__grade{border:1.6px solid var(--ink);border-radius:999px;padding:1px 7px;font-family:var(--mono);font-size:12px;font-weight:900;background:var(--surface);min-width:28px;text-align:center;color:var(--ink)}
+.pp-badge__bar{height:6px;background:#0a2a18;border-radius:999px;border:1px solid var(--ink);overflow:hidden}
+.pp-badge__fill{height:100%;border-radius:999px}
+.pp-badge--gold{background:var(--panel)} .pp-badge--gold .pp-badge__grade{background:var(--yellow);color:#0a1510}
+
+.pp-skills-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:760px){.pp-skills-grid{grid-template-columns:1fr}.pp-badges-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:420px){.pp-badges-grid{grid-template-columns:1fr}}
+.pp-skill{border:2px solid var(--ink);border-radius:12px;background:var(--surface);box-shadow:2px 2px 0 var(--ink);padding:8px 10px;display:flex;flex-direction:column;gap:6px;position:relative}
+.pp-skill__head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.pp-skill__label{font-family:var(--mono);font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft)}
+.pp-skill__grade{font-family:var(--mono);font-size:12px;font-weight:900;border:1.6px solid var(--ink);border-radius:999px;padding:1px 8px;background:var(--surface);min-width:34px;text-align:center;color:var(--ink)}
+.pp-skill__grade--gold{background:var(--yellow);color:#0a1510}
+.pp-skill__grade--blue{background:var(--blue);color:#fff;border-color:var(--blue)}
+.pp-skill__grade--green{background:var(--green);color:#0a1510;border-color:var(--green)}
+.pp-skill__grade--mid{background:var(--surface);color:var(--ink)}
+.pp-skill__grade--low{background:var(--panel);color:var(--ink-muted)}
+.pp-skill__track{height:8px;background:#0a2a18;border-radius:999px;border:1.5px solid var(--ink);overflow:hidden;position:relative}
+.pp-skill__fill{height:100%;border-radius:999px;transition:width .5s cubic-bezier(.2,.8,.2,1);background:var(--ink)}
+.pp-skill__foot{font-family:var(--mono);font-size:9.5px;color:var(--ink-muted);display:flex;justify-content:space-between}
+
+/* dossier specifics */
+.vp-dossier{display:flex;flex-direction:column;gap:12px}
+.vp-dossier__hero{background:var(--panel);border:2.2px solid var(--ink);border-radius:14px;box-shadow:3px 3px 0 var(--ink);padding:12px 14px}
+.vp-dossier__name{font-family:"Architects Daughter",var(--mono);font-size:28px;margin:0;line-height:.95}
+.vp-dossier__meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.vp-dossier__pill{border:1.5px solid var(--ink);border-radius:999px;padding:2px 8px;background:var(--surface);font-family:var(--mono);font-size:10.5px;font-weight:800;box-shadow:1px 1px 0 var(--ink)}
+.vp-dossier__pill--arch{background:var(--ink);color:var(--paper)}
+.vp-dossier__grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:640px){.vp-dossier__grid{grid-template-columns:1fr}}
+.vp-dossier__box{background:var(--surface);border:2px solid var(--ink);border-radius:12px;padding:10px 12px;box-shadow:2px 2px 0 var(--ink)}
+.vp-dossier__box h4{margin:0 0 6px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.vp-dossier__kv{font-family:var(--mono);font-size:12px;line-height:1.4;display:flex;justify-content:space-between;gap:8px;padding:2px 0;border-bottom:1px dashed var(--hairline)}
+.vp-dossier__kv:last-child{border-bottom:0}
+.vp-dossier__sim{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.vp-dossier__sim li{font-family:var(--mono);font-size:11px;display:flex;justify-content:space-between;gap:8px;padding:4px 8px;border:1px solid var(--hairline);border-radius:8px;background:rgba(255,255,255,.04)}
+.vp-dossier__sim li b{font-weight:800}

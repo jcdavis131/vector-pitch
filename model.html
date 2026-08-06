@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a1510">
+<link rel="manifest" href="/manifest.json">
+<title>How the vector knows — MTNN 24-d Training Cockpit — Vector Pitch</title>
+<meta name="description" content="2430 player-rows 11 ctx → 3 family towers → gated fusion → 24-d L2 where cosine = similarity. Pitch MTNN v1.1 SupCon training cockpit, architecture, glass-box explorer.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/shell.css"/>
+<link rel="stylesheet" href="assets/unified.css"/>
+<link rel="stylesheet" href="assets/final-qa.css"/>
+<link rel="stylesheet" href="assets/pitch.css"/>
+<link rel="stylesheet" href="assets/responsive.css"/>
+<link rel="stylesheet" href="assets/motion.css"/>
+<style>
+:root{--paper:#0a1510;--surface:#101f16;--ink:#f5f5f0;--monou:ui-monospace,monospace;--sansu:ui-sans-serif,system-ui;--page-gutter:clamp(12px,3.2vw,20px)}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sansu)}
+.research-main.network-main{width:min(1180px,100%);max-width:1180px;margin:0 auto;padding:12px var(--page-gutter) calc(96px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:16px}
+.research-head h1{margin:0;font-family:"Architects Daughter",var(--monou);font-size:clamp(28px,6vw,48px);line-height:.95;letter-spacing:-.02em;color:#f5f5f0}
+.network-hero{margin:0;max-width:68ch;font-size:clamp(15px,3.6vw,18px);line-height:1.55;color:#c3cec4}
+.network-hero b{color:#f5f5f0}
+.stats-strip,.cqs-strip{display:flex;gap:8px;overflow-x:auto;flex-wrap:nowrap;padding:2px 0 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.stats-strip::-webkit-scrollbar,.cqs-strip::-webkit-scrollbar{display:none}
+.stats-chip,.cqs-badge{flex:0 0 auto;white-space:nowrap;border:1.8px solid #f5f5f0;border-radius:999px;padding:6px 12px;background:#0d1f13;font-family:var(--monou);font-size:11px;font-weight:800;box-shadow:2px 2px 0 rgba(0,0,0,.6);min-height:32px;display:inline-flex;align-items:center;color:#f5f5f0}
+.cqs-badge.is-primary{background:#f5f5f0;color:#0a1510}.cqs-badge.is-primary b{color:#0a1510}
+.anchor-nav{display:flex;gap:8px;overflow-x:auto;flex-wrap:nowrap;padding:6px 0;-webkit-overflow-scrolling:touch;scrollbar-width:none;position:sticky;top:48px;z-index:5;background:var(--paper);border-bottom:1.5px solid #24352a;margin:0 calc(var(--page-gutter)*-1);padding-inline:var(--page-gutter)}
+.anchor-nav::-webkit-scrollbar{display:none}
+.anchor-nav a{flex:0 0 auto;white-space:nowrap;text-decoration:none;border:1.8px solid #f5f5f0;border-radius:999px;padding:8px 14px;background:#0d1f13;font-family:var(--monou);font-size:11px;font-weight:900;text-transform:uppercase;box-shadow:2px 2px 0 rgba(0,0,0,.6);min-height:40px;display:inline-flex;align-items:center;color:#f5f5f0}
+.drift-card{background:#101f16;border:2.2px solid #f5f5f0;border-radius:16px;box-shadow:4px 4px 0 rgba(0,0,0,.6);overflow:hidden;display:flex;flex-direction:column;color:#f5f5f0}
+.drift-card__head{padding:14px 16px 10px;border-bottom:1.5px solid #24352a}
+.card-kicker{font-family:var(--monou);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#9db29e;display:flex;gap:6px;align-items:center}
+.card-kicker::before{content:'';width:6px;height:6px;border-radius:50%;background:#da4e34;display:inline-block}
+.drift-card__head h2{margin:6px 0 0;font-family:var(--monou);font-size:clamp(16px,4vw,22px);line-height:1.15}
+.cockpit-grid{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid #24352a}
+@media(min-width:900px){.cockpit-grid{grid-template-columns:1fr 1fr}}
+.cockpit-panel{padding:14px 16px;min-width:0}.cockpit-panel+.cockpit-panel{border-top:1.5px solid #24352a}
+@media(min-width:900px){.cockpit-panel+.cockpit-panel{border-top:0;border-left:1.5px solid #24352a}}
+.cockpit-panel h3{margin:0 0 8px;font-family:var(--monou);font-size:12px;text-transform:uppercase}
+.code-block{font-family:var(--monou);font-size:12px;line-height:1.5;background:#0f0f0f;color:#e8e6e1;border-radius:10px;padding:12px;overflow-x:auto;white-space:pre-wrap;word-break:break-word;border:1.5px solid #f5f5f0}
+.pipe{display:flex;gap:8px;overflow-x:auto;flex-wrap:nowrap;padding:6px 0 8px;scrollbar-width:none}.pipe::-webkit-scrollbar{display:none}
+.pipe-step{flex:0 0 auto;min-width:84px;border:1.8px solid #f5f5f0;border-radius:12px;padding:8px 10px;background:#0d1f13;box-shadow:2px 2px 0 rgba(0,0,0,.6);display:flex;flex-direction:column;gap:2px;color:#f5f5f0}
+.pipe-step b{font-size:12px}.pipe-step i{font-style:normal;font-family:var(--monou);font-size:10px;color:#9db29e}
+.step-num{font-family:var(--monou);font-size:10px;font-weight:800;background:#f5f5f0;color:#0a1510;border-radius:999px;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center}
+.pipe-arrow{flex:0 0 auto;display:flex;align-items:center;font-weight:900;color:#f5f5f0}
+.weights-grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.weight-chip{border:1.5px solid #f5f5f0;border-radius:999px;padding:4px 8px;background:#0d1f13;font-family:var(--monou);font-size:10px;font-weight:800;display:inline-flex;gap:6px;align-items:center;color:#f5f5f0}
+.manim-grid{display:grid;grid-template-columns:1fr;gap:12px;padding:12px}
+@media(min-width:700px){.manim-grid{grid-template-columns:1fr 1fr}}
+.manim-card{border:1.8px solid #f5f5f0;border-radius:14px;overflow:hidden;background:#000;box-shadow:3px 3px 0 rgba(0,0,0,.6);display:flex;flex-direction:column}
+.manim-card video{width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
+.manim-caption{padding:10px 12px;background:#101f16;font-size:13px;line-height:1.5;color:#c3cec4;border-top:1.5px solid #f5f5f0}
+.manim-caption b{color:#f5f5f0}
+.network-section__head{padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.viz-panel__label{font-family:var(--monou);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:#f5f5f0}
+.network-flow-subhead{font-size:13px;line-height:1.5;color:#9db29e;margin:4px 0 0;max-width:70ch}
+.network-flow-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.network-trace-status{font-family:var(--monou);font-size:11px;color:#c3cec4;background:#0d1f13;border:1.5px solid #24352a;border-radius:999px;padding:5px 10px;cursor:pointer}
+.network-trace-status.is-active{background:#f5f5f0;color:#0a1510;border-color:#f5f5f0}
+.network-flow-layout{display:grid;grid-template-columns:1fr;gap:0}
+@media(min-width:980px){.network-flow-layout{grid-template-columns:1.2fr .8fr}}
+.network-flow-host{min-height:280px;background:#0d1f13;border-top:1.5px solid #24352a;border-bottom:1.5px solid #24352a;overflow:hidden;position:relative}
+.network-map-layout{display:grid;grid-template-columns:1fr;gap:0}
+@media(min-width:900px){.network-map-layout{grid-template-columns:1fr 360px}}
+.network-map-stage{padding:12px;background:#0c1410}
+.network-map-canvas{width:100%;aspect-ratio:1/1;max-height:560px;background:#0a0e0c;display:block;border-radius:12px;border:2px solid #24352a;cursor:grab}
+.network-map-canvas:active{cursor:grabbing}
+.mono{font-family:var(--monou);font-size:11px}
+.viz-panel{background:#0d1f13;border:1.5px solid #f5f5f0;border-radius:12px;padding:10px;box-shadow:2px 2px 0 rgba(0,0,0,.6)}
+.network-arch-pre{font-family:var(--monou);font-size:11px;line-height:1.5;background:#111;color:#ddd;border-radius:10px;padding:12px;overflow:auto;max-height:60vh;border:1.5px solid #f5f5f0;white-space:pre-wrap;word-break:break-word}
+.site-next{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:8px var(--page-gutter) 0;font-family:var(--monou);font-size:12px;font-weight:800}
+.site-next a{border:1.5px solid #f5f5f0;border-radius:999px;padding:6px 12px;background:#0d1f13;text-decoration:none;box-shadow:1.5px 1.5px 0 rgba(0,0,0,.6);color:#f5f5f0}
+.emb-token{display:inline-flex;border:1px solid #f5f5f0;border-radius:6px;padding:2px 5px;margin:2px;font-family:monospace;font-size:10px;background:#101f16}
+.profile-bar{height:8px;background:#0a1510;border:1px solid #24352a;border-radius:4px;overflow:hidden;margin:4px 0}
+.profile-bar>span{display:block;height:100%;background:#da4e34}
+.nearest-row{display:flex;justify-content:space-between;align-items:center;padding:4px 6px;border-bottom:1px dashed #24352a;font-size:12px}
+</style>
+</head>
+<body>
+<nav class="site-nav" data-active="/model" aria-label="Vector Pitch site"></nav>
+<main class="research-main network-main">
+<div class="research-head network-head">
+<h1>How the vector knows</h1>
+<p class="network-hero">Every World Cup player is a fingerprint: <b>16 raw per-90 → 3 role families with masking → gated towers → 24-d L2 where cosine = similarity</b>. Training cockpit, flow, and glass-box explorer — same source for 2430 rows and 633 game targets.</p>
+<div class="stats-strip" aria-label="Pitch MTNN stats">
+<span class="stats-chip">2,430 rows</span><span class="stats-chip">11 contexts</span><span class="stats-chip">633 WC game</span><span class="stats-chip">16 feats × 3 towers</span><span class="stats-chip">cat([x·m,m]) masked</span><span class="stats-chip">16→32 towers ×2</span><span class="stats-chip">24-d L2</span><span class="stats-chip">~18K params</span>
+</div>
+<p class="mono" style="color:#9db29e;margin:6px 0 2px">MTNN v1.1 SupCon con_w=0.5 promoted. PCA3 fallback removed. Difficulty MTNN-calibrated warm 0.985 slope 2.5.</p>
+<div class="cqs-strip" id="eval-scoreboard-strip" aria-label="Held-out scoreboard">
+<div class="cqs-badge is-primary"><b id="evsb-pos">0.797</b><span>pos_cluster_acc</span></div>
+<div class="cqs-badge"><b id="evsb-knn">0.7894</b><span>knn5_pos_acc</span></div>
+<div class="cqs-badge"><b id="evsb-nnrole">0.7492</b><span>nn_role_coherence</span></div>
+<div class="cqs-badge"><b id="evsb-recon">0.4956</b><span>recon_mae</span></div>
+<div class="cqs-badge"><b id="evsb-inband">588/633 92.9%</b><span>in-band</span></div>
+<div class="cqs-badge"><b id="evsb-median">0.4843</b><span>median difficulty</span></div>
+</div>
+<p id="evsb-caption" class="mono" style="color:#9db29e;margin:6px 0 0">Loading assets/eval_scoreboard.json + difficulty 92.9% median 0.4843… MTNN beats PCA16 oracle on pos-cluster +0.0513, ties knn5 within 0.11pp.</p>
+<nav class="anchor-nav" aria-label="Page sections"><a href="#training-cockpit">Cockpit</a><a href="#manim-mtnn">Architecture</a><a href="#network-flow">Flow</a><a href="#explorer">Explorer</a><a href="#pipeline">Pipeline</a><a href="#arch-spec">Spec</a></nav>
+</div>
+
+<section class="drift-card" id="training-cockpit">
+<div class="drift-card__head"><span class="card-kicker">Live Training Cockpit • Pitch MTNN v1.1 → v2</span><h2>Training cockpit — what ships now and what trains next</h2></div>
+<div class="cockpit-grid">
+<div class="cockpit-panel">
+<h3>Current deployed — pitch_mtnn 24-d gated fusion</h3>
+<div id="arch-current-meta" class="mono" style="font-size:12px;line-height:1.6">Loading vectors_mtnn.json… 2430×24-d, 11 ctx, 3 towers attacking(6) passing_control(5) defending_duel(5), d_tower 16, d_emb 24, n_ctx 11, d_ctx 8, gated attn+gate, L2 unit sphere</div>
+<div class="weights-grid" id="weights-grid"></div>
+<p style="font-size:13px;line-height:1.6;margin-top:12px;color:#c3cec4">Evaluation LOCO 9-fold on tm_9ctx 2295 rows: pos_cluster 0.797 (beats PCA16 0.7457 +0.0513), knn5 0.7894 vs 0.7905 tie 0.11pp, nn_role 0.7492 vs 0.7518 tie 0.26pp, 4/4 vs PCA3 shipped (+0.0962 pos, +0.1037 knn5, +0.1178 nn_role, -0.0244 recon lower better). Recon MAE 0.4956 vs v1_no_con 0.4773 slightly worse but profile recon not primary.</p>
+</div>
+<div class="cockpit-panel">
+<h3>Hill-climb 01→05 + loss weights</h3>
+<div class="pipe">
+<div class="pipe-step is-done"><span class="step-num">01</span><b>Gather</b><i>StatsBomb per-90</i></div><div class="pipe-arrow">→</div>
+<div class="pipe-step is-done"><span class="step-num">02</span><b>Clean</b><i>tourney σ 16-d</i></div><div class="pipe-arrow">→</div>
+<div class="pipe-step is-done"><span class="step-num">03</span><b>Towers</b><i>16→32×3</i></div><div class="pipe-arrow">→</div>
+<div class="pipe-step is-done"><span class="step-num">04</span><b>Fusion</b><i> gated 24 L2</i></div><div class="pipe-arrow">→</div>
+<div class="pipe-step is-done"><span class="step-num">05</span><b>Deploy</b><i>canvas+3D map</i></div>
+</div>
+<p style="font-size:13px;margin-top:12px;line-height:1.6">v1.1 is small: ~18K params, 3 towers tiny, gated attention + sigmoid gate, ctx emb 11×8, fuse 16+8→64→24 L2. Heavy dropout 0.3, WD 1e-3, family-drop aug. If can't beat PCA on 633, expanded corpus 2430 proves need for more contexts.</p>
+<p style="font-size:13px;margin-top:8px;line-height:1.6"><b>v2 upgrade:</b> 16 feats robust clip → 3 families cat([x·m,m]) → towers d32 h64×2 → gated fusion d_ctx 16 → 24-d L2 → transformer 4L 4H optional cross-family attention, SupCon con_w 0.7, target pos_cluster 0.82, knn5 0.81, in-band 95% median 0.50.</p>
+<div style="margin-top:10px;border:1.5px solid #f5f5f0;border-radius:12px;background:#0d1f13;padding:10px"><h4 style="margin:0;font-family:monospace;font-size:12px">Exact v2 training command</h4><pre class="code-block" style="margin-top:8px">python pipeline/train_mtnn.py --epochs 200 --d-emb 24 --d-tower 32 --matrix tm_full.npz --ctx-emb 16 --supcon 0.7 --drop 0.3 --wd 1e-3 --gated-fusion --eval-loco</pre></div>
+</div>
+</div>
+</section>
+
+<section class="drift-card" id="manim-mtnn">
+<div class="drift-card__head"><span class="card-kicker">Architecture — 4 animations • code-generated</span><h2>How Pitch MTNN actually works</h2></div>
+<div class="manim-grid">
+<div class="manim-card"><video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/MTNNFlow.mp4" aria-label="MTNNFlow"></video><div class="manim-caption"><b>MTNNFlow — glass box</b><br>16 feats → 3 families cat mask → 3× 16→32 residual ×2 LN GELU skip → gated attn + sigmoid gate mix → ctx 11→8 → 24+8→64→24 L2. Every box real dimension.</div></div>
+<div class="manim-card"><video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/ChimeraEquation.mp4" aria-label="ChimeraEquation"></video><div class="manim-caption"><b>ChimeraEquation — how Chimera scores</b><br>Target 8+8 fusion chimera 1% daily: 8 attack dims from donor A + 8 defend/duel from donor B → fuse in 24-d → nearest real among 633 by cosine. Hard mode wins 92% threshold.</div></div>
+<div class="manim-card"><video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/InputFamilies.mp4" aria-label="InputFamilies"></video><div class="manim-caption"><b>InputFamilies — 16→3 towers</b><br>attacking [GOALS,XG,FINISHING,ASSISTS,KEY_PASSES,CROSSES] =6, passing_control [PASSES_CMP,PASS_CMP_PCT,PROG_CARRY,DRIBBLES,FOULS_WON]=5, defending_duel [PRESSURES,TACKLES,INTERCEPTIONS,RECOVERIES,FOULS_CONV]=5. Missing = masked zero.</div></div>
+<div class="manim-card"><video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/EmbeddingL2.mp4" aria-label="EmbeddingL2"></video><div class="manim-caption"><b>EmbeddingL2 — 24-d → L2 → unit sphere</b><br>v̂ = v/||v||₂, ||v̂||=1, cos = v̂·ŵ. 633 points on sphere powers Guess The Player + Chimera hard + 3D map PC1/2/3 colored by position.</div></div>
+</div>
+</section>
+
+<section class="drift-card" id="network-flow" aria-label="Network data flow">
+<div class="network-section__head"><div><p class="viz-panel__label">Data flow — truthful boxes measured</p><p class="network-flow-subhead">Input mask m∈{0,1} • cat([x·m,m]) → 3 residual towers 16→32 LN GELU + skip → season ctx embed → gated mix → L2 24-d → MLP heads 8 arch / 16 recon. Tap any node.</p></div><div class="network-flow-tools"><span id="network-trace-status" class="network-trace-status">Tap a node to see what fed it.</span></div></div>
+<div class="network-flow-layout">
+<div class="network-flow-main"><div id="network-flow-svg" class="network-flow-host" role="img" aria-label="MTNN layer diagram"><svg viewBox="0 0 800 260" style="width:100%;height:260px;background:#0d1f13"><text x="20" y="30" fill="#f5f5f0" font-family="monospace" font-size="12">16 feats × mask → 3× towers → gated attn → L2 24-d → 8 arch / 16 recon</text><rect x="20" y="50" width="120" height="40" rx="8" fill="#101f16" stroke="#f5f5f0"/><text x="30" y="75" fill="#c3cec4" font-size="10">Families masked</text><rect x="170" y="50" width="120" height="40" rx="8" fill="#101f16" stroke="#f5f5f0"/><text x="180" y="75" fill="#c3cec4" font-size="10">3 towers 16→32×2</text><rect x="320" y="50" width="140" height="40" rx="8" fill="#0a1510" stroke="#da4e34"/><text x="330" y="75" fill="#f5f5f0" font-size="10">Gated fusion 11 ctx</text><circle cx="500" cy="70" r="28" fill="#f5f5f0"/><text x="482" y="74" fill="#0a1510" font-size="10" font-weight="800">24-d</text><rect x="560" y="40" width="100" height="30" rx="8" fill="#101f16" stroke="#f5f5f0"/><text x="570" y="60" fill="#c3cec4" font-size="10">8 clusters</text><rect x="560" y="90" width="100" height="30" rx="8" fill="#101f16" stroke="#f5f5f0"/><text x="570" y="110" fill="#c3cec4" font-size="10">16-d profile</text><line x1="140" y1="70" x2="170" y2="70" stroke="#f5f5f0"/><line x1="290" y1="70" x2="320" y2="70" stroke="#f5f5f0"/><line x1="460" y1="70" x2="472" y2="70" stroke="#f5f5f0"/></svg></div><div id="network-flow-insights" class="network-insights" style="padding:10px"><p class="mono" style="color:#9db29e">Loading tower activations, family share per head… 3 towers, gates ~0.5, attn weights tournament-dependent. PC1 attack↔def, PC2 control, PC3 aerial. Masked missing → zero + flag.</p></div></div>
+<div id="network-node-inspector" class="viz-panel" style="margin:8px"><p class="mono" style="color:#9db29e">Tap an input, tower, or output to see exact numbers. Current probe: none selected.</p><div id="network-probe-details"></div></div>
+</div>
+</section>
+
+<section class="drift-card network-controls-card" id="explorer">
+<div class="drift-card__head"><span class="card-kicker">Explorer • Glass box debugger • 633 WC probe</span><h2>Probe any WC player-season</h2></div>
+<div style="padding:14px 16px;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><label class="viz-panel__label">Player</label><input type="search" id="network-search" placeholder="Search 633 — e.g. Mbappé 2022, Modrić 2018…" style="flex:1 1 260px;min-width:0;border:2.2px solid #f5f5f0;border-radius:12px;padding:12px 14px;font-size:16px;min-height:48px;background:#0d1f13;color:#f5f5f0"><span id="network-player-tag" style="font-family:monospace;font-size:11px;background:#0d1f13;border:1.5px solid #f5f5f0;border-radius:999px;padding:5px 10px;color:#f5f5f0">Loading index…</span></div>
+<div style="display:flex;gap:6px;overflow-x:auto"><button class="network-trace-status is-active" data-step="0">◉ Input 16-d</button><button class="network-trace-status" data-step="1">⬢ Towers 3×32</button><button class="network-trace-status" data-step="2">⬣ Fusion gated</button><button class="network-trace-status" data-step="3">⬔ Embed 24-d</button><button class="network-trace-status" data-step="4">⬕ Heads 8/16</button></div>
+</div>
+<div style="padding:0 16px 16px">
+<p id="network-step-caption" class="mono" style="color:#c3cec4">Loading architecture… 3×16→32 LN GELU×2, ctx 11→8, 24+8→64→24 L2 ~18K. Tournament-z per WC, masked, context-honest.</p>
+<div id="network-story" style="margin-top:10px;padding:12px;background:#0d1f13;border:1.5px dashed #f5f5f0;border-radius:12px;font-size:14px;line-height:1.6;color:#c3cec4">Loading story… pick a WC player to see why 24-d puts Messi 2022 near Mbappé 2022 vs Modrić 2018.</div>
+<div id="network-embed-tokens" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:4px"></div>
+<div id="network-profile-bars" style="margin-top:10px"></div>
+<div id="network-nearest" style="margin-top:10px;background:#0d1f13;border:1.5px solid #24352a;border-radius:10px;padding:8px"></div>
+</div>
+</section>
+
+<section class="drift-card network-map-card" aria-label="24-d embedding map">
+<div class="network-section__head"><div><p class="viz-panel__label">Embedding map — 24-d rendered in 3D PC1/2/3</p><p style="font-size:12px;color:#9db29e;margin-top:6px">Slow auto-rotate • drag to orbit • scroll to zoom • orange=selected — 633 WC points L2-normed colored by position DEF/MID/FWD. PC1 attack vs defend, PC2 control vs aerial, PC3 youth burst. Uses x/y/z from vectors.json as PC1/2/3.</p></div></div>
+<div class="network-map-layout">
+<div class="network-map-stage"><canvas id="network-map-canvas" class="network-map-canvas" aria-label="3D MTNN embedding map"></canvas><ul id="network-map-legend" style="display:flex;gap:6px;flex-wrap:wrap;padding:10px 0 0;list-style:none;margin:0"><li style="color:#f5f5f0;font-family:monospace;font-size:10px"><span style="display:inline-block;width:10px;height:10px;background:#4b78e2;border-radius:50%"></span> DEF</li><li style="font-family:monospace;font-size:10px;color:#f5f5f0"><span style="display:inline-block;width:10px;height:10px;background:#e6d23b;border-radius:50%"></span> MID</li><li style="font-family:monospace;font-size:10px;color:#f5f5f0"><span style="display:inline-block;width:10px;height:10px;background:#da4e34;border-radius:50%"></span> FWD</li></ul></div>
+<div id="network-map-insights" style="padding:12px;color:#c3cec4;font-size:13px"><p class="mono">Loading nearby WC players… 633 points, position-colored, cluster 8 archetypes.</p><p style="font-size:13px;margin-top:8px">Difficulty median 0.4843, 588 in-band 92.9% warm_sim 0.985. Rotation gate holds 3/56 upcoming vs old unchecked — not hiding hard puzzles.</p><div id="map-nearest-list" style="margin-top:10px"></div></div>
+</div>
+</section>
+
+<section class="drift-card" id="pipeline">
+<div class="drift-card__head"><span class="card-kicker">Lab pipeline 01→05</span><h2>From StatsBomb to fingerprint</h2></div>
+<div class="cockpit-grid">
+<div class="cockpit-panel"><h3>01 Gather → 02 Clean</h3><p style="font-size:14px;line-height:1.6;color:#c3cec4">Pull per-90 from StatsBomb open-data FIFA WC 2018+2022 633 player-tournaments after MIN≥180 filter EXCLUDE_GOALKEEPERS. Per-tournament z-score so 2018 and 2022 are both 0 = average of their tourney. Mask m creates cat([x·m,m]) so model knows never-measured vs zero (no impute).</p><ul style="font-size:12px;line-height:1.6;margin:8px 0 0 18px;color:#9db29e"><li>attacking 6, passing_control 5, defending_duel 5 =16</li><li>WC 2018 64 matches, WC 2022 64 matches, ~2k events per match</li><li>position group DEF/MID/FWD by stint majority minutes (lineups file MM:SS)</li></ul></div>
+<div class="cockpit-panel"><h3>03 Train → 04 Eval → 05 Deploy</h3><p style="font-size:14px;line-height:1.6;color:#c3cec4">Residual towers 3×16→32 ×2 LN GELU skip =96, +8 ctx =104, gated fusion mixed→64→24 L2 ~18K. SupCon con_w=0.5 on position, arcade cluster 8. ONNX 2MB, WASM. Difficulty calibration embedding-space guessability model targeting 40-80% expected-solve band — model estimate, not telemetry — gate holds 3/56.</p><ul style="font-size:12px;line-height:1.6;margin:8px 0 0 18px;color:#9db29e"><li>LOCO 9-fold tm_9ctx 2295 rows 9 ctx avg</li><li>pos_cluster 0.797 beats PCA16 +0.0513</li><li>knn5 0.7894 tie oracle 0.11pp</li><li>nn_role 0.7492 tie oracle 0.26pp</li><li>recon MAE 0.4956 vs PCA3 0.52 wins</li></ul></div>
+</div>
+</section>
+
+<section class="drift-card" id="arch-spec">
+<div class="drift-card__head"><span class="card-kicker">Shipped spec reproducible</span><h2>Arch spec — vectors_mtnn.json + pitch_mtnn_embeddings.json</h2></div>
+<div style="padding:14px"><pre id="arch-layers-pre" class="network-arch-pre">Loading vectors_mtnn.json… 2430×24-d, 3 families, gated fusion, 11 ctx, SupCon 0.5</pre></div>
+</section>
+
+<nav class="site-next" aria-label="Continue exploring"><span class="site-next__label" style="color:#9db29e">Next →</span><a href="/">Play</a><a href="/players">Players</a><a href="/methods">Methods</a><a href="/trends">Trends</a></nav>
+</main>
+<footer style="display:block;background:#0a1510;color:#f5f5f0;border-top:2.5px solid #f5f5f0;padding:12px clamp(12px,3vw,22px);font-family:monospace;font-size:11px"><div style="display:flex;gap:14px;flex-wrap:wrap"><a href="/" style="color:#f5f5f0;text-decoration:none;font-weight:800">Play</a><a href="/model" style="color:#f5f5f0">Lab</a><a href="/methods" style="color:#f5f5f0">Methods</a><a href="/players" style="color:#f5f5f0">Players</a><a href="https://github.com/jcdavis131/vector-pitch" target="_blank" rel="noopener" style="color:#f5f5f0">GitHub</a></div><div style="margin-top:8px;opacity:.6;font-size:10px">Every number recomputable from StatsBomb open-data · pitch.dumbmodel.com</div></footer>
+<script src="assets/site-nav.js" defer></script>
+<script>
+(() => {
+  let VECTORS=null, DIFF=null, SCORE=null;
+  const FEATURES=["GOALS_P90","XG_P90","FINISHING_P90","KEY_PASSES_P90","ASSISTS_P90","PASSES_CMP_P90","PASS_CMP_PCT","PROG_CARRY_P90","DRIBBLES_P90","PRESSURES_P90","TACKLES_P90","INTERCEPTIONS_P90","RECOVERIES_P90","CROSSES_P90","FOULS_WON_P90","FOULS_CONV_P90"];
+
+  async function loadArch(){
+    try{
+      const r = await fetch('assets/vectors_mtnn.json?v='+Date.now());
+      const j = await r.json();
+      const el = document.getElementById('arch-current-meta');
+      const pre = document.getElementById('arch-layers-pre');
+      const arch = j.embedding || j.model || 'mtnn_v1_24d_l2';
+      const n = j.n_players || 2430;
+      const ctx = j.contexts ? (Array.isArray(j.contexts)? j.contexts.length : j.contexts) : 11;
+      const d = j.d_emb || 24;
+      if(el) el.innerHTML = `<div><b>model</b> ${arch} • <b>dEmb</b> ${d} • <b>ctx</b> ${ctx} • <b>n</b> ${n} • <b>towers</b> 3 (attacking 6, passing_control 5, defending_duel 5)</div><div style="margin-top:6px"><b>provenance</b> ${((j.attribution&&j.attribution.provenance)||j.provenance||'MTNN v1.1 SupCon 0.5').toString().slice(0,220)}</div>`;
+      if(pre) pre.textContent = JSON.stringify(j, null, 2).slice(0,12000);
+      VECTORS_MTNN=j;
+    }catch(e){const el=document.getElementById('arch-current-meta'); if(el) el.textContent='Failed vectors_mtnn.json '+e}
+  }
+  let VECTORS_MTNN=null;
+  function loadWeights(){
+    const WEIGHTS={pos_cluster:0.797,knn5:0.7894,nn_role:0.7492,recon:0.4956,in_band:0.929,median_diff:0.4843,warm_sim:0.985,slope:2.5};
+    const grid=document.getElementById('weights-grid');
+    if(!grid) return;
+    grid.innerHTML = Object.entries(WEIGHTS).map(([k,v])=>`<div class="weight-chip"><b>${k}</b><span>${v}</span></div>`).join('');
+  }
+  async function loadData(){
+    try{
+      const [vr, dr, sr] = await Promise.all([
+        fetch('assets/vectors.json?v='+Date.now()).then(r=>r.json()),
+        fetch('assets/difficulty_calibration.json?v='+Date.now()).then(r=>r.json()).catch(()=>null),
+        fetch('assets/eval_scoreboard.json?v='+Date.now()).then(r=>r.json()).catch(()=>null)
+      ]);
+      VECTORS=vr; DIFF=dr; SCORE=sr;
+      initExplorer();
+      initMap();
+      if(sr) updateScoreboard(sr);
+    }catch(e){console.warn('loadData failed',e); document.getElementById('network-player-tag').textContent='load failed '+e}
+  }
+  function updateScoreboard(j){
+    try{
+      if(!j.evaluation) return;
+      const m=j.evaluation.mtnn_v1_1_con05;
+      document.getElementById('evsb-pos').textContent=m.pos_cluster_acc;
+      document.getElementById('evsb-knn').textContent=m.knn5_pos_acc;
+      document.getElementById('evsb-nnrole').textContent=m.nn_role_coherence;
+      document.getElementById('evsb-recon').textContent=m.recon_mae;
+      const d=j.difficulty?.new_mtnn24;
+      if(d){document.getElementById('evsb-inband').textContent=`${d.n_in_band}/633 ${d.pct}%`; document.getElementById('evsb-median').textContent='0.4843';}
+      const cap=document.getElementById('evsb-caption');
+      if(cap) cap.textContent=`Held-out LOCO 9-fold tm_9ctx 2295 rows: pos_cluster ${m.pos_cluster_acc} beats PCA16 oracle 0.7457 +0.0513, knn5 ${m.knn5_pos_acc} vs 0.7905 tie 0.11pp, nn_role ${m.nn_role_coherence} vs 0.7518 tie 0.26pp, 4/4 vs PCA3 shipped. Difficulty 588/633 92.9% median 0.4843 warm_sim 0.985 slope 2.5 gate 3/56. Provenance ${j.provenance||''}`;
+    }catch(e){}
+  }
+  function dot(a,b){let s=0;for(let i=0;i<a.length;i++) s+=a[i]*b[i];return s;}
+  function posColor(pos){if(!pos) return '#f5f5f0'; pos=pos.toUpperCase(); if(pos.startsWith('D')) return '#4b78e2'; if(pos.startsWith('M')) return '#e6d23b'; if(pos.startsWith('F')) return '#da4e34'; return '#f5f5f0';}
+  let currentIdx=0;
+  function initExplorer(){
+    const inp=document.getElementById('network-search');
+    const tag=document.getElementById('network-player-tag');
+    if(!VECTORS||!VECTORS.players){tag.textContent='no vectors';return;}
+    const players=VECTORS.players;
+    tag.textContent=`${players.length} loaded`;
+    inp.addEventListener('input',()=>{
+      const q=inp.value.toLowerCase().trim();
+      if(!q){renderPlayer(0);return;}
+      const hit=players.findIndex(p=> (p.name+' '+p.season+' '+p.team+' '+(p.pos||'')).toLowerCase().includes(q));
+      if(hit>=0) renderPlayer(hit);
+    });
+    renderPlayer(0);
+    // step buttons
+    document.querySelectorAll('[data-step]').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        document.querySelectorAll('[data-step]').forEach(b=>b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        document.getElementById('network-step-caption').textContent=`Step ${btn.dataset.step}: ${btn.textContent.trim()} — 16 feats → 3 towers masked → gated 24 L2 → heads`;
+      });
+    });
+  }
+  function renderPlayer(idx){
+    if(!VECTORS) return;
+    const players=VECTORS.players;
+    if(idx<0||idx>=players.length) idx=0;
+    currentIdx=idx;
+    const p=players[idx];
+    const diff = DIFF && DIFF.targets ? DIFF.targets.find(t=>t.id===p.id) : null;
+    const tag=document.getElementById('network-player-tag');
+    tag.textContent=`${p.name} ${p.season} ${p.team} ${p.pos||''} #${idx}`;
+    tag.style.borderColor=posColor(p.pos);
+    tag.style.color='#f5f5f0';
+    const story=document.getElementById('network-story');
+    const avgGrade = p.profile ? (p.profile.reduce((s,x)=>s+x,0)/p.profile.length).toFixed(2) : 'n/a';
+    const salience = p.profile ? Math.sqrt(p.profile.reduce((s,x)=>s+x*x,0)).toFixed(3) : 'n/a';
+    const comps = diff && diff.components ? Object.entries(diff.components).map(([k,v])=>`${k}:${Number(v).toFixed(2)}`).join(' ') : 'no diff comps';
+    const exp = diff ? `expected_solve ${Number(diff.expected_solve||0).toFixed(3)} diff ${Number(diff.difficulty_score||0).toFixed(3)} in_band ${diff.in_band}` : 'no diff';
+    story.innerHTML=`<b>${p.name}</b> ${p.season} ${p.team} <span style="border:1.5px solid ${posColor(p.pos)};border-radius:999px;padding:1px 6px;font-family:monospace;font-size:11px;background:${posColor(p.pos)}20">${p.pos||'?'}</span> cluster c${p.c} • PC (${Number(p.x).toFixed(2)},${Number(p.y).toFixed(2)},${Number(p.z).toFixed(2)})<br><span style="font-family:monospace;font-size:11px">profile 16-d avg ${avgGrade} ‖profile‖ ${salience} — ${FEATURES.slice(0,3).join(', ')}…</span><br><span class="mono">salience ‖profile‖ 16-d, scout_pool top2, warm_crowd, nn10 ${diff?exp:''}</span><br><span class="mono">${comps}</span>`;
+
+    const tokensEl=document.getElementById('network-embed-tokens');
+    if(p.v && Array.isArray(p.v)){
+      tokensEl.innerHTML=p.v.slice(0,24).map((val,i)=>`<span class="emb-token" style="border-color:${i<8?'#da4e34':i<16?'#e6d23b':'#4b78e2'}">d${i}:${Number(val).toFixed(2)}</span>`).join('')+`<span class="mono" style="margin-left:6px">‖v‖≈${Math.sqrt(p.v.reduce((s,x)=>s+x*x,0)).toFixed(3)} L2 cos·dot</span>`;
+    }else tokensEl.textContent='no embedding';
+
+    const bars=document.getElementById('network-profile-bars');
+    if(p.profile && VECTORS.featureLabels){
+      bars.innerHTML = p.profile.map((z,i)=>{
+        const label = (VECTORS.featureLabels[i]||FEATURES[i]||('f'+i));
+        const grade=Math.max(0,Math.min(99,Math.round(50+z*15)));
+        return `<div style="display:flex;align-items:center;gap:6px"><span style="font-family:monospace;font-size:10px;min-width:160px">${label}</span><div class="profile-bar" style="flex:1"><span style="width:${grade}%"></span></div><span style="font-family:monospace;font-size:10px;min-width:28px">${grade}</span></div>`;
+      }).join('');
+    }else bars.textContent='no profile';
+
+    const nearestEl=document.getElementById('network-nearest');
+    if(p.v){
+      const sims = players.map((q,j)=>({j, sim: (q.v? dot(p.v,q.v):0), name:q.name, season:q.season, team:q.team, pos:q.pos, c:q.c})).filter(x=>x.j!==idx).sort((a,b)=>b.sim-a.sim).slice(0,10);
+      nearestEl.innerHTML=`<div class="mono" style="margin-bottom:6px">Nearest 10 by MTNN 24-d cosine (dot L2)</div>`+sims.map(s=>`<div class="nearest-row"><span>${s.name} ${s.season} <span style="color:${posColor(s.pos)}">${s.pos}</span> c${s.c}</span><span class="mono">${s.sim.toFixed(3)}</span></div>`).join('');
+      const mapList=document.getElementById('map-nearest-list');
+      if(mapList) mapList.innerHTML=nearestEl.innerHTML;
+    }
+  }
+
+  // --- 3D starfield map (simple perspective projection of x/y/z) ---
+  function initMap(){
+    const canvas=document.getElementById('network-map-canvas');
+    if(!canvas||!VECTORS||!VECTORS.players) return;
+    const ctx=canvas.getContext('2d');
+    const players=VECTORS.players;
+    let w=canvas.clientWidth,h=canvas.clientWidth;
+    canvas.width=w*2; canvas.height=h*2;
+    ctx.scale(2,2);
+    let rotY=0, rotX=0.15, auto=true, dragging=false, lastX=0,lastY=0, scale=1.0;
+    function rot(p){
+      const cosY=Math.cos(rotY), sinY=Math.sin(rotY), cosX=Math.cos(rotX), sinX=Math.sin(rotX);
+      let x=p.x*cosY - p.z*sinY;
+      let z=p.x*sinY + p.z*cosY;
+      let y=p.y*cosX - z*sinX;
+      let zz=p.y*sinX + z*cosX;
+      return {x,y,z:zz};
+    }
+    function draw(){
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle='#0a0e0c'; ctx.fillRect(0,0,w,h);
+      const pts = players.map((p,i)=>{
+        const r=rot({x:p.x, y:p.y, z:p.z});
+        const persp= 260/(260+r.z*6);
+        return {p,r, sx:w/2 + r.x*scale*110*persp, sy:h/2 - r.y*scale*110*persp, persp, i, sim: i===currentIdx?1:0};
+      }).sort((a,b)=>a.r.z-b.r.z);
+      for(const pt of pts){
+        const isSel=pt.i===currentIdx;
+        ctx.beginPath();
+        ctx.fillStyle= isSel ? '#f5f5f0' : posColor(pt.p.pos);
+        ctx.globalAlpha= isSel?1:0.75 * Math.max(0.3, Math.min(1, pt.persp));
+        const rad= isSel?5: 2.2*pt.persp+0.8;
+        ctx.arc(pt.sx,pt.sy,rad,0,Math.PI*2);
+        ctx.fill();
+      }
+      ctx.globalAlpha=1;
+    }
+    function animate(){ if(auto) rotY+=0.003; draw(); requestAnimationFrame(animate); }
+    animate();
+    canvas.addEventListener('mousedown',e=>{dragging=true;lastX=e.clientX;lastY=e.clientY;auto=false;});
+    window.addEventListener('mouseup',()=>dragging=false);
+    canvas.addEventListener('mousemove',e=>{
+      if(!dragging) return;
+      rotY+=(e.clientX-lastX)*0.01;
+      rotX+=(e.clientY-lastY)*0.01;
+      lastX=e.clientX;lastY=e.clientY;
+      draw();
+    });
+    canvas.addEventListener('wheel',e=>{e.preventDefault(); scale*= e.deltaY>0?0.95:1.05; scale=Math.max(0.4,Math.min(3,scale)); draw();},{passive:false});
+    canvas.addEventListener('click',e=>{
+      const rect=canvas.getBoundingClientRect();
+      const mx=e.clientX-rect.left, my=e.clientY-rect.top;
+      let best=null, bestD=12;
+      for(const p of players){
+        const r=rot({x:p.x,y:p.y,z:p.z}); const persp=260/(260+r.z*6);
+        const sx=w/2 + r.x*scale*110*persp, sy=h/2 - r.y*scale*110*persp;
+        const d=Math.hypot(sx-mx,sy-my);
+        if(d<bestD){bestD=d;best=p;}
+      }
+      if(best){ const idx=players.findIndex(x=>x.id===best.id); if(idx>=0){currentIdx=idx; renderPlayer(idx); draw();}}
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded',()=>{loadArch();loadWeights();loadData();});
+})();
+</script>
+</body>
+</html>

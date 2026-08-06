@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#0a1510">
+<title>Players — Directory + Pitch Dossier — Vector Pitch</title>
+<meta name="description" content="633 WC player-tournaments, MTNN 24-d retrieval, searchable directory + full 16-d dossier."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/shell.css"/>
+<link rel="stylesheet" href="assets/pitch.css"/>
+<link rel="stylesheet" href="assets/responsive.css"/>
+<link rel="stylesheet" href="assets/unified.css"/>
+<link rel="stylesheet" href="assets/motion.css"/>
+<link rel="stylesheet" href="assets/player-profile.css"/>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pitch.dumbmodel.com/players">
+<meta property="og:title" content="Players — Directory + Pitch Dossier — Vector Pitch">
+<meta property="og:description" content="633 WC player-tournaments, MTNN 24-d, searchable directory + 16-d dossiers.">
+<style>
+/* Pitch page extras not in unified */
+.vp-kicker-meta{display:inline-flex;gap:8px;flex-wrap:wrap;align-items:center}
+.vp-h1-lead{margin:8px 0 6px;font-size:clamp(28px,4vw,38px)}
+.vp-h1-accent{background:var(--ink);color:var(--paper);padding:0 .22em;border-radius:8px;letter-spacing:.02em}
+.vp-lead{margin:0;font-size:14px;line-height:1.55;color:var(--ink-soft)}
+.vp-pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.vp-loading{font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+.wiki-row__grades em{font-style:normal;color:var(--ink-soft);font-weight:700;margin-right:4px}
+.diff-badge{font-family:var(--mono);font-size:10px;font-weight:800;border:1.5px solid var(--ink);border-radius:999px;padding:2px 7px;display:inline-flex;align-items:center;gap:4px}
+.diff-badge--in{background:var(--surface);color:var(--ink)}
+.diff-badge--easy{background:#1a2e1e;color:var(--green);border-color:var(--green)}
+.diff-badge--hard{background:#2e1a1a;color:#ff8a8a;border-color:#ff5c5c}
+.pc-pill{font-family:var(--mono);font-size:10px;color:var(--ink-muted);border:1px dashed var(--hairline);border-radius:999px;padding:1px 6px}
+.vp-dossier__hero h2{color:var(--ink)}
+/* make inputs feel dark */
+#wiki-search,#wiki-filter-pos,#wiki-filter-arch,#wiki-filter-diff{background:var(--surface);color:var(--ink);border-color:var(--ink)}
+#wiki-search:disabled{opacity:.6}
+/* improve mobile list tap */
+.wiki-row-wrap{cursor:pointer}
+.wiki-row-wrap:focus-within{outline:2px solid var(--blue);outline-offset:2px}
+</style>
+</head><body>
+<noscript><div role="alert" style="padding:16px;text-align:center;background:#101f16;color:#f5f5f0;border-bottom:2px solid #f5f5f0">Enable JS — Vector Pitch Players needs JavaScript for search + dossiers</div></noscript>
+
+<nav class="site-nav" data-active="/players" aria-label="Vector Pitch site"></nav>
+
+<div class="main">
+  <div class="card vx-rise">
+    <div class="kicker"><span class="kdot"></span> <span class="vp-kicker-meta"><span>Players · 633 WC player-tournaments</span><span>· MTNN 24-d L2</span><span>· median difficulty 0.4843</span><span>· 588 in-band 92.9%</span><span>· searchable</span></span></div>
+    <h1 class="hd vp-h1-lead">Player Directory <span class="vp-h1-accent">+ Pitch Dossier</span></h1>
+    <p class="vp-lead">Every WC 2018/2022 player-tournament graded, clustered into 8 archetypes, difficulty-calibrated (warm 0.985 slope 2.5). Click any row for full 16-d profile, PC map coords, scout pool, salience, and 10 nearest MTNN neighbors. Built from <code style="font-family:var(--mono);font-size:12px">vectors.json</code> + <code style="font-family:var(--mono);font-size:12px">difficulty_calibration.json</code>.</p>
+    <div class="vp-pill-row"><a class="pill" href="/play">Play →</a><a class="pill" href="/model">Lab →</a><a class="pill" href="/methods">Methods →</a><a class="pill" href="/dashboard">Dashboard →</a><span class="pill" style="background:var(--panel)">16-d z per-90 · z-norm in-tournament</span></div>
+  </div>
+
+  <section class="card" id="players-panel-directory" role="tabpanel" aria-label="Player directory">
+    <div class="wiki-controls">
+      <div class="wiki-search-row">
+        <input class="input wiki-search" id="wiki-search" type="text" placeholder="Search Messi, Mbappé, Modrić, Belgium, 2022…" autocomplete="off" spellcheck="false" disabled>
+        <div class="wiki-filters">
+          <select id="wiki-filter-pos" disabled><option value="">All positions</option><option value="DEF">DEF</option><option value="MID">MID</option><option value="FWD">FWD</option></select>
+          <select id="wiki-filter-arch" disabled><option value="">All archetypes (8)</option></select>
+          <select id="wiki-filter-diff" disabled><option value="">All difficulty</option><option value="in">In-band 0.4–0.8 (588)</option><option value="easy">Too easy &lt;0.4 (7)</option><option value="hard">Too hard &gt;0.8 (38)</option></select>
+        </div>
+      </div>
+      <div class="wiki-alphabet" id="wiki-alphabet" aria-label="Jump to initial"></div>
+      <div class="wiki-count" id="wiki-count">Loading player index…</div>
+    </div>
+    <ol class="wiki-list" id="wiki-list" style="margin-top:10px" aria-live="polite"></ol>
+  </section>
+
+  <div id="dossier-backdrop" class="vh-modal-backdrop" hidden>
+    <div class="vh-modal" role="dialog" aria-modal="true" id="dossier-modal" aria-labelledby="dossier-title">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+        <h3 class="hd" id="dossier-title" style="margin:0;font-size:18px">Dossier</h3>
+        <button class="btn" id="dossier-close" type="button" style="min-height:36px;padding:6px 10px">Close</button>
+      </div>
+      <div id="dossier-body" style="margin-top:10px;font-size:14px;line-height:1.6"></div>
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+        <a class="btn btn-accent" id="dossier-source-link" href="/methods" target="_blank" rel="noopener" style="min-height:36px">Methods →</a>
+        <button class="btn" id="dossier-copy" type="button" style="min-height:36px">Copy summary</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="/dashboard">Dashboard</a><a href="https://github.com/jcdavis131/vector-pitch" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">MTNN 24-d L2 · clusters 8 · 633 WC 2018/2022 · 588/633 in-band 92.9% · median 0.4843 · every number recomputable from tournament z-scores</div></footer>
+
+<script src="assets/site-nav.js" defer></script>
+<script>
+// Vector Pitch Players — hoops-level directory, pitch-dark theme
+// Fetch vectors.json (633 x 24-d + 16-d profile) + difficulty_calibration.json (633 targets) + eval_scoreboard.json (optional)
+// Fast client-side filter, nearest-10 via MTNN dot, grades via 0-99 from z.
+(() => {
+'use strict';
+const $ = (s, r=document) => r.querySelector(s);
+const vecPath = 'assets/vectors.json';
+const diffPath = 'assets/difficulty_calibration.json';
+const evalPath = 'assets/eval_scoreboard.json';
+
+const searchEl = $('#wiki-search');
+const posEl = $('#wiki-filter-pos');
+const archEl = $('#wiki-filter-arch');
+const diffEl = $('#wiki-filter-diff');
+const alphaEl = $('#wiki-alphabet');
+const countEl = $('#wiki-count');
+const listEl = $('#wiki-list');
+const backdrop = $('#dossier-backdrop');
+const modal = $('#dossier-modal');
+const titleEl = $('#dossier-title');
+const bodyEl = $('#dossier-body');
+const closeBtn = $('#dossier-close');
+const copyBtn = $('#dossier-copy');
+
+let RAW = null; // vectors.json root
+let PLAYERS = []; // merged enriched
+let CLUSTERS = [];
+let FEATURES = [];
+let FEATURE_LABELS = {};
+let LETTER = ''; // active alphabet
+let lastQuery = '';
+
+const gradeFromZ = (z) => {
+  if (!isFinite(z)) return 50;
+  const g = Math.round(50 + z * 15); // 1 sigma = 15 pts, matches hoops era-norm spread
+  return Math.min(99, Math.max(0, g));
+};
+const clamp = (n,a,b)=> Math.min(b,Math.max(a,n));
+
+function dot(a,b){
+  let s=0;
+  for(let i=0;i<a.length;i++) s+=a[i]*b[i];
+  return s;
+}
+
+// nearest 10 on demand excluding self, cosine = dot (L2 normed)
+function nearest10(target, all){
+  const t = target.v;
+  if (!t) return [];
+  const scored = [];
+  for (let i=0;i<all.length;i++){
+    const o = all[i];
+    if (o.id===target.id) continue;
+    if (!o.v) continue;
+    const sim = dot(t, o.v);
+    scored.push({p:o, sim});
+  }
+  scored.sort((a,b)=> b.sim - a.sim);
+  return scored.slice(0,10);
+}
+
+function difficultyBucket(d){
+  if (d==null) return 'unknown';
+  if (d < 0.4) return 'easy';
+  if (d > 0.8) return 'hard';
+  return 'in';
+}
+function bucketLabel(b){
+  return b==='easy'?'Too Easy':b==='hard'?'Too Hard':'In-band';
+}
+
+function buildAlphabet(){
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  const frag = document.createDocumentFragment();
+  // All button
+  const allBtn = document.createElement('button');
+  allBtn.textContent = 'All';
+  allBtn.dataset.letter = '';
+  allBtn.className = 'is-active';
+  allBtn.type='button';
+  allBtn.addEventListener('click', ()=>{ LETTER=''; [...alphaEl.children].forEach(c=>c.classList.remove('is-active')); allBtn.classList.add('is-active'); renderList(); });
+  frag.appendChild(allBtn);
+  letters.forEach(L=>{
+    const b=document.createElement('button');
+    b.textContent=L;
+    b.dataset.letter=L;
+    b.type='button';
+    b.addEventListener('click', ()=>{
+      if (LETTER===L){ LETTER=''; b.classList.remove('is-active'); alphaEl.firstChild.classList.add('is-active'); }
+      else { LETTER=L; [...alphaEl.children].forEach(c=>c.classList.remove('is-active')); b.classList.add('is-active'); }
+      renderList();
+    });
+    frag.appendChild(b);
+  });
+  alphaEl.appendChild(frag);
+}
+
+function renderList(){
+  const q = (searchEl.value||'').trim().toLowerCase();
+  const pos = posEl.value||'';
+  const archIdx = archEl.value==='' ? null : parseInt(archEl.value,10);
+  const diffFilter = diffEl.value||'';
+
+  lastQuery = q;
+  const filtered = PLAYERS.filter(p=>{
+    if (LETTER && !p.name.toUpperCase().startsWith(LETTER)) return false;
+    if (pos && p.pos!==pos) return false;
+    if (archIdx!==null && p.c!==archIdx) return false;
+    if (diffFilter){
+      const b = difficultyBucket(p.difficulty_score);
+      if (diffFilter!==b) return false;
+    }
+    if (q){
+      const hay = (p.name+' '+p.team+' '+p.season+' '+p.pos+' '+(CLUSTERS[p.c]||'') ).toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  countEl.textContent = `${filtered.length} / ${PLAYERS.length} players${q?` for “${searchEl.value.trim()}”`:''}${LETTER?' · '+LETTER+'*':''} · click for dossier`;
+  // render in chunks for perceived speed
+  listEl.innerHTML='';
+  if (!filtered.length){
+    const li=document.createElement('li');
+    li.className='wiki-empty';
+    li.textContent = 'No players match filters.';
+    listEl.appendChild(li);
+    return;
+  }
+  const frag=document.createDocumentFragment();
+  // cap initial render to 250 then idle render rest to keep fast
+  const firstN = Math.min(filtered.length, 250);
+  for(let i=0;i<firstN;i++) frag.appendChild(rowFor(filtered[i]));
+  listEl.appendChild(frag);
+  if (filtered.length > firstN){
+    let idx=firstN;
+    const pump=()=>{
+      const chunk=document.createDocumentFragment();
+      const end=Math.min(idx+120, filtered.length);
+      for(; idx<end; idx++) chunk.appendChild(rowFor(filtered[idx]));
+      listEl.appendChild(chunk);
+      if (idx < filtered.length) requestAnimationFrame(pump);
+    };
+    requestAnimationFrame(pump);
+  }
+}
+
+function rowFor(p){
+  const li=document.createElement('li');
+  li.className='wiki-row-wrap vx-rise';
+  li.tabIndex=0;
+  li.dataset.id=p.id;
+  li.setAttribute('role','button');
+  li.setAttribute('aria-label', `${p.name} ${p.season} ${p.team} dossier`);
+
+  const avgGrade = p._avgGrade!=null? p._avgGrade : 50;
+  const topTrait = p._topTrait? p._topTrait.label : '';
+  const diff = p.difficulty_score!=null? p.difficulty_score.toFixed(3) : '—';
+  const solve = p.expected_solve!=null? p.expected_solve.toFixed(3) : '—';
+  const bucket = difficultyBucket(p.difficulty_score);
+  const bucketCls = bucket==='in'?'diff-badge--in': bucket==='easy'?'diff-badge--easy':'diff-badge--hard';
+
+  li.innerHTML = `
+    <button class="wiki-row" type="button" style="flex:1 1 auto">
+      <span class="wiki-row__name">${escapeHtml(p.name)} <span class="vh-team-tag">${escapeHtml(p.team)}</span> <span style="opacity:.7;font-size:10px">${escapeHtml(p.season)}</span></span>
+      <span class="wiki-row__meta" style="flex-wrap:wrap">
+        <span>${escapeHtml(p.pos)}</span>
+        <span title="${escapeHtml(CLUSTERS[p.c]||'cluster '+p.c)}">▸ ${escapeHtml((CLUSTERS[p.c]||'c'+p.c).split(' + ')[0])}</span>
+        <span class="diff-badge ${bucketCls}" title="difficulty ${diff} expected solve ${solve}">${bucketLabel(bucket)} ${diff}</span>
+        <span class="pc-pill" title="PCA map coords">x${p.x!=null?p.x.toFixed(2):'–'} y${p.y!=null?p.y.toFixed(2):'–'} z${p.z!=null?p.z.toFixed(2):'–'}</span>
+      </span>
+    </button>
+    <span class="wiki-row__grades" title="meta grades — top trait ${escapeHtml(topTrait)} avg ${avgGrade}"><em>${p.pos}</em>${avgGrade} ${escapeHtml(topTrait.slice(0,10))}</span>
+  `;
+  // expose solve on hover via title
+  li.querySelector('.wiki-row').title = `${p.name} ${p.season} ${p.team} ${p.pos} · ${CLUSTERS[p.c]||'c'+p.c} · diff ${diff} solve ${solve} · grades avg ${avgGrade}`;
+  li.addEventListener('click', ()=> openDossier(p));
+  li.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openDossier(p);} });
+  const btnInner = li.querySelector('button');
+  if (btnInner) btnInner.addEventListener('click', (e)=>{ e.preventDefault(); openDossier(p); });
+  return li;
+}
+
+function escapeHtml(s){ return String(s).replace(/[&<>"]/g, c=> ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+function openDossier(p){
+  titleEl.textContent = `${p.name} — ${p.season} · ${p.team} · ${p.pos}`;
+  // compute grades + sims
+  const grades = (p.profile||[]).map((z,i)=>({ idx:i, key: FEATURES[i], label: FEATURE_LABELS[FEATURES[i]]||FEATURES[i]||`F${i}`, z, grade: gradeFromZ(z) }));
+  grades.sort((a,b)=> b.grade - a.grade);
+  const nearest = nearest10(p, PLAYERS);
+  const bucket = difficultyBucket(p.difficulty_score);
+  const comps = p._diffComponents||{};
+  const avg = p._avgGrade;
+
+  const simHtml = nearest.map(({p:o, sim})=> `<li><span><b>${escapeHtml(o.name)}</b> ${escapeHtml(o.season)} · ${escapeHtml(o.team)} · ${escapeHtml(o.pos)} · ${(CLUSTERS[o.c]||'').split(' + ')[0]}</span><span style="font-variant-numeric:tabular-nums">${sim.toFixed(3)}</span></li>`).join('') || '<li style="opacity:.6">No sims computed</li>';
+
+  const skillBars = grades.map(g=>{
+    const pct = clamp(g.grade,0,99);
+    const cls = pct>=90?'pp-skill__grade--gold': pct>=75?'pp-skill__grade--green': pct>=60?'pp-skill__grade--blue': pct>=35?'pp-skill__grade--mid':'pp-skill__grade--low';
+    const width = pct+'%';
+    return `<li class="pp-skill"><div class="pp-skill__head"><span class="pp-skill__label" title="${escapeHtml(g.key)} ${g.z>=0?'+':''}${g.z.toFixed(2)}σ">${escapeHtml(g.label)}</span><span class="pp-skill__grade ${cls}">${pct}</span></div><div class="pp-skill__track"><div class="pp-skill__fill" style="width:${width};background:${pct>=85?'var(--yellow)':pct>=70?'var(--green)':pct>=55?'var(--blue)':'var(--ink)'}"></div></div><div class="pp-skill__foot"><span>${escapeHtml(g.key)}</span><span>${g.z>=0?'+':''}${g.z.toFixed(2)}σ</span></div></li>`;
+  }).join('');
+
+  bodyEl.innerHTML = `
+  <div class="vp-dossier">
+    <div class="vp-dossier__hero">
+      <h2 class="pp-name" style="margin:0;font-size:clamp(22px,5vw,30px)">${escapeHtml(p.name)} <span style="opacity:.7;font-size:14px;font-family:var(--mono)">${escapeHtml(p.season)} · ${escapeHtml(p.team)} · ${escapeHtml(p.pos)}</span></h2>
+      <div class="vp-dossier__meta">
+        <span class="vp-dossier__pill vp-dossier__pill--arch" title="Archetype cluster ${p.c}">◐ ${escapeHtml(CLUSTERS[p.c]||'cluster '+p.c)}</span>
+        <span class="vp-dossier__pill" title="Difficulty score 0-1 — median 0.4843">diff ${p.difficulty_score!=null?p.difficulty_score.toFixed(4):'—'} · ${bucketLabel(bucket)}</span>
+        <span class="vp-dossier__pill">solve ${p.expected_solve!=null?p.expected_solve.toFixed(4):'—'}</span>
+        <span class="vp-dossier__pill">avg grade ${avg!=null?avg:'—'}</span>
+        <span class="vp-dossier__pill">MTNN ${p.v? '24-d L2' : 'n/a'}</span>
+      </div>
+      <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="pc-pill">PC x ${p.x!=null?p.x.toFixed(3):'–'} y ${p.y!=null?p.y.toFixed(3):'–'} z ${p.z!=null?p.z.toFixed(3):'–'}</span><span class="pc-pill">id ${p.id}</span><span class="pc-pill">in-band ${p.in_band==null?'?':p.in_band?'yes':'no'}</span></div>
+    </div>
+
+    <div class="vp-dossier__grid">
+      <div class="vp-dossier__box">
+        <h4>Archetype & Map</h4>
+        <div class="vp-dossier__kv"><span>Cluster id</span><span>${p.c} / ${CLUSTERS.length}</span></div>
+        <div class="vp-dossier__kv"><span>Archetype</span><span>${escapeHtml(CLUSTERS[p.c]||'—')}</span></div>
+        <div class="vp-dossier__kv"><span>Position</span><span>${escapeHtml(p.pos)}</span></div>
+        <div class="vp-dossier__kv"><span>PC coords</span><span style="font-variant-numeric:tabular-nums">${p.x!=null?p.x.toFixed(4):'–'}, ${p.y!=null?p.y.toFixed(4):'–'}, ${p.z!=null?p.z.toFixed(4):'–'}</span></div>
+        <div class="vp-dossier__kv"><span>Team / Season</span><span>${escapeHtml(p.team)} / ${escapeHtml(p.season)}</span></div>
+        <div style="margin-top:8px;font-size:11px;color:var(--ink-muted);font-family:var(--mono)">Clusters are MTNN 24-d L2 k-means 8 — see eval_scoreboard 92.9% in-band.</div>
+      </div>
+
+      <div class="vp-dossier__box">
+        <h4>Difficulty Calibration <span style="opacity:.6">median 0.4843</span></h4>
+        <div class="vp-dossier__kv"><span>difficulty_score</span><span style="font-variant-numeric:tabular-nums">${p.difficulty_score!=null?p.difficulty_score.toFixed(4):'—'}</span></div>
+        <div class="vp-dossier__kv"><span>expected_solve</span><span>${p.expected_solve!=null?p.expected_solve.toFixed(4):'—'}</span></div>
+        <div class="vp-dossier__kv"><span>in-band 0.4–0.8</span><span>${p.in_band==null?'—':p.in_band?'yes':'no'}</span></div>
+        <div class="vp-dossier__kv"><span>flag</span><span>${escapeHtml(p.flag||'—')}</span></div>
+        <div class="vp-dossier__kv"><span>warm_crowd (cnt)</span><span>${comps.warm_crowd!=null?comps.warm_crowd:'—'}</span></div>
+        <div class="vp-dossier__kv"><span>nn10_sim</span><span>${comps.nn10_sim!=null?Number(comps.nn10_sim).toFixed(4):'—'}</span></div>
+        <div class="vp-dossier__kv"><span>scout_pool</span><span>${comps.scout_pool!=null?comps.scout_pool:'—'}</span></div>
+        <div class="vp-dossier__kv"><span>salience (‖profile‖)</span><span>${comps.salience!=null?Number(comps.salience).toFixed(3):'—'}</span></div>
+        <div style="margin-top:6px;font-size:11px;color:var(--ink-muted);font-family:var(--mono)">Slope 2.5 warm_sim 0.985 MTNN-calibrated. 588/633 in-band, 7 too-easy, 38 too-hard.</div>
+      </div>
+    </div>
+
+    <div class="pp-section"><div class="pp-section-head">16-d Profile — 0-99 grades from z (50+15σ)</div><ul class="pp-skills-grid" style="margin-top:8px">${skillBars}</ul></div>
+
+    <div class="vp-dossier__grid">
+      <div class="vp-dossier__box"><h4>Scout Pool / Salience</h4><div class="vp-dossier__kv"><span>scout_pool</span><span>${comps.scout_pool!=null?comps.scout_pool:'—'} <span style="opacity:.6;font-size:10px">profile top-2</span></span></div><div class="vp-dossier__kv"><span>salience</span><span>${comps.salience!=null?Number(comps.salience).toFixed(4):'—'} <span style="opacity:.6">‖profile‖ 16-d</span></span></div><div class="vp-dossier__kv"><span>warm_crowd</span><span>${comps.warm_crowd!=null?comps.warm_crowd:'—'} neighbors</span></div><div class="vp-dossier__kv"><span>avg grade</span><span>${avg}</span></div><div class="vp-dossier__kv"><span>top trait</span><span>${escapeHtml(grades[0]?.label||'—')} ${grades[0]?.grade||''}</span></div></div>
+      <div class="vp-dossier__box"><h4>Nearest 10 — MTNN 24-d cosine</h4><ol class="vp-dossier__sim">${simHtml}</ol><div style="margin-top:6px;font-size:10px;color:var(--ink-muted);font-family:var(--mono)">L2-normalized v dot = cosine. 24-d retrieval, not PCA3 map.</div></div>
+    </div>
+
+    <div class="vp-dossier__box"><h4>All 633 PC Map — Reference</h4><div style="font-family:var(--mono);font-size:11px;line-height:1.4;color:var(--ink-soft)">x PCA1, y PCA2, z PCA3 of tournament-z 16-d · this player x=${p.x?.toFixed(3)} y=${p.y?.toFixed(3)} z=${p.z?.toFixed(3)} · map is PCA3 from original tournament-z; retrieval is MTNN 24-d (beats PCA3 0.797 vs 0.7008 pos-cluster).</div></div>
+  </div>`;
+
+  backdrop.hidden=false;
+  document.body.classList.add('vh-modal-open');
+  // store for copy
+  backdrop.dataset.lastId = p.id;
+  // focus close
+  closeBtn.focus();
+}
+
+function closeDossier(){
+  backdrop.hidden=true;
+  document.body.classList.remove('vh-modal-open');
+  titleEl.textContent='Dossier';
+}
+
+closeBtn.addEventListener('click', closeDossier);
+backdrop.addEventListener('click', (e)=>{ if(e.target===backdrop) closeDossier(); });
+document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && !backdrop.hidden) closeDossier(); });
+copyBtn.addEventListener('click', async ()=>{
+  const p = PLAYERS.find(x=> String(x.id)===String(backdrop.dataset.lastId));
+  if(!p) return;
+  const txt = `${p.name} ${p.season} ${p.team} ${p.pos} — ${CLUSTERS[p.c]||'c'+p.c} — diff ${p.difficulty_score?.toFixed?.(3)||'–'} solve ${p.expected_solve?.toFixed?.(3)||'–'} — PC ${p.x?.toFixed(3)},${p.y?.toFixed(3)},${p.z?.toFixed(3)} — avg grade ${p._avgGrade} — pitch.dumbmodel.com/players`;
+  try{ await navigator.clipboard.writeText(txt); copyBtn.textContent='Copied!'; setTimeout(()=>copyBtn.textContent='Copy summary',1500);}catch{}
+});
+
+async function init(){
+  buildAlphabet();
+  try{
+    const [vecRes, diffRes, evalRes] = await Promise.all([
+      fetch(vecPath).then(r=>{if(!r.ok) throw new Error('vectors '+r.status); return r.json()}),
+      fetch(diffPath).then(r=>{if(!r.ok) throw new Error('diff '+r.status); return r.json()}),
+      fetch(evalPath).then(r=> r.ok? r.json(): null).catch(()=>null)
+    ]);
+    RAW = vecRes;
+    CLUSTERS = vecRes.clusters||[];
+    FEATURES = vecRes.features||[];
+    FEATURE_LABELS = vecRes.featureLabels||{};
+
+    // populate archetype filter
+    archEl.innerHTML='<option value="">All archetypes (8)</option>';
+    CLUSTERS.forEach((name,i)=>{
+      const opt=document.createElement('option');
+      opt.value=String(i);
+      opt.textContent=`${i}: ${name}`;
+      archEl.appendChild(opt);
+    });
+
+    // merge difficulty map by id
+    const diffMap = new Map();
+    (diffRes.targets||[]).forEach(t=> diffMap.set(t.id, t));
+
+    PLAYERS = (vecRes.players||[]).map(pl=>{
+      const d = diffMap.get(pl.id);
+      const profile = pl.profile||[];
+      const grades = profile.map(z=> gradeFromZ(z));
+      const avg = grades.length? Math.round(grades.reduce((a,b)=>a+b,0)/grades.length) : null;
+      const sortedTraits = profile.map((z,i)=>({i,z, key:FEATURES[i], label:FEATURE_LABELS[FEATURES[i]]||FEATURES[i], grade:gradeFromZ(z)})).sort((a,b)=> b.grade - a.grade);
+      return {
+        ...pl,
+        difficulty_score: d?.difficulty_score ?? null,
+        expected_solve: d?.expected_solve ?? null,
+        in_band: d?.in_band ?? null,
+        flag: d?.flag ?? null,
+        _diffComponents: d?.components || null,
+        _diffComponentsRaw: d?.components,
+        _avgGrade: avg,
+        _topTrait: sortedTraits[0]||null,
+        _grades: grades,
+        _sortedTraits: sortedTraits,
+        get _diffComponents(){ return this._diffComponentsRaw; }
+      };
+    });
+
+    // expose components accessor cleanly
+    PLAYERS.forEach(p=>{
+      const d = diffMap.get(p.id);
+      p._diffComponents = d?.components||null;
+      p.difficulty_score = d?.difficulty_score??p.difficulty_score;
+      p.expected_solve = d?.expected_solve??p.expected_solve;
+      p.in_band = d?.in_band??p.in_band;
+      p.flag = d?.flag??p.flag;
+    });
+
+    // sort default by name for directory
+    PLAYERS.sort((a,b)=> a.name.localeCompare(b.name));
+
+    // enable controls
+    [searchEl,posEl,archEl,diffEl].forEach(el=>{ el.disabled=false; });
+    countEl.textContent = `${PLAYERS.length} players loaded — median diff 0.4843 — search ready`;
+    renderList();
+
+    // wire search with debounce
+    let t=null;
+    const trigger=()=>{ clearTimeout(t); t=setTimeout(renderList, 70); };
+    searchEl.addEventListener('input', trigger);
+    posEl.addEventListener('change', renderList);
+    archEl.addEventListener('change', renderList);
+    diffEl.addEventListener('change', renderList);
+
+    // optional: log eval
+    if (evalRes) console.log('[players] eval', evalRes?.difficulty?.new_mtnn24||evalRes?.difficulty);
+
+  }catch(e){
+    console.error(e);
+    countEl.textContent = 'Failed to load vectors/difficulty: '+ (e.message||e);
+    const li=document.createElement('li'); li.className='wiki-empty'; li.textContent='Load failed — see console.'; listEl.appendChild(li);
+  }
+}
+
+if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
+</body></html>

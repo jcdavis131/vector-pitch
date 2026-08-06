@@ -1,28 +1,26 @@
-/* Shared top navigation — mount on <nav class="site-nav" data-active="/path"> */
+/* Shared top navigation — Vector Pitch mount on <nav class="site-nav" data-active="/path"> */
 (function (global) {
   'use strict';
-
   var LINKS = [
-    { href: '/play', label: 'Play' },
-    { href: '/model', label: 'Network', title: 'MTNN Network Explorer' },
-    { href: '/trends', label: 'Trends', title: 'Trend Research' },
-    { href: '/players', label: 'Players', title: 'Player References' },
-    { href: '/teams', label: 'Teams', title: 'Team Labs' },
-    { href: '/methods', label: 'Methods' },
-    { href: '/leaderboard', label: 'Leaderboard' },
-    { href: '/dashboard', label: 'Lab', title: 'Dumbmodel Lab — Data→Clean→Train→Eval' },
+    { href: '/', label: 'Play', title: 'Guess The Player daily' },
+    { href: '/model', label: 'Lab', title: 'MTNN 24-d Training Cockpit' },
+    { href: '/players', label: 'Players', title: '633 WC player dossier' },
+    { href: '/methods', label: 'Methods', title: 'How built — every number recomputable' },
+    { href: '/trends', label: 'Trends', title: '2018 → 2022 drift' },
+    { href: '/dashboard', label: 'Dash', title: 'Lab pipeline status' }
   ];
-
   function mount() {
     var nav = document.querySelector('.site-nav');
     if (!nav) return;
     var active = nav.getAttribute('data-active') || '';
     var linksHtml = LINKS.map(function (l) {
-      var isActive = active === l.href ||
-        (active === '/players' && (l.href === '/players')) ||
-        (active === '/trends' && l.href === '/trends') ||
+      var isActive = active === l.href || (active === '/' && l.href === '/') ||
+        (active === '/play' && l.href === '/') ||
         (active === '/model' && l.href === '/model') ||
-        (active === '/teams' && l.href === '/teams');
+        (active === '/players' && l.href === '/players') ||
+        (active === '/methods' && l.href === '/methods') ||
+        (active === '/trends' && l.href === '/trends') ||
+        (active === '/dashboard' && l.href === '/dashboard');
       return '<a class="site-nav__link' + (isActive ? ' is-active' : '') + '"' +
         ' href="' + l.href + '"' +
         (l.title ? ' title="' + l.title + '"' : '') +
@@ -30,15 +28,13 @@
         '>' + l.label + '</a>';
     }).join('');
     nav.innerHTML =
-      '<a class="site-nav__brand" href="/">VECTOR<span class="site-nav__accent">HOOPS</span></a>' +
+      '<a class="site-nav__brand" href="/">VECTOR<span class="site-nav__accent">PITCH</span></a>' +
       '<div class="site-nav__links">' + linksHtml + '</div>';
   }
-
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', mount);
   } else {
     mount();
   }
-
-  global.VHSiteNav = { mount: mount, links: LINKS };
+  global.VPSiteNav = { mount: mount, links: LINKS };
 })(window);

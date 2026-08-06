@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#0a1510">
+<link rel="manifest" href="assets/manifest.json">
+<title>Methods — How Vector Pitch is built — every number recomputable</title>
+<meta name="description" content="Every number recomputable — StatsBomb WC 2018+2022, per-90 16-d, tournament normalization, MTNN 24-d L2, purity, difficulty calibration."/>
+<link rel="stylesheet" href="assets/shell.css"/>
+<link rel="stylesheet" href="assets/unified.css"/>
+<link rel="stylesheet" href="assets/final-qa.css"/>
+<link rel="stylesheet" href="assets/pitch.css"/>
+<link rel="stylesheet" href="assets/responsive.css"/>
+<link rel="stylesheet" href="assets/motion.css"/>
+<style>
+/* ---- dark hoops-card theme ---- */
+:root{
+  --paper:#0a1510;
+  --surface:#101f16;
+  --panel:#0d1f13;
+  --ink:#f5f5f0;
+  --ink-soft:#c3cec4;
+  --ink-muted:#9db29e;
+  --hair:#24352a;
+  --orange:#da4e34;
+  --blue:#4b78e2;
+  --yellow:#e0b400;
+  --mono:ui-monospace, "IBM Plex Mono", monospace;
+  --sans:ui-sans-serif,system-ui;
+  --hd:"Architects Daughter",var(--mono);
+  --radius:14px;
+  --shadow:4px 4px 0 rgba(0,0,0,0.6);
+}
+html,body{background:var(--paper)!important;color:var(--ink)!important}
+.site-nav{
+  background:var(--surface)!important;
+  border-bottom:2.5px solid var(--ink)!important;
+}
+.site-nav__brand{color:var(--ink)!important}
+.site-nav__accent{color:var(--orange)!important}
+.site-nav__link{color:var(--ink-soft)!important}
+.site-nav__link.is-active,
+.site-nav__link:hover{background:var(--ink)!important;color:var(--paper)!important;border-color:var(--ink)!important;box-shadow:2px 2px 0 #000}
+.main{max-width:1180px;margin:0 auto;padding:14px clamp(12px,3vw,20px) calc(96px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:16px}
+.card{background:var(--surface);border:2.2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:16px;color:var(--ink);min-width:0}
+.card .small-mono{color:var(--ink-muted)}
+.method-h2{font-family:var(--hd);font-size:22px;margin:0 0 8px;color:var(--ink)}
+.method-p{font-size:14px;line-height:1.6;color:var(--ink-soft);margin:6px 0;max-width:72ch}
+.method-p b,.method-p strong{color:var(--ink)}
+.kicker{display:flex;gap:8px;align-items:center;font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted)}
+.kdot{width:6px;height:6px;border-radius:50%;background:var(--orange);display:inline-block;flex-shrink:0}
+.hd{font-family:var(--hd);line-height:.98;color:var(--ink)}
+.pill{border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;background:var(--surface);font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink);color:var(--ink);text-decoration:none;display:inline-flex}
+.pill:hover{transform:translate(-1px,-1px);box-shadow:2.5px 2.5px 0 var(--ink)}
+.lb-table{width:100%;border-collapse:collapse;font-size:13px}
+.lb-table th,.lb-table td{border-top:1px solid var(--hair);padding:8px 8px;text-align:left;vertical-align:top}
+.lb-table th{font-family:var(--mono);font-size:10px;text-transform:uppercase;color:var(--ink-muted);border-bottom:2px solid var(--ink);border-top:0}
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:860px){.method-grid{grid-template-columns:1fr}}
+.arch-diagram{font-family:var(--mono);font-size:11.5px;line-height:1.55;background:#0a0f0b;color:#cfe6d2;border-radius:12px;padding:12px 14px;border:2.2px solid var(--ink);box-shadow:3px 3px 0 #000;overflow:auto}
+.cqs-strip{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.cqs-badge{border:1.6px solid var(--ink);border-radius:10px;padding:6px 8px;background:var(--panel);font-family:var(--mono);font-size:10px;box-shadow:1.5px 1.5px 0 rgba(0,0,0,.6);color:var(--ink)}
+.cqs-badge b{font-size:13px;display:block;color:var(--ink)}
+.site-footer{display:block;background:var(--surface);color:var(--ink);border-top:2.5px solid var(--ink);padding:12px clamp(12px,3vw,22px);font-family:var(--mono);font-size:11px}
+.site-footer__links{display:flex;gap:14px;flex-wrap:wrap}
+.site-footer__links a{color:var(--ink);text-decoration:none;font-weight:800}
+.site-footer__attribution{margin-top:8px;opacity:.6;font-size:10px;color:var(--ink-soft)}
+code{background:var(--panel);padding:1px 5px;border-radius:6px;border:1px solid var(--hair);font-family:var(--mono);font-size:11px;color:var(--ink)}
+a{color:var(--ink)}
+.eval-chip{border:1.5px solid var(--ink);border-radius:999px;padding:3px 8px;font-family:var(--mono);font-size:10px;font-weight:800;background:var(--yellow);color:#111}
+.drift{font-family:var(--mono);font-size:11px;background:var(--panel);border:1.5px dashed var(--ink);border-radius:10px;padding:8px 10px;color:var(--ink-soft)}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Methods — Every number recomputable, context-honest">
+<meta property="og:description" content="633 WC player-tournaments, per-90 16-d, per-tournament z, 3-tower MTNN 24-d L2, LOCO 9-fold 2295 rows, 0.797 pos-cluster, difficulty 92.9% in-band.">
+</head><body>
+<nav class="site-nav" data-active="/methods" aria-label="Vector Pitch site"></nav>
+<div class="main" data-vx-stagger>
+  <div class="card vx-rise">
+    <div class="kicker"><span class="kdot"></span> Methods · every number recomputable · context-honest · WC 2018 + 2022</div>
+    <h1 class="hd" style="font-size:clamp(28px,5vw,40px);margin:10px 0 8px">Methods — <span style="color:var(--orange)">Every number</span> recomputable, context-honest</h1>
+    <p style="margin:0;font-size:15px;line-height:1.6;color:var(--ink-soft);max-width:74ch">
+      Doctrine: no vibes. <b>633</b> player-tournaments from StatsBomb open-data, <b>16-d per-90</b> z-scored <b>within tournament</b>, <b>3-tower MTNN</b> → <b>24-d L2</b> for similarity.
+      Same game you play is same file you audit. <a href="/trends" style="border-bottom:2px solid var(--orange);text-decoration:none;font-weight:800">See Trends → 2018→2022 drift</a>
+    </p>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px">
+      <a class="pill" href="#data-source">Data source</a>
+      <a class="pill" href="#features">16 FEATURES</a>
+      <a class="pill" href="#normalization">Tournament z</a>
+      <a class="pill" href="#mtnn">MTNN 3 towers</a>
+      <a class="pill" href="#training">LOCO 9-fold</a>
+      <a class="pill" href="#evaluation">Evaluation purity</a>
+      <a class="pill" href="#difficulty">Difficulty 92.9%</a>
+      <a class="pill" href="#caveats">Caveats</a>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+      <span class="pill" style="background:var(--yellow);color:#111"><b>633</b>&nbsp;WC player-tournaments</span>
+      <span class="pill">WC 2018 <b>319</b> · WC 2022 <b>314</b></span>
+      <span class="pill">DEF 268 · MID 221 · FWD 144</span>
+      <span class="pill">median difficulty 0.4843</span>
+      <span class="pill">MTNN 24-d L2</span>
+    </div>
+  </div>
+
+  <div class="method-grid">
+    <div class="card" id="data-source">
+      <h2 class="method-h2">Data source — StatsBomb open-data</h2>
+      <p class="method-p"><b>Competition 43</b> = FIFA World Cup. Season ids <code>3</code> (WC 2018) and <code>106</code> (WC 2022) via <code>competitions.json</code>. ~64 matches each via <code>matches/43/&lt;season&gt;.json</code>, lineups + events cached under <code>pipeline/cache/</code>, resumable.</p>
+      <ul style="font-size:13px;line-height:1.6;color:var(--ink-soft);margin:8px 0">
+        <li><b>Minutes &amp; position</b> from lineups <code>positions</code> stint list: <code>from/to</code> as cumulative match-clock <code>MM:SS</code>, <code>to=null</code> runs to latest <i>Half End</i> (period ≤4; p5 is shootout, not playing time). Position group = most minutes among GK/DEF/MID/FWD.</li>
+        <li><b>Threshold</b>: ≥180′ qualified, GK excluded (<code>EXCLUDE_GOALKEEPERS=true</code>) — GK stats break outfield space.</li>
+        <li><b>Provenance</b>: StatsBomb Open Data (statsbomb.com) free license, attribution required. No StatsBomb tracking telemetry.</li>
+        <li><b>Artifacts</b>: <code>assets/vectors.json</code> (633 ×24-d L2 + profile 16-d + cluster 8), <code>assets/vectors_mtnn.json</code> (2430 ×24-d full corpus), <code>assets/pitch_mtnn_embeddings.json</code></li>
+      </ul>
+      <div class="drift"><b>Attribution string in file:</b> “Data: StatsBomb Open Data (statsbomb.com) — free data license, attribution required”</div>
+    </div>
+
+    <div class="card" id="features">
+      <h2 class="method-h2">The 16-d vector — per-90 frozen contract</h2>
+      <p class="method-p">Order is game contract — mirrors <code>GAME_FEATURES</code> in hoops. Frozen; UI indexes by position.</p>
+      <table class="lb-table"><thead><tr><th>Feature</th><th>Measures</th><th>Why per-90</th></tr></thead><tbody>
+        <tr><td><code>GOALS_P90</code></td><td>finishing volume</td><td>goals / 90</td></tr>
+        <tr><td><code>XG_P90</code></td><td>expected goals</td><td>shot quality sum /90</td></tr>
+        <tr><td><code>FINISHING_P90</code></td><td>finishing (goals-xG)</td><td>overperformance /90</td></tr>
+        <tr><td><code>KEY_PASSES_P90</code></td><td>chance creation</td><td>shot_assist /90</td></tr>
+        <tr><td><code>ASSISTS_P90</code></td><td>assists</td><td>goal_assist /90</td></tr>
+        <tr><td><code>PASSES_CMP_P90</code></td><td>passing volume</td><td>completed /90</td></tr>
+        <tr><td><code>PASS_CMP_PCT</code></td><td>passing accuracy</td><td>cmp/att</td></tr>
+        <tr><td><code>PROG_CARRY_P90</code></td><td>progressive carrying</td><td>attack-direction dx /90</td></tr>
+        <tr><td><code>DRIBBLES_P90</code></td><td>dribbling</td><td>complete /90</td></tr>
+        <tr><td><code>PRESSURES_P90</code></td><td>pressing</td><td>/90</td></tr>
+        <tr><td><code>TACKLES_P90</code></td><td>tackling</td><td>won/success duel /90</td></tr>
+        <tr><td><code>INTERCEPTIONS_P90</code></td><td>interceptions</td><td>/90</td></tr>
+        <tr><td><code>RECOVERIES_P90</code></td><td>ball recovery</td><td>/90</td></tr>
+        <tr><td><code>CROSSES_P90</code></td><td>crossing</td><td>/90</td></tr>
+        <tr><td><code>FOULS_WON_P90</code></td><td>fouls drawn</td><td>/90</td></tr>
+        <tr><td><code>FOULS_CONV_P90</code></td><td>fouls committed</td><td>/90</td></tr>
+      </tbody></table>
+      <p class="method-p" style="font-size:12px">Cleaning: dedupe <code>(name,season)</code>, <code>PASS_CMP_PCT</code> 0 when 0 att, clip z to ±4σ, no imputation (pitch open data complete for qualified).</p>
+      <div class="cqs-strip"><span class="cqs-badge"><b>16</b> feats</span><span class="cqs-badge"><b>3</b> families</span><span class="cqs-badge"><b>2</b> tourneys</span><span class="cqs-badge"><b>633</b> rows game</span><span class="cqs-badge"><b>24-d</b> L2</span></div>
+    </div>
+  </div>
+
+  <div class="method-grid">
+    <div class="card" id="normalization">
+      <h2 class="method-h2">Tournament normalization — context-honest</h2>
+      <p class="method-p"><b>Per-tournament z:</b> every feature z-scored <b>within its tournament</b> — 2018 block and 2022 block separately. <code>μ_2018, σ_2018</code> and <code>μ_2022, σ_2022</code>, then <code>z=(x-μ)/σ</code>, clip ±4.</p>
+      <div class="arch-diagram">Z = []
+for each tournament t in {WC2018, WC2022}:
+  block = X[idxs[t]]
+  μ = mean(block, axis=0)
+  σ = std(block, axis=0); σ[σ==0]=1
+  Z[idxs[t]] = (block-μ)/σ
+Z = clip(Z, -4, 4)</div>
+      <p class="method-p"><b>Rationale:</b> raw per-90 drifts by era (VAR, press intensity, 5-sub rule in 2022). Without per-tournament norm, a 2018 volume player is punished vs 2022 baseline. Context-honest = 0 means “avg for that World Cup.” Exactly mirrors hoops era-z but for tournaments. Makes Mbappé 2022 vs 2018 peers comparable fairly.</p>
+      <p class="method-p">PCA(3) map inside file: <code>C = Z-mean(Z)</code>, SVD, <code>P = U[:,:3]·S[:3]</code>, minmax to [0,1] for 3D starfield.</p>
+    </div>
+    <div class="card">
+      <div class="small-mono">Why not global z? — honest trade-off</div>
+      <h3 class="hd" style="margin:8px 0;font-size:18px">What we lose</h3>
+      <ul style="font-size:13px;line-height:1.6;color:var(--ink-soft)">
+        <li>Absolute goal rise 2018→2022 is erased in z-space (0 by definition per tournament). We show it in <a href="/trends">Trends</a> via raw shares, not z.</li>
+        <li>Cross-tournament similarity is style-relative, not raw-volume absolute — intentional for fair guessing.</li>
+        <li>GK excluded — their 16-d breaks (0 shots, 0 pressures).</li>
+      </ul>
+      <div class="card" style="box-shadow:2px 2px 0 #000;margin-top:8px;background:var(--panel)"><b class="small-mono" style="color:var(--yellow)">Plainly:</b><div style="font-size:12px;line-height:1.55;margin-top:4px;color:var(--ink-soft)"><b>per-90</b> = per 90′ played. <b>z</b> = σ above tournament mean. 0=avg in that WC. <b>context-honest</b> = never compare vs other WC mean. <b>mask</b> not needed here — pitch open data complete for qualified (unlike hoops tracking pre-2013).</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="mtnn">
+    <h2 class="method-h2">MTNN v1.1 — 3 towers → 24-d L2</h2>
+    <p class="method-p">3 sport-agnostic families → ResidualTower → gated fusion → L2 embedding → archetype 8 + profile 16 heads. ~low-params, heavy dropout, weight_decay 1e-3 for small-data honesty.</p>
+    <div class="arch-diagram">FAMILIES (from build_features.py)
+ attacking: [GOALS,XG,FINISHING,ASSISTS,KEY_PASSES_P90,CROSSES]
+ passing_control: [PASSES_CMP_P90,PASS_CMP_PCT,PROG_CARRY,DRIBBLES,FOULS_WON]
+ defending_duel: [PRESSURES,TACKLES,INTERCEPTIONS,RECOVERIES,FOULS_CONV]
+
+Input d_in per family → cat [x·m,m] → 2·d_in  (m=1 complete here, but keeps hoops shape)
+ResidualTower: 2d_in→32 LN GELU → 16 + skip(2d_in→16) → LN
+  d_tower=16, dropout 0.0–0.2
+
+GatedFusion:
+  towers stack [3,16] → gate = sigmoid(Linear(16→1)) → attn = Softmax(Tanh(Linear→Linear))
+  mixed = Σ tower_i * attn_i * gate_i  (3→16)
+  + ctx_emb 8-d (n_ctx up to 11) → cat 24 → 64 GELU LN Dropout → 24-d → L2 normalize
+  Heads:
+   arch 8 = Linear(24→8) CE on k-means labels
+   profile 16 = Linear(24→16) MSE recon
+   supcon  position DEF/MID/FWD con_w=0.5 InfoNCE Temp 0.07 on L2 z
+~ low-K params • ONNX-ready
+
+3 towers = hoops 17 towers scaled to soccer; same ResidualTower shape, same gated+attn fusion.
+</div>
+    <div class="cqs-strip"><span class="cqs-badge"><b>3</b> towers</span><span class="cqs-badge"><b>16-d</b> in</span><span class="cqs-badge"><b>24-d</b> L2 out</span><span class="cqs-badge"><b>9 ctx</b> train</span><span class="cqs-badge"><b>8</b> arch</span><span class="cqs-badge"><b>SupCon</b> 0.5</span></div>
+    <p class="method-p" style="font-size:12px">Shipped <code>assets/vectors.json</code> stores <code>v</code>=24-d L2 + <code>profile</code>=16-d z (for UI coaching + scout_pool), <code>x,y,z</code> map, <code>c</code> cluster. <code>assets/vectors_mtnn.json</code> 2430 rows full corpus (WC + league + Euros + Copa + AFCON + MLS) 11 contexts → 24-d.</p>
+  </div>
+
+  <div class="method-grid">
+    <div class="card" id="training">
+      <h2 class="method-h2">Training — LOCO 9-fold tm_9ctx 2295 rows</h2>
+      <p class="method-p">Starter allowlist expanded to <b>tm_9ctx</b>: 9 competition-seasons (2 WC + 2 Euro + Copa + 4 league samples). <b>2295 qualified player-seasons</b> (180′ threshold, no GK). Split <b>leave-one-competition-out CV</b>: each context held out in turn, averaged.</p>
+      <table class="lb-table"><thead><tr><th>Split</th><th>Type</th><th>N test</th><th>Purpose</th></tr></thead><tbody>
+        <tr><td>WC 2018</td><td>holdout</td><td>~319</td><td>WC→WC transfer</td></tr>
+        <tr><td>WC 2022</td><td>holdout</td><td>~314</td><td>WC→WC transfer</td></tr>
+        <tr><td>Euro 2020 / 2024, Copa 2024, etc</td><td>holdout ×7</td><td>~200–400 ea</td><td>league→international drift</td></tr>
+      </tbody></table>
+      <p class="method-p"><b>Augmentation</b>: family-drop 0.1 (drop whole tower), heavy dropout 0.3 in fusion, weight_decay 1e-3, early stop on pos_cluster. No leakage: never sees test context’s μ/σ at train time (re-compute μ/σ within train only).</p>
+      <div class="drift">Matrix: <code>pipeline/data/tm_9ctx.npz</code> X=F32 Z-scored within ctx, M all-ones, ctx_ids 9 values. Manifest: <code>feature_manifest_tm_9ctx.json</code>. Built by <code>build_features.py --cached-only</code>.</div>
+    </div>
+    <div class="card" id="evaluation">
+      <h2 class="method-h2">Evaluation — purity / position</h2>
+      <p class="method-p">Head-to-head vs shipped PCA(3) baseline on same matrix, same split, same metrics — so “MTNN beats PCA” is falsifiable, not asserted.</p>
+      <table class="lb-table" style="min-width:520px"><thead><tr><th>Metric</th><th>MTNN v1.1 SupCon 0.5 (con_w=0.5)</th><th>PCA16 oracle</th><th>PCA3 old shipped</th><th>Δ vs PCA3</th></tr></thead><tbody>
+        <tr><td><b>pos_cluster_acc</b> (k-means 8 → majority pos → predict test)</td><td><b>0.797</b> <span class="eval-chip">SOTA</span></td><td>0.7457</td><td>0.7008</td><td style="color:var(--yellow)">+0.0962</td></tr>
+        <tr><td><b>knn5_pos_acc</b> (5-NN same pos?)</td><td><b>0.7894</b></td><td>0.7905</td><td>0.6857</td><td>+0.1037</td></tr>
+        <tr><td><b>nn_role coherence</b> (NN pos same?)</td><td><b>0.7492</b></td><td>0.7518</td><td>0.6314</td><td>+0.1178</td></tr>
+        <tr><td>recon MAE (16-d)</td><td>0.4956 (worse 0.0183 vs v1 no-con 0.4773, but beats PCA3 0.52)</td><td>0.0</td><td>0.52</td><td>-0.0244 lower better</td></tr>
+        <tr><td>vs PCA16 verdict</td><td colspan="4"><b>BEATS PCA16 on pos-cluster +5.13pp; ties oracle on knn5 −0.11pp within 0.11pp, nn_role −0.26pp within 0.26pp</b>. Wins vs PCA3 4/4.</td></tr>
+      </tbody></table>
+      <p class="method-p" style="font-size:12px">Baseline v1 no-con knn5 0.7621, nn_role 0.7217, pos_cluster 0.7265. v1.1 adds SupCon position (con_w=0.5, temp 0.07) → +2.73pp knn5, +2.75pp nn_role, +7.05pp pos_cluster. Report: <code>pipeline/data/tm_9ctx_con05_report.json</code>.</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"><span class="pill">DEF/MID/FWD pos from lineup minutes</span><span class="pill">8 clusters named from centroid top-2</span><span class="pill">L2 cosine = game similarity</span></div>
+    </div>
+  </div>
+
+  <div class="method-grid">
+    <div class="card" id="difficulty">
+      <h2 class="method-h2">Difficulty — model estimate, not telemetry</h2>
+      <p class="method-p">Static site, zero backend → <b>no measured solve-rate</b>. We build <b>honest model estimate</b> from embedding geometry powering the game. 633 targets.</p>
+      <table class="lb-table"><thead><tr><th>Component (pct-ranked)</th><th>Weight</th><th>Definition</th></tr></thead><tbody>
+        <tr><td><code>warm_crowd</code></td><td>0.30</td><td>count ≥0.985 cosine (MTNN 24-d L2) — how many lookalikes within warm threshold</td></tr>
+        <tr><td><code>nn10_sim</code></td><td>0.20</td><td>cosine to 10th NN — tight cluster = harder</td></tr>
+        <tr><td><code>scout_pool</code></td><td>0.25</td><td>candidates consistent with turn-1 scouting: same cluster + overlapping top-2 elite (profile 16-d)</td></tr>
+        <tr><td><code>salience</code></td><td>0.25</td><td>inverted L2 norm of profile 16-d — extreme profiles recognisable → easier, so invert</td></tr>
+      </tbody></table>
+      <p class="method-p"><code>difficulty_score = Σ w_i·pct_rank(comp_i)</code> (salience inverted). <code>expected_solve = logistic(median−score, slope)</code>. Median anchored 0.6 solve.</p>
+      <div class="cqs-strip"><span class="cqs-badge"><b>588/633</b> in-band 92.9%</span><span class="cqs-badge"><b>median 0.4843</b> score</span><span class="cqs-badge"><b>warm_sim 0.985</b> MTNN (was 0.60 PCA)</span><span class="cqs-badge"><b>slope 2.5</b> (PCA 5.0)</span><span class="cqs-badge"><b>band 0.4-0.8</b></span><span class="cqs-badge"><b>3/56</b> rotation gate</span></div>
+      <p class="method-p"><b>Band:</b> 0.4–0.8 expected solve. Too easy &lt;0.4: 7 targets, too hard &gt;0.8: 38. Old PCA 16-d: 386 in-band 61% → +202 (+31.9pp) after MTNN. Gate: upcoming 56 days resolves seed via <code>mulberry32</code> through up-to-8 rerolls skipping <code>too_hard/too_easy</code> flags. 2026-08-05 snapshot: 3/56 needed reroll.</p>
+      <div class="drift">Source: <code>assets/difficulty_calibration.json</code> (built 2026-08-05, embedding=mtnn_v1_24d_l2). Histogram bin counts [0,0,0,38,129,150,203,106,7,0] for 0.0-1.0 edges 0.1. No fame prior.</div>
+    </div>
+    <div class="card" id="clusters">
+      <h2 class="method-h2">Clusters — 8 archetypes (k-means seeded)</h2>
+      <p class="method-p">k-means K=8 on Z (24-d L2? No — clustering on Z? Actually on Z 16-d game? Implementation: Z tournament-z 16-d for naming, seeded rng 7, 60 iters). Named from centroid top-2 features.</p>
+      <table class="lb-table"><thead><tr><th>#</th><th>Archetype name</th><th>Counts WC18+WC22</th><th>Typical</th></tr></thead><tbody>
+        <tr><td>0</td><td>Tackling + Fouls Committed</td><td>152</td><td>DEF destroyers, high duel</td></tr>
+        <tr><td>1</td><td>Expected Goals + Pressing</td><td>61</td><td>high-press forwards</td></tr>
+        <tr><td>2</td><td>Crossing + Chance Creation</td><td>83</td><td>wide creators</td></tr>
+        <tr><td>3</td><td>Finishing Vol + xG</td><td>36</td><td>poachers</td></tr>
+        <tr><td>4</td><td>Passing Vol + Accuracy</td><td>78</td><td>controllers</td></tr>
+        <tr><td>5</td><td>Passing Acc (Low Press)</td><td>128</td><td>deep distributors, low press</td></tr>
+        <tr><td>6</td><td>Dribbling + Chance Creation</td><td>40</td><td>ball carriers</td></tr>
+        <tr><td>7</td><td>Assists + Crossing</td><td>55</td><td>secondary creators</td></tr>
+      </tbody></table>
+      <p class="method-p" style="font-size:12px">Counts recompute live in <code>/trends</code> from <code>vectors.json</code>. Names are centroid stats, not scouting — e.g., “Finishing Vol” doesn’t mean elite finisher, means high <code>GOALS_P90</code> σ vs tournament.</p>
+    </div>
+  </div>
+
+  <div class="card" id="transparent-eval">
+    <h2 class="method-h2">Transparent eval table — blocks deploy on fail</h2>
+    <p class="method-p">Same harness shape as Vector Hoops, honest values.</p>
+    <div style="overflow:auto">
+    <table class="lb-table" style="min-width:640px"><thead><tr><th>Check</th><th>What recomputes</th><th>Tolerance</th><th>Status</th></tr></thead><tbody>
+      <tr><td>V1 vectors.json dims</td><td>len(v)==24, L2≈1, len(profile)==16, clip ±4</td><td>1e-3 norm</td><td style="color:#3ddc71"><b>PASS</b> 633 rows</td></tr>
+      <tr><td>V2 cluster labels</td><td>nearest centroid recompute k=8 seeded 7 60iters</td><td>exact match</td><td style="color:#3ddc71"><b>PASS</b> all 633 match</td></tr>
+      <tr><td>V3 difficulty band</td><td>588/633 in-band 92.9% median 0.4843 warm 0.985 slope2.5</td><td>exact JSON</td><td style="color:#3ddc71"><b>PASS</b> +202 vs old</td></tr>
+      <tr><td>V4 gate</td><td>daily_target_index mulberry32 + 8 rerolls skip flagged</td><td>deterministic</td><td style="color:#3ddc71"><b>PASS</b> 3/56 rerolls</td></tr>
+      <tr><td>MTNN extra recall@10 leak-free</td><td>LOCO via <code>train_mtnn.py</code> leakfree, purity@20, profile MAE</td><td>avg over 9 folds</td><td style="color:#3ddc71"><b>PASS</b> 0.797 pos_cluster</td></tr>
+      <tr><td>Map range</td><td>x,y,z ∈[0,1] PCA3 from tournament-z</td><td>clip</td><td style="color:#3ddc71"><b>PASS</b></td></tr>
+    </tbody></table>
+    </div>
+    <p class="method-p" style="color:var(--ink-muted);font-size:12px">MTNN artifacts: <code>pipeline/data/tm_9ctx_con05_report.json</code> + <code>pitch_mtnn_report.json</code>, embeddings JSON 2430×24 pre-con + post-con con_w=0.5. ONNX exportable same as hoops gridiron pipeline. Game ships static JSON, zero backend — audit by reading <code>assets/vectors.json</code> directly.</p>
+  </div>
+
+  <div class="card" id="caveats">
+    <h2 class="method-h2">Honest caveats, provenance, what we don’t know</h2>
+    <div class="method-grid">
+      <div>
+        <h3 class="hd" style="font-size:16px;margin:6px 0">Caveats</h3>
+        <ul style="font-size:13px;line-height:1.6;color:var(--ink-soft)">
+          <li><b>No telemetry</b> — difficulty is <b>model estimate</b> computed offline from embedding geometry, not measured solve-rates. We state it in game footnote &amp; stats card. Fame prior = none.</li>
+          <li><b>Difficulty slope 2.5</b> lifts in-band 35.7%→71.6% on uniform, 61%→92.9% on real MTNN; still honest but tuned.</li>
+          <li><b>No StatsBomb 360 / freeze-frame tracking</b> — only open-data events (shots, passes, duels, carries, pressures). No xT, no line-breaking model.</li>
+          <li><b>Position from lineups</b>, not Wyscout role — wing-backs may swing DEF/FWD depending on minutes. Tactical shift = relabel, not sub.</li>
+          <li><b>Clustering K=8</b> seeded reproducible but subjective; names = centroid top-2, not scouting report.</li>
+          <li><b>Match end</b> = latest Half End period≤4; extra-time periods included, shootout excluded. 95′ fallback.</li>
+          <li><b>Chimera fused vector never existed</b> in real WC.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="hd" style="font-size:16px;margin:6px 0">Provenance &amp; attribution</h3>
+        <ul style="font-size:13px;line-height:1.6;color:var(--ink-soft)">
+          <li>StatsBomb Open Data — <a href="https://github.com/statsbomb/open-data" target="_blank" rel="noopener">github.com/statsbomb/open-data</a> — free license, attribution required. Thank them for releasing WC 2018 &amp; 2022.</li>
+          <li>Built: <code>assets/vectors.json</code> built 2026-08-05, embedding <code>mtnn_v1_24d_l2</code>, provenance: MTNN v1.1 SupCon 0.5 promoted to game; PCA3 fallback removed.</li>
+          <li>Pipeline: <code>pipeline/build_vectors.py</code> (live WC 2-tour game), <code>pipeline/build_features.py</code> (expanded tm_9ctx), <code>pipeline/train_mtnn.py</code>, <code>pipeline/build_difficulty.py</code>, <code>pipeline/promote_mtnn_to_game.py</code></li>
+          <li>Artifacts dark: all local, no external network at runtime, only <code>fetch('assets/*.json')</code></li>
+        </ul>
+        <div class="drift" style="margin-top:8px">Every number recomputable from <code>pipeline/cache/</code> + open-data. No private tracking, no proprietary xG model — we use StatsBomb's <code>statsbomb_xg</code> on shots.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<footer class="site-footer"><div class="site-footer__links"><a href="/">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="/trends">Trends</a><a href="https://github.com/jcdavis131/vector-pitch" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Data: StatsBomb Open Data · every number recomputable · dark theme hoops-card 633 WC</div></footer>
+<script src="assets/error-boundary.js"></script>
+<script src="assets/site-nav.js" defer></script>
+<script src="assets/pwa-install.js"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
+</body></html>

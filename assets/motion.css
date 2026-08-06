@@ -13,9 +13,15 @@
  *   ambient   — deliberately absent. A data cockpit should not shimmer;
  *               ambient motion would compete with the numbers.
  *
- * Colour, type and layout are untouched by this file. pitch.css already
- * defined the lift/press geometry but declared no `transition` at all, so
- * those states snapped instantly; this file supplies the timing.
+ * Colour, type and layout are untouched by this file.
+ *
+ * Of the family this app had the least motion: no `transition`, no
+ * `@keyframes` and no `prefers-reduced-motion` anywhere in the shell. The
+ * `.btn:active` press in unified.css had the right geometry but no timing,
+ * so it snapped between states.
+ *
+ * Load order note: this must come after unified.css, which is where the
+ * --ink / --shadow-block tokens are defined.
  */
 
 :root{
@@ -56,21 +62,33 @@
 [data-vx-stagger] > :nth-child(n+6){ animation-delay: calc(var(--vx-stagger) * 5); }
 
 /* ---------- secondary: lift and press ----------
- * The geometry already exists in pitch.css; this only gives it timing. */
-.vp-btn,
-.vp-help-btn,
-.vp-card,
-.vp-mapcard,
-.vp-statscard,
-.vp-stattile{
+ * .btn already presses to translate(1px,1px) with the shadow dropping
+ * 3px -> 1px. The hover here is the matching lift, scaled to that same
+ * 3px base shadow rather than the family's 4px so the button keeps its
+ * own proportions. */
+.btn{
   transition: transform  var(--dur-quick) var(--ease-standard),
               box-shadow var(--dur-quick) var(--ease-standard);
 }
+.btn:hover{
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+/* :active is restated here on purpose. unified.css declares .btn:active
+ * earlier in the cascade, and a held click matches :hover and :active at
+ * once — both at the same specificity, so the later rule wins. Without this
+ * the hover lift above would swallow the press. */
+.btn:active{
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
 
-/* Colour-only changes get a colour-only transition. */
-.vp-suggestions li{
-  transition: background-color var(--dur-quick) var(--ease-standard),
-              color            var(--dur-quick) var(--ease-standard);
+/* .card is a surface, not a control, and its resting shadow comes from
+ * var(--shadow) rather than the block tokens — so it gets timing for any
+ * state change but no hover lift of its own. */
+.card{
+  transition: transform  var(--dur-quick) var(--ease-standard),
+              box-shadow var(--dur-quick) var(--ease-standard);
 }
 
 /* Focus rings must not ease in — a keyboard user needs the ring immediately. */
@@ -78,9 +96,8 @@ a:focus-visible,
 button:focus-visible{ transition: none; }
 
 /* ---------- reduced motion ----------
- * pitch.css had a gate, but it only neutralised two hover transforms — there
- * was no motion for it to stop. This is the real gate, and it also covers
- * any animation added later without one of its own. */
+ * This shell previously had no gate at any level. It covers the rules above
+ * and any animation added later without a gate of its own. */
 @media (prefers-reduced-motion: reduce){
   *, *::before, *::after{
     animation-duration: .01ms !important;
