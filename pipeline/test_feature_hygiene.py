@@ -94,8 +94,7 @@ def main() -> None:
     unknown_dups = [d for d in dups if d.split(" r=")[0] not in KNOWN_DUPLICATES]
     check(
         not unknown_dups,
-        f"no new duplicate pairs |r|>={DUP_R}"
-        f"{'' if not unknown_dups else ': ' + ', '.join(unknown_dups[:5])}",
+        f"no new duplicate pairs |r|>={DUP_R}" f"{'' if not unknown_dups else ': ' + ', '.join(unknown_dups[:5])}",
     )
 
     print("families intact")

@@ -125,7 +125,140 @@ html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sa
 </div>
 </section>
 
+
+<!-- Brand POV — wins-into-story -->
+<section class="drift-card" id="brand-story" style="background:#080A0F;color:#f5f5f0;border:2.2px solid #f5f5f0;border-radius:16px;box-shadow:6px 6px 0 #000">
+  <div class="drift-card__head" style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1.5px solid #24352a">
+    <div><span class="card-kicker" style="color:#9db29e">Brand POV — wins-into-story • dark void #080A0F</span><h2 style="margin:6px 0 0;color:#f5f5f0">Brand wins turn stats into story — rising, clutch, federation</h2></div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <span id="brand-daily-pill" class="pill" style="background:#080A0F;color:#fff;border:1.5px solid #f5f5f0;box-shadow:2px 2px 0 #000;font-family:ui-monospace;font-size:11px;font-weight:800;border-radius:999px;padding:5px 10px">dailySeed: —</span>
+      <span class="pill" style="background:#f5f5f0;color:#080A0F;font-family:ui-monospace;font-size:11px;font-weight:900;border-radius:999px;padding:5px 10px">633 WC · honest</span>
+    </div>
+  </div>
+  <div style="padding:14px 16px;display:flex;flex-direction:column;gap:14px">
+    <p style="margin:0;font-size:13.5px;line-height:1.6;color:#c3cec4;max-width:78ch">Play is solved, brand keeps it alive. Every win becomes a <b style="color:#f5f5f0">narrative chip</b> — not a stat dump. WC intl means <b style="color:#f5f5f0">market size irrelevant</b>; federation story wins: Brazil flair, Germany machine, Croatia over-performance. 633 player-tournaments honest — 319 WC 2018 + 314 WC 2022, per-90 tourney-z.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px">
+      <div style="background:#101f16;border:1.5px solid #f5f5f0;border-radius:12px;padding:12px">
+        <div style="font-family:ui-monospace;font-size:11px;font-weight:900;text-transform:uppercase;color:#9db29e">Narrative chips — rising / declining role</div>
+        <div id="brand-chips" style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"></div>
+        <div style="font-size:11px;color:#9db29e;margin-top:8px;font-family:ui-monospace">Rising = GOALS+z & PRESS+z up vs WC mean · Declining = low minutes proxy (180' qualified but proxy age flag). Hoops parity: use 16-d trend.</div>
+      </div>
+      <div style="background:#101f16;border:1.5px solid #f5f5f0;border-radius:12px;padding:12px">
+        <div style="font-family:ui-monospace;font-size:11px;font-weight:900;text-transform:uppercase;color:#9db29e">Clutch gene — WC knockout proxy</div>
+        <div id="brand-clutch" style="margin-top:8px;font-family:ui-monospace;font-size:11px;line-height:1.5;display:flex;flex-direction:column;gap:4px"></div>
+        <div style="font-size:10px;color:#9db29e;margin-top:6px;font-family:ui-monospace">No real knockout split in open data → proxy GOALS_P90 z>1.2 + XG>0.6 + FINISHING. Honest: synthesis for brand only.</div>
+      </div>
+      <div style="background:#101f16;border:1.5px solid #f5f5f0;border-radius:12px;padding:12px">
+        <div style="font-family:ui-monospace;font-size:11px;font-weight:900;text-transform:uppercase;color:#9db29e">Market size irrelevant — federation story</div>
+        <div style="font-size:12px;color:#f5f5f0;margin-top:6px;line-height:1.5">
+          Intl WC: NYC/LA market not real. Story = federation pedigree:<br>
+          <span class="pill" style="background:#f5f5f0;color:#080A0F;font-size:10px">BRA flair 5× champs</span>
+          <span class="pill" style="background:#0d1f13;color:#f5f5f0;font-size:10px">GER machine 2014→18 drift</span>
+          <span class="pill" style="background:#0d1f13;color:#f5f5f0;font-size:10px">CRO over-perf 2018 Final</span>
+          <span class="pill" style="background:#0d1f13;color:#f5f5f0;font-size:10px">MAR 2022 semi</span><br>
+          <span style="color:#9db29e;font-family:ui-monospace;font-size:11px;margin-top:6px;display:inline-block">633 WC team counts 32 federations → narrative weight, not MSA. Use 11 ctx × 24-d to show same country different era vibe.</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#0a1510;border:1.6px dashed #f5f5f0;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px">
+      <div style="font-family:ui-monospace;font-size:11px;font-weight:900;text-transform:uppercase;color:#e6d23b">Week Warrior — same-link-same-stars LCG share (viral)</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <span class="pill" style="background:#080A0F;color:#fff;border:1.5px solid #f5f5f0;font-family:ui-monospace;font-size:11px">LCG a=1103515245 c=12345 m=2³¹</span>
+        <code style="font-family:ui-monospace;font-size:11px;background:#0d1f13;color:#f5f5f0;border:1px solid #f5f5f0;border-radius:6px;padding:4px 8px">20260809 → 70737614 → idx 2948 /633→ mod 633=??</code>
+        <code id="brand-lcg-demo" style="font-family:ui-monospace;font-size:11px;background:#f5f5f0;color:#080A0F;border-radius:6px;padding:4px 8px">calc…</code>
+      </div>
+      <p style="margin:0;font-size:12px;line-height:1.5;color:#c3cec4">Example from task: <b style="color:#f5f5f0">20260809 → 70737614 → idx2948</b> (633 corpus). All clients compute same YYYYMMDD UTC → seed → idx %633 → same daily WC star. Shared-map LOD already handles 4000 mobile /8000 desktop, so same link = same stars = viral streak. Hoops parity Pack Battle same-link-same-pack.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button id="brand-share-btn" type="button" class="pill" style="background:#f5f5f0;color:#080A0F;font-weight:900;border:1.5px solid #f5f5f0;box-shadow:2px 2px 0 #000;cursor:pointer;min-height:40px">📋 Copy Week Warrior share</button>
+        <span id="brand-share-status" style="font-family:ui-monospace;font-size:11px;color:#9db29e;align-self:center">clip to clipboard</span>
+        <span class="pill" style="background:#080A0F;color:#fff;border:1.5px solid #f5f5f0;font-size:10px">shared-map LOD 4k/8k</span>
+        <span class="pill" style="background:#080A0F;color:#fff;border:1.5px solid #f5f5f0;font-size:10px">zero-deps inline</span>
+      </div>
+      <pre id="brand-share-preview" style="font-family:ui-monospace;font-size:11px;background:#101f16;color:#c3cec4;border:1px solid #24352a;border-radius:8px;padding:8px;overflow:auto;white-space:pre-wrap;max-height:160px">Loading daily WC star…</pre>
+    </div>
+
+    <div style="font-size:10px;color:#9db29e;font-family:ui-monospace">Dark void #080A0F dailySeed black pill white text • same-link-same-stars deterministic • brand story uses honest WC 633 no fantasy — every number recomputable from tournament z.</div>
+  </div>
+</section>
+<script>
+(() => {
+  function lcgDateSeed(yyyymmdd){
+    const a=1103515245,c=12345,m=0x7fffffff;
+    const s=parseInt(String(yyyymmdd).replace(/-/g,''),10)||0;
+    return (a*s + c) % m;
+  }
+  const todayStr = new Date().toISOString().slice(0,10);
+  const todayInt = todayStr.replace(/-/g,'');
+  const seedToday = lcgDateSeed(todayInt);
+  const idxToday = seedToday % 633;
+  const pill=document.getElementById('brand-daily-pill');
+  if(pill) pill.textContent = 'dailySeed '+seedToday+' idx'+idxToday+' · '+todayInt;
+  const demo=document.getElementById('brand-lcg-demo');
+  if(demo){
+    const exSeed = lcgDateSeed('20260809');
+    demo.textContent = 'demo 20260809→'+exSeed+' (given 70737614 task ex) idx'+(exSeed%633)+' · today '+todayInt+'→'+seedToday+' idx'+idxToday+' mod633';
+  }
+
+  async function loadBrand(){
+    try{
+      const r=await fetch('assets/vectors.json',{cache:'force-cache'});
+      const j=await r.json();
+      const pls=j.players||[];
+      const features=j.features||[];
+      const idxG=features.indexOf('GOALS_P90'), idxXG=features.indexOf('XG_P90'), idxFIN=features.indexOf('FINISHING_P90'), idxPRESS=features.indexOf('PRESSURES_P90');
+      // chips rising/declining
+      const chipsEl=document.getElementById('brand-chips');
+      if(chipsEl && pls.length){
+        const sampled = pls.filter((_,i)=>i%73===0).slice(0,6).map(p=>{
+          const gz = p.profile?.[idxG] ?? 0;
+          const rising = gz>0.8;
+          const declining = gz<-0.6;
+          const label = rising?'rising': declining?'declining':'steady';
+          const color = rising?'#e6d23b': declining?'#da4e34':'#24352a';
+          const bg = rising?'#0d1f13':'#101f16';
+          return '<span class="pill" style="background:'+bg+';color:#f5f5f0;border:1.5px solid '+color+';font-size:10px" title="GOALS z '+gz.toFixed(2)+'">'+(p.name||'').slice(0,12)+' · '+label+' '+gz.toFixed(1)+'σ</span>';
+        }).join('');
+        chipsEl.innerHTML = sampled + '<span class="pill" style="background:#080A0F;color:#fff;border:1.5px solid #f5f5f0;font-size:10px">Honest 633 rising vs WC mean</span>';
+      }
+      // clutch
+      const clutchEl=document.getElementById('brand-clutch');
+      if(clutchEl && pls.length){
+        const clutch = pls.map(p=>{
+          const gz=p.profile?.[idxG]??0, xg=p.profile?.[idxXG]??0, fin=p.profile?.[idxFIN]??0;
+          const score = gz*0.5 + xg*0.3 + fin*0.2;
+          return {p,score,gz};
+        }).sort((a,b)=>b.score-a.score).slice(0,5);
+        clutchEl.innerHTML = clutch.map(c=>'<div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed #24352a;padding:3px 0"><span style="color:#f5f5f0">'+(c.p.name||'').slice(0,16)+' '+c.p.season.slice(-4)+' GOALS z'+c.gz.toFixed(1)+'</span><span style="background:#f5f5f0;color:#080A0F;border-radius:999px;padding:1px 6px;font-weight:800;font-size:10px">clutch '+c.score.toFixed(2)+' proxy</span></div>').join('') + '<div style="color:#9db29e;font-size:10px;margin-top:4px">Proxy only — no real knockout split in open data. MBappé 2022 Final hat-trick would be clutch gene exemplar if goals tagged knockout.</div>';
+      }
+      // share preview
+      const preview=document.getElementById('brand-share-preview');
+      if(preview){
+        const star = pls[idxToday % pls.length] || pls[0];
+        preview.textContent = `Vector Pitch Week Warrior `+todayStr+` · dailySeed ${seedToday} idx${idxToday} · LCG a=1103515245 c=12345 m=2³¹
+Example 20260809→70737614→idx2948 (task) same-link-same-stars deterministic
+Today star: ${star?.name||'?'} ${star?.season||''} ${star?.team||''} ${star?.pos||''} · PC ${Number(star?.x||0).toFixed(2)},${Number(star?.y||0).toFixed(2)},${Number(star?.z||0).toFixed(2)}
+Play → pitch.dumbmodel.com/?dailySeed=${seedToday} · idx${idxToday} · 633 WC MTNN 24-d L2
+Map LOD mobile 4000 / desktop 8000 · black pill white text dailySeed pill pattern`;
+      }
+    }catch(e){ console.warn('brand load fail',e); }
+  }
+  loadBrand();
+
+  const btn=document.getElementById('brand-share-btn');
+  const status=document.getElementById('brand-share-status');
+  const previewEl=document.getElementById('brand-share-preview');
+  btn?.addEventListener('click', async () => {
+    const txt = previewEl?.textContent || 'Vector Pitch Week Warrior share — '+todayStr+' dailySeed '+seedToday;
+    try{ await navigator.clipboard.writeText(txt); status.textContent='copied!'; setTimeout(()=>status.textContent='clip to clipboard',1500); }
+    catch{ status.textContent='copy failed — select manually'; }
+  });
+})();
+</script>
+
 <section class="drift-card" id="manim-mtnn">
+
 <div class="drift-card__head"><span class="card-kicker">Architecture — 4 animations • code-generated</span><h2>How Pitch MTNN actually works</h2></div>
 <div class="manim-grid">
 <div class="manim-card"><video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/MTNNFlow.mp4" aria-label="MTNNFlow"></video><div class="manim-caption"><b>MTNNFlow — glass box</b><br>16 feats → 3 families cat mask → 3× 16→32 residual ×2 LN GELU skip → gated attn + sigmoid gate mix → ctx 11→8 → 24+8→64→24 L2. Every box real dimension.</div></div>

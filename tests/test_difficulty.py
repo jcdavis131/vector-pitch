@@ -121,9 +121,7 @@ def test_gate_holds_back_out_of_band_pick():
     idx, rerolls = gated_daily_target_index("2026-07-22", 633, {255: "too_easy"})
     assert (idx, rerolls) == (343, 1)
     # 255 and 343 both flagged -> two rerolls, 246 ships
-    idx, rerolls = gated_daily_target_index(
-        "2026-07-22", 633, {255: "too_hard", 343: "too_easy"}
-    )
+    idx, rerolls = gated_daily_target_index("2026-07-22", 633, {255: "too_hard", 343: "too_easy"})
     assert (idx, rerolls) == (246, 2)
 
 

@@ -113,12 +113,12 @@ def fetch_json(url: str, cache_name: str, note: str = ""):
     if p.exists():
         try:
             return json.loads(p.read_text(encoding="utf-8"))
-        except Exception:
-            pass  # corrupt cache -> refetch
-    req = urllib.request.Request(url, headers={"User-Agent": UA})
+        except Exception:  # noqa: S110 -- corrupt cache is expected; fall through to refetch
+            pass
+    req = urllib.request.Request(url, headers={"User-Agent": UA})  # noqa: S310 -- url is a trusted API endpoint constant
     for attempt in range(4):
         try:
-            raw = urllib.request.urlopen(req, timeout=60).read()
+            raw = urllib.request.urlopen(req, timeout=60).read()  # noqa: S310 -- trusted API endpoint
             data = json.loads(raw)
             CACHE.mkdir(parents=True, exist_ok=True)
             p.write_bytes(raw)
@@ -216,16 +216,12 @@ class PlayerAgg:
 
 def match_end_seconds(events: list[dict]) -> float:
     ends = [
-        e["minute"] * 60 + e["second"]
-        for e in events
-        if e["type"]["name"] == "Half End" and e.get("period", 0) <= 4
+        e["minute"] * 60 + e["second"] for e in events if e["type"]["name"] == "Half End" and e.get("period", 0) <= 4
     ]
     return max(ends) if ends else 95 * 60.0  # sane fallback
 
 
-def process_lineups(
-    lineups: list[dict], end_seconds: float, agg: dict[int, PlayerAgg]
-) -> None:
+def process_lineups(lineups: list[dict], end_seconds: float, agg: dict[int, PlayerAgg]) -> None:
     for team in lineups:
         team_name = team["team_name"]
         for pl in team["lineup"]:
@@ -386,10 +382,7 @@ def main() -> None:
             match_count += 1
             if (i + 1) % 16 == 0 or i == len(matches) - 1:
                 elapsed = time.time() - t_start
-                print(
-                    f"  {label}: {i + 1}/{len(matches)} matches processed "
-                    f"({elapsed:.0f}s elapsed)"
-                )
+                print(f"  {label}: {i + 1}/{len(matches)} matches processed " f"({elapsed:.0f}s elapsed)")
 
         for pid, a in tourn_agg.items():
             all_players[(pid, label)] = a
@@ -402,10 +395,7 @@ def main() -> None:
         )
 
     if fetch_fail_count:
-        print(
-            f"WARNING: {fetch_fail_count} match file(s) failed to fetch "
-            f"(cached files persist; re-run to retry)"
-        )
+        print(f"WARNING: {fetch_fail_count} match file(s) failed to fetch " f"(cached files persist; re-run to retry)")
 
     # ---- filter to minutes-qualified outfield players, build per-90 rows ----
     rows: list[dict] = []
@@ -533,9 +523,7 @@ def main() -> None:
     assert len({(p["name"], p["season"]) for p in players}) <= len(players)
     assert all(len(p["v"]) == d for p in players), "vector length"
     assert all(all(-4.0001 <= v <= 4.0001 for v in p["v"]) for p in players), "clip"
-    assert all(
-        0 <= p["x"] <= 1 and 0 <= p["y"] <= 1 and 0 <= p["z"] <= 1 for p in players
-    ), "map range"
+    assert all(0 <= p["x"] <= 1 and 0 <= p["y"] <= 1 and 0 <= p["z"] <= 1 for p in players), "map range"
 
     elapsed = time.time() - t_start
     print(

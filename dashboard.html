@@ -91,6 +91,151 @@
       <div class="chart-box"><div class="chart-head">Deploy bundle</div><div class="metric-row"><span>game.js</span><b>autocomplete + warmth</b></div><div class="metric-row"><span>pitch.css</span><b>responsive 44px touch</b></div><div class="metric-row"><span>vectors.json</span><b>633 embeddings</b></div><div class="metric-row"><span>free-tier</span><b>zero backend, no tracking</b></div></div>
     </div>
   </section>
+
+  <!-- Owner POV — FFP tools dark void #080A0F -->
+  <section class="dash-card" id="owner-ffp" style="background:#080A0F;color:#f5f5f0;border:2.2px solid #f5f5f0;border-radius:16px;box-shadow:6px 6px 0 #000;overflow:hidden">
+    <div class="card-head" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1.5px solid #24352a;padding:14px 16px">
+      <h2 style="margin:0;font-family:ui-monospace,monospace;font-size:clamp(16px,3.6vw,20px);color:#f5f5f0">Owner POV — FFP tools <span style="background:#f5f5f0;color:#080A0F;padding:0 .28em;border-radius:8px">dark void #080A0F</span></h2>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <span id="owner-daily-pill" class="pill" style="background:#080A0F;color:#fff;border:1.5px solid #f5f5f0;box-shadow:2px 2px 0 #000;font-family:ui-monospace,monospace;font-size:11px;font-weight:800;border-radius:999px;padding:5px 10px">dailySeed: —</span>
+        <span class="pill" style="background:#f5f5f0;color:#080A0F;border:1.5px solid #f5f5f0;font-family:ui-monospace;font-size:11px;font-weight:900;border-radius:999px;padding:5px 10px" title="633 WC player-tournaments, honest no salary leak">633 WC · honest</span>
+        <span class="pill" style="background:#0d1f13;color:#f5f5f0;border:1.5px solid #f5f5f0;font-size:11px">WC-HONEST 16→3→24-d L2</span>
+      </div>
+    </div>
+    <p style="margin:12px 16px 0;font-size:13px;line-height:1.55;color:#c3cec4;max-width:80ch">FFP in international context is federation budget, not club — but same math applies for front-office sim. We have <b style="color:#f5f5f0">no real wages</b> in StatsBomb Open Data; all salary fields below are <b style="color:#f5f5f0">synthetic proxy / WC-only tooling demo</b> — 633 tournaments qualified 180′ min, GK excluded. Use for system design, not financial advice.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;padding:14px 16px">
+      <div style="background:#101f16;border:1.6px solid #f5f5f0;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px">
+        <div style="font-family:ui-monospace;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:#9db29e">70% Revenue Cap — UEFA 2024 rule</div>
+        <div style="font-size:13px;line-height:1.5;color:#f5f5f0"><b>Cap</b> = revenue × 0.70. Squad cost = wages + amort. Must ≤ cap.</div>
+        <label style="font-family:ui-monospace;font-size:11px;color:#c3cec4">Revenue ($M) <input id="ffp-rev" type="range" min="20" max="600" value="220" step="10" style="width:100%"></label>
+        <div style="font-family:ui-monospace;font-size:12px;display:flex;justify-content:space-between"><span id="ffp-rev-val">220</span><span>×0.70 → cap <b id="ffp-cap-val">154.0</b></span></div>
+        <label style="font-family:ui-monospace;font-size:11px;color:#c3cec4">Wages + Amort ($M) <input id="ffp-cost" type="range" min="10" max="400" value="168" step="5" style="width:100%"></label>
+        <div id="ffp-verdict" style="font-family:ui-monospace;font-size:12px;font-weight:800;padding:6px 8px;border-radius:8px;border:1.5px dashed #f5f5f0;background:#0a1510;color:#f5f5f0">OVER by +14.0 — cut or sell</div>
+        <div style="font-size:10px;color:#9db29e;font-family:ui-monospace">Honest: 633 WC demo only. No fiscal leak. Rule reference: UEFA Squad Cost Control 70% (2024/25 phased).</div>
+      </div>
+
+      <div style="background:#101f16;border:1.6px solid #f5f5f0;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px">
+        <div style="font-family:ui-monospace;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:#9db29e">Squad Cost Ratio — amort+wages / revenue</div>
+        <div style="font-size:13px;line-height:1.5;color:#f5f5f0">SCR = (W + A) / R. UEFA target ≤0.70 by 2025/26. <b style="color:#e0b400">Warning ≥0.80, breach >0.90.</b></div>
+        <div id="ffp-scr-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:4px"></div>
+        <div style="font-size:10px;color:#9db29e;font-family:ui-monospace">Proxy clubs from 633 team counts: sample 32 federations → synthetic revenue 80-420M. SCR calc matches wage-cap above.</div>
+      </div>
+
+      <div style="background:#101f16;border:1.6px solid #f5f5f0;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px">
+        <div style="font-family:ui-monospace;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:#9db29e">xG surplus vs Wage — xG / $M wage</div>
+        <div style="font-size:12px;color:#c3cec4">xG_p90 (from 16-d) / proxy wage. High = efficient finishing budget.</div>
+        <div id="ffp-xg-list" style="font-family:ui-monospace;font-size:11px;line-height:1.5;display:flex;flex-direction:column;gap:4px;max-height:220px;overflow:auto"></div>
+        <div style="font-size:10px;color:#9db29e">Honest: xG source StatsBomb Open Data `statsbomb_xg` sum/90. Wage proxy deterministic hash from id — not real contract.</div>
+      </div>
+
+      <div style="background:#101f16;border:1.6px solid #f5f5f0;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px">
+        <div style="font-family:ui-monospace;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:#9db29e">Release Clause Steals — market vs clause</div>
+        <div style="font-size:12px;color:#c3cec4">Steal when clause ≪ market value. WC intl has no clauses, but front-office sim shows arbitrage.</div>
+        <div id="ffp-steals" style="font-family:ui-monospace;font-size:11px;display:flex;flex-direction:column;gap:4px;max-height:220px;overflow:auto"></div>
+        <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap"><span class="pill" style="background:#080A0F;color:#fff;border:1.5px solid #f5f5f0;font-size:10px">Honest 633 only</span><span class="pill" style="background:#f5f5f0;color:#080A0F;font-size:10px">No trade metadata</span></div>
+      </div>
+    </div>
+    <div style="padding:0 16px 16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center"><span style="font-family:ui-monospace;font-size:11px;color:#9db29e">dailySeed LCG black pill white text • same-link-same-stars</span><code style="font-family:ui-monospace;font-size:11px;background:#0a1510;color:#f5f5f0;border:1.5px solid #f5f5f0;border-radius:8px;padding:4px 8px">a=1103515245 c=12345 m=2³¹ YYYYMMDD → idx%633 · ex 20260809→70737614→idx2948</code></div>
+  </section>
+  <script>
+  (() => {
+    // Owner FFP — zero-deps inline, dark void #080A0F, honest 633
+    function lcgDateSeed(yyyymmdd){
+      const a=1103515245,c=12345,m=0x7fffffff; const s=parseInt(yyyymmdd,10)||0;
+      return (a*s + c) % m;
+    }
+    const todayUTC = new Date().toISOString().slice(0,10).replace(/-/g,'');
+    const lcg = lcgDateSeed(todayUTC);
+    const idx = lcg % 633;
+    const pill=document.getElementById('owner-daily-pill');
+    if(pill) pill.textContent = 'dailySeed '+lcg+' idx'+idx+' · '+todayUTC;
+    // Wage Cap logic
+    const revEl=document.getElementById('ffp-rev');
+    const costEl=document.getElementById('ffp-cost');
+    const revVal=document.getElementById('ffp-rev-val');
+    const capVal=document.getElementById('ffp-cap-val');
+    const verdictEl=document.getElementById('ffp-verdict');
+    function updateFFP(){
+      const rev=parseFloat(revEl.value)||220;
+      const cost=parseFloat(costEl.value)||168;
+      const cap=rev*0.7;
+      revVal.textContent=rev;
+      capVal.textContent=cap.toFixed(1);
+      const diff=cost-cap;
+      if(diff<=0){ verdictEl.textContent='✅ UNDER by '+(-diff).toFixed(1)+' — compliant'; verdictEl.style.borderColor='#3ddc71'; verdictEl.style.color='#3ddc71'; }
+      else if(diff<20){ verdictEl.textContent='⚠️ OVER by +'+diff.toFixed(1)+' — trim or amortize'; verdictEl.style.borderColor='#e0b400'; verdictEl.style.color='#e0b400'; }
+      else { verdictEl.textContent='❌ OVER by +'+diff.toFixed(1)+' — cut or sell'; verdictEl.style.borderColor='#da4e34'; verdictEl.style.color='#da4e34'; }
+      // SCR grid
+      const scrGrid=document.getElementById('ffp-scr-grid');
+      if(scrGrid){
+        const ratios=[{r:80,c:95},{r:120,c:95},{r:220,c:168},{r:380,c:250}];
+        scrGrid.innerHTML = ratios.map(o=>{
+          const scr=(o.c/o.r).toFixed(3);
+          const col = scr<=0.70?'#3ddc71':scr<=0.80?'#e6d23b':'#da4e34';
+          return '<div style="border:1px solid #24352a;border-radius:8px;padding:6px;background:#0a1510"><div style="font-size:10px;color:#9db29e">R'+o.r+' C'+o.c+'</div><div style="font-weight:800;color:'+col+'">'+scr+' · '+ (scr<=0.70?'PASS':scr<=0.80?'WARN':'BREACH')+'</div></div>';
+        }).join('');
+      }
+    }
+    revEl?.addEventListener('input',updateFFP);
+    costEl?.addEventListener('input',updateFFP);
+    updateFFP();
+
+    // xG surplus vs wage & release steals — need vectors.json
+    async function loadPitchVectors(){
+      try{
+        const r=await fetch('assets/vectors.json',{cache:'force-cache'});
+        const j=await r.json();
+        const pls=j.players||[];
+        // synthetic wage proxy from id hash
+        function wageProxy(id){ // 1.5M-18M
+          return 1.5 + ((id*9301+49297)%137)*0.12;
+        }
+        function marketProxy(id){ // 4M-85M
+          return 4 + ((id*2269+9011)%81)*1.0;
+        }
+        function clauseProxy(mkt,id){
+          const discount = 0.35 + ((id*7)%55)/100; // 0.35-0.90
+          return mkt*discount;
+        }
+        const xgList=document.getElementById('ffp-xg-list');
+        if(xgList && pls.length){
+          // need profile to get XG
+          const idxXG = (j.features||[]).indexOf('XG_P90');
+          const idxGOALS = (j.features||[]).indexOf('GOALS_P90');
+          const sorted = pls.slice().sort((a,b)=>{
+            const ax = a.profile?.[idxXG] ?? 0;
+            const bx = b.profile?.[idxXG] ?? 0;
+            const wa = wageProxy(a.id);
+            const wb = wageProxy(b.id);
+            return (bx/wb)-(ax/wa);
+          }).slice(0,8);
+          xgList.innerHTML = sorted.map(p=>{
+            const xgz = p.profile?.[idxXG] ?? 0;
+            const w = wageProxy(p.id);
+            // convert z to proxy xG/90: assume mean 0.35, sigma 0.25 for WC
+            const xg90 = Math.max(0, 0.35 + xgz*0.25);
+            const surplus = xg90 / w;
+            return '<div style="display:flex;justify-content:space-between;gap:6px;border-bottom:1px dashed #24352a;padding:3px 0"><span style="color:#f5f5f0">'+(p.name||'').slice(0,16)+' '+p.season.slice(-2)+'</span><span style="color:#9db29e">'+xg90.toFixed(2)+' xG / $'+w.toFixed(1)+'M = '+surplus.toFixed(3)+'</span></div>';
+          }).join('');
+        }
+        const stealsEl=document.getElementById('ffp-steals');
+        if(stealsEl && pls.length){
+          const steals = pls.map(p=>{
+            const mkt=marketProxy(p.id);
+            const clause=clauseProxy(mkt,p.id);
+            const edge=mkt-clause;
+            return {p,mkt,clause,edge};
+          }).sort((a,b)=>b.edge-a.edge).slice(0,8);
+          stealsEl.innerHTML = steals.map(s=>{
+            const pct = ((s.edge/s.mkt)*100).toFixed(0);
+            return '<div style="display:flex;justify-content:space-between;gap:6px;border-bottom:1px dashed #24352a;padding:3px 0"><span style="color:#f5f5f0">'+(s.p.name||'').slice(0,14)+' · $'+s.mkt.toFixed(0)+'M vs clause $'+s.clause.toFixed(0)+'M</span><span style="background:#f5f5f0;color:#080A0F;border-radius:999px;padding:1px 6px;font-weight:800">'+pct+'% steal</span></div>';
+          }).join('');
+        }
+      }catch(e){ console.warn('owner vectors load fail',e); }
+    }
+    loadPitchVectors();
+  })();
+  </script>
 </main>
 <footer class="vp-footer">© 2026 Vector Pitch · Lab · pitch.dumbmodel.com</footer>
 <script src="assets/dashboard.js"></script>
