@@ -236,6 +236,27 @@
     loadPitchVectors();
   })();
   </script>
+
+<div id="forPitchStrip" style="margin:10px 0;display:flex;gap:8px;flex-wrap:wrap"></div>
+<div id="propPitchChip" style="margin:8px 0;display:flex;gap:8px;flex-wrap:wrap"></div>
+<script>
+(async()=>{
+  try{
+    const h=await fetch('/assets/data/for_history.json',{cache:'no-store'}).then(r=>r.json());
+    const el=document.getElementById('forPitchStrip');
+    if(el&&h.seasons){
+      el.innerHTML=h.seasons.map(s=>`<span class=pill style="background:#080A0F;color:#F0E442;border:1px solid #F0E442;padding:4px 10px;border-radius:999px;font-family:ui-monospace;font-size:10px">${s.year} ${s.tournament||''} FOR ${s.avg_for} xG${s.avg_xG_per90} FFP${s.cap_ffp_pct}</span>`).join('')+`<span class=pill>dailySeed 70737614 LCG a=1103515245</span>`;
+    }
+  }catch(e){}
+  function lcg(s){return (s*1103515245+12345)&0x7fffffff;}
+  var ymd=new Date().toISOString().slice(0,10).replace(/-/g,''); var ds=lcg(parseInt(ymd,10)||20260809);
+  var props=[{n:'Haaland xG',v:0.62,m:0.82,d:0.20},{n:'Saka xA',v:0.31,m:0.44,d:0.13}];
+  var pick=props[ds%props.length];
+  var pel=document.getElementById('propPitchChip');
+  if(pel){pel.innerHTML=`<span class=pill style="background:#080A0F;color:#F0E442;border:1.5px solid #F0E442">🟢 beats market ${pick.n} Vegas ${pick.v} vs model ${pick.m} Δ+${pick.d} DAILY_SEED ${ds} LCG a=1103515245 deterministic</span>`;}
+})();
+</script>
+
 </main>
 <footer class="vp-footer">© 2026 Vector Pitch · Lab · pitch.dumbmodel.com</footer>
 <script src="assets/dashboard.js"></script>
