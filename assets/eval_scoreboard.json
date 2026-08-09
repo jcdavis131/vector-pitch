@@ -1,1 +1,105 @@
-{"artifacts":{"difficulty":"assets/difficulty_calibration.json 633 targets, 588 in-band 92.9%","embeddings":"assets/pitch_mtnn_embeddings.json 2430 x 24-d con_w=0.5","report":"pipeline/data/pitch_mtnn_report.json + tm_9ctx_con05_report.json","vectors_full":"assets/vectors_mtnn.json 2430 x 24-d","vectors_game":"assets/vectors.json 633 x 24-d L2 + profile 16-d + cluster 8"},"built":"2026-08-04","difficulty":{"improvement":"+202 in-band (+31.9pp) 386→588, gate holds 3/56 upcoming vs old unchecked","new_mtnn24":{"band":[0.4,0.8],"embedding":"mtnn_v1_24d_l2","n_in_band":588,"n_too_easy":7,"n_too_hard":38,"pct":92.9,"salience":"profile 16-d norm","scout_pool":"profile top2","slope":2.5,"warm_sim":0.985},"old_pca16":{"band":[0.4,0.8],"n_in_band":386,"n_too_easy":82,"n_too_hard":165,"pct":61.0,"slope":5.0,"warm_sim":0.6}},"embedding":"mtnn_v1_24d_l2","evaluation":{"baseline_v1_no_con":{"knn5_pos_acc":0.7621,"nn_role_coherence":0.7217,"pos_cluster_acc":0.7265,"recon_mae":0.4773},"method":"leave-one-competition-out CV 9 folds on tm_9ctx (2295 rows, 9 contexts)","mtnn_v1_1_con05":{"knn5_pos_acc":0.7894,"knn5_supcon":0.7894,"nn_role_coherence":0.7492,"pos_acc_overall":0.797,"pos_cluster_acc":0.797,"recon_mae":0.4956},"pca16_oracle":{"knn5_pos_acc":0.7905,"nn_role_coherence":0.7518,"pos_cluster_acc":0.7457,"recon_mae":0.0},"pca3_shipped_old":{"knn5_pos_acc":0.6857,"nn_role_coherence":0.6314,"pos_cluster_acc":0.7008,"recon_mae":0.52},"vs_pca16_oracle":{"knn5":"-0.0011 (0.7894 vs 0.7905) within 0.11pp","nn_role":"-0.0026 (0.7492 vs 0.7518) within 0.26pp","pos_cluster":"+0.0513 (0.797 vs 0.7457) BEATS oracle","verdict":"BEATS PCA16 on pos-cluster; ties oracle on knn5/nn_role"},"vs_v1_baseline":{"knn5":"+0.0273 (0.7894 vs 0.7621)","nn_role":"+0.0275 (0.7492 vs 0.7217)","pos_cluster":"+0.0705 (0.797 vs 0.7265)","recon":"+0.0183 worse (0.4956 vs 0.4773) but still beats PCA3"},"wins_vs_pca3":{"count":"4/4 SOTA beats shipped PCA3","knn5":"+0.1037 (0.7894 vs 0.6857)","nn_role":"+0.1178 (0.7492 vs 0.6314)","pos_cluster":"+0.0962 (0.797 vs 0.7008)","recon":"-0.0244 (0.4956 vs 0.52 lower better)"}},"full_corpus":{"contexts":11,"dim":24,"n":2430},"game_corpus":{"dim":24,"n":633,"normalized":"L2","source":"WC 2018 + WC 2022"},"model":"PitchMTNN v1.1 (position SupCon con_w=0.5)","provenance":"MTNN v1.1 SupCon 0.5 promoted to game; PCA3 fallback removed; difficulty MTNN-calibrated with warm 0.985 slope 2.5; profile retained for UI coaching/pitches"}
+{
+  "artifacts": {
+    "difficulty": "assets/difficulty_calibration.json 633 targets, 588 in-band 92.9%",
+    "embeddings": "assets/pitch_mtnn_embeddings.json 2430 x 24-d con_w=0.5",
+    "report": "pipeline/data/pitch_mtnn_report.json + tm_9ctx_con05_report.json",
+    "vectors_full": "assets/vectors_mtnn.json 2430 x 24-d",
+    "vectors_game": "assets/vectors.json 633 x 24-d L2 + profile 16-d + cluster 8"
+  },
+  "built": "2026-08-04",
+  "difficulty": {
+    "improvement": "+202 in-band (+31.9pp) 386\u2192588, gate holds 3/56 upcoming vs old unchecked",
+    "new_mtnn24": {
+      "band": [
+        0.4,
+        0.8
+      ],
+      "embedding": "mtnn_v1_24d_l2",
+      "n_in_band": 588,
+      "n_too_easy": 7,
+      "n_too_hard": 38,
+      "pct": 92.9,
+      "salience": "profile 16-d norm",
+      "scout_pool": "profile top2",
+      "slope": 2.5,
+      "warm_sim": 0.985
+    },
+    "old_pca16": {
+      "band": [
+        0.4,
+        0.8
+      ],
+      "n_in_band": 386,
+      "n_too_easy": 82,
+      "n_too_hard": 165,
+      "pct": 61.0,
+      "slope": 5.0,
+      "warm_sim": 0.6
+    }
+  },
+  "embedding": "mtnn_v1_24d_l2",
+  "evaluation": {
+    "baseline_v1_no_con": {
+      "knn5_pos_acc": 0.7621,
+      "nn_role_coherence": 0.7217,
+      "pos_cluster_acc": 0.7265,
+      "recon_mae": 0.4773
+    },
+    "method": "leave-one-competition-out CV 9 folds on tm_9ctx (2295 rows, 9 contexts)",
+    "mtnn_v1_1_con05": {
+      "knn5_pos_acc": 0.7894,
+      "knn5_supcon": 0.7894,
+      "nn_role_coherence": 0.7492,
+      "pos_acc_overall": 0.797,
+      "pos_cluster_acc": 0.797,
+      "recon_mae": 0.4956,
+      "composite": 0.7785
+    },
+    "pca16_oracle": {
+      "knn5_pos_acc": 0.7905,
+      "nn_role_coherence": 0.7518,
+      "pos_cluster_acc": 0.7457,
+      "recon_mae": 0.0
+    },
+    "pca3_shipped_old": {
+      "knn5_pos_acc": 0.6857,
+      "nn_role_coherence": 0.6314,
+      "pos_cluster_acc": 0.7008,
+      "recon_mae": 0.52
+    },
+    "vs_pca16_oracle": {
+      "knn5": "-0.0011 (0.7894 vs 0.7905) within 0.11pp",
+      "nn_role": "-0.0026 (0.7492 vs 0.7518) within 0.26pp",
+      "pos_cluster": "+0.0513 (0.797 vs 0.7457) BEATS oracle",
+      "verdict": "BEATS PCA16 on pos-cluster; ties oracle on knn5/nn_role"
+    },
+    "vs_v1_baseline": {
+      "knn5": "+0.0273 (0.7894 vs 0.7621)",
+      "nn_role": "+0.0275 (0.7492 vs 0.7217)",
+      "pos_cluster": "+0.0705 (0.797 vs 0.7265)",
+      "recon": "+0.0183 worse (0.4956 vs 0.4773) but still beats PCA3"
+    },
+    "wins_vs_pca3": {
+      "count": "4/4 SOTA beats shipped PCA3",
+      "knn5": "+0.1037 (0.7894 vs 0.6857)",
+      "nn_role": "+0.1178 (0.7492 vs 0.6314)",
+      "pos_cluster": "+0.0962 (0.797 vs 0.7008)",
+      "recon": "-0.0244 (0.4956 vs 0.52 lower better)"
+    },
+    "composite": 0.7785
+  },
+  "full_corpus": {
+    "contexts": 11,
+    "dim": 24,
+    "n": 2430
+  },
+  "game_corpus": {
+    "dim": 24,
+    "n": 633,
+    "normalized": "L2",
+    "source": "WC 2018 + WC 2022"
+  },
+  "model": "PitchMTNN v1.1 (position SupCon con_w=0.5)",
+  "provenance": "MTNN v1.1 SupCon 0.5 promoted to game; PCA3 fallback removed; difficulty MTNN-calibrated with warm 0.985 slope 2.5; profile retained for UI coaching/pitches",
+  "composite": 0.7785
+}
