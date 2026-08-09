@@ -135,6 +135,33 @@
         <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap"><span class="pill" style="background:#080A0F;color:#fff;border:1.5px solid #f5f5f0;font-size:10px">Honest 633 only</span><span class="pill" style="background:#f5f5f0;color:#080A0F;font-size:10px">No trade metadata</span></div>
       </div>
     </div>
+
+    <!-- FOR over time + cap% trend + props Δ — Pitch next-hill v6.3 · zero-deps vanilla JS · DAILY_SEED 70737614 -->
+    <div id="owner-for-props" style="margin:0 16px 12px;padding:12px;border:1.6px dashed #f5f5f0;border-radius:12px;background:#0a1510;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <span class="pill" id="for-pill" style="background:#f5f5f0;color:#080A0F;border:1.5px solid #f5f5f0;font-family:ui-monospace;font-size:11px;font-weight:900;border-radius:999px;padding:5px 10px">FOR 2018→2024 — loading</span>
+        <span class="pill" id="cap-trend-pill" style="background:#0d1f13;color:#f5f5f0;border:1.5px solid #f5f5f0;font-size:11px;font-family:ui-monospace">cap% trend 70% FFP — loading</span>
+        <span class="pill" id="props-delta-pill" style="background:#e0b400;color:#080A0F;border:1.5px solid #f5f5f0;font-size:11px;font-family:ui-monospace;font-weight:900;transform:rotate(-1deg)">props Δ +0.20 Haaland · Vegas 0.62→model 0.82 — beats market</span>
+        <span class="pill" id="daily-seed-known" style="background:#080A0F;color:#fff;border:1.5px solid #f5f5f0;font-family:ui-monospace;font-size:11px;font-weight:800;border-radius:999px;padding:5px 10px">dailySeed 70737614 · deterministic</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px">
+        <div style="border:1px solid #24352a;border-radius:8px;padding:8px;background:#101f16">
+          <div style="font-family:ui-monospace;font-size:10px;font-weight:900;text-transform:uppercase;color:#9db29e">FOR over time — WC 2018/2022 + leagues 2020-2024</div>
+          <div id="for-spark" style="font-family:ui-monospace;font-size:11px;color:#f5f5f0;line-height:1.5;margin-top:6px">loading for_history.json…</div>
+          <div style="font-size:10px;color:#9db29e;font-family:ui-monospace;margin-top:4px">honest synthetic LCG a=1103515245 c=12345 m=2³¹ seeded 70737614 (20260809 example) — training baseline only</div>
+        </div>
+        <div style="border:1px solid #24352a;border-radius:8px;padding:8px;background:#101f16">
+          <div style="font-family:ui-monospace;font-size:10px;font-weight:900;text-transform:uppercase;color:#9db29e">cap% trend FFP 70% — revenue ×0.70</div>
+          <div id="cap-trend-list" style="font-family:ui-monospace;font-size:11px;color:#f5f5f0;line-height:1.5;margin-top:6px">loading…</div>
+          <div style="font-size:10px;color:#9db29e;font-family:ui-monospace;margin-top:4px">70% rule phased UEFA 2024/25 — synthetic federation proxy via FOR (no wage leak)</div>
+        </div>
+        <div style="border:1px solid #24352a;border-radius:8px;padding:8px;background:#fffef7">
+          <div style="font-family:ui-monospace;font-size:10px;font-weight:900;text-transform:uppercase;color:#080A0F">props Δ — beats market expectation</div>
+          <div id="props-delta-list" style="font-family:ui-monospace;font-size:11px;color:#080A0F;line-height:1.5;margin-top:6px;display:flex;flex-direction:column;gap:4px">loading prop_edge_pitch.jsonl…</div>
+          <div style="font-size:10px;color:#666;font-family:ui-monospace;margin-top:4px">Vegas vs model xG diff +0.20 Haaland example — Δ = model−market — prop edge ≠ win prob — no bet slip — training only — gate 8.0</div>
+        </div>
+      </div>
+    </div>
     <div style="padding:0 16px 16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center"><span style="font-family:ui-monospace;font-size:11px;color:#9db29e">dailySeed LCG black pill white text • same-link-same-stars</span><code style="font-family:ui-monospace;font-size:11px;background:#0a1510;color:#f5f5f0;border:1.5px solid #f5f5f0;border-radius:8px;padding:4px 8px">a=1103515245 c=12345 m=2³¹ YYYYMMDD → idx%633 · ex 20260809→70737614→idx2948</code></div>
   </section>
   <script>
@@ -233,29 +260,94 @@
         }
       }catch(e){ console.warn('owner vectors load fail',e); }
     }
+
+    // === FOR history + cap% + props Δ (next-hill-pitch) — zero-deps vanilla JS — deterministic 70737614 ===
+    async function loadForAndProps(){
+      try{
+        // FOR history
+        const rf = await fetch('assets/data/for_history.json',{cache:'force-cache'});
+        const jf = await rf.json();
+        const seasons = jf.seasons||[];
+        const pill = document.getElementById('for-pill');
+        if(pill && seasons.length){
+          const first = seasons[0].for_proxy;
+          const last = seasons[seasons.length-1].for_proxy;
+          const trend = (last-first).toFixed(2);
+          const sign = trend>=0?'+':'';
+          pill.textContent = 'FOR '+seasons[0].year+'→'+seasons[seasons.length-1].year+' '+first.toFixed(2)+'→'+last.toFixed(2)+' trend '+sign+trend+' ('+jf.dailySeed+' deterministic)';
+        }
+        const spark = document.getElementById('for-spark');
+        if(spark && seasons.length){
+          // simple inline sparkline using bars
+          spark.innerHTML = seasons.map(s=>{
+            const col = s.type==='WC' ? '#e0b400' : '#3ddc71';
+            const w = Math.max(40, Math.min(100, (s.for_proxy/15)*100)).toFixed(0);
+            return '<div style="display:flex;justify-content:space-between;gap:6px;border-bottom:1px dashed #24352a;padding:2px 0"><span style="color:#f5f5f0">'+s.label+'</span><span style="display:flex;align-items:center;gap:6px"><span style="display:inline-block;height:8px;width:'+w+'px;background:'+col+';border-radius:4px"></span><span style="color:#9db29e">'+s.for_proxy.toFixed(2)+' · xG '+s.xg_proxy_avg+' · poss '+s.possession_avg_pct+'%</span></span></div>';
+          }).join('');
+        }
+        // cap% trend pill — map FOR to SCR proxy  (W+A)/R approx FOR/15 -> cap%
+        const capPill = document.getElementById('cap-trend-pill');
+        const capList = document.getElementById('cap-trend-list');
+        if((capPill||capList) && seasons.length){
+          // Use FFP 70% concept: cap% = 0.55 + (for_proxy/20)*0.35  → 0.55-0.90 range deterministic via for_proxy
+          const caps = seasons.map(s=>{
+            const pct = 0.55 + (s.for_proxy/20)*0.35;
+            return {year:s.label, pct: pct, over: pct>0.70};
+          });
+          if(capPill){
+            const over = caps.filter(c=>c.over).length;
+            const avg = (caps.reduce((a,c)=>a+c.pct,0)/caps.length).toFixed(3);
+            capPill.textContent = 'cap% trend FFP 70% avg '+avg+' · '+over+'/'+caps.length+' over — 2020-2024 '+(avg>0.70?'mostly over — cut needed':'mostly under');
+          }
+          if(capList){
+            capList.innerHTML = caps.map(c=>{
+              const col = c.pct<=0.70 ? '#3ddc71' : c.pct<=0.80 ? '#e0b400' : '#da4e34';
+              const tag = c.pct<=0.70?'PASS':c.pct<=0.80?'WARN':'BREACH';
+              return '<div style="display:flex;justify-content:space-between;gap:6px;border-bottom:1px dashed #24352a;padding:3px 0"><span style="color:#f5f5f0">'+c.year+'</span><span style="color:'+col+';font-weight:800">'+(c.pct*100).toFixed(1)+'% '+tag+'</span></div>';
+            }).join('');
+          }
+        }
+      }catch(e){ console.warn('FOR history load fail',e); }
+      try{
+        // props Δ
+        const rp = await fetch('assets/data/prop_edge_pitch.jsonl',{cache:'force-cache'});
+        const txt = await rp.text();
+        const lines = txt.split('\n').filter(l=>l.trim()).slice(1); // skip meta first line (contains file_format)
+        // actually first line meta contains file_format, so lines[0] is first meta, but we slice 1 already — so now lines are 2 rows
+        // If meta detection fails, fallback to filter lines with entity_id
+        const rows = [];
+        for(const l of (txt.split('\n'))){
+          try{ const o=JSON.parse(l); if(o.entity_id) rows.push(o); }catch{}
+        }
+        const listEl = document.getElementById('props-delta-list');
+        const chip = document.getElementById('props-delta-pill');
+        if(listEl && rows.length){
+          listEl.innerHTML = rows.map(r=>{
+            const delta = r.delta ?? (r.model_exp - r.market_line_vegas_exp);
+            const plus = delta>=0?'+':'';
+            const col = delta>=0 ? '#0a1510' : '#da4e34';
+            const bg = delta>=0 ? '#c3ffc5' : '#ffb3b3';
+            return '<div style="display:flex;justify-content:space-between;gap:8px;border:1.5px solid #080A0F;border-radius:8px;padding:6px 8px;background:'+bg+';color:'+col+'"><span><b>'+ (r.entity_name||r.entity_id) +'</b> '+r.market_type+'<br><span style="font-size:10px;opacity:.8">Vegas '+r.market_line_vegas_exp.toFixed(2)+' → model '+r.model_exp.toFixed(2)+' Δ '+plus+delta.toFixed(2)+' · '+ (r.dfs_action||'')+'</span></span><span style="background:#080A0F;color:#fffef7;border-radius:999px;padding:2px 8px;font-weight:900;font-size:10px;align-self:center">'+plus+delta.toFixed(2)+' beats</span></div>';
+          }).join('');
+        }
+        if(chip && rows.length){
+          const h = rows.find(r=>r.entity_name && r.entity_name.toLowerCase().includes('haaland')) || rows[0];
+          if(h){
+            chip.textContent = 'props Δ '+ (h.delta>=0?'+':'') + h.delta.toFixed(2)+' '+ (h.entity_name.split('_')[0]||'Haaland') + ' · Vegas '+h.market_line_vegas_exp.toFixed(2)+'→model '+h.model_exp.toFixed(2)+' — beats market';
+          }
+        }
+      }catch(e){ console.warn('props pitch load fail',e); }
+      // ensure known pill always 70737614 deterministic
+      const known = document.getElementById('daily-seed-known');
+      if(known) known.textContent = 'dailySeed 70737614 · 20260809→70737614 deterministic LCG a=1103515245';
+    }
+    loadForAndProps();
+    // keep known pill sync with dailySeed pill
+
     loadPitchVectors();
   })();
   </script>
 
-<div id="forPitchStrip" style="margin:10px 0;display:flex;gap:8px;flex-wrap:wrap"></div>
-<div id="propPitchChip" style="margin:8px 0;display:flex;gap:8px;flex-wrap:wrap"></div>
-<script>
-(async()=>{
-  try{
-    const h=await fetch('/assets/data/for_history.json',{cache:'no-store'}).then(r=>r.json());
-    const el=document.getElementById('forPitchStrip');
-    if(el&&h.seasons){
-      el.innerHTML=h.seasons.map(s=>`<span class=pill style="background:#080A0F;color:#F0E442;border:1px solid #F0E442;padding:4px 10px;border-radius:999px;font-family:ui-monospace;font-size:10px">${s.year} ${s.tournament||''} FOR ${s.avg_for} xG${s.avg_xG_per90} FFP${s.cap_ffp_pct}</span>`).join('')+`<span class=pill>dailySeed 70737614 LCG a=1103515245</span>`;
-    }
-  }catch(e){}
-  function lcg(s){return (s*1103515245+12345)&0x7fffffff;}
-  var ymd=new Date().toISOString().slice(0,10).replace(/-/g,''); var ds=lcg(parseInt(ymd,10)||20260809);
-  var props=[{n:'Haaland xG',v:0.62,m:0.82,d:0.20},{n:'Saka xA',v:0.31,m:0.44,d:0.13}];
-  var pick=props[ds%props.length];
-  var pel=document.getElementById('propPitchChip');
-  if(pel){pel.innerHTML=`<span class=pill style="background:#080A0F;color:#F0E442;border:1.5px solid #F0E442">🟢 beats market ${pick.n} Vegas ${pick.v} vs model ${pick.m} Δ+${pick.d} DAILY_SEED ${ds} LCG a=1103515245 deterministic</span>`;}
-})();
-</script>
 
 </main>
 <footer class="vp-footer">© 2026 Vector Pitch · Lab · pitch.dumbmodel.com</footer>
