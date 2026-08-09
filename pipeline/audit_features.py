@@ -58,8 +58,10 @@ def main() -> None:
     feats: list[str] = man["features"]
     fam_of: dict[str, str] = man["families"]
     if Z.shape[1] != len(feats):
-        raise SystemExit(f"train_matrix.npz has {Z.shape[1]} cols but manifest lists {len(feats)} "
-                         "features -- schema drifted, do not trust this audit until reconciled")
+        raise SystemExit(
+            f"train_matrix.npz has {Z.shape[1]} cols but manifest lists {len(feats)} "
+            "features -- schema drifted, do not trust this audit until reconciled"
+        )
 
     fam_cols: dict[str, list[int]] = defaultdict(list)
     for j, f in enumerate(feats):
@@ -72,13 +74,26 @@ def main() -> None:
         obs = M[:, j] > 0
         cov = float(obs.mean())
         if obs.sum() < MIN_OVERLAP:
-            dead.append({"feature": f, "family": fam_of.get(f), "coverage": round(cov, 4),
-                         "why": "coverage below usable threshold"})
+            dead.append(
+                {
+                    "feature": f,
+                    "family": fam_of.get(f),
+                    "coverage": round(cov, 4),
+                    "why": "coverage below usable threshold",
+                }
+            )
             continue
         sd = float(Z[obs, j].std())
         if sd < NEAR_CONST_STD:
-            dead.append({"feature": f, "family": fam_of.get(f), "coverage": round(cov, 4),
-                         "sd": round(sd, 6), "why": "near-constant where observed"})
+            dead.append(
+                {
+                    "feature": f,
+                    "family": fam_of.get(f),
+                    "coverage": round(cov, 4),
+                    "sd": round(sd, 6),
+                    "why": "near-constant where observed",
+                }
+            )
     report["dead_or_constant"] = dead
 
     dups = []
@@ -86,8 +101,16 @@ def main() -> None:
         for k in range(j + 1, len(feats)):
             r, n = masked_corr(Z[:, j], Z[:, k], M[:, j], M[:, k])
             if abs(r) >= DUP_R:
-                dups.append({"a": feats[j], "b": feats[k], "family_a": fam_of.get(feats[j]),
-                             "family_b": fam_of.get(feats[k]), "r": round(r, 4), "n": n})
+                dups.append(
+                    {
+                        "a": feats[j],
+                        "b": feats[k],
+                        "family_a": fam_of.get(feats[j]),
+                        "family_b": fam_of.get(feats[k]),
+                        "r": round(r, 4),
+                        "n": n,
+                    }
+                )
     dups.sort(key=lambda d: -abs(d["r"]))
     report["redundant_pairs"] = dups
 
@@ -102,8 +125,11 @@ def main() -> None:
                 if n >= MIN_OVERLAP:
                     rs.append(abs(r))
         if rs:
-            fam_red[fam] = {"n_features": len(cols), "mean_abs_r": round(float(np.mean(rs)), 4),
-                            "max_abs_r": round(float(np.max(rs)), 4)}
+            fam_red[fam] = {
+                "n_features": len(cols),
+                "mean_abs_r": round(float(np.mean(rs)), 4),
+                "max_abs_r": round(float(np.max(rs)), 4),
+            }
     report["within_family_redundancy"] = fam_red
 
     # coverage by context (ctx_ids), since there's no clean chronological axis
