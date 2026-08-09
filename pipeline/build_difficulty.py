@@ -93,9 +93,7 @@ def daily_target_index(date_str: str, n_players: int) -> int:
     return min(max(idx, 0), n_players - 1)
 
 
-def gated_daily_target_index(
-    date_str: str, n_players: int, flags: dict[int, str | None] | None
-) -> tuple[int, int]:
+def gated_daily_target_index(date_str: str, n_players: int, flags: dict[int, str | None] | None) -> tuple[int, int]:
     rng = mulberry32_stream(xmur3_seed("vector-pitch:" + date_str))
 
     def draw() -> int:
@@ -161,10 +159,7 @@ def compute_components(players: list[dict], warm_sim: float | None = None) -> di
     t2sets = [set(row) for row in top2]
     clusters = np.array([p["c"] for p in players])
     scout_pool = np.array(
-        [
-            sum(1 for j in range(n) if clusters[j] == clusters[i] and t2sets[i] & t2sets[j])
-            for i in range(n)
-        ],
+        [sum(1 for j in range(n) if clusters[j] == clusters[i] and t2sets[i] & t2sets[j]) for i in range(n)],
         dtype=np.float64,
     )
     salience_norms = np.linalg.norm(prof, axis=1)
@@ -278,7 +273,10 @@ def main() -> None:
 
     out = {
         "computed_at": time.strftime("%Y-%m-%d"),
-        "source": f"assets/vectors.json (built {data.get('built')}, {n} targets, embedding={embedding_tag}, warm_sim={warm_sim}, slope={slope})",
+        "source": (
+            f"assets/vectors.json (built {data.get('built')}, {n} targets, "
+            f"embedding={embedding_tag}, warm_sim={warm_sim}, slope={slope})"
+        ),
         "embedding": embedding_tag,
         "warm_sim": warm_sim,
         "slope": slope,
@@ -286,8 +284,10 @@ def main() -> None:
             "definition": (
                 "difficulty_score in [0,1], weighted mean of percentile-ranked components: "
                 f"warm_crowd (>= {warm_sim} cosine, {'MTNN 24-d L2' if is_mtnn else 'PCA 16-d'}), "
-                f"nn10_sim (cosine to {KTH_NEIGHBOUR}th NN), scout_pool (same archetype + overlap top-2, "
-                f"{'profile 16-d' if is_mtnn else '16-d'}), inverted salience (norm of {'profile 16-d' if is_mtnn else 'z-vector'})."
+                f"nn10_sim (cosine to {KTH_NEIGHBOUR}th NN), "
+                f"scout_pool (same archetype + overlap top-2, "
+                f"{'profile 16-d' if is_mtnn else '16-d'}), "
+                f"inverted salience (norm of {'profile 16-d' if is_mtnn else 'z-vector'})."
             ),
             "weights": WEIGHTS,
             "expected_solve": f"MODEL ESTIMATE logistic median={ANCHOR_SOLVE} slope={slope} band {BAND[0]}-{BAND[1]}",
@@ -318,7 +318,11 @@ def main() -> None:
 
     elapsed = time.time() - t_start
     in_band_pct = 100.0 * out["summary"]["n_in_band"] / n
-    print(f"wrote {OUT.name}: {n} targets, {out['summary']['n_in_band']} in band ({in_band_pct:.1f}%), {n_too_hard} too hard, {n_too_easy} too easy ({elapsed:.1f}s) embedding={embedding_tag}")
+    print(
+        f"wrote {OUT.name}: {n} targets, {out['summary']['n_in_band']} in band "
+        f"({in_band_pct:.1f}%), {n_too_hard} too hard, {n_too_easy} too easy "
+        f"({elapsed:.1f}s) embedding={embedding_tag}"
+    )
     flagged = [u for u in upcoming if not u["in_band"]]
     gated = sum(1 for u in upcoming if u["gate_rerolls"] > 0)
     print(f"upcoming {UPCOMING_DAYS} days: gate held {gated}, {len(flagged)} still out-of-band")
@@ -326,4 +330,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     import sys
+
     sys.exit(main())

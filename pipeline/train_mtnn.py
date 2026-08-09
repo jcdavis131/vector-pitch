@@ -56,9 +56,7 @@ N_ARCH = 8  # k-means archetypes (matches the shipped PCA game)
 
 
 class ResidualTower(nn.Module):
-    def __init__(
-        self, d_in: int, d_out: int = 16, d_hidden: int = 32, dropout: float = 0.0
-    ):
+    def __init__(self, d_in: int, d_out: int = 16, d_hidden: int = 32, dropout: float = 0.0):
         super().__init__()
         d_cat = d_in * 2
         self.fc1 = nn.Linear(d_cat, d_hidden)
@@ -70,9 +68,7 @@ class ResidualTower(nn.Module):
 
     def forward(self, x: torch.Tensor, m: torch.Tensor) -> torch.Tensor:
         h = torch.cat([x * m, m], dim=-1)
-        return self.ln2(
-            self.fc2(self.drop(F.gelu(self.ln1(self.fc1(h))))) + self.skip(h)
-        )
+        return self.ln2(self.fc2(self.drop(F.gelu(self.ln1(self.fc1(h))))) + self.skip(h))
 
 
 class GatedFusion(nn.Module):
@@ -89,9 +85,7 @@ class GatedFusion(nn.Module):
         super().__init__()
         self.ctx_emb = nn.Embedding(n_ctx, d_ctx)
         self.gate = nn.Linear(d_tower, 1)
-        self.attn = nn.Sequential(
-            nn.Linear(d_tower, d_tower), nn.Tanh(), nn.Linear(d_tower, 1)
-        )
+        self.attn = nn.Sequential(nn.Linear(d_tower, d_tower), nn.Tanh(), nn.Linear(d_tower, 1))
         self.fuse = nn.Sequential(
             nn.Linear(d_tower + d_ctx, d_hidden),
             nn.GELU(),
@@ -123,21 +117,14 @@ class PitchMTNN(nn.Module):
         super().__init__()
         self.families = sorted(fam_dims)
         self.towers = nn.ModuleDict(
-            {
-                f: ResidualTower(fam_dims[f], d_out=d_tower, dropout=dropout)
-                for f in self.families
-            }
+            {f: ResidualTower(fam_dims[f], d_out=d_tower, dropout=dropout) for f in self.families}
         )
-        self.fusion = GatedFusion(
-            len(self.families), d_tower, n_ctx, d_emb=d_emb, dropout=dropout
-        )
+        self.fusion = GatedFusion(len(self.families), d_tower, n_ctx, d_emb=d_emb, dropout=dropout)
         self.arch_head = nn.Linear(d_emb, n_arch)
         self.profile_head = nn.Linear(d_emb, n_feat)
 
     def encode(self, xs, ms, ctx_ids):
-        parts = torch.stack(
-            [self.towers[f](xs[f], ms[f]) for f in self.families], dim=1
-        )
+        parts = torch.stack([self.towers[f](xs[f], ms[f]) for f in self.families], dim=1)
         return self.fusion(parts, ctx_ids)
 
     def forward(self, xs, ms, ctx_ids):
@@ -358,9 +345,7 @@ def train_fold(
                 vl = vl + con_w * float(supcon_loss(emb_v, pos_tr_t))
         if vl < best_loss - 1e-4:
             best_loss, bad = vl, 0
-            best_state = {
-                k: v.detach().cpu().clone() for k, v in model.state_dict().items()
-            }
+            best_state = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
         else:
             bad += 1
             if bad >= patience:
@@ -375,9 +360,7 @@ def train_fold(
         emb_tr = model.encode(xs_tr, ms_tr, ctx_tr).cpu().numpy()
         # test batch
         xs_te = {f: Xte_t[:, slices[f]] for f in slices}
-        ms_te = {
-            f: torch.ones(Xte_t.shape[0], len(slices[f]), device=device) for f in slices
-        }
+        ms_te = {f: torch.ones(Xte_t.shape[0], len(slices[f]), device=device) for f in slices}
         emb_te = model.encode(xs_te, ms_te, ctx_te).cpu().numpy()
         prof_te = model.profile_head(model.encode(xs_te, ms_te, ctx_te)).cpu().numpy()
 
@@ -425,9 +408,7 @@ def train_fold(
 # ---------------------------------------------------------------------------
 
 
-def train_final_and_export(
-    X, M, ctx_ids, meta, slices, fam_dims, n_ctx, feats, args, device
-):
+def train_final_and_export(X, M, ctx_ids, meta, slices, fam_dims, n_ctx, feats, args, device):
     """Train a final MTNN on ALL data (no holdout) and export the L2 embedding.
 
     Additive: writes assets/pitch_mtnn_embeddings.json (player -> e_p) and the
@@ -470,9 +451,9 @@ def train_final_and_export(
                         xs[fam] = torch.zeros_like(xs[fam])
             opt.zero_grad()
             emb, out = model(xs, ms, ctx_t[bi])
-            loss = args.arch_w * F.cross_entropy(
-                out["arch"], arch_t[bi]
-            ) + args.prof_w * F.smooth_l1_loss(out["profile"], Xt[bi])
+            loss = args.arch_w * F.cross_entropy(out["arch"], arch_t[bi]) + args.prof_w * F.smooth_l1_loss(
+                out["profile"], Xt[bi]
+            )
             if getattr(args, "con_w", 0) > 0:
                 # position ids from meta (DEF/MID/FWD)
                 pos_bi = torch.tensor(
@@ -532,18 +513,16 @@ def train_final_and_export(
         "players": rows,
     }
     ASSETS.mkdir(parents=True, exist_ok=True)
-    (ASSETS / "pitch_mtnn_embeddings.json").write_text(
-        json.dumps(out, separators=(",", ":")), encoding="utf-8"
-    )
+    (ASSETS / "pitch_mtnn_embeddings.json").write_text(json.dumps(out, separators=(",", ":")), encoding="utf-8")
     print(
         f"exported {n} embeddings (d_emb={args.d_emb}) "
         f"-> assets/pitch_mtnn_embeddings.json | state_dict -> pipeline/data/pitch_mtnn.pt"
     )
     # sanity: every embedding is unit-norm
     norms = np.linalg.norm(emb, axis=1)
-    assert np.allclose(norms, 1.0, atol=1e-4), (
-        f"embeddings not L2-normalized: min={norms.min():.4f} max={norms.max():.4f}"
-    )
+    assert np.allclose(
+        norms, 1.0, atol=1e-4
+    ), f"embeddings not L2-normalized: min={norms.min():.4f} max={norms.max():.4f}"
     return out
 
 
@@ -558,12 +537,8 @@ def main() -> int:
     ap.add_argument("--d-emb", type=int, default=24)
     ap.add_argument("--d-tower", type=int, default=16)
     ap.add_argument("--family-drop", type=float, default=0.15)
-    ap.add_argument(
-        "--arch-w", type=float, default=1.0, help="archetype CE loss weight"
-    )
-    ap.add_argument(
-        "--prof-w", type=float, default=0.5, help="profile recon loss weight"
-    )
+    ap.add_argument("--arch-w", type=float, default=1.0, help="archetype CE loss weight")
+    ap.add_argument("--prof-w", type=float, default=0.5, help="profile recon loss weight")
     ap.add_argument(
         "--con-w",
         type=float,
@@ -611,8 +586,9 @@ def main() -> int:
     # was 0.0209. Default is 7, the previous hardcoded value, so behaviour is
     # unchanged unless the flag is passed — this removes a measurement blocker, it
     # does not change any result.
-    ap.add_argument("--seed", type=int, default=7,
-                    help="random seed; vary it to measure the noise floor before believing any A/B")
+    ap.add_argument(
+        "--seed", type=int, default=7, help="random seed; vary it to measure the noise floor before believing any A/B"
+    )
     args = ap.parse_args()
     t0 = time.time()
     torch.manual_seed(args.seed)
@@ -623,9 +599,7 @@ def main() -> int:
     M = npz["M"]
     ctx_ids = npz["ctx_ids"]
     stem = args.matrix.replace(".npz", "")
-    manifest = json.loads(
-        (DATA / f"feature_manifest_{stem}.json").read_text(encoding="utf-8")
-    )
+    manifest = json.loads((DATA / f"feature_manifest_{stem}.json").read_text(encoding="utf-8"))
     meta = json.loads((DATA / f"meta_{stem}.json").read_text(encoding="utf-8"))
     feats = manifest["features"]
     families = manifest["family_lists"]
@@ -642,9 +616,7 @@ def main() -> int:
     if args.skip_cv:
         if args.save_final:
             print("\n-- final model on ALL data + export e_p (CV skipped) --")
-            train_final_and_export(
-                X, M, ctx_ids, meta, slices, fam_dims, n_ctx, feats, args, device
-            )
+            train_final_and_export(X, M, ctx_ids, meta, slices, fam_dims, n_ctx, feats, args, device)
         else:
             print("--skip-cv without --save-final: nothing to do")
         return 0
@@ -657,10 +629,7 @@ def main() -> int:
         te = ctx_ids == hold
         if tr.sum() < 40 or te.sum() < 20:
             continue
-        print(
-            f"\n-- fold: hold context {manifest['contexts'][hold]} "
-            f"(tr={int(tr.sum())}, te={int(te.sum())}) --"
-        )
+        print(f"\n-- fold: hold context {manifest['contexts'][hold]} " f"(tr={int(tr.sum())}, te={int(te.sum())}) --")
         r = train_fold(
             X,
             M,
@@ -695,10 +664,7 @@ def main() -> int:
             f"  knn5 pos-acc:    MTNN {r['knn5_pos_acc_mtnn']} | "
             f"PCA(3) {r['knn5_pos_acc_pca3']} | PCA(16) {r['knn5_pos_acc_pca16']}"
         )
-        print(
-            f"  NN role: MTNN {r['nn_role_mtnn']} | "
-            f"PCA(3) {r['nn_role_pca3']} | PCA(16) {r['nn_role_pca16']}"
-        )
+        print(f"  NN role: MTNN {r['nn_role_mtnn']} | " f"PCA(3) {r['nn_role_pca3']} | PCA(16) {r['nn_role_pca16']}")
         print(
             f"  recon MAE: MTNN {r['recon_mae_mtnn']} | PCA(3) {r['recon_mae_pca3']} | "
             f"PCA({args.d_emb}) {r['recon_mae_pcaD']}"
@@ -745,8 +711,7 @@ def main() -> int:
         "recon_mae_mtnn": avg("recon_mae_mtnn"),
         "recon_mae_pca3": avg("recon_mae_pca3"),
         "recon_mae_pcaD": avg("recon_mae_pcaD"),
-        "beats_pca3_pos_cluster": avg("pos_cluster_acc_mtnn")
-        > avg("pos_cluster_acc_pca3"),
+        "beats_pca3_pos_cluster": avg("pos_cluster_acc_mtnn") > avg("pos_cluster_acc_pca3"),
         "beats_pca3_knn5": avg("knn5_pos_acc_mtnn") > avg("knn5_pos_acc_pca3"),
         "beats_pca3_nn_role": avg("nn_role_mtnn") > avg("nn_role_pca3"),
         "beats_pca3_recon": avg("recon_mae_mtnn") < avg("recon_mae_pca3"),
@@ -767,9 +732,7 @@ def main() -> int:
     report_stem = args.matrix.replace(".npz", "")
     if args.tag:
         report_stem = f"{report_stem}_{args.tag}"
-    (DATA / f"{report_stem}_report.json").write_text(
-        json.dumps(summary, indent=2), encoding="utf-8"
-    )
+    (DATA / f"{report_stem}_report.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     print("\n=== SUMMARY (MTNN vs PCA, leave-one-context-out) ===")
     print(
         f"  pos-cluster acc: MTNN {summary['pos_cluster_acc_mtnn']} | "
@@ -804,9 +767,7 @@ def main() -> int:
         if want_final:
             print("  auto: promote (≥2/4 vs PCA) — running final-refit on ALL data")
         else:
-            print(
-                "  auto: did not beat PCA on ≥2/4 — skipping final-refit / assets export"
-            )
+            print("  auto: did not beat PCA on ≥2/4 — skipping final-refit / assets export")
     if want_final:
         print("\n-- final model on ALL data + export e_p --")
         summary["deploy"] = {
@@ -814,12 +775,8 @@ def main() -> int:
             "metrics_source": "leave_one_context_out",
             "note": "CV metrics are held-out; shipped e_p is full-corpus refit.",
         }
-        (DATA / f"{report_stem}_report.json").write_text(
-            json.dumps(summary, indent=2), encoding="utf-8"
-        )
-        train_final_and_export(
-            X, M, ctx_ids, meta, slices, fam_dims, n_ctx, feats, args, device
-        )
+        (DATA / f"{report_stem}_report.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
+        train_final_and_export(X, M, ctx_ids, meta, slices, fam_dims, n_ctx, feats, args, device)
     return 0
 
 

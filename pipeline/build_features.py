@@ -90,9 +90,7 @@ STARTER = [
 ]
 
 
-def select_competitions(
-    mode: str, competitions: list[dict]
-) -> list[tuple[int, int, str]]:
+def select_competitions(mode: str, competitions: list[dict]) -> list[tuple[int, int, str]]:
     """Return list of (competition_id, season_id, label) to ingest."""
     if mode == "starter":
         return list(STARTER)
@@ -120,9 +118,7 @@ def context_is_cached(comp_id: int, season_id: int) -> bool:
     if not matches:
         return False
     mid = matches[0]["match_id"]
-    return (CACHE / f"lineups_{mid}.json").exists() and (
-        CACHE / f"events_{mid}.json"
-    ).exists()
+    return (CACHE / f"lineups_{mid}.json").exists() and (CACHE / f"events_{mid}.json").exists()
 
 
 def build_context(comp_id: int, season_id: int, label: str, cached_only: bool):
@@ -165,9 +161,7 @@ def build_context(comp_id: int, season_id: int, label: str, cached_only: bool):
         process_events(events, agg)
         fetched += 1
         if (i + 1) % 32 == 0 or i == len(matches) - 1:
-            print(
-                f"  {label}: {i + 1}/{len(matches)} matches ({fetched} ok, {failed} fail)"
-            )
+            print(f"  {label}: {i + 1}/{len(matches)} matches ({fetched} ok, {failed} fail)")
 
     # per-90 rows for qualified outfielders
     rows = []
@@ -266,16 +260,13 @@ def main() -> int:
             total_matches += m_ok
             total_fail += m_fail
             print(
-                f"  {label}: {len(rows)} qualified player-seasons "
-                f"({m_ok} matches, {time.time() - t0:.0f}s elapsed)"
+                f"  {label}: {len(rows)} qualified player-seasons " f"({m_ok} matches, {time.time() - t0:.0f}s elapsed)"
             )
         else:
             print(f"  {label}: no rows (matches={m_ok}, fail={m_fail})")
 
     if not all_rows:
-        raise SystemExit(
-            "no player-seasons produced -- run without --cached-only to fetch"
-        )
+        raise SystemExit("no player-seasons produced -- run without --cached-only to fetch")
 
     n, d = len(all_rows), len(FEATURES)
     X = np.array([[r[f] for f in FEATURES] for r in all_rows], dtype=np.float64)
@@ -292,9 +283,7 @@ def main() -> int:
         sd[sd == 0] = 1.0
         Z[idxs] = (block - mu) / sd
     Z = np.clip(Z, -4, 4)
-    M = np.ones_like(
-        Z, dtype=np.float32
-    )  # pitch open data is complete for qualified players
+    M = np.ones_like(Z, dtype=np.float32)  # pitch open data is complete for qualified players
 
     ctx_ids = np.zeros(n, dtype=np.int64)
     ctx_list = sorted(ctx_index)
@@ -346,9 +335,7 @@ def main() -> int:
         "matches_failed": total_fail,
         "feature_labels": LABELS,
     }
-    (DATA / f"feature_manifest_{args.out}.json").write_text(
-        json.dumps(manifest, indent=2), encoding="utf-8"
-    )
+    (DATA / f"feature_manifest_{args.out}.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
 
     # audit asserts
     assert not np.isnan(Z).any(), "NaN in z-scored matrix"
