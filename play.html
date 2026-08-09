@@ -1,213 +1,146 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Vector Pitch — Guess The Player, daily World Cup</title>
-<meta name="description" content="Guess today's mystery World Cup player in 6 tries. Wordle for soccer, context-honest. Chimera hard mode.">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Play — Daily Court 5× — Vector Pitch</title>
+<meta name="description" content="Daily Court: 5 WC past→present twins. 6 tries each, build your starting XI. Pack Battle — share same link, battle friends. Lab glass-box."/>
+<meta property="og:title" content="Play Vector Pitch — Daily Court 5× + Pack Battle"/>
+<meta name="theme-color" content="#0A1510"/>
+<link rel="manifest" href="/manifest.json"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
-<link rel="manifest" href="/manifest.json"/><meta name="theme-color" content="#0A1510"/><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#9917;</text></svg>">
-<link rel="stylesheet" href="assets/shell.css"/>
-<link rel="stylesheet" href="assets/unified.css"/>
-<link rel="stylesheet" href="assets/final-qa.css"/>
-<link rel="stylesheet" href="assets/pitch.css">
-<link rel="stylesheet" href="assets/responsive.css">
-<link rel="stylesheet" href="assets/motion.css">
-</head>
+<link rel="stylesheet" href="assets/shell.css"/><link rel="stylesheet" href="assets/responsive.css"/><link rel="stylesheet" href="assets/final-qa.css"/><link rel="stylesheet" href="assets/unified.css"/><link rel="stylesheet" href="assets/motion.css"/><link rel="stylesheet" href="assets/pitch.css">
+<style>
+.main{max-width:1100px;margin:0 auto;padding:12px}
+.card{background:#FFFEF7;border:1px solid #EAE5D7;border-radius:14px;padding:14px;margin:10px 0;box-shadow:0 1px 0 #eee}
+.small-mono{font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:#6B6A63}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:20px;background:#F2EEE3;color:#0A1510;font-size:11px;font-family:ui-monospace,monospace}
+.mode-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.mode-tab{padding:7px 12px;border-radius:20px;border:1px solid #E2DACA;background:#FFFEF7;cursor:pointer;font-size:13px}
+.mode-tab.is-active{background:#0A1510;color:#FFFEF7;border-color:#0A1510}
+.game-title{font-family:'Architects Daughter',cursive;font-size:28px;line-height:1.15;margin:6px 0}
+.game-subtitle{color:#555;font-size:13px;margin:2px 0 8px}
+.progress-dots{display:flex;gap:6px;margin-top:8px}.progress-dots i{width:10px;height:10px;border-radius:50%;background:#E9E3D1;display:inline-block}
+.progress-dots i.done{background:#0A1510}.progress-dots i.win{background:#009E73}
+.pitch-map{width:100%;height:420px;border-radius:10px;background:#FFFEF7;border:1px solid #EAE5D7;display:block}
+.vp-card{border:1px solid #EAE5D7;border-radius:12px;padding:10px;background:#FFFEF7;margin:10px 0}
+</style>
+<meta property="og:type" content="website"><meta property="og:url" content="https://pitch.dumbmodel.com/play"><meta property="og:description" content="Daily Court: 5 WC twins — 5 mystery players. Pack Battle same-link. Lab glass-box 3 towers."><meta property="og:image" content="/assets/og-1200x630.png"><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/></head>
 <body>
-
-<nav class="site-nav" data-active="/"></nav>
-<header class="vp-header">
-  <div class="vp-header__brand">
-    <span class="vp-logo">VECTOR<span class="vp-logo__accent">PITCH</span></span>
-  </div>
-  <div class="vp-stats" id="header-stats">
-    <div class="vp-stat">
-      <span class="vp-stat__num" id="puzzle-day">—</span>
-      <span class="vp-stat__label">day</span>
+<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Pitch needs JavaScript for Daily Court + Map</div></noscript>
+<nav class="site-nav" data-active="/play" aria-label="Vector Pitch site"></nav>
+<div class="main">
+<div class="card" id="game-header">
+  <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+    <div style="flex:1 1 300px;min-width:0">
+      <div class="small-mono" style="display:flex;gap:6px;align-items:center;margin-bottom:6px"><span style="width:6px;height:6px;border-radius:50%;background:#D55E00;display:inline-block"></span><span id="header-mode-label">DAILY COURT • 5× WC-TWIN</span><span id="mode-badge" class="pill" style="background:#0072B2;color:#fff">DAILY 5</span></div>
+      <h1 class="game-title hd" id="game-title">Find the <span style="background:#0A1510;color:#fff;padding:0 .18em;border-radius:6px">WC twin</span></h1>
+      <p class="game-subtitle" id="game-subtitle">Same 5 for everyone today. 6 tries each. Solve 1 to save streak. Lab shows fusion avg L2 argmin.</p>
     </div>
-    <div class="vp-stat">
-      <span class="vp-stat__num" id="streak-num">0</span>
-      <span class="vp-stat__label">streak</span>
-    </div>
-    <div class="vp-stat">
-      <span class="vp-stat__num" id="guesses-left-num">6</span>
-      <span class="vp-stat__label">left</span>
+    <div style="flex:0 0 auto;display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+      <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end"><span class="pill" id="puzzle-pill">P#—</span><span class="pill" id="streak-pill">streak 0</span></div>
+      <button class="pill" id="btn-howto" type="button">❓ How to play</button>
     </div>
   </div>
-  <button class="vp-help-btn" id="help-btn" type="button" aria-haspopup="dialog" aria-controls="help-modal" title="How to play">?</button>
-</header>
+  <div class="game-status-bar" id="game-status-bar" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:8px"><div class="small-mono" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span id="puzzle-day-label">Today</span><span style="opacity:.4">•</span><span id="game-phase-label">Loading court…</span></div><div class="progress-dots" id="guess-dots"></div></div>
+</div>
 
-<main id="app">
-
-  <section id="panel-chimera" class="vp-panel">
-
-    <div class="vp-card vp-prompt" id="prompt-card">
-      <div class="vp-prompt__eyebrow" id="puzzle-number">Vector Pitch #—</div>
-      <p class="vp-prompt__text" id="prompt-text">Loading today's Mystery Player…</p>
-      <p class="vp-prompt__scouting" id="scouting-line"></p>
-    </div>
-
-    <div class="vp-card vp-guessbar">
-      <div class="vp-autocomplete" id="chimera-autocomplete">
-        <input
-          type="text"
-          id="chimera-input"
-          class="vp-input"
-          placeholder="Type a player, e.g. Kylian Mbappé (WC 2022 &middot; FRA &middot; FWD)"
-          autocomplete="off"
-          aria-autocomplete="list"
-          aria-controls="chimera-suggestions"
-          aria-expanded="false"
-          disabled
-        >
-        <ul class="vp-suggestions" id="chimera-suggestions" role="listbox" hidden></ul>
-      </div>
-      <button class="vp-btn vp-btn--primary" id="chimera-submit" disabled>Guess</button>
-    </div>
-
-    <div class="vp-card vp-warmth" id="warmth-card" hidden>
-      <div class="vp-warmth__bars" id="warmth-bars" aria-hidden="true"></div>
-      <div class="vp-warmth__closest" id="warmth-closest">Closest: &mdash;</div>
-    </div>
-
-    <div class="vp-card vp-poshint" id="pos-hint-card" hidden>
-      <span class="vp-poshint__label">Position hint</span>
-      <span class="vp-poshint__chip" id="pos-hint-value">&mdash;</span>
-    </div>
-
-    <div class="vp-card vp-result" id="result-card" hidden>
-      <div class="vp-scoreboard" id="scoreboard">
-        <div class="vp-scoreboard__pct" id="scoreboard-pct">0%</div>
-        <div class="vp-scoreboard__sub">match on last guess</div>
-      </div>
-
-      <p class="vp-story" id="story-caption"></p>
-      <p class="vp-guess__line vp-guess__line--quick" id="quick-coaching-line"></p>
-      <p class="vp-guess__line" id="cluster-line"></p>
-
-      <details class="vp-fullreport" id="full-report">
-        <summary class="vp-fullreport__summary">Full scouting report &#9662;</summary>
-        <div class="vp-fullreport__body">
-          <div class="vp-section-label">The pitch &mdash; zone presence</div>
-          <div class="vp-pitches" id="pitches-row">
-            <div class="vp-pitch-block">
-              <div class="vp-pitch-block__label">Target</div>
-              <canvas class="vp-pitch" id="pitch-target" width="315" height="204" aria-label="Full-pitch diagram of the target's attacking and defensive zone presence"></canvas>
-            </div>
-            <div class="vp-pitch-block">
-              <div class="vp-pitch-block__label" id="pitch-guess-label">Your guess</div>
-              <canvas class="vp-pitch" id="pitch-guess" width="315" height="204" aria-label="Full-pitch diagram of your guess's attacking and defensive zone presence"></canvas>
-            </div>
-          </div>
-          <div class="vp-pitch-legend">
-            <span><span class="vp-legend-swatch vp-legend-swatch--orange"></span>attack &mdash; zone fills &amp; arrows, &sigma;-labeled</span>
-            <span><span class="vp-legend-swatch vp-legend-swatch--hatch"></span>defense &mdash; 45&deg; hatch</span>
-          </div>
-
-          <div class="vp-section-label">Dimensional breakdown &mdash; &sigma; vs tournament, all 16 dimensions</div>
-          <div class="vp-breakdown" id="breakdown-chart" role="img" aria-label="Diverging bar chart comparing the Chimera and your guess across all 16 stat dimensions in sigmas"></div>
-          <div class="vp-pitch-legend">
-            <span><span class="vp-legend-swatch vp-legend-swatch--orange"></span>target</span>
-            <span><span class="vp-legend-swatch vp-legend-swatch--blue"></span>your guess</span>
-          </div>
-          <p class="vp-guess__line" id="coaching-line"></p>
-        </div>
-      </details>
-    </div>
-
-    <div class="vp-card vp-reveal" id="reveal-card" hidden>
-      <h2 class="vp-reveal__title" id="reveal-title">Revealed</h2>
-      <div class="vp-reveal__body" id="reveal-body"></div>
-      <button class="vp-btn vp-btn--accent" id="share-btn">Share result</button>
-      <div class="vp-reveal__copied" id="share-copied" hidden>Copied to clipboard.</div>
-    </div>
-
-    <details class="vp-card vp-statscard" id="stats-details" open>
-      <summary class="vp-statscard__label">Your stats <span class="vp-statscard__hint">(this device only)</span></summary>
-      <div class="vp-statscard__body">
-        <div class="vp-statsgrid" id="stats-grid"></div>
-        <div class="vp-statscard__difficulty" id="stats-difficulty" hidden></div>
-        <p class="vp-statscard__note" id="stats-note">Stats live in this browser's local storage &mdash; your device only, nothing leaves this page. Difficulty is a model estimate computed offline from the player-vector space, not measured telemetry.</p>
-      </div>
-    </details>
-
-    <details class="vp-card vp-mapcard" id="map-details" open>
-      <summary class="vp-mapcard__label">3D pitch map <span class="vp-mapcard__hint">(drag to rotate &middot; wheel/pinch to zoom)</span></summary>
-      <div class="vp-mapcard__body">
-        <div class="vp-map-wrap">
-          <canvas id="pitch-map" class="vp-map" width="600" height="600" aria-label="3D starfield of all World Cup players colored by position, with the target marker and your guesses pinned"></canvas>
-          <button class="vp-map-pause" id="map-pause-btn" type="button" title="Pause rotation">Pause</button>
-          <button class="vp-map-color" id="map-color-btn" type="button" title="Toggle dot coloring">Color: position</button>
-          <div class="vp-map-axes" id="map-axes">PC1 / PC2 / PC3 of the tournament-normalized stat space</div>
-        </div>
-        <div class="vp-mapcard__legend" id="map-legend"></div>
-      </div>
-    </details>
-
-    <ol class="vp-guesslist" id="guess-list" aria-live="polite"></ol>
-
-  </section>
-
-  <div class="vp-loading" id="loading-banner">Loading vectors&hellip;</div>
-  <div class="vp-error" id="error-banner" hidden></div>
-
-<!-- hoops gold parity: daily 5× deterministic hash + pack 1/3/5 ?pack= mountSharedMap -->
-<div class="vp-card" id="daily-court" style="margin:12px 0;">
+<div class="card" id="mode-selector">
   <div class="small-mono" style="display:flex;justify-content:space-between;gap:8px;margin-bottom:8px"><span>Mode — daily court is default (5× deterministic hash)</span><span style="text-transform:none;opacity:.6">Random & Pack don't affect streak</span></div>
-  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+  <div class="mode-tabs" id="mode-tabs">
     <button class="mode-tab is-active daily-active" data-mode="daily" type="button">⚽ Daily Court 5×</button>
+    <button class="mode-tab" data-mode="random" type="button">🎲 Random</button>
     <button class="mode-tab" data-mode="pack1" data-pack-n="1" type="button">⚡ Solo 1</button>
     <button class="mode-tab" data-mode="pack3" data-pack-n="3" type="button">🔥 Triple 3</button>
     <button class="mode-tab" data-mode="pack5" data-pack-n="5" type="button">🏆 Full 5</button>
+    <a class="mode-tab" href="/model" style="text-decoration:none;display:inline-flex;align-items:center">🧪 Lab</a>
+    <a class="mode-tab" href="/players" style="text-decoration:none;display:inline-flex;align-items:center">👥 Players</a>
   </div>
-  <div id="daily-pool-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px"></div>
-  <div class="small-mono" style="margin-top:8px;color:#666">5 puzzles daily + viral packs — deterministic from date: hash(date+slot) — refresh gives same 5 — ?pack=672-123-456 same link for friends — mountSharedMap pinned guesses</div>
+  <div class="small-mono" id="mode-desc" style="margin-top:6px;color:#666">Daily Court: 5 fixed puzzles per day hash(date+slot) — refresh gives same 5 — ?pack=42-113-587 same link for friends — mountSharedMap pinned guesses</div>
+  <div id="daily-pool-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-top:10px"></div>
 </div>
+
 <div class="vp-card" id="pack-progress" style="display:none;"></div>
 <div class="vp-card" id="pack-summary" style="display:none;"></div>
 <div class="vp-card" id="pack-invalid" style="display:none;"></div>
-<script type="module">
-// deterministic daily 5× hash + pack 1/3/5 ?pack= handler — hoops parity light
-import { mountSharedMap } from './assets/shared-map.js';
-const EPOCH='2024-01-01';
-function xmur3(str){ let h=1779033703^str.length; for(let i=0;i<str.length;i++){h=Math.imul(h^str.charCodeAt(i),3432918353); h=h<<13|h>>>19;} return function(){h=Math.imul(h^h>>>16,2246822507); h=Math.imul(h^h>>>13,3266489909); return (h^h>>>16)>>>0;}}
-function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; let t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }}
-function dailyPool(dateStr, n=5, total=633){
-  const rng=mulberry32(xmur3(dateStr)()); const pool=[]; const used=new Set();
-  while(pool.length<n){ const idx=Math.floor(rng()*total); if(!used.has(idx)){ used.add(idx); pool.push(idx);} }
-  return pool;
-}
-function parsePackParam(){
-  const sp=new URLSearchParams(location.search); const pack=sp.get('pack'); if(!pack) return null;
-  const ids=pack.split('-').map(s=>parseInt(s,10)).filter(v=>!isNaN(v)&&v>=0&&v<633);
-  if(ids.length>=1&&ids.length<=5) return ids; return null;
-}
-window.VPPitchDaily={dailyPool, parsePackParam, mountSharedMap};
-// auto-mount map if canvas exists
-const canvas=document.getElementById('pitch-map');
-if(canvas){ mountSharedMap(canvas,{highlightId:null,guessIds:[]}).then(api=>{ window._sharedMapApi=api; }); }
-</script>
-</main>
 
-<div class="vp-modal-backdrop" id="help-backdrop" hidden>
-  <div class="vp-modal" id="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-title">
-    <h2 id="help-title">How to play — Guess The Player</h2>
-    <ol class="vp-modal__list">
-      <li>Each day one World Cup player (2018 or 2022) is the mystery target.</li>
-      <li>Guess any player; you get a % match, a pitch comparison, and coaching.</li>
-      <li>Exact name + tournament wins. 6 guesses. New at midnight UTC.</li>
-      <li>After 3 guesses, position hint (DEF / MID / FWD). After 5, archetype hint.</li>
-      <li>Hard mode: <a href="?mode=chimera_hard">Chimera 8+8 fusion, 92% wins</a>.</li>
-    </ol>
-    <p class="vp-modal__telemetry" id="telemetry-note">Anonymous play events (round counts only) help tune the game.</p>
-    <button class="vp-btn vp-btn--primary" id="help-close" type="button">Got it</button>
+<div class="card" id="game-board">
+  <div style="display:grid;grid-template-columns:1fr 360px;gap:12px;align-items:start">
+    <div>
+      <div id="prompt-card" class="vp-card"><div class="small-mono" id="puzzle-number">Vector Pitch #—</div><p id="prompt-text">Loading today's Mystery Player…</p><p id="scouting-line" class="small-mono" style="color:#666"></p></div>
+      <div class="vp-card" style="display:flex;gap:8px;align-items:center"><input type="text" id="chimera-input" placeholder="Type a player, e.g. Mbappé (WC 2022 · FRA · FWD)" style="flex:1;padding:8px 10px;border-radius:10px;border:1px solid #EAE5D7" autocomplete="off" disabled><button id="chimera-submit" disabled style="padding:8px 12px;border-radius:10px;background:#0A1510;color:#fff;border:none">Guess</button></div>
+      <div id="warmth-card" hidden class="vp-card"><div id="warmth-bars"></div><div id="warmth-closest" class="small-mono">Closest: —</div></div>
+      <div id="pos-hint-card" hidden class="vp-card"><span class="small-mono">Position hint</span> <span id="pos-hint-value" class="pill">—</span></div>
+      <div id="result-card" hidden class="vp-card"><div id="scoreboard"><div id="scoreboard-pct" style="font-size:28px;font-weight:700">0%</div><div class="small-mono">match on last guess</div></div><p id="story-caption"></p><p id="quick-coaching-line" class="small-mono"></p><p id="cluster-line" class="small-mono"></p></div>
+      <div id="reveal-card" hidden class="vp-card"><h2 id="reveal-title">Revealed</h2><div id="reveal-body"></div><button id="share-btn" class="pill" type="button">Share result</button><div id="share-copied" hidden class="small-mono">Copied to clipboard.</div></div>
+      <ol id="guess-list" aria-live="polite" style="padding-left:18px"></ol>
+    </div>
+    <div>
+      <div class="small-mono" style="margin-bottom:6px">3D pitch map <span style="text-transform:none;opacity:.6">(drag to rotate · pause/reset)</span></div>
+      <canvas id="pitch-map" class="pitch-map" width="600" height="600" aria-label="3D starfield WC players colored by DEF/MID/FWD, target + guesses pinned"></canvas>
+      <div style="display:flex;gap:6px;margin-top:6px"><button id="map-pause-btn" class="pill" type="button">Pause</button><button id="map-reset-btn" class="pill" type="button">Reset</button><span id="map-stats" class="small-mono" style="margin-left:auto">633 WC / 2430 FULL · 24-d L2 cosine=DEF orange/blue etc 8 arch</span></div>
+      <div id="map-legend" class="small-mono" style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap"><span><span style="display:inline-block;width:8px;height:8px;background:#0072B2;border-radius:2px"></span> DEF</span><span><span style="display:inline-block;width:8px;height:8px;background:#009E73;border-radius:2px"></span> MID</span><span><span style="display:inline-block;width:8px;height:8px;background:#D55E00;border-radius:2px"></span> FWD</span><span style="opacity:.6">SHAPE=ARCH POS=POS 24-D L2 • v2 filtered 2 tourneys OR 2022</span></div>
+    </div>
   </div>
 </div>
 
-<footer class="vp-footer" id="footer">© 2026 Vector Pitch · pitch.dumbmodel.com</footer>
+<div class="card" id="lab-panel" style="display:none;">
+  <div class="small-mono" style="margin-bottom:6px">Lab — daily/lab tabs lab-panel fusion avg L2 argmin ?lab= shareable Guess-in-Daily CTA 92% win threshold</div>
+  <div id="lab-content" style="font-size:13px;color:#555">Select a player pair to see trilateral fusion avg L2 argmin (chimera 8+8 → nearest real among 633, 92% win threshold). Glass-box 3 towers attacking/passing/defending gated fusion cat([x·m,m]) L2 unit sphere ~18K ONNX 2MB.</div>
+</div>
 
+</div>
+
+<footer class="site-footer" style="max-width:1100px;margin:12px auto;padding:0 12px"><div class="site-footer__links" style="display:flex;gap:12px;flex-wrap:wrap"><a href="/">Home</a><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-pitch" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution small-mono" style="margin-top:6px">Every number recomputable from statsbomb.com · 633 WC tournament-z · dumbmodel.com — free, no account, no trackers · historical training data not gambling</div></footer>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
+<script type="module">
+import { mountSharedMap } from './assets/shared-map.js';
+const EPOCH='2024-01-01';
+function xmur3(str){let h=1779033703^str.length;for(let i=0;i<str.length;i++){h=Math.imul(h^str.charCodeAt(i),3432918353);h=h<<13|h>>>19;}return function(){h=Math.imul(h^h>>>16,2246822507);h=Math.imul(h^h>>>13,3266489909);return(h^h>>>16)>>>0;}}
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}}
+function dailyPool(dateStr,n=5,total=633){const rng=mulberry32(xmur3(dateStr)());const pool=[];const used=new Set();while(pool.length<n){const idx=Math.floor(rng()*total);if(!used.has(idx)){used.add(idx);pool.push(idx);}}return pool;}
+function parsePackParam(){const sp=new URLSearchParams(location.search);const pack=sp.get('pack');if(!pack) return null;const ids=pack.split('-').map(s=>parseInt(s,10)).filter(v=>!isNaN(v)&&v>=0&&v<633);if(ids.length>=1&&ids.length<=5) return ids;return null;}
+function parseLabParam(){const sp=new URLSearchParams(location.search);const lab=sp.get('lab');if(!lab) return null;const ids=lab.split('-').map(s=>parseInt(s,10)).filter(v=>!isNaN(v)&&v>=0&&v<633);if(ids.length===2) return ids;return null;}
+window.VPPitchDaily={dailyPool,parsePackParam,parseLabParam,mountSharedMap};
+async function main(){
+  const canvas=document.getElementById('pitch-map');
+  let api=null;
+  if(canvas){ try{ api=await mountSharedMap(canvas,{highlightId:null,guessIds:[]}); window._sharedMapApi=api; document.getElementById('map-pause-btn')?.addEventListener('click',()=>{api&&api.pause?api.pause():null}); document.getElementById('map-reset-btn')?.addEventListener('click',()=>{api&&api.resume?api.resume():null}); }catch(e){console.warn('mount fail',e);} }
+  // mode tabs parity hoops
+  const tabs=document.querySelectorAll('.mode-tab[data-mode]');
+  const desc=document.getElementById('mode-desc');
+  const grid=document.getElementById('daily-pool-grid');
+  const modeBadge=document.getElementById('mode-badge');
+  const headerLabel=document.getElementById('header-mode-label');
+  const puzzleDayLabel=document.getElementById('puzzle-day-label');
+  const gamePhase=document.getElementById('game-phase-label');
+  const guessDots=document.getElementById('guess-dots');
+  function renderDots(n,winSlot){ guessDots.innerHTML=''; for(let i=0;i<5;i++){ const d=document.createElement('i'); if(i<n) d.className='done'; if(i===winSlot) d.className='win'; guessDots.appendChild(d);} }
+  renderDots(0,null);
+  const today=new Date().toISOString().slice(0,10);
+  let dailyIds=dailyPool(today,5,633);
+  const pack=parsePackParam();
+  function setMode(m){
+    tabs.forEach(t=>t.classList.toggle('is-active',t.dataset.mode===m));
+    if(modeBadge) modeBadge.textContent=m==='daily'?'DAILY 5':m.toUpperCase();
+    if(headerLabel) headerLabel.textContent=m==='daily'?'DAILY COURT • 5× WC-TWIN':m.toUpperCase()+' • PITCH';
+    if(m==='daily'){ if(desc) desc.textContent=`Today ${today} — 5 fixed puzzles hash(${today}+slot) — refresh same 5 — ?pack=${dailyIds.join('-')} same link friends — mountSharedMap pinned`; if(puzzleDayLabel) puzzleDayLabel.textContent=today; if(gamePhase) gamePhase.textContent='Daily Court 5× ready'; if(grid){ grid.innerHTML=''; dailyIds.forEach((id,i)=>{ const el=document.createElement('div'); el.className='pill'; el.textContent=`#${id} slot ${i+1}`; grid.appendChild(el); }); } }
+    else if(m.startsWith('pack')){ const k=parseInt(m.slice(4))||1; const ids=(pack&&pack.length===k)? pack : dailyIds.slice(0,k); if(desc) desc.textContent=`Pack Battle ${k} — ?pack=${ids.join('-')} same-link same-stars streak 🔥 Week Warrior toast viral-today countdown UTC midnight`; if(puzzleDayLabel) puzzleDayLabel.textContent=`Pack ${k}`; if(gamePhase) gamePhase.textContent=`Pack ${k} ready`; if(grid){ grid.innerHTML=''; ids.forEach(id=>{ const el=document.createElement('div'); el.className='pill'; el.textContent=`ID ${id}`; grid.appendChild(el); }); } if(api){ api.setGuesses(ids.map(i=>({idx:i}))); } }
+    else if(m==='random'){ const id=Math.floor(Math.random()*633); if(desc) desc.textContent=`Random single ${id} — doesn't affect streak`; if(puzzleDayLabel) puzzleDayLabel.textContent='Random'; if(gamePhase) gamePhase.textContent=`Random ${id}`; if(grid){ grid.innerHTML=`<div class='pill'>ID ${id}</div>`; } if(api){ api.setGuesses([{idx:id}]); } }
+  }
+  tabs.forEach(t=>t.addEventListener('click',()=>setMode(t.dataset.mode)));
+  setMode(pack? `pack${pack.length}` : 'daily');
+  // lab tab ?lab= handler parity hoops
+  const labIds=parseLabParam();
+  if(labIds){ const labPanel=document.getElementById('lab-panel'); if(labPanel){ labPanel.style.display='block'; const lc=document.getElementById('lab-content'); if(lc){ lc.textContent=`Lab ?lab=${labIds.join('-')} fusion avg L2 argmin 8+8 chimera → nearest real 92% win threshold. IDs ${labIds.join(' + ')}.`; } } if(api){ api.setGuesses(labIds.map(i=>({idx:i}))); } }
+  // integrate existing game.js chimera guessing (hoops parity) — piggyback on chimera-input
+  // simple enable after vectors load
+  const inp=document.getElementById('chimera-input'); const btn=document.getElementById('chimera-submit');
+  if(inp) inp.disabled=false; if(btn) btn.disabled=false;
+}
+main().catch(e=>{ console.error(e); const inv=document.getElementById('pack-invalid'); if(inv){ inv.style.display='block'; inv.innerHTML=`<div class='small-mono' style='color:#a33'>Error</div><h3>${e.message}</h3><pre style='white-space:pre-wrap;font-size:11px'>${(e.stack||'')}</pre>`; } });
+</script>
 <script src="assets/site-nav.js" defer></script>
 <script src="assets/game.js" defer></script>
 </body>
