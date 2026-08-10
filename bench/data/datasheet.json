@@ -1,0 +1,96 @@
+{
+  "domain": "pitch",
+  "built": "2026-08-10T00:35:56Z",
+  "source": "StatsBomb open-data (github.com/statsbomb/open-data), FA Women's Super League seasons 2018/2019, 2019/2020, 2020/2021 (competition_id 37; season_ids 4, 42, 90; 325 matches). Per-match aggregates committed as bench/data/wsl_player_matches_*.json; aggregation uses pipeline/build_vectors.py process_lineups/process_events.",
+  "rows": 3403,
+  "entities": 450,
+  "entity": "player (StatsBomb player_id); a row is (player, team-season, window of 3 consecutive team matches)",
+  "time_range": {
+    "feat_end": [
+      "2018-09-23",
+      "2021-04-25"
+    ],
+    "label_end": [
+      "2018-10-21",
+      "2021-05-09"
+    ]
+  },
+  "rows_per_season": {
+    "2018/2019": 1055,
+    "2019/2020": 780,
+    "2020/2021": 1568
+  },
+  "targets": {
+    "next_window_minutes": {
+      "construction": "y = player's total minutes over the NEXT window (3 team matches strictly after the feature window; 0 when not in the matchday squad). Defined for all rows.",
+      "observed": 3403,
+      "mean": 136.4761505126953,
+      "share_zero": 0.2612400822803409
+    },
+    "next_window_goal_contribution": {
+      "construction": "y = (goals + assists) * 90 / minutes over the NEXT window; defined only when next-window minutes > 0 (per-90 rate is undefined at 0 minutes).",
+      "observed": 2514,
+      "mean": 0.22906506061553955,
+      "share_zero": 0.7052505966587113
+    }
+  },
+  "split": {
+    "kind": "temporal on label-window END date (days since 1970-01-01)",
+    "harness_cut": "2020-07-01 (test = all label windows in 2020/21; train = 2018/19 + 2019/20)",
+    "mtnn_val": "label-end >= 2019-12-01 and < cut (early stopping only)",
+    "train": 1257,
+    "val": 578,
+    "test": 1568,
+    "leakage_guarantee": "every row asserts feat_end_date < label_start_date; windows never span seasons; scaler fit on the harness train side only"
+  },
+  "features": {
+    "count": 31,
+    "families": {
+      "attacking": [
+        "GOALS_P90",
+        "XG_P90",
+        "FINISHING_P90",
+        "ASSISTS_P90",
+        "KEY_PASSES_P90",
+        "CROSSES_P90"
+      ],
+      "defending_duel": [
+        "PRESSURES_P90",
+        "TACKLES_P90",
+        "INTERCEPTIONS_P90",
+        "RECOVERIES_P90",
+        "FOULS_CONV_P90"
+      ],
+      "history": [
+        "PREV_WINDOW_MINUTES",
+        "STD_MINUTES",
+        "MEAN_WINDOW_MINUTES",
+        "STD_GC_P90",
+        "STARTS_SHARE",
+        "WINDOWS_SEEN"
+      ],
+      "passing_control": [
+        "PASSES_CMP_P90",
+        "PASS_CMP_PCT",
+        "PROG_CARRY_P90",
+        "DRIBBLES_P90",
+        "FOULS_WON_P90"
+      ],
+      "role": [
+        "POS_DEF",
+        "POS_MID",
+        "POS_FWD"
+      ],
+      "volume_availability": [
+        "CUR_MINUTES",
+        "CUR_IN_SQUAD",
+        "CUR_PLAYED",
+        "CUR_STARTS",
+        "CUR_MINUTES_SHARE",
+        "CUR_GC"
+      ]
+    },
+    "note": "current-window per-90 families masked when the player played 0 minutes in the window; history/volume always observed; role one-hot masked until first played minute. X = train-fit MaskedZScaler(X_raw)*M; X_raw kept unscaled for the persistence_current rung."
+  },
+  "exclusions": "goalkeeper rows (season-to-date GK minutes > 50% of played minutes) dropped, repo convention EXCLUDE_GOALKEEPERS"
+}

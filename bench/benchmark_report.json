@@ -1,0 +1,728 @@
+{
+  "schema_version": "1.1",
+  "domain": "pitch",
+  "primary_task_type": "retrieval",
+  "description": "Soccer player-windows. Retrieval-primary (find the same player's adjacent window), but not retrieval-only: two forward prediction targets are declared so the domain participates in the prediction thesis too.",
+  "aggregate": {
+    "targets_total": 2,
+    "targets_scored": 2,
+    "targets_spec_only": 0,
+    "targets_errored": 0,
+    "targets_judged": 2,
+    "mtnn_target_wins": 1,
+    "baseline_target_wins": 1,
+    "primary_metric_verdicts": {
+      "next_window_minutes": false,
+      "next_window_goal_contribution": true
+    },
+    "headline": "MTNN beats best baseline on 1/2 judged target(s) (primary metric); baseline wins the rest",
+    "built": "2026-08-10T00:43:54"
+  },
+  "targets": [
+    {
+      "target": {
+        "name": "next_window_minutes",
+        "kind": "regression",
+        "horizon": "next_window",
+        "split": "temporal",
+        "primary_metric": "spearman_ic",
+        "status": "scored"
+      },
+      "note": "",
+      "scorecard": {
+        "schema_version": "1.0",
+        "domain": "pitch",
+        "task": "pitch::next_window_minutes",
+        "task_type": "prediction",
+        "split": "temporal",
+        "seed": 0,
+        "k_values": [
+          1,
+          5,
+          10
+        ],
+        "summary": {
+          "metrics_judged": 4,
+          "mtnn_wins": 0,
+          "baseline_wins": 4,
+          "headline": "baseline wins all 4 judged metric(s) — this domain is simple",
+          "built": "2026-08-10T00:43:53",
+          "n_train": 1835,
+          "n_test": 1568
+        },
+        "methods": [
+          {
+            "name": "dummy_mean",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.0,
+              "mae": 101.407185,
+              "rmse": 111.468772,
+              "r2": -0.031101
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.224315,
+              "mae": 105.747284,
+              "rmse": 129.245515,
+              "r2": -0.3862
+            },
+            "note": ""
+          },
+          {
+            "name": "ridge",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.741673,
+              "mae": 56.943348,
+              "rmse": 74.819594,
+              "r2": 0.535457
+            },
+            "note": ""
+          },
+          {
+            "name": "pca_ridge(n=16)",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.736458,
+              "mae": 57.017362,
+              "rmse": 75.513948,
+              "r2": 0.526795
+            },
+            "note": ""
+          },
+          {
+            "name": "knn(k=10)",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.706609,
+              "mae": 60.977396,
+              "rmse": 81.04116,
+              "r2": 0.454988
+            },
+            "note": ""
+          },
+          {
+            "name": "hist_gbm",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.71176,
+              "mae": 58.880536,
+              "rmse": 78.852198,
+              "r2": 0.484032
+            },
+            "note": ""
+          },
+          {
+            "name": "mlp",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.69779,
+              "mae": 60.258128,
+              "rmse": 80.356395,
+              "r2": 0.464159
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.732552,
+              "mae": 54.350995,
+              "rmse": 81.974898,
+              "r2": 0.442356
+            },
+            "note": ""
+          },
+          {
+            "name": "mtnn",
+            "kind": "prediction",
+            "is_mtnn": true,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.671315,
+              "mae": 62.976975,
+              "rmse": 81.841407,
+              "r2": 0.444171
+            },
+            "note": ""
+          }
+        ],
+        "metrics": {
+          "spearman_ic": {
+            "higher_is_better": true,
+            "ranking": [
+              {
+                "method": "ridge",
+                "value": 0.741673
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.736458
+              },
+              {
+                "method": "persistence_current",
+                "value": 0.732552
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.71176
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.706609
+              },
+              {
+                "method": "mlp",
+                "value": 0.69779
+              },
+              {
+                "method": "mtnn",
+                "value": 0.671315
+              },
+              {
+                "method": "persistence",
+                "value": 0.224315
+              },
+              {
+                "method": "dummy_mean",
+                "value": 0.0
+              }
+            ],
+            "best_method": "ridge",
+            "best_baseline": "ridge",
+            "best_baseline_value": 0.741673,
+            "mtnn_value": 0.671315,
+            "mtnn_delta": -0.070358,
+            "mtnn_beats_best_baseline": false
+          },
+          "mae": {
+            "higher_is_better": false,
+            "ranking": [
+              {
+                "method": "persistence_current",
+                "value": 54.350995
+              },
+              {
+                "method": "ridge",
+                "value": 56.943348
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 57.017362
+              },
+              {
+                "method": "hist_gbm",
+                "value": 58.880536
+              },
+              {
+                "method": "mlp",
+                "value": 60.258128
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 60.977396
+              },
+              {
+                "method": "mtnn",
+                "value": 62.976975
+              },
+              {
+                "method": "dummy_mean",
+                "value": 101.407185
+              },
+              {
+                "method": "persistence",
+                "value": 105.747284
+              }
+            ],
+            "best_method": "persistence_current",
+            "best_baseline": "persistence_current",
+            "best_baseline_value": 54.350995,
+            "mtnn_value": 62.976975,
+            "mtnn_delta": -8.62598,
+            "mtnn_beats_best_baseline": false
+          },
+          "rmse": {
+            "higher_is_better": false,
+            "ranking": [
+              {
+                "method": "ridge",
+                "value": 74.819594
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 75.513948
+              },
+              {
+                "method": "hist_gbm",
+                "value": 78.852198
+              },
+              {
+                "method": "mlp",
+                "value": 80.356395
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 81.04116
+              },
+              {
+                "method": "mtnn",
+                "value": 81.841407
+              },
+              {
+                "method": "persistence_current",
+                "value": 81.974898
+              },
+              {
+                "method": "dummy_mean",
+                "value": 111.468772
+              },
+              {
+                "method": "persistence",
+                "value": 129.245515
+              }
+            ],
+            "best_method": "ridge",
+            "best_baseline": "ridge",
+            "best_baseline_value": 74.819594,
+            "mtnn_value": 81.841407,
+            "mtnn_delta": -7.021813,
+            "mtnn_beats_best_baseline": false
+          },
+          "r2": {
+            "higher_is_better": true,
+            "ranking": [
+              {
+                "method": "ridge",
+                "value": 0.535457
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.526795
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.484032
+              },
+              {
+                "method": "mlp",
+                "value": 0.464159
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.454988
+              },
+              {
+                "method": "mtnn",
+                "value": 0.444171
+              },
+              {
+                "method": "persistence_current",
+                "value": 0.442356
+              },
+              {
+                "method": "dummy_mean",
+                "value": -0.031101
+              },
+              {
+                "method": "persistence",
+                "value": -0.3862
+              }
+            ],
+            "best_method": "ridge",
+            "best_baseline": "ridge",
+            "best_baseline_value": 0.535457,
+            "mtnn_value": 0.444171,
+            "mtnn_delta": -0.091286,
+            "mtnn_beats_best_baseline": false
+          }
+        },
+        "notes": {
+          "target": "next_window_minutes",
+          "kind": "regression",
+          "horizon": "next_window",
+          "primary_metric": "spearman_ic",
+          "construction": "y = minutes in the player's next window; features from prior windows only. Temporal split on window index: train <= cut, test after. No future window leaks.",
+          "data": "REAL StatsBomb open-data, FA WSL 2018/19-2020/21 (see bench/data/datasheet.json)",
+          "features": "train-fit MaskedZScaler features + observability mask columns (62 cols)",
+          "mtnn_training": "seed=0 best_epoch=237 gradient<2019-12-01 val 2019-12..2020-02"
+        }
+      }
+    },
+    {
+      "target": {
+        "name": "next_window_goal_contribution",
+        "kind": "regression",
+        "horizon": "next_window",
+        "split": "temporal",
+        "primary_metric": "spearman_ic",
+        "status": "scored"
+      },
+      "note": "",
+      "scorecard": {
+        "schema_version": "1.0",
+        "domain": "pitch",
+        "task": "pitch::next_window_goal_contribution",
+        "task_type": "prediction",
+        "split": "temporal",
+        "seed": 0,
+        "k_values": [
+          1,
+          5,
+          10
+        ],
+        "summary": {
+          "metrics_judged": 4,
+          "mtnn_wins": 2,
+          "baseline_wins": 2,
+          "headline": "MTNN wins 2/4 judged metric(s); baseline wins the rest",
+          "built": "2026-08-10T00:43:54",
+          "n_train": 1378,
+          "n_test": 1136
+        },
+        "methods": [
+          {
+            "name": "dummy_mean",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.0,
+              "mae": 0.319131,
+              "rmse": 0.444718,
+              "r2": -0.011395
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.179233,
+              "mae": 0.306699,
+              "rmse": 0.579822,
+              "r2": -0.719258
+            },
+            "note": ""
+          },
+          {
+            "name": "ridge",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.348114,
+              "mae": 0.288075,
+              "rmse": 0.42586,
+              "r2": 0.072561
+            },
+            "note": ""
+          },
+          {
+            "name": "pca_ridge(n=16)",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.354189,
+              "mae": 0.278924,
+              "rmse": 0.414239,
+              "r2": 0.122489
+            },
+            "note": ""
+          },
+          {
+            "name": "knn(k=10)",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.271257,
+              "mae": 0.282068,
+              "rmse": 0.451225,
+              "r2": -0.041207
+            },
+            "note": ""
+          },
+          {
+            "name": "hist_gbm",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.287186,
+              "mae": 0.312834,
+              "rmse": 0.489202,
+              "r2": -0.22385
+            },
+            "note": ""
+          },
+          {
+            "name": "mlp",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.157733,
+              "mae": 0.495118,
+              "rmse": 0.76218,
+              "r2": -1.97075
+            },
+            "note": ""
+          },
+          {
+            "name": "persistence_current",
+            "kind": "prediction",
+            "is_mtnn": false,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.25067,
+              "mae": 0.28304,
+              "rmse": 0.546835,
+              "r2": -0.529199
+            },
+            "note": ""
+          },
+          {
+            "name": "mtnn",
+            "kind": "prediction",
+            "is_mtnn": true,
+            "status": "ok",
+            "metrics": {
+              "spearman_ic": 0.387049,
+              "mae": 0.276886,
+              "rmse": 0.4144,
+              "r2": 0.121806
+            },
+            "note": ""
+          }
+        ],
+        "metrics": {
+          "spearman_ic": {
+            "higher_is_better": true,
+            "ranking": [
+              {
+                "method": "mtnn",
+                "value": 0.387049
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.354189
+              },
+              {
+                "method": "ridge",
+                "value": 0.348114
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.287186
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.271257
+              },
+              {
+                "method": "persistence_current",
+                "value": 0.25067
+              },
+              {
+                "method": "persistence",
+                "value": 0.179233
+              },
+              {
+                "method": "mlp",
+                "value": 0.157733
+              },
+              {
+                "method": "dummy_mean",
+                "value": 0.0
+              }
+            ],
+            "best_method": "mtnn",
+            "best_baseline": "pca_ridge(n=16)",
+            "best_baseline_value": 0.354189,
+            "mtnn_value": 0.387049,
+            "mtnn_delta": 0.032859,
+            "mtnn_beats_best_baseline": true
+          },
+          "mae": {
+            "higher_is_better": false,
+            "ranking": [
+              {
+                "method": "mtnn",
+                "value": 0.276886
+              },
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.278924
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.282068
+              },
+              {
+                "method": "persistence_current",
+                "value": 0.28304
+              },
+              {
+                "method": "ridge",
+                "value": 0.288075
+              },
+              {
+                "method": "persistence",
+                "value": 0.306699
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.312834
+              },
+              {
+                "method": "dummy_mean",
+                "value": 0.319131
+              },
+              {
+                "method": "mlp",
+                "value": 0.495118
+              }
+            ],
+            "best_method": "mtnn",
+            "best_baseline": "pca_ridge(n=16)",
+            "best_baseline_value": 0.278924,
+            "mtnn_value": 0.276886,
+            "mtnn_delta": 0.002037,
+            "mtnn_beats_best_baseline": true
+          },
+          "rmse": {
+            "higher_is_better": false,
+            "ranking": [
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.414239
+              },
+              {
+                "method": "mtnn",
+                "value": 0.4144
+              },
+              {
+                "method": "ridge",
+                "value": 0.42586
+              },
+              {
+                "method": "dummy_mean",
+                "value": 0.444718
+              },
+              {
+                "method": "knn(k=10)",
+                "value": 0.451225
+              },
+              {
+                "method": "hist_gbm",
+                "value": 0.489202
+              },
+              {
+                "method": "persistence_current",
+                "value": 0.546835
+              },
+              {
+                "method": "persistence",
+                "value": 0.579822
+              },
+              {
+                "method": "mlp",
+                "value": 0.76218
+              }
+            ],
+            "best_method": "pca_ridge(n=16)",
+            "best_baseline": "pca_ridge(n=16)",
+            "best_baseline_value": 0.414239,
+            "mtnn_value": 0.4144,
+            "mtnn_delta": -0.000161,
+            "mtnn_beats_best_baseline": false
+          },
+          "r2": {
+            "higher_is_better": true,
+            "ranking": [
+              {
+                "method": "pca_ridge(n=16)",
+                "value": 0.122489
+              },
+              {
+                "method": "mtnn",
+                "value": 0.121806
+              },
+              {
+                "method": "ridge",
+                "value": 0.072561
+              },
+              {
+                "method": "dummy_mean",
+                "value": -0.011395
+              },
+              {
+                "method": "knn(k=10)",
+                "value": -0.041207
+              },
+              {
+                "method": "hist_gbm",
+                "value": -0.22385
+              },
+              {
+                "method": "persistence_current",
+                "value": -0.529199
+              },
+              {
+                "method": "persistence",
+                "value": -0.719258
+              },
+              {
+                "method": "mlp",
+                "value": -1.97075
+              }
+            ],
+            "best_method": "pca_ridge(n=16)",
+            "best_baseline": "pca_ridge(n=16)",
+            "best_baseline_value": 0.122489,
+            "mtnn_value": 0.121806,
+            "mtnn_delta": -0.000683,
+            "mtnn_beats_best_baseline": false
+          }
+        },
+        "notes": {
+          "target": "next_window_goal_contribution",
+          "kind": "regression",
+          "horizon": "next_window",
+          "primary_metric": "spearman_ic",
+          "construction": "y = (goals + assists) per 90 in the next window; features from prior windows. Temporal split on window index.",
+          "data": "REAL StatsBomb open-data, FA WSL 2018/19-2020/21 (see bench/data/datasheet.json)",
+          "features": "train-fit MaskedZScaler features + observability mask columns (62 cols)",
+          "mtnn_training": "seed=0 best_epoch=237 gradient<2019-12-01 val 2019-12..2020-02"
+        }
+      }
+    }
+  ],
+  "notes": {}
+}

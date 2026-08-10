@@ -1,0 +1,32 @@
+{
+  "model": "pipeline/train_mtnn.py PitchMTNN \u2014 6 masked residual family towers (cat([x*m, m]) input) -> attention+gate fusion (+ctx embedding, single-context vocab) -> L2 24-d embedding",
+  "heads": "2x nn.Linear(24, 1) on the shared L2 embedding (next_window_minutes MSE-z, next_window_goal_contribution MSE-z, masked where undefined)",
+  "auxiliary_loss": "adjacent-window same-player InfoNCE (temp 0.07) x 0.5 over 810 train-universe pairs (the domain's retrieval-primary task)",
+  "dims": {
+    "d_tower": 16,
+    "d_emb": 24,
+    "families": {
+      "attacking": 6,
+      "defending_duel": 5,
+      "history": 6,
+      "passing_control": 5,
+      "role": 3,
+      "volume_availability": 6
+    }
+  },
+  "params_total": 11635,
+  "optimizer": "AdamW(lr=0.003, weight_decay=1e-4), full-batch",
+  "family_drop": 0.0,
+  "max_epochs": 400,
+  "epochs_run": 277,
+  "best_epoch": 237,
+  "best_val_loss": 3.250385,
+  "early_stop_patience": 40,
+  "seed": 0,
+  "preprocessing": "vector_core MaskedZScaler fit on harness-train rows only (in build_dataset.py); targets z-scored on MTNN gradient-train rows only; predictions de-standardized to raw units",
+  "train_rows": 1257,
+  "val_rows": 578,
+  "split": "gradient rows: label-end < 2019-12-01; val: label-end in [2019-12-01, 2020-07-01) (early stop only); no 2020/21 row is ever forward-passed at fit time",
+  "wall_seconds": 9.4,
+  "hyperparameter_selection": "chosen by VAL loss only over a 12-config grid (lr {1e-3, 3e-3} x ret_weight {0, 0.25, 0.5} x family_drop {0, 0.15}); winner lr=0.003 ret_weight=0.5 family_drop=0.0; the test split was never consulted for selection."
+}
