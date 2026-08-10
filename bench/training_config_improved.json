@@ -1,0 +1,131 @@
+{
+  "model": "pipeline/train_mtnn.py PitchMTNN (improvement pass) \u2014 same 6-tower trunk + gated fusion + L2 embedding, PLUS a direct raw-CUR_MINUTES residual skip into the next_window_minutes head (minutes_skip=True)",
+  "heads": "next_window_minutes: nn.Linear(d_emb+1 if minutes_skip else d_emb, 1); next_window_goal_contribution: nn.Linear(d_emb, 1) (unchanged)",
+  "auxiliary_loss": "adjacent-window same-player InfoNCE (temp 0.07) x 0.5",
+  "dims": {
+    "d_tower": 16,
+    "d_emb": 24
+  },
+  "optimizer": "AdamW(lr=0.003, weight_decay=0.0001), full-batch",
+  "family_drop": 0.0,
+  "seeds_ensembled": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "per_seed": [
+    {
+      "lr": 0.003,
+      "weight_decay": 0.0001,
+      "family_drop": 0.0,
+      "ret_weight": 0.5,
+      "d_emb": 24,
+      "d_tower": 16,
+      "minutes_skip": true,
+      "seed": 0,
+      "params_total": 11636,
+      "epochs_run": 259,
+      "best_epoch": 219,
+      "best_val_loss": 3.224515,
+      "best_val_components": {
+        "next_window_minutes": 0.4371616542339325,
+        "next_window_goal_contribution": 2.787353515625
+      },
+      "wall_seconds": 86.05,
+      "n_pairs": 810,
+      "train_rows": 1257,
+      "val_rows": 578
+    },
+    {
+      "lr": 0.003,
+      "weight_decay": 0.0001,
+      "family_drop": 0.0,
+      "ret_weight": 0.5,
+      "d_emb": 24,
+      "d_tower": 16,
+      "minutes_skip": true,
+      "seed": 1,
+      "params_total": 11636,
+      "epochs_run": 170,
+      "best_epoch": 130,
+      "best_val_loss": 3.263046,
+      "best_val_components": {
+        "next_window_minutes": 0.4463405907154083,
+        "next_window_goal_contribution": 2.8167054653167725
+      },
+      "wall_seconds": 63.83,
+      "n_pairs": 810,
+      "train_rows": 1257,
+      "val_rows": 578
+    },
+    {
+      "lr": 0.003,
+      "weight_decay": 0.0001,
+      "family_drop": 0.0,
+      "ret_weight": 0.5,
+      "d_emb": 24,
+      "d_tower": 16,
+      "minutes_skip": true,
+      "seed": 2,
+      "params_total": 11636,
+      "epochs_run": 204,
+      "best_epoch": 164,
+      "best_val_loss": 3.25389,
+      "best_val_components": {
+        "next_window_minutes": 0.4383786916732788,
+        "next_window_goal_contribution": 2.8155107498168945
+      },
+      "wall_seconds": 67.51,
+      "n_pairs": 810,
+      "train_rows": 1257,
+      "val_rows": 578
+    },
+    {
+      "lr": 0.003,
+      "weight_decay": 0.0001,
+      "family_drop": 0.0,
+      "ret_weight": 0.5,
+      "d_emb": 24,
+      "d_tower": 16,
+      "minutes_skip": true,
+      "seed": 3,
+      "params_total": 11636,
+      "epochs_run": 227,
+      "best_epoch": 187,
+      "best_val_loss": 3.243996,
+      "best_val_components": {
+        "next_window_minutes": 0.4473412334918976,
+        "next_window_goal_contribution": 2.7966549396514893
+      },
+      "wall_seconds": 79.56,
+      "n_pairs": 810,
+      "train_rows": 1257,
+      "val_rows": 578
+    },
+    {
+      "lr": 0.003,
+      "weight_decay": 0.0001,
+      "family_drop": 0.0,
+      "ret_weight": 0.5,
+      "d_emb": 24,
+      "d_tower": 16,
+      "minutes_skip": true,
+      "seed": 4,
+      "params_total": 11636,
+      "epochs_run": 251,
+      "best_epoch": 211,
+      "best_val_loss": 3.211565,
+      "best_val_components": {
+        "next_window_minutes": 0.44324859976768494,
+        "next_window_goal_contribution": 2.7683169841766357
+      },
+      "wall_seconds": 79.2,
+      "n_pairs": 810,
+      "train_rows": 1257,
+      "val_rows": 578
+    }
+  ],
+  "hyperparameter_selection": "chosen by VAL loss only over the phase-1 grid in bench/experiment_mtnn_improve.py (minutes_skip x lr x ret_weight, 40 configs) plus this run's own seed(s); test split never consulted for selection."
+}
