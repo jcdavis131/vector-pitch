@@ -16,7 +16,7 @@
   --shadow:4px 4px 0 rgba(0,0,0,.6);
   --mono:ui-monospace,"IBM Plex Mono",SFMono-Regular,monospace;
   --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  --hd:"Architects Daughter",var(--mono);
+  --hd:var(--mono);
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;overflow-x:clip}

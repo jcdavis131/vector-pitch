@@ -53,7 +53,7 @@
 /* dossier specifics */
 .vp-dossier{display:flex;flex-direction:column;gap:12px}
 .vp-dossier__hero{background:var(--panel);border:2.2px solid var(--ink);border-radius:14px;box-shadow:3px 3px 0 var(--ink);padding:12px 14px}
-.vp-dossier__name{font-family:"Architects Daughter",var(--mono);font-size:28px;margin:0;line-height:.95}
+.vp-dossier__name{font-family:var(--mono);font-size:28px;margin:0;line-height:.95}
 .vp-dossier__meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
 .vp-dossier__pill{border:1.5px solid var(--ink);border-radius:999px;padding:2px 8px;background:var(--surface);font-family:var(--mono);font-size:10.5px;font-weight:800;box-shadow:1px 1px 0 var(--ink)}
 .vp-dossier__pill--arch{background:var(--ink);color:var(--paper)}
