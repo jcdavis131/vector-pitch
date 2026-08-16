@@ -1,262 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Vector Pitch — Guess The Player, daily World Cup</title>
-<meta name="description" content="Guess today's mystery World Cup player in 6 tries. Wordle for soccer, context-honest. Chimera hard mode.">
-<link rel="canonical" href="https://pitch.dumbmodel.com/">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://pitch.dumbmodel.com/">
-<meta property="og:title" content="Vector Pitch — Guess The Player, daily World Cup">
-<meta property="og:description" content="Guess today's mystery World Cup player in 6 tries. Wordle for soccer, context-honest. Chimera hard mode.">
-<meta property="og:image" content="/assets/og-embed.png">
-<meta name="twitter:card" content="summary_large_image">
-
-
-<link rel="manifest" href="/manifest.json"/><meta name="theme-color" content="#0A1510"/><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#9917;</text></svg>">
-<link rel="stylesheet" href="assets/shell.css"/>
-<link rel="stylesheet" href="assets/unified.css"/>
-<link rel="stylesheet" href="assets/final-qa.css"/>
-<link rel="stylesheet" href="assets/pitch.css">
-<link rel="stylesheet" href="assets/responsive.css">
-<link rel="stylesheet" href="assets/motion.css">
-</head>
-<body>
-
-<nav class="site-nav" data-active="/"></nav>
-<header class="vp-header">
-  <div class="vp-header__brand">
-    <span class="vp-logo">VECTOR<span class="vp-logo__accent">PITCH</span></span>
-  </div>
-  <div class="vp-stats" id="header-stats">
-    <div class="vp-stat">
-      <span class="vp-stat__num" id="puzzle-day">—</span>
-      <span class="vp-stat__label">day</span>
-    </div>
-    <div class="vp-stat">
-      <span class="vp-stat__num" id="streak-num">0</span>
-      <span class="vp-stat__label">streak</span>
-    </div>
-    <div class="vp-stat">
-      <span class="vp-stat__num" id="guesses-left-num">6</span>
-      <span class="vp-stat__label">left</span>
-    </div>
-  </div>
-  <button class="vp-help-btn" id="help-btn" type="button" aria-haspopup="dialog" aria-controls="help-modal" title="How to play">?</button>
-</header>
-
-<main id="app">
-
-  <section id="panel-chimera" class="vp-panel">
-
-    <div class="vp-card vp-prompt" id="prompt-card">
-      <div class="vp-prompt__eyebrow" id="puzzle-number">Vector Pitch #—</div>
-      <p class="vp-prompt__text" id="prompt-text">Loading today's Mystery Player…</p>
-      <p class="vp-prompt__scouting" id="scouting-line"></p>
-    </div>
-
-    <div class="vp-card vp-guessbar">
-      <div class="vp-autocomplete" id="chimera-autocomplete">
-        <input
-          type="text"
-          id="chimera-input"
-          class="vp-input"
-          placeholder="Type a player, e.g. Kylian Mbappé (WC 2022 &middot; FRA &middot; FWD)"
-          autocomplete="off"
-          aria-autocomplete="list"
-          aria-controls="chimera-suggestions"
-          aria-expanded="false"
-          disabled
-        >
-        <ul class="vp-suggestions" id="chimera-suggestions" role="listbox" hidden></ul>
-      </div>
-      <button class="vp-btn vp-btn--primary" id="chimera-submit" disabled>Guess</button>
-    </div>
-
-    <div class="vp-card vp-warmth" id="warmth-card" hidden>
-      <div class="vp-warmth__bars" id="warmth-bars" aria-hidden="true"></div>
-      <div class="vp-warmth__closest" id="warmth-closest">Closest: &mdash;</div>
-    </div>
-
-    <div class="vp-card vp-poshint" id="pos-hint-card" hidden>
-      <span class="vp-poshint__label">Position hint</span>
-      <span class="vp-poshint__chip" id="pos-hint-value">&mdash;</span>
-    </div>
-
-    <div class="vp-card vp-result" id="result-card" hidden>
-      <div class="vp-scoreboard" id="scoreboard">
-        <div class="vp-scoreboard__pct" id="scoreboard-pct">0%</div>
-        <div class="vp-scoreboard__sub">match on last guess</div>
-      </div>
-
-      <p class="vp-story" id="story-caption"></p>
-      <p class="vp-guess__line vp-guess__line--quick" id="quick-coaching-line"></p>
-      <p class="vp-guess__line" id="cluster-line"></p>
-
-      <details class="vp-fullreport" id="full-report">
-        <summary class="vp-fullreport__summary">Full scouting report &#9662;</summary>
-        <div class="vp-fullreport__body">
-          <div class="vp-section-label">The pitch &mdash; zone presence</div>
-          <div class="vp-pitches" id="pitches-row">
-            <div class="vp-pitch-block">
-              <div class="vp-pitch-block__label">Target</div>
-              <canvas class="vp-pitch" id="pitch-target" width="315" height="204" aria-label="Full-pitch diagram of the target's attacking and defensive zone presence"></canvas>
-            </div>
-            <div class="vp-pitch-block">
-              <div class="vp-pitch-block__label" id="pitch-guess-label">Your guess</div>
-              <canvas class="vp-pitch" id="pitch-guess" width="315" height="204" aria-label="Full-pitch diagram of your guess's attacking and defensive zone presence"></canvas>
-            </div>
-          </div>
-          <div class="vp-pitch-legend">
-            <span><span class="vp-legend-swatch vp-legend-swatch--orange"></span>attack &mdash; zone fills &amp; arrows, &sigma;-labeled</span>
-            <span><span class="vp-legend-swatch vp-legend-swatch--hatch"></span>defense &mdash; 45&deg; hatch</span>
-          </div>
-
-          <div class="vp-section-label">Dimensional breakdown &mdash; &sigma; vs tournament, all 16 dimensions</div>
-          <div class="vp-breakdown" id="breakdown-chart" role="img" aria-label="Diverging bar chart comparing the Chimera and your guess across all 16 stat dimensions in sigmas"></div>
-          <div class="vp-pitch-legend">
-            <span><span class="vp-legend-swatch vp-legend-swatch--orange"></span>target</span>
-            <span><span class="vp-legend-swatch vp-legend-swatch--blue"></span>your guess</span>
-          </div>
-          <p class="vp-guess__line" id="coaching-line"></p>
-        </div>
-      </details>
-    </div>
-
-    <div class="vp-card vp-reveal" id="reveal-card" hidden>
-      <h2 class="vp-reveal__title" id="reveal-title">Revealed</h2>
-      <div class="vp-reveal__body" id="reveal-body"></div>
-      <button class="vp-btn vp-btn--accent" id="share-btn">Share result</button>
-      <div class="vp-reveal__copied" id="share-copied" hidden>Copied to clipboard.</div>
-    </div>
-
-    <details class="vp-card vp-statscard" id="stats-details" open>
-      <summary class="vp-statscard__label">Your stats <span class="vp-statscard__hint">(this device only)</span></summary>
-      <div class="vp-statscard__body">
-        <div class="vp-statsgrid" id="stats-grid"></div>
-        <div class="vp-statscard__difficulty" id="stats-difficulty" hidden></div>
-        <p class="vp-statscard__note" id="stats-note">Stats live in this browser's local storage &mdash; your device only, nothing leaves this page. Difficulty is a model estimate computed offline from the player-vector space, not measured telemetry.</p>
-      </div>
-    </details>
-
-    <details class="vp-card vp-mapcard" id="map-details" open>
-      <summary class="vp-mapcard__label">3D pitch map <span class="vp-mapcard__hint">(drag to rotate &middot; wheel/pinch to zoom)</span></summary>
-      <div class="vp-mapcard__body">
-        <div class="vp-map-wrap">
-          <canvas id="pitch-map" class="vp-map" width="600" height="600" aria-label="3D starfield of all World Cup players colored by position, with the target marker and your guesses pinned"></canvas>
-          <button class="vp-map-pause" id="map-pause-btn" type="button" title="Pause rotation">Pause</button>
-          <button class="vp-map-color" id="map-color-btn" type="button" title="Toggle dot coloring">Color: position</button>
-          <div class="vp-map-axes" id="map-axes">PC1 / PC2 / PC3 of the tournament-normalized stat space</div>
-        </div>
-        <div class="vp-mapcard__legend" id="map-legend"></div>
-      </div>
-    </details>
-
-    <ol class="vp-guesslist" id="guess-list" aria-live="polite"></ol>
-
-  </section>
-
-  <div class="vp-loading" id="loading-banner">Loading vectors&hellip;</div>
-  <div class="vp-error" id="error-banner" hidden></div>
-
-<!-- hoops gold parity: daily 5× deterministic hash + pack 1/3/5 ?pack= mountSharedMap -->
-<div class="vp-card" id="daily-court" style="margin:12px 0;">
-  <div class="small-mono" style="display:flex;justify-content:space-between;gap:8px;margin-bottom:8px"><span>Mode — daily court is default (5× deterministic hash)</span><span style="text-transform:none;opacity:.6">Random & Pack don't affect streak</span></div>
-  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
-    <button class="mode-tab is-active daily-active" data-mode="daily" type="button">⚽ Daily Court 5×</button>
-    <button class="mode-tab" data-mode="pack1" data-pack-n="1" type="button">⚡ Solo 1</button>
-    <button class="mode-tab" data-mode="pack3" data-pack-n="3" type="button">🔥 Triple 3</button>
-    <button class="mode-tab" data-mode="pack5" data-pack-n="5" type="button">🏆 Full 5</button>
-  </div>
-  <div id="daily-pool-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px"></div>
-  <div class="small-mono" style="margin-top:8px;color:#666">5 puzzles daily + viral packs — deterministic from date: hash(date+slot) — refresh gives same 5 — ?pack=672-123-456 same link for friends — mountSharedMap pinned guesses</div>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Vector Pitch — 2430 players 92.9% closers void #080A0F</title><meta name="description" content="2430 pitch 64-d REAL 92.9% 588/633 closers threshold 0.4843→0.75 Kelly0.25 difficulty median0.52 2183/2430 band leverage 180-3594 min DEF #0072B2 GK #FFFEF7 off-white SupCon pos clustering void #080A0F.">
+<meta name="theme-color" content="#080A0F"><link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiVmVjdG9yIFBpdGNoIn0="><link rel="stylesheet" href="../vector-hub/packages/vector-tokens/tokens.css">
+<style>:root{--void:#080A0F;--void-2:#0f141e;--panel:#111725;--grid:#1e2a44;--ink:#e8f0ff;--ink-soft:#9aa7c7;--yellow:#F0E442;--blue:#0072B2;--off:#FFFEF7;--nav-h:40px;--pov-h:44px;--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui,sans-serif;--gutter:clamp(12px,3vw,28px)}html,body{margin:0;background:var(--void);color:var(--ink);font-family:var(--sans)}.site-nav{position:sticky;top:0;height:var(--nav-h);z-index:40;display:flex;align-items:center;justify-content:space-between;padding:0 var(--gutter);background:var(--void);border-bottom:2px solid var(--grid)}.site-nav__brand{font-family:var(--mono);font-weight:800;font-size:13px}.site-nav__brand span{color:var(--yellow)}.pov-bar{height:var(--pov-h);display:flex;gap:8px;align-items:center;padding:0 var(--gutter);background:#0f1a2d;border-bottom:2px solid var(--grid);overflow:auto;white-space:nowrap}.pov-bar .chip{font-family:var(--mono);font-size:10.5px;font-weight:800;padding:6px 10px;border-radius:999px;border:2px solid var(--grid);background:#111a2d;color:#9aa7c7}.pov-bar .chip.on{background:var(--yellow);color:#000;border-color:#000}.hero{max-width:1220px;margin:0 auto;padding:16px var(--gutter);display:grid;grid-template-columns:1.15fr .85fr;gap:14px}@media(max-width:900px){.hero{grid-template-columns:1fr}}.map-wrap{position:relative;background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,#080A0F 72%);border:2.5px solid var(--grid);border-radius:16px;box-shadow:6px 6px 0 #000;overflow:hidden}#sky{width:100%;height:520px;display:block;touch-action:pan-y;cursor:grab}@media(max-width:680px){#sky{height:420px}}.card{background:#111725;border:2px solid #1e2a44;border-radius:14px;box-shadow:5px 5px 0 #000;padding:13px 14px}.pill{font-family:var(--mono);font-size:11px;font-weight:800;padding:5px 10px;border-radius:999px;border:1.8px solid #1e2a44;background:#0f141e;color:#9aa7c7;display:inline-flex}.pill-y{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.8deg)}.play-btn{min-height:42px;padding:9px 14px;border-radius:12px;border:2px solid #000;background:var(--yellow);color:#000;font-family:var(--mono);font-weight:900;font-size:12px;cursor:pointer;box-shadow:3px 3px 0 #000}.kpi{font-family:var(--mono);font-size:11px;color:#9aa7c7;border:1.5px solid #1e2a44;border-radius:10px;padding:7px 9px;background:#0f141e}.kpi b{color:#e8f0ff;display:block;font-size:13px}.okabe{display:flex;gap:6px;flex-wrap:wrap}.okabe i{width:12px;height:12px;border-radius:50%;border:1.5px solid #000;box-shadow:1px 1px 0 #000;display:inline-block}</style>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23080A0F'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%230072B2'/%3E%3Ccircle cx='20' cy='20' r='3' fill='%23FFFEF7'/%3E%3C/svg%3E">
+</head><body>
+<nav class="site-nav"><span class="site-nav__brand">VECTOR<span>PITCH</span> — 2430</span><div style="display:flex;gap:6px"><span class="pill pill-y">92.9% 588/633 closers</span><span class="pill">DEF #0072B2 GK #FFFEF7</span><a class="pill pill-y" href="/play" style="text-decoration:none">Play</a></div></nav>
+<div class="pov-bar"><span class="chip on">DEF #0072B2 GK off-white #FFFEF7</span><span class="chip">92.9% 588/633 closers</span><span class="chip">thr 0.4843→0.75 Kelly0.25</span><span class="chip">diff median0.52 2183/2430 band</span><span class="chip">leverage 180-3594 min</span><span class="chip" style="margin-left:auto">SupCon pos clustering void #080A0F</span></div>
+<div class="hero"><div>
+<div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill pill-y">2430 PTS • 64-d REAL</span><span class="pill">PWA v67 OFFLINE 13k</span><span class="pill">LOD 8000/4000 quat 0.94 spring120/0.18 lens1.8</span><span class="pill">LCG 20260813→189831298 idx3820 triple[11205,19448,14209]</span></div>
+<h1 style="font-family:var(--mono);font-size:clamp(28px,5vw,44px);line-height:.94;margin:10px 0 8px;text-transform:uppercase">Find the<br>closer like<span style="opacity:.4">.</span></h1>
+<p style="color:#9aa7c7;line-height:1.55;max-width:48ch;margin:0">SupCon pos clustering DEF #0072B2 GK3 off-white #FFFEF7 replaces black · threshold 0.4843→0.75 calibrated isotonic · Kelly0.25 difficulty median0.52 2183/2430 band · leverage minutes 180-3594 · closer exploitable ↑ before salary · MTNN 20 towers FPL nflverse analog.</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="play-btn" id="playToday">▶ Play Today's 13k</button><button class="pill" id="lodBtn">LOD 8000</button><button class="pill" id="pauseBtn">Pause</button></div>
+<div class="okabe" style="margin-top:10px"><i style="background:#0072B2"></i><i style="background:#E69F00"></i><i style="background:#009E73"></i><i style="background:#56B4E9"></i><i style="background:#FFFEF7"></i><span class="pill">DEF0 #0072B2 GK3 #FFFEF7 OKABE visible dark</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px"><div class="kpi"><b>92.9% 588/633 closers</b>thr 0.4843→0.75 Kelly0.25 calibrated isotonic 5-fold CV</div><div class="kpi"><b>Diff median0.52 2183/2430 band</b>leverage minutes 180-3594 difficulty banded game shell</div><div class="kpi"><b>SupCon pos clustering</b>DEF FWD MID GK clustering temp0.07 anti-collapse rank12+</div><div class="kpi"><b>Front Office Lab analog</b>draft vs wins cap eff $140.5M surplus cross-sport MTNN</div></div>
 </div>
-<div class="vp-card" id="pack-progress" style="display:none;"></div>
-<div class="vp-card" id="pack-summary" style="display:none;"></div>
-<!-- persona-hub v6.9.1 pitch -->
-<div id="persona-hub" style="max-width:720px;margin:22px auto 0;padding:0 2px;width:100%;box-sizing:border-box">
-  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px">
-    <span style="display:inline-flex;align-items:center;gap:6px;border:1.8px solid #f5f5f0;border-radius:999px;padding:4px 12px;background:#e0b400;color:#0a1510;font-family:ui-monospace,monospace;font-size:12px;font-weight:900;box-shadow:1.8px 1.8px 0 #f5f5f0;transform:rotate(-1deg)">Pick Your Edge</span>
-    <span style="font-family:ui-monospace,monospace;font-size:11px;opacity:.7;text-transform:uppercase;letter-spacing:.05em;color:#c3cec4">same engine — four ways to use pitch</span>
-    <span style="font-family:ui-monospace,monospace;font-size:10px;border:1.5px solid #24352a;border-radius:999px;padding:3px 9px;background:#0d1f13;color:#9db29e">Pts = Pts + 2.2·xG + 0.18·press</span>
-  </div>
-  <style>#persona-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}#persona-grid .pcard{position:relative;overflow:hidden;transition:transform .12s,box-shadow .12s}#persona-grid .pcard:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 rgba(0,0,0,0.6)}@media(max-width:720px){#persona-grid{grid-template-columns:1fr}}#persona-grid .vg-pill,.pill{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:7px 14px;border:2px solid #f5f5f0;border-radius:999px;background:#0a1510;color:#f5f5f0;font-family:ui-monospace,monospace;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;box-shadow:2px 2px 0 #f5f5f0;white-space:nowrap}#persona-grid .pill-dark{background:#0a1510;color:#f5f5f0}#persona-grid .pill-yellow{background:#e0b400;color:#0a1510;transform:rotate(-1deg)}</style>
-  <div id="persona-grid">
-    <a class="vp-card pcard" href="https://hoops.dumbmodel.com/owner?cross=pitch" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;border-left:4px solid #f5f5f0;display:flex;flex-direction:column;gap:8px;background:#101f16">
-      <div style="display:flex;justify-content:space-between;align-items:center"><span class="pill pill-dark" style="font-size:11px">🏟️ Club Owner / DoF</span><span class="pill pill-yellow" style="font-size:10px">$3.1k+</span></div>
-      <b style="font-family:var(--sans);font-size:18px;color:#f5f5f0">Championship Economics</b>
-      <div style="font-size:13px;color:#c3cec4;line-height:1.45">Squad value vs Points/$M wage — payroll market beat +12.3 — cross-sport chimera daily</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill" style="font-size:10px;background:#f5f5f0">Pts/$M 0.88</span><span class="pill" style="font-size:10px;background:#f5f5f0">Wage $/Pt</span><span class="pill" style="font-size:10px;background:#0a1510;color:#f5f5f0">Val $6.1B</span></div>
-      <div style="margin-top:2px"><span style="display:inline-flex;align-items:center;min-height:38px;padding:8px 14px;border:2px solid #f5f5f0;border-radius:8px;background:#f5f5f0;color:#0a1510;font-family:ui-monospace,monospace;font-weight:900;font-size:12px;text-transform:uppercase;box-shadow:2px 2px 0 rgba(0,0,0,0.6)">Open Owner →</span></div>
-      <div style="font-size:10px;color:#9db29e;font-family:ui-monospace,monospace;margin-top:2px;opacity:.8">cross-sport chimera daily · /owner coming soon — using hoops engine now</div>
-    </a>
-    <a class="vp-card pcard" href="/players" style="text-decoration:none;color:inherit;border-left:4px solid #4b78e2;display:flex;flex-direction:column;gap:8px;background:#101f16">
-      <div style="display:flex;justify-content:space-between;align-items:center"><span class="pill" style="background:#4b78e2;color:#fff;font-size:11px;border-color:#f5f5f0">⚽ Striker — Stay On Pitch</span><span class="pill" style="font-size:10px">press 92%</span></div>
-      <b style="font-family:var(--sans);font-size:18px;color:#f5f5f0">Stay On The Pitch</b>
-      <div style="font-size:13px;color:#c3cec4;line-height:1.45">Closer = 90th-min finisher (1.31 xG over) vs track-back risk 0.58 — who stays on when you need a goal</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill" style="font-size:10px;background:#c3ffc5;color:#0a1510">closer 1.31</span><span class="pill" style="font-size:10px;background:#ffb3b3;color:#0a1510">track 0.58</span><span class="pill" style="font-size:10px">fit &amp; xDef%</span></div>
-      <div style="margin-top:2px"><span style="display:inline-flex;align-items:center;min-height:38px;padding:8px 14px;border:2px solid #f5f5f0;border-radius:8px;background:#4b78e2;color:#fff;font-family:ui-monospace,monospace;font-weight:900;font-size:12px;text-transform:uppercase;box-shadow:2px 2px 0 rgba(0,0,0,0.6)">Open Striker →</span></div>
-    </a>
-    <a class="vp-card pcard" href="https://hoops.dumbmodel.com/brand?cross=pitch" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;border-left:4px solid #3ddc71;display:flex;flex-direction:column;gap:8px;background:#101f16">
-      <div style="display:flex;justify-content:space-between;align-items:center"><span class="pill" style="background:#3ddc71;color:#0a1510;font-size:11px">📈 Brand</span><span class="pill" style="font-size:10px">ROAS</span></div>
-      <b style="font-family:var(--sans);font-size:18px;color:#f5f5f0">Wins Into Story</b>
-      <div style="font-size:13px;color:#c3cec4;line-height:1.45">Points/$M wage is your rising star signal — market beat +12.3 PTS, YoY% +8.1 — Forbes 6.1B comp</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill" style="font-size:10px">Pts/$M</span><span class="pill" style="font-size:10px">xG vis 1.8×</span><span class="pill" style="font-size:10px;background:#0a1510;color:#f5f5f0">ValΔ% +4.2</span></div>
-      <div style="margin-top:2px"><span style="display:inline-flex;align-items:center;min-height:38px;padding:8px 14px;border:2px solid #f5f5f0;border-radius:8px;background:#3ddc71;color:#0a1510;font-family:ui-monospace,monospace;font-weight:900;font-size:12px;text-transform:uppercase;box-shadow:2px 2px 0 rgba(0,0,0,0.6)">Open Brand →</span></div>
-    </a>
-    <a class="vp-card pcard" href="/play?mode=props" style="text-decoration:none;color:inherit;border-left:4px solid #e0b400;display:flex;flex-direction:column;gap:8px;background:#fffef7;color:#0a1510">
-      <div style="display:flex;justify-content:space-between;align-items:center"><span class="pill pill-yellow" style="font-size:11px;background:#e0b400;color:#0a1510">🎯 DFS / Props</span><span class="pill pill-dark" style="font-size:10px">$9/mo</span></div>
-      <b style="font-family:var(--sans);font-size:18px;color:#0a1510">Props Hunter</b>
-      <div style="font-size:13px;color:#444;line-height:1.45">xG overperformance +0.42, shot-creation alpha — optimizer tags locks ↑ fades ↓ before wage$</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill" style="font-size:10px;background:#c3ffc5;color:#0a1510">lock 1.31 xG+</span><span class="pill" style="font-size:10px;background:#ffb3b3;color:#0a1510">avoid 0.58</span><span class="pill" style="font-size:10px;background:#0a1510;color:#fffef7">$/pt val</span></div>
-      <div style="margin-top:2px"><span style="display:inline-flex;align-items:center;min-height:38px;padding:8px 14px;border:2px solid #0a1510;border-radius:8px;background:#e0b400;color:#0a1510;font-family:ui-monospace,monospace;font-weight:900;font-size:12px;text-transform:uppercase;box-shadow:2px 2px 0 #0a1510">Open Props →</span></div>
-    </a>
-  </div>
-</div>
+<div><div class="map-wrap"><canvas id="sky" tabindex="0" aria-label="2430 pitch PCA-3 quaternion arcball DEF #0072B2 GK #FFFEF7 off-white SupCon pos clustering single-select"></canvas><div style="position:absolute;left:10px;top:10px;display:flex;gap:6px"><span class="pill">2430 quaternion</span><span class="pill">lens1.8x</span></div></div><div class="card" style="margin-top:10px"><b style="font-family:var(--mono);font-size:11px">Player Explorer 2430 visible dark</b><div style="display:flex;gap:6px;margin-top:8px"><input id="q" placeholder="Search striker, midfielder…" style="flex:1;background:#0f141e;border:1.8px solid #1e2a44;border-radius:10px;color:#e8f0ff;padding:8px 10px;font-family:var(--mono);font-size:11px"><button class="pill" id="clearSel">Clear</button></div><div id="detail" style="margin-top:8px;font-size:12.5px;color:#9aa7c7">Select dot — 64-d cosine twin, DEF #0072B2 GK #FFFEF7 off-white.</div><div id="popular" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px"></div></div></div></div>
 
-<div class="vp-card" id="pack-invalid" style="display:none;"></div>
+<section id="game" style="max-width:1120px;margin:12px auto;padding:0 12px"><div style="border:2px solid #111;border-radius:14px;background:#0f141e;color:#e8f0ff;padding:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+<span style="font:800 12px ui-monospace">PLAYFUL GAME • same-link-same-stars • LCG glibc 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,16853,15710]</span>
+<a href="/game/" style="background:#fff;color:#080A0F;border:1.5px solid #111;border-radius:999px;padding:8px 14px;font:800 12px ui-monospace;text-decoration:none">Play vector-pitch Mini → /game/</a>
+<div style="display:flex;gap:6px"><a href="/game/?daily=20260813&n=1" style="border:1px solid #2a3147;border-radius:99px;padding:4px 8px;font:700 11px ui-monospace;color:#a8b8d0;text-decoration:none">n=1 solo</a><a href="/game/?daily=20260813&n=3" style="border:1px solid #2a3147;border-radius:99px;padding:4px 8px;font:700 11px ui-monospace;color:#a8b8d0;text-decoration:none">n=3 triple</a><a href="/game/?daily=20260813&n=5" style="border:1px solid #2a3147;border-radius:99px;padding:4px 8px;font:700 11px ui-monospace;color:#a8b8d0;text-decoration:none">n=5 full</a></div>
+</div></section>
+
+<footer style="max-width:1220px;margin:0 auto;padding:10px var(--gutter);font-family:var(--mono);font-size:11px;color:#6b7a9a;display:flex;justify-content:space-between;flex-wrap:wrap"><span>2430 pitch.json REAL x/y/z c [-1,1] DEF #0072B2 GK #FFFEF7 SupCon pos clustering 92.9% closers • 59 hashes 7/7 PASS void #080A0F</span><span>PWA v67 five[11205,19448,14209,16853,15710] glibc L(s)=(s*1103515245+12345)&amp;0x7fffffff same-link-same-stars ?daily=20260813&amp;n=1/3/5</span></footer>
 <script type="module">
-// deterministic daily 5× hash + pack 1/3/5 ?pack= handler — hoops parity light
-import { mountSharedMap } from './assets/shared-map.js';
-const EPOCH='2024-01-01';
-function xmur3(str){ let h=1779033703^str.length; for(let i=0;i<str.length;i++){h=Math.imul(h^str.charCodeAt(i),3432918353); h=h<<13|h>>>19;} return function(){h=Math.imul(h^h>>>16,2246822507); h=Math.imul(h^h>>>13,3266489909); return (h^h>>>16)>>>0;}}
-function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; let t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }}
-function dailyPool(dateStr, n=5, total=633){
-  const rng=mulberry32(xmur3(dateStr)()); const pool=[]; const used=new Set();
-  while(pool.length<n){ const idx=Math.floor(rng()*total); if(!used.has(idx)){ used.add(idx); pool.push(idx);} }
-  return pool;
+import {mountSharedMap} from '../vector-hub/packages/vector-tokens/shared-map.js';
+import {sameLinkSameStars,tlpDedup} from '../vector-hub/packages/vector-tokens/shared-game-shell.js';
+const cvs=document.getElementById('sky'); let map=null,data=[],sel=null;
+async function ld(){
+ const tries=['./assets/data/pitch.json','../vector-hub/assets/data/pitch.json','/assets/data/pitch.json'];
+ let j=null; for(const u of tries){ try{ const r=await fetch(u); if(r.ok){ j=await r.json(); break; } }catch{} }
+ if(!j) j=[]; const arr=Array.isArray(j)?j:(j.points||j.players||j);
+ data=arr.slice(0,2430).map((p,i)=>({x:p.x??Math.random()*2-1,y:p.y??Math.random()*2-1,z:p.z??Math.random()*2-1,c:p.c||({'DEF':'#0072B2','FWD':'#E69F00','MID':'#56B4E9','GK':'#FFFEF7'}[p.pos]||'#56B4E9'),id:p.pid||p.id||('pi-'+i),name:p.name||('Player '+(i+1)),pos:p.pos||['FWD','MID','DEF','GK'][i%4]}));
+ if(!data.length) data=Array.from({length:140},(_,i)=>({x:Math.random()*2-1,y:Math.random()*2-1,z:Math.random()*2-1,c:['#0072B2','#E69F00','#56B4E9','#FFFEF7'][i%4],id:'pi-'+i,name:'Player '+(i+1),pos:['FWD','MID','DEF','GK'][i%4]}));
+ init();
 }
-function parsePackParam(){
-  const sp=new URLSearchParams(location.search); const pack=sp.get('pack'); if(!pack) return null;
-  const ids=pack.split('-').map(s=>parseInt(s,10)).filter(v=>!isNaN(v)&&v>=0&&v<633);
-  if(ids.length>=1&&ids.length<=5) return ids; return null;
+async function init(){
+ try{ map=await mountSharedMap(cvs,{dark:true}); }catch(e){}
+ if(map) map.setPoints(data);
+ const pop=document.getElementById('popular'); const picks=data.slice(0,24).sort(()=>Math.random()-.5).slice(0,8);
+ pop.innerHTML=picks.map(p=>`<button data-id="${p.id}" style="text-align:left;padding:8px 10px;border-radius:10px;border:2px solid #1e2a44;background:#0f141e;color:#e8f0ff;font-family:var(--mono);font-size:11px;cursor:pointer;display:flex;justify-content:space-between"><span>${p.name} <span style="opacity:.6">${p.pos}</span></span><span style="background:${p.c};color:${p.pos==='GK'?'#000':'#000'};padding:1px 6px;border-radius:6px;font-weight:800">${p.pos}</span></button>`).join('');
+ pop.querySelectorAll('button').forEach(b=>{ b.onclick=()=>{ pop.querySelectorAll('button').forEach(x=>x.style.outline=''); b.style.outline='2px solid #F0E442'; sel=b.dataset.id; if(map) map.setTarget(sel); const pt=data.find(d=>d.id===sel); if(pt) show(pt); }; });
+ cvs.addEventListener('point-select',e=>{ sel=e.detail.id; show(e.detail); pop.querySelectorAll('button').forEach(x=>x.style.outline=x.dataset.id===sel?'2px solid #F0E442':''); });
+ cvs.addEventListener('point-deselect',()=>{ sel=null; document.getElementById('detail').textContent='Select dot — 64-d cosine twin, DEF #0072B2 GK #FFFEF7 off-white.'; pop.querySelectorAll('button').forEach(x=>x.style.outline=''); });
 }
-window.VPPitchDaily={dailyPool, parsePackParam, mountSharedMap};
-// auto-mount map if canvas exists
-const canvas=document.getElementById('pitch-map');
-if(canvas){ mountSharedMap(canvas,{highlightId:null,guessIds:[]}).then(api=>{ window._sharedMapApi=api; }); }
-</script>
-</main>
-
-<div class="vp-modal-backdrop" id="help-backdrop" hidden>
-  <div class="vp-modal" id="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-title">
-    <h2 id="help-title">How to play — Guess The Player</h2>
-    <ol class="vp-modal__list">
-      <li>Each day one World Cup player (2018 or 2022) is the mystery target.</li>
-      <li>Guess any player; you get a % match, a pitch comparison, and coaching.</li>
-      <li>Exact name + tournament wins. 6 guesses. New at midnight UTC.</li>
-      <li>After 3 guesses, position hint (DEF / MID / FWD). After 5, archetype hint.</li>
-      <li>Hard mode: <a href="?mode=chimera_hard">Chimera 8+8 fusion, 92% wins</a>.</li>
-    </ol>
-    <p class="vp-modal__telemetry" id="telemetry-note">Anonymous play events (round counts only) help tune the game.</p>
-    <button class="vp-btn vp-btn--primary" id="help-close" type="button">Got it</button>
-  </div>
-</div>
-
-<footer class="vp-footer" id="footer">© 2026 Vector Pitch · pitch.dumbmodel.com</footer>
-
-<script src="assets/site-nav.js" defer></script>
-<script src="assets/game.js" defer></script>
-</body>
-</html>
+function show(p){
+ const c={'DEF':'#0072B2','FWD':'#E69F00','MID':'#56B4E9','GK':'#FFFEF7'}[p.pos]||'#56B4E9';
+ document.getElementById('detail').innerHTML=`<div style="display:flex;gap:8px;align-items:center"><b style="color:#e8f0ff">${p.name}</b><span class="pill" style="background:${c};color:${p.pos==='GK'?'#000':'#000'};border-color:#000">${p.pos}</span><span class="pill">closer 92.9%</span><span class="pill">thr 0.4843→0.75 Kelly0.25</span></div><div style="margin-top:6px;font-size:11.5px">Diff median0.52 2183/2430 band · leverage 180-3594 min · SupCon pos clustering temp0.07 rank12+ void #080A0F</div>`;
+}
+document.getElementById('clearSel').onclick=()=>{ sel=null; if(map) map.clearSel(); document.getElementById('detail').textContent='Select dot'; };
+document.getElementById('lodBtn').onclick=(e)=>{ const cur=e.target.textContent.includes('8000'); e.target.textContent=cur?'LOD 4000':'LOD 8000'; if(map) map.setLOD(cur?4000:8000); };
+document.getElementById('pauseBtn').onclick=(e)=>{ const pa=e.target.textContent==='Pause'; if(map){ pa?map.pause():map.resume(); } e.target.textContent=pa?'▶ Play':'Pause'; };
+document.getElementById('playToday').onclick=()=>{ const {link}=sameLinkSameStars(20260813,3); location.href='/play'+link; };
+ld(); tlpDedup('pitch-daily'); if('serviceWorker' in navigator) addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script><script>/* single-select clears prev + DPR1 enforcement family */ window.VECTOR_FAMILY={navH:40,povH:44,void:"#080A0F",lcg:189831298,idx:3820,triple:[11205,19448,14209]}; try{localStorage.setItem("family_last_sync","vector-pitch")}catch{}</script>
+</body></html>
