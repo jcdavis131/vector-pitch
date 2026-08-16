@@ -1,0 +1,10 @@
+{"nodeId":"pitch-normalize","agentId":"scout-pro-button-up-pitch","attempt":1,"latency_ms":420,"tokens_est":1240,"status":"ok","errorClass":""}
+{"nodeId":"pitch-tokens-canonical","agentId":"scout-pro-button-up-pitch","attempt":1,"latency_ms":180,"tokens_est":620,"status":"ok","errorClass":""}
+{"nodeId":"pitch-ui-masterclass","agentId":"scout-pro-button-up-pitch","attempt":1,"latency_ms":1520,"tokens_est":4200,"status":"ok","errorClass":""}
+{"nodeId":"pitch-contrast-fix","agentId":"scout-pro-button-up-pitch","attempt":1,"latency_ms":240,"tokens_est":480,"status":"ok","errorClass":""}
+{"nodeId":"pitch-footer-subtle","agentId":"scout-pro-button-up-pitch","attempt":1,"latency_ms":110,"tokens_est":220,"status":"ok","errorClass":""}
+{"nodeId":"pitch-glass-box-lab","agentId":"scout-pro-button-up-pitch","attempt":1,"latency_ms":980,"tokens_est":3100,"status":"ok","errorClass":""}
+{"nodeId":"pitch-provenance-7-7-0","agentId":"scout-pro-button-up-pitch","attempt":1,"latency_ms":360,"tokens_est":880,"status":"ok","errorClass":""}
+{"nodeId":"pitch-pwa-v67-13k","agentId":"scout-pro-button-up-pitch","attempt":1,"latency_ms":540,"tokens_est":1280,"status":"ok","errorClass":""}
+{"nodeId":"pitch-verifier-budget","agentId":"critic-verifier-with-budget","attempt":1,"latency_ms":2100,"tokens_est":5600,"status":"ok","errorClass":"","score":9.1,"threshold":8.0,"budget":3,"earlyExit":0.3,"loops":1,"gate":"PASS"}
+{"nodeId":"pitch-offline-verify","agentId":"scout-pro-button-up-pitch","attempt":1,"latency_ms":320,"tokens_est":640,"status":"ok","errorClass":""}

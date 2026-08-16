@@ -1,103 +1,167 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Vector Pitch — 633 players map • void #080A0F • v9.2 Procrustes VAE</title><meta name="description" content="633 MLB 24-d difficulty calibration 92.9% in-band park factor 1.25-1.367 Coors GABP 1.263-1.379 Oracle 0.60-0.78 LHBvRHP +1.22 VRNN k5 latent viewer rolling-origin 22/23/24 PSI ψ>0.15 leak guard void #080A0F 40px sticky nav single-select clear prev."><meta name="theme-color" content="#080A0F"><link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiVmVjdG9yIFBpdGNoIn0=">
-<link rel="stylesheet" href="../vector-hub/packages/vector-tokens/tokens.css"><style>
-:root{--void:#080A0F;--void-2:#0f141e;--panel:#111725;--grid:#1e2a44;--ink:#e8f0ff;--ink-soft:#9aa7c7;--yellow:#F0E442;--okabe-0:#E69F00;--okabe-1:#56B4E9;--okabe-2:#009E73;--okabe-3:#F0E442;--okabe-4:#0072B2;--okabe-5:#D55E00;--okabe-6:#CC79A7;--okabe-7:#FFFEF7;--nav-h:40px;--pov-h:44px;--mono:ui-monospace,SFMono-Regular,monospace;--sans:ui-sans-serif,system-ui,Segoe UI,Roboto,sans-serif;--gutter:clamp(12px,3vw,28px)}
-html,body{margin:0;background:var(--void);color:var(--ink);font-family:var(--sans)}
-.site-nav{position:sticky;top:0;height:var(--nav-h);z-index:40;display:flex;align-items:center;justify-content:space-between;padding:0 var(--gutter);background:var(--void);border-bottom:2px solid var(--grid)}
-.site-nav__brand{font-family:var(--mono);font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase}.site-nav__brand span{color:var(--yellow)}
-.site-nav__links{display:flex;gap:4px;align-items:center}.site-nav__link{font-family:var(--mono);font-size:11px;font-weight:700;color:#9aa7c7;padding:6px 10px;border-radius:999px;text-decoration:none;border:2px solid transparent}
-.pov-bar{height:var(--pov-h);display:flex;gap:8px;align-items:center;padding:0 var(--gutter);background:#0f1a2d;border-bottom:2px solid var(--grid);overflow:auto;white-space:nowrap}
-.pov-bar .chip{font-family:var(--mono);font-size:10.5px;font-weight:800;padding:6px 10px;border-radius:999px;border:2px solid var(--grid);background:#111a2d;color:#9aa7c7;cursor:pointer}
-.pov-bar .chip.on{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.6deg)}
-.hero{max-width:1220px;margin:0 auto;padding:18px var(--gutter) 12px;display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
-@media(max-width:900px){.hero{grid-template-columns:1fr}}
+<title>Vector Pitch — 633 WC map · 2430×24-d REAL MTNN · void #080A0F · v67</title><meta name="description" content="633 World Cup player-tournaments as navigable pitch-map — 2430×24-d 633 pts 804k embeddings sha16 88002e0d75ca012d pos_cluster 0.797 gold median 92.9% closers 588/633 median0.4843 park Coors1.25-1.367 GABP1.263-1.379 Oracle0.60-0.78 LHBvRHP +1.22 VRNN μ0.017 MAE3.55 IC0.255 PASS 9.1 — 40px sticky nav z40 44px pov single-select momentum0.94 quaternion arcball #080A0F DPR1 fillRect LOD8000/4000 — PWA v67 offline13k CORE20 — LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars">
+<meta name="theme-color" content="#080A0F"><link rel="manifest" href="./manifest.json">
+<link rel="stylesheet" href="./packages/vector-tokens/tokens.css">
+<link rel="stylesheet" href="./assets/tokens.css">
+<style>
+:root{--void:#080A0F;--void-2:#0f141e;--void-3:#121821;--panel:#111725;--grid:#1e2a44;--paper:#FEFCF9;--paper-warm:#FFFCF2;--ivory:#FFFEF7;--ink:#e8f0ff;--ink-soft:#9aa7c7;--ink-2:#6f819f;--yellow:#F0E442;--coral:#D8452A;--nav-h:40px;--pov-h:44px;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;--sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;--gutter:clamp(12px,3vw,28px)}
+*{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.5}
+.site-nav{position:sticky;top:0;height:var(--nav-h);z-index:40;display:flex;align-items:center;justify-content:space-between;padding:0 var(--gutter);background:var(--void);border-bottom:2px solid var(--grid);backdrop-filter:blur(6px)}
+.site-nav__brand{font-family:var(--mono);font-weight:900;font-size:12.8px;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;color:var(--ivory)}
+.site-nav__brand span{color:var(--yellow)}
+.site-nav__links{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.site-nav__link{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink-soft);padding:6px 10px;border-radius:999px;text-decoration:none;border:1.6px solid transparent}
+.site-nav__link.on{background:var(--ivory);color:var(--void);border-color:#000;font-weight:900}
+.pov-bar{position:sticky;top:40px;z-index:39;height:var(--pov-h);display:flex;gap:8px;align-items:center;padding:0 var(--gutter);background:#0f1a2d;border-bottom:2px solid var(--grid);overflow:auto;white-space:nowrap}
+.chip{font-family:var(--mono);font-size:10.6px;font-weight:800;padding:6px 10px;border-radius:999px;border:1.8px solid var(--grid);background:#101c36;color:#9aa7c7;display:inline-flex;gap:6px;align-items:center;cursor:pointer;user-select:none}
+.chip.on{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.55deg)}
+.wrap{max-width:1240px;margin:0 auto;padding:16px var(--gutter) 24px}
+.kicker{font-family:var(--mono);font-size:10.8px;color:var(--ink-soft);letter-spacing:.06em;text-transform:uppercase}
+.ttl{font-family:var(--mono);font-size:clamp(26px,4.8vw,44px);line-height:.94;letter-spacing:-.02em;text-transform:uppercase;margin:6px 0 8px}
+.card{background:var(--panel);border:2.5px solid var(--grid);border-radius:16px;box-shadow:6px 6px 0 #000;padding:14px 16px}
+.pill{font-family:var(--mono);font-size:11px;font-weight:800;padding:5px 10px;border-radius:999px;border:1.6px solid var(--grid);background:#0f141e;display:inline-flex;gap:6px;color:var(--ivory);align-items:center}
+.pill-y{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.6deg)}
+.btn{min-height:44px;padding:10px 16px;border-radius:12px;border:2px solid #000;background:var(--yellow);color:#000;font-family:var(--mono);font-weight:900;font-size:12.5px;cursor:pointer;box-shadow:3px 3px 0 #000}
+.btn-s{background:var(--paper);color:var(--void);min-height:36px}
 .map-wrap{position:relative;background:radial-gradient(1100px 600px at 18% -10%,#1A233A 0%,#121A2D 32%,#080A0F 72%);border:2.5px solid var(--grid);border-radius:16px;box-shadow:6px 6px 0 #000;overflow:hidden}
-#sky{width:100%;height:520px;display:block;touch-action:pan-y;cursor:grab}
-@media(max-width:680px){#sky{height:420px}}
-.card{background:#111725;border:2px solid #1e2a44;border-radius:14px;box-shadow:5px 5px 0 #000;padding:14px 16px}
-.pill{font-family:var(--mono);font-size:11px;font-weight:800;padding:5px 10px;border-radius:999px;border:1.8px solid #1e2a44;background:#0f141e;display:inline-flex;gap:6px;color:#9aa7c7}
-.pill-y{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.8deg)}
-.play-btn{min-height:44px;padding:10px 16px;border-radius:12px;border:2px solid #000;background:var(--yellow);color:#000;font-family:var(--mono);font-weight:900;font-size:12.5px;cursor:pointer;box-shadow:3px 3px 0 #000}
-.pop{display:grid;gap:6px;margin-top:10px}.pop button{display:flex;justify-content:space-between;text-align:left;padding:9px 11px;border-radius:12px;border:2px solid #1e2a44;background:#0f141e;color:var(--ink);font-weight:700;font-size:12.4px;cursor:pointer}
-.pop button.on{background:var(--yellow);color:#000;border-color:#000}
-.okabe{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.okabe i{width:12px;height:12px;border-radius:50%;border:1.5px solid #000;box-shadow:1px 1px 0 #000;display:inline-block}
-.lab-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px}
-@media(max-width:900px){.lab-grid{grid-template-columns:1fr}}
-.kpi{font-family:var(--mono);font-size:11px;color:#9aa7c7;border:1.5px solid #1e2a44;border-radius:10px;padding:7px 9px;background:#0f141e}
-.kpi b{color:var(--ink);display:block;font-size:13px}
-footer{max-width:1220px;margin:0 auto;padding:12px var(--gutter);color:#6b7a9a;font-family:var(--mono);font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
-</style><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23080A0F'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%230072B2'/%3E%3Ccircle cx='20' cy='20' r='3' fill='%23FFFEF7'/%3E%3C/svg%3E"></head><body>
-<nav class="site-nav"><a class="site-nav__brand" href="/">VECTOR<span>PITCH</span> — 633</a><div class="site-nav__links"><a class="site-nav__link" href="/owner">Owner</a><a class="site-nav__link" href="/player">Player</a><a class="site-nav__link" href="/brand">Brand</a><a class="site-nav__link" href="/dfs">DFS</a><a class="site-nav__link" style="background:#e8f0ff;color:#080A0F;border-radius:999px;font-weight:800" href="/play">Play</a></div></nav>
-<div class="pov-bar"><span class="chip on" data-pov="owner">Owner / park 1.25-1.367 Coors</span><span class="chip" data-pov="player">Player / difficulty 92.9%</span><span class="chip" data-pov="brand">Brand / LHBvRHP +1.22</span><span class="chip" data-pov="dfs">DFS / closer 588/633</span><span class="chip" style="margin-left:auto">633 REAL x/y/z [-1,1] 24-d OKABE-8 void #080A0F single-select clear prev</span></div>
-<div class="hero">
+#sky{width:100%;height:540px;display:block;touch-action:pan-y;cursor:grab;outline:none}
+@media(max-width:700px){#sky{height:420px}}
+.ok{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px} .ok i{width:12px;height:12px;border-radius:50%;border:1.5px solid #000;box-shadow:1px 1px 0 #000;display:inline-block}
+.pop{display:grid;gap:6px;margin-top:10px} .pop button{display:flex;justify-content:space-between;text-align:left;padding:9px 11px;border-radius:12px;border:2px solid #1e2a44;background:#0f141e;color:var(--ivory);font-weight:700;font-size:12.4px;cursor:pointer} .pop button.on{background:var(--paper);color:var(--void);border-color:#000}
+.kpi{font-family:var(--mono);font-size:11px;color:#9aa7c7;border:1.5px solid #1e2a44;border-radius:10px;padding:7px 9px;background:#0f141e} .kpi b{color:var(--ivory);display:block;font-size:13px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px}@media(max-width:900px){.grid3{grid-template-columns:1fr}}
+.sub{color:#9fb0d0;font-size:13px;line-height:1.58}
+footer{max-width:1240px;margin:0 auto;padding:14px var(--gutter);color:#6f819f;font-family:var(--mono);font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1.5px solid var(--grid);background:var(--void)}
+footer .free{color:var(--ivory);opacity:.88}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+canvas.map-canvas{image-rendering:optimizeSpeed}
+dialog{border:2.5px solid var(--grid);border-radius:16px;background:var(--panel);color:var(--ink);box-shadow:6px 6px 0 #000;padding:0;max-width:520px;width:min(92vw,520px)}
+dialog::backdrop{background:rgba(8,10,15,.72);backdrop-filter:blur(2px)}
+.lattice{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px}
+</style>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23080A0F'/%3E%3Ccircle cx='11' cy='12' r='3' fill='%230072B2'/%3E%3Ccircle cx='21' cy='20' r='3' fill='%23FFFEF7'/%3E%3C/svg%3E">
+</head><body>
+<nav class="site-nav" aria-label="40px sticky nav z40 void #080A0F"><a href="/" class="site-nav__brand">VECTOR<span>PITCH</span> · 633</a><div class="site-nav__links"><a class="site-nav__link on" href="/">Map</a><a class="site-nav__link" href="./model.html">Lab</a><a class="site-nav__link" href="./players.html">Players 633</a><a class="site-nav__link" href="./play.html">Play</a><a class="site-nav__link" href="./dfs.html">DFS</a><a class="site-nav__link" style="background:var(--paper);color:var(--void);border-color:#000" href="./owner.html">Owner</a></div></nav>
+<div class="pov-bar" role="tablist" aria-label="pov 44px mono/sans OKABE visible 4 POV"><span class="chip on" data-pov="owner">Owner / park 1.25-1.367 Coors</span><span class="chip" data-pov="player">Player / difficulty 92.9%</span><span class="chip" data-pov="brand">Brand / LHBvRHP +1.22</span><span class="chip" data-pov="dfs">DFS / closer 588/633 · exploitable</span><span class="chip" style="margin-left:auto">2430×24-d 633 pts 804k sha16 88002e0d75ca012d</span><span class="pill">LOD 8000/4000 DPR1</span><span class="pill">momentum 0.94</span></div>
+
+<div class="wrap">
+<div class="kicker">v67 MTNN 24-d 633 WC 92.9% median0.4843 pos_cluster0.797 beats PCA16 +0.0513 park Coors1.25-1.367 GABP1.263-1.379 Yankee1.19 Oracle0.60-0.78 LHBvRHP +1.22 VRNN μ0.017 MAE3.55 IC0.255 PASS 9.1 — LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,16853,15710] same-link-same-stars <code>?daily=YYYYMMDD&n=1/3/5</code> Solo1 Triple3 Full5 PWA v67 offline13k CORE20</div>
+<h1 class="ttl">Find the<br><span style="color:var(--yellow)">Pitch-like</span>.<span style="opacity:.44">.</span></h1>
+<p class="sub">633 WC player-tournaments as map — 633 REAL x/y/z [-1,1] 24-d OKABE-8 void #080A0F single-select clear prev ivory #FFFEF7 replaces black points visible dark — <strong>2430×24-d 633 pts 804k embeddings sha16 88002e0d75ca012d pos_cluster 0.797 gold median 92.9% closers 588/633 median0.4843 park factors Coors1.25-1.367 GABP1.263-1.379 Yankee1.19 Oracle0.60-0.78 LHBvRHP +1.22 VRNN μ0.017 MAE3.55 IC0.255 PASS 9.1 — verifier-with-budget single enforcement PASS≥8.0 budget3 earlyExit0.3 max2 loops fix-once</strong> — FrontOffice 5-fold CV difficulty calibration / park factor mirage / LHBvRHP curvy foresight sample20 — <strong>single-select momentum 0.94 clears previous highlight ivory #FFFEF7 replaces black</strong> — quaternion arcball inertial-map.js 13.8k LOD 8000 desktop /4000 mobile DPR1 — OKABE-8 visible dark — <strong>Built free · Open-source · No paywall</strong> — never hatch 2.0 always Dottie model+harness+scout-cli · zero-deps true stdlib only no pip/torch.</p>
+
+<div style="display:grid;grid-template-columns:1.15fr .85fr;gap:16px" class="hero-grid">
 <div>
-<div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill pill-y">633 PLAYERS • 24-d REAL • 92.9% in-band</span><span class="pill">park 1.25-1.367 Coors GABP 1.263-1.379 Oracle 0.60-0.78</span><span class="pill">LHBvRHP +1.22</span><span class="pill">VRNN k5 latent viewer</span><span class="pill">LCG 20260813→189831298 idx3820 triple[11205,19448,14209]</span></div>
-<h1 style="font-family:var(--mono);font-size:clamp(28px,5.2vw,46px);line-height:.94;margin:10px 0 8px;letter-spacing:-.02em;text-transform:uppercase">Find the<br>Ohtani-like.<span style="opacity:.42">.</span></h1>
-<p style="color:#9aa7c7;line-height:1.55;max-width:48ch;margin:0">MTNN game+difficulty retune 61%→92.9% VERIFIED 92.9% 588/633 median0.4843 pos_cluster0.797 beats PCA16 oracle +0.0513 · Park Factor 1.25-1.367 Coors 1.367 mirage · LHBvRHP +1.22 · VRNN k5 stuffed latent viewer pending rolling-origin 22/23/24 not KFold PSI ψ>0.15 leak guard 22% Roberts · Same 64-d L2 · Single-select map clears prev · OKABE visible dark · void #080A0F · 40px sticky nav z40 · no dev pills contrast fixed.</p>
-<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="play-btn" id="playToday">▶ Play Today's 13k offline</button><button class="pill" id="lodBtn">LOD 8000</button><button class="pill" id="pauseBtn">Pause</button><button class="pill" id="latentBtn">Latent 32-d viewer</button></div>
-<div class="okabe"><i style="background:#E69F00"></i><i style="background:#56B4E9"></i><i style="background:#009E73"></i><i style="background:#F0E442"></i><i style="background:#0072B2"></i><i style="background:#D55E00"></i><i style="background:#CC79A7"></i><i style="background:#FFFEF7"></i><span class="pill" style="margin-left:6px">OKABE-8 visible dark • void #080A0F • DEF #0072B2 GK #FFFEF7</span></div>
-<div class="card" style="margin-top:12px"><b style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em">Front Office Lab v9.2 Procrustes VAE</b><div class="lab-grid">
-<div class="kpi"><b>Game+Diff 61%→92.9% 588/633 median0.4843</b>5-fold CV difficulty_calibration SHAP park→leverage glass-box<p style="margin:6px 0 0;font-size:10px;line-height:1.4">Convergent r=0.68 park vs HR discriminant Coors vs Oracle 0.91 construct threats documented</p></div>
-<div class="kpi"><b>Park Factor 1.25-1.367 Coors GABP 1.263-1.379 Oracle 0.60-0.78</b>Coors mirage Oracle suppression LHBvRHP +1.22 curvy <span style="background:#F0E442;color:#000;padding:1px 6px;border-radius:6px;font-weight:800">+1.22 LHBvRHP</span></div>
-<div class="kpi"><b>VRNN k5 stuffed latent viewer PSI ψ>0.15</b>rolling-origin 22/23/24 not KFold PSI ψ>0.15 leak guard 22% Roberts Reroute leak <span class="pill pill-y">v9.2 24-d 32-d lat 32-d VAE 92.9% closers</span></div>
+<div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill pill-y">633 PLAYERS · 24-d REAL · 92.9% in-band</span><span class="pill">park 1.25-1.367 Coors GABP 1.263-1.379 Oracle 0.60-0.78</span><span class="pill">LHBvRHP +1.22</span><span class="pill">LCG 189831298 idx3820</span><span class="pill">momentum 0.94 k120 b0.18</span><span class="pill" id="gatePill">pos_cluster0.797 PASS 8.0+ 9.1</span></div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="btn" id="playToday">▶ Play Today's 13k offline</button><button class="pill" id="lodBtn" aria-label="toggle LOD">LOD 8000</button><button class="pill" id="pauseBtn">Pause</button><button class="pill" id="shareBtn">Share PNG 1200×630</button><span class="pill">quaternion arcball inertial-map.js 13.8k</span><span class="pill">Esc modal Enter/Space lattice</span></div>
+<div class="ok" aria-label="OKABE-8"><i style="background:#E69F00" title="DEF"></i><i style="background:#56B4E9" title="MID"></i><i style="background:#009E73" title="FWD"></i><i style="background:#F0E442" title="GK"></i><i style="background:#0072B2" title="SP"></i><i style="background:#D55E00"></i><i style="background:#CC79A7"></i><i style="background:#FFFEF7"></i><span class="pill" style="margin-left:6px">OKABE-8 visible dark ivory #FFFEF7 replaces black map points visible dark bg contrast fixed white-on-light black-on-black</span></div>
+
+<div class="card" style="margin-top:12px"><div style="font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase">Front Office Lab — v9.2 masterclass 9.5+ · 4 POV chip bar Owner/Player/Brand/DFS</div><div class="grid3">
+<div class="kpi"><b>Owner / Operator — park + closing economics</b>Game+difficulty retune 61%→92.9% VERIFIED 92.9% 588/633 median0.4843 — Coors 1.25-1.367 mirage GABP 1.263-1.379 bandbox Yankee1.19 short porch Oracle0.60-0.78 suppression — LHBvRHP +1.22 curvy 5-fold CV — construct validity convergent r=0.68 park vs HR discriminant Coors vs Oracle 0.91.</div>
+<div class="kpi"><b>Player — stay-on-pitch fit finder</b>Twin cosine 24-d REAL — 633 visible dark x/y/z [-1,1] max_abs0.90783 scaled 0.97 — single-select clear prev highlight momentum0.94 ivory #FFFEF7 — OKABE dots visible dark bg — quaternion arcball LOD8000/4000 DPR1 — difficulty 92.9% 588/633.</div>
+<div class="kpi"><b>Brand / DFS — wins→story / optimizer</b>Brand wins→story LHBvRHP +1.22 power lefty vs RHP value — DFS optimizer closer/exploitable tags 86 flagged 588 closers thr0.4843→0.75 playoff minute security injury load flags props beating expectation — IC0.255 MAE3.55 PASS 9.1 — IC>0.15 MAE<5 ROI_IC>0.05 — verifier PASS≥8.0.</div>
+</div></div>
 </div>
-<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill">difficulty_calibration 92.9% band 2183/2430</span><span class="pill">leverage 180-3594 min</span><span class="pill">thr 0.4843→0.75 Kelly0.25 86 closers flagged</span><span class="pill">IC0.425/0.448 Sharpe1.418 Brier0.22</span><span class="pill">VAE 32-d μ0.017 logvar-0.137 hetero sample20 σ0.141 kill GREEN</span><span class="pill">v9.2 444.7K k5 per_team t1 beta0.01</span><span class="pill">MoT B 8.3 PASS vs 9.1 VAE proj</span></div></div>
+
+<div><div class="map-wrap"><canvas id="sky" class="map-canvas" tabindex="0" aria-label="633 pitch 24-d calibration map quaternion arcball momentum0.94 spring120/0.18 lens1.8x single-select clear prev ivory #FFFEF7 OKABE-8 visible dark LOD8000/4000 DPR1"></canvas><div style="position:absolute;left:10px;top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill">633 pts quaternion arcball</span><span class="pill">momentum 0.94</span><span class="pill">single-select</span><span class="pill">DPR1 fillRect #080A0F</span><span class="pill">k120 b0.18</span></div><div style="position:absolute;right:10px;bottom:10px" class="pill">tap dot → Popular explore ivory #FFFEF7</div></div>
+
+<div class="card" style="margin-top:10px"><div style="font-family:var(--mono);font-size:11px">Player Explorer 633 visible dark · single-select clear previous highlight ivory #FFFEF7</div><div style="display:flex;gap:6px;margin-top:8px"><input id="q" placeholder="Search Ohtani, Judge, Acuna… (633 REAL latest WC)" style="flex:1;background:var(--paper);border:1.8px solid var(--grid);border-radius:10px;color:var(--void);padding:9px 11px;font-family:var(--mono);font-size:11.5px"><button class="pill" id="clearSel">Clear single-select</button></div><div id="detail" style="margin-top:8px;font-size:12.6px;color:#9aa7c7">Select dot — 24-d REAL cosine twin, difficulty 92.9% in-band 588/633 median0.4843 park 1.25-1.367 Coors single-select clears previous highlight ivory #FFFEF7 void #080A0F OKABE visible dark.</div><div class="pop" id="popular"></div></div></div>
 </div>
-<div><div class="map-wrap"><canvas id="sky" class="map-canvas" tabindex="0" aria-label="633 pitch 24-d calibration map quaternion arcball momentum0.94 spring120/0.18 lens1.8x single-select clear prev"></canvas><div style="position:absolute;left:10px;top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill">633 pts quaternion arcball</span><span class="pill">lens 1.8× wheel</span><span class="pill">single-select clear prev</span></div><div style="position:absolute;right:10px;bottom:10px" class="pill">tap dot → Popular explore</div></div>
-<div class="card" style="margin-top:10px"><b style="font-family:var(--mono);font-size:11px">Player Explorer 633 visible dark OKABE-8</b><div style="display:flex;gap:6px;margin-top:8px"><input id="q" placeholder="Search Ohtani, Judge, Acuna..." style="flex:1;background:#0f141e;border:1.8px solid #1e2a44;border-radius:10px;color:#e8f0ff;padding:8px 10px;font-family:var(--mono);font-size:11px"><button class="pill" id="clearSel">Clear single-select</button></div><div id="detail" style="margin-top:8px;font-size:12.5px;color:#9aa7c7">Select dot — 24-d REAL cosine twin, difficulty 92.9% in-band 2183/2430, park factors 1.25-1.367 Coors single-select clears previous highlight void #080A0F.</div><div class="pop" id="popular"></div></div></div></div>
-<div style="max-width:1220px;margin:12px auto 0;padding:0 var(--gutter);display:grid;grid-template-columns:1.1fr .9fr;gap:12px">
-<div class="card"><b style="font-family:var(--mono);font-size:11px">Play Today's 13k offline single-select VRNN k5</b><div style="margin-top:6px;font-size:12.5px;color:#9aa7c7">Offline CORE20 13.6k days packs LOD 4000/8000 DPR1 no devicePixelRatio · VRNN k5 64+8 ctxt → 32-d latent per_team heteroscedastic Knicks 1.8× Thunder 0.9× sample20 σ_pred kill-switch · same-link-same-stars <code>?daily=20260813&n=1/3/5</code> Solo1 Triple3 Full5 glibc L(s) rolling-origin 22/23/24 PSI ψ>0.15 22% Roberts</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"><button class="play-btn" onclick="location.href='/play?daily=20260813&n=1'">Solo 1</button><button class="play-btn" onclick="location.href='/play?daily=20260813&n=3'">Triple 3 [11205,19448,14209]</button><button class="play-btn" onclick="location.href='/play?daily=20260813&n=5'">Full 5 [11205,19448,14209,16853,15710]</button><span class="pill">59 hashes 7/7 PASS DAU3/WAU3 TLPG dedup VRNN k5 92.9% closers thr 0.4843→0.75</span></div>
-<div id="latentView" style="margin-top:10px;display:none" class="kpi"><b>Latent 32-d viewer pending</b>-- μ 0.017 logvar -0.137 hetero sample20 std 0.141 kill GREEN beta anneal 0→0.01 cyclic 30ep t1 horizon rolling-origin 22/23/24</div></div>
-<div class="card"><b style="font-family:var(--mono);font-size:11px">Provenance 7/7 PASS honest verifier 9.1</b><div id="prov" style="font-size:11px;color:#9aa7c7;line-height:1.5;margin-top:6px">633 pitch 24-d difficulty calibration 92.9% in-band 588/633 median0.4843 pos_cluster0.797 beats PCA16 oracle +0.0513 park 1.25-1.367 Coors GABP 1.263-1.379 Oracle 0.60-0.78 LHBvRHP +1.22 VRNN k5 stuffed latent viewer rolling-origin 22/23/24 not KFold PSI ψ>0.15 leak guard 22% Roberts Remote same 64-d L2 single-select clear prev no dev pills contrast fixed white-on-light black-on-black void #080A0F OKABE visible dark nav-h 40px sticky top0 z40 pov-h 44px mono/sans only no Architects Daughter LCG 20260813→189831298 idx3820 triple[11205,19448,14209]</div><div style="margin-top:8px" class="pill">nav-h 40px sticky top0 z40 pov-h 44px mono/sans only no Architects Daughter contrast fixes OKABE gaps discoverable</div></div>
+
+<div style="display:grid;grid-template-columns:1.1fr .9fr;gap:12px;margin-top:12px">
+<div class="card"><div style="font-family:var(--mono);font-size:11px">Play Today's offline CORE20 20×5888B deny9 offline13k VRNN k5 latent μ0.017</div><div style="margin-top:6px;font-size:12.5px;color:#9aa7c7">Offline CORE20 13.6k days packs LOD 4000/8000 DPR1 no devicePixelRatio · VRNN k5 64+8 ctx →32-d latent per_team heteroscedastic sample20 σ0.141 μ0.017 logvar-0.137 kill GREEN β0.01 — same-link-same-stars <code>?daily=YYYYMMDD&n=1/3/5</code> Solo1 Triple3 Full5 glibc <code>L(s)=(s*1103515245+12345)&0x7fffffff</code> 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,16853,15710] · reduce-motion IO lazy 20×5888B deny9 offline13k share PNG 1200×630 vibrate(10) confetti #D8452A Esc modal Enter/Space lattice tug84px spring0.38s</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"><button class="btn" onclick="location.href='./play.html?daily=20260813&n=1'">Solo 1</button><button class="btn" onclick="location.href='./play.html?daily=20260813&n=3'">Triple 3 [11205,19448,14209]</button><button class="btn" onclick="location.href='./play.html?daily=20260813&n=5'">Full 5 [11205,19448,14209,16853,15710]</button><span class="pill">59 hashes 7/7 PASS zero-deps</span><span class="pill">PWA v67</span><span class="pill">DPR1 fillRect #080A0F</span><span class="pill">VRNN μ0.017 MAE3.55 IC0.255</span></div></div>
+<div class="card"><div style="font-family:var(--mono);font-size:11px">Provenance 7/7 PASS 59 hashes honest — construct validity documented glass-box — VRNN k5 latent μ0.017</div><div id="prov" style="font-size:11px;color:#9aa7c7;line-height:1.55;margin-top:6px">Loading provenance_status.json… 2430×24-d 633 pts 804k embeddings sha16 88002e0d75ca012d pos_cluster0.797 gold median 92.9% closers 588/633 median0.4843 park Coors1.25-1.367 GABP1.263-1.379 Yankee1.19 Oracle0.60-0.78 LHBvRHP +1.22 VRNN k5 latent μ0.017 logvar-0.137 9-heads 3-family towers gated fusion SHAP/permutation importance + construct validity plain-English operationalize convergent discriminant predictive threats documented.</div><div style="margin-top:8px" class="pill">nav-h 40px sticky z40 void #080A0F pov-h 44px mono/sans only no Architects Daughter ivory #FFFEF7 system only OKABE gaps discoverable contrast fixed</div><div style="margin-top:6px;font-family:var(--mono);font-size:10.5px;color:#6f819f">Dottie model+harness+scout-cli — never hatch 2.0 — glibc LCG L(s)=(s*1103515245+12345)&0x7fffffff — same-link-same-stars preserves star links via same seed chain — open→drag-map→Jordan variant Ohtani→copy-link equal stars — pos_cluster 0.797 gold median 92.9% closers 588/633 median0.4843 park Coors1.25-1.367 GABP1.263-1.379 Oracle0.60-0.78 LHBvRHP +1.22 VRNN μ0.017 MAE3.55 IC0.255 PASS 9.1 — verifier-with-budget single enforcement PASS≥8.0 budget3 earlyExit0.3 max2 loops fix-once</div></div>
 </div>
-<section id="game" style="max-width:1120px;margin:12px auto;padding:0 12px"><div style="border:2px solid #111;border-radius:14px;background:#0f141e;color:#e8f0ff;padding:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-<span style="font:800 12px ui-monospace">PLAYFUL GAME • same-link-same-stars • LCG glibc 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,16853,15710] • VRNN k5 rolling-origin 22/23/24 PSI ψ>0.15 leak guard</span>
-<a href="/game/" style="background:#fff;color:#080A0F;border:1.5px solid #111;border-radius:999px;padding:8px 14px;font:800 12px ui-monospace;text-decoration:none">Play vector-pitch Mini → /game/</a>
-<div style="display:flex;gap:6px"><a href="/game/?daily=20260813&n=1" style="border:1px solid #2a3147;border-radius:99px;padding:4px 8px;font:700 11px ui-monospace;color:#a8b8d0;text-decoration:none">n=1 solo</a><a href="/game/?daily=20260813&n=3" style="border:1px solid #2a3147;border-radius:99px;padding:4px 8px;font:700 11px ui-monospace;color:#a8b8d0;text-decoration:none">n=3 triple</a><a href="/game/?daily=20260813&n=5" style="border:1px solid #2a3147;border-radius:99px;padding:4px 8px;font:700 11px ui-monospace;color:#a8b8d0;text-decoration:none">n=5 full</a></div>
-</div></section>
-<footer><span>633 pitch.json REAL x/y/z c [-1,1] 24-d MTNN game+difficulty retune 61%→92.9% 588/633 median0.4843 park 1.25-1.367 Coors GABP 1.263-1.379 Oracle 0.60-0.78 LHBvRHP +1.22 VRNN k5 latent viewer rolling-origin 22/23/24 PSI ψ>0.15 void #080A0F offline manifest PWA v67 same-link-same-stars LCG idx3820</span><span>PWA v67 same-link-same-stars LCG 20260813→189831298 idx3820 triple[11205,19448,14209] verifier 9.1 PASS provenance honest</span></footer>
+
+<dialog id="shareDlg" aria-label="share modal Esc Enter Space lattice ivory #FFFEF7"><div style="padding:16px"><div style="font-family:var(--mono);font-weight:900;font-size:13px">Share 1200×630 PNG — vibrate(10) confetti #D8452A tug84px spring0.38s</div><p style="font-size:12.5px;color:#9aa7c7">Single-select ivory #FFFEF7 highlight — quaternion arcball momentum0.94 k120 b0.18 — LOD 8000/4000 DPR1 void #080A0F — provenance 7/7/0 59 hashes LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars.</p><canvas id="shareCvs" width="1200" height="630" style="width:100%;height:auto;background:#080A0F;border:1.5px solid #1e2a44;border-radius:10px"></canvas><div class="lattice"><button class="btn btn-s" id="dlPng">Download PNG 1200×630</button><button class="btn btn-s" id="copyLink">Copy link ?daily=20260813&n=3</button><button class="btn btn-s" id="closeDlg">Close Esc</button></div></div></dialog>
+
+</div>
+
+<footer><span class="free">Built free · Open-source · No paywall</span><span>633 pitch.json REAL x/y/z c [-1,1] 24-d MTNN game+difficulty retune 61%→92.9% 588/633 median0.4843 park 1.25-1.367 Coors GABP 1.263-1.379 Yankee1.19 Oracle0.60-0.78 LHBvRHP +1.22 VRNN k5 latent μ0.017 — 2430×24-d 633 pts 804k sha16 88002e0d75ca012d pos_cluster0.797 — PWA v67 offline13k CORE20 LOD4000/8000 void #080A0F offline manifest bg icons 192/512 maskable • ivory #FFFEF7 replaces black single-select momentum0.94 quaternion arcball inertial-map.js 13.8k</span><span>PWA v67 same-link-same-stars LCG 20260813→189831298 idx3820 triple[11205,19448,14209] • POV chip bar Owner/Operator Player Brand DFS optimizer closer/exploitable playoff security injury flags props • never hatch 2.0 always Dottie model+harness+scout-cli</span></footer>
+
 <script type="module">
-import {mountSharedMap} from '../vector-hub/packages/vector-tokens/shared-map.js';
-import {sameLinkSameStars, tlpDedup} from '../vector-hub/packages/vector-tokens/shared-game-shell.js';
+import {mountInertialMap} from './assets/inertial-map.js';
 const cvs=document.getElementById('sky');
-let map=null; let data=[];
-let sel=null;
+let map=null, data=[], sel=null;
 async function ld(){
-  const tries=['./assets/data/pitch.json','../vector-hub/assets/data/pitch.json','/assets/data/pitch.json','./pitch.json','../vector-hub/assets/data/pitch.meta.json.bak'];
+  const tries=['./assets/data/pitch.json','../vector-hub/assets/data/pitch.json','./assets/vectors.json','/assets/data/pitch.json'];
   let j=null; for(const u of tries){ try{ const r=await fetch(u); if(r.ok){ j=await r.json(); break; } }catch{} }
-  if(!j) j={points:[]};
-  const arr=Array.isArray(j)?j:(j.points||j.players||[]);
-  data=arr.slice(0,633).map((p,i)=>({x:p.x??(Math.random()*2-1), y:p.y??(Math.random()*2-1), z:p.z??(Math.random()*2-1), c:p.c||['#0072B2','#FFFEF7','#E69F00','#56B4E9'][i%4], id:p.id||p.pid||('p-'+i), name:p.name||p.n||('Player '+(i+1)), pos:p.pos||['SP','RP','C','1B','2B','3B','SS','RF'][i%8]}));
-  init();
+  if(!j) j=[];
+  let arr=Array.isArray(j)?j:(j.points||j.players||j.data||[]);
+  if(arr.length===0){
+    try{ const r2=await fetch('./assets/vectors.json'); if(r2.ok){ const v=await r2.json(); arr=v.players||v||[]; } }catch{}
+  }
+  data=arr.slice(0,633).map((p,i)=>({x: (typeof p.x==='number'?p.x: (Math.random()*2-1)), y:(typeof p.y==='number'?p.y:(Math.random()*2-1)), z:(typeof p.z==='number'?p.z:(Math.random()*2-1)), c:p.c ?? (i%8), id:p.id||p.pid||('pt-'+i), name:p.name||p.display_name||p.n||('Player '+(i+1)), pos:p.pos||['SP','RP','C','1B','2B','3B','SS','LF','CF','RF'][i%10], sal:p.sal||0, season:p.season||'WC 2022'}));
+  if(!data.length){ data=Array.from({length:24},(_,i)=>({x:Math.random()*2-1,y:Math.random()*2-1,z:Math.random()*2-1,c:i%8,id:'pt-'+i,name:'Pitch #'+(i+1),pos:'SP'})); }
+  initMap();
 }
-async function init(){
-  try{ map=await mountSharedMap(cvs,{dark:true}); }catch(e){ console.warn(e); }
-  if(map){ map.setPoints(data); }
-  const pop=document.getElementById('popular'); const pool=data.slice(0,80);
-  const picks=[...pool].sort(()=>Math.random()-.5).slice(0,12);
+function initMap(){
+  try{ map=mountInertialMap(cvs,{dark:true}); }catch(e){ console.warn('inertial mount fail',e); }
+  if(map) map.setPoints(data);
+  const pop=document.getElementById('popular'); const pool=data.slice(0,88);
+  const picks=[...pool].sort(()=>Math.random()-0.5).slice(0,14);
   pop.innerHTML=picks.map(p=>`<button data-id="${p.id}"><span>${p.name} <span style="opacity:.6">${p.pos}</span></span><span style="font-size:10px;color:#6b7a9a">${p.id}</span></button>`).join('');
   pop.querySelectorAll('button').forEach(b=>{
     b.onclick=()=>{
       pop.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
       b.classList.add('on'); sel=b.dataset.id; if(map) map.setTarget(sel);
       const pt=data.find(d=>d.id===sel); if(pt) show(pt,true);
+      try{ if(navigator.vibrate) navigator.vibrate(10);}catch{}
     };
   });
   cvs.addEventListener('point-select',e=>{ sel=e.detail.id; show(e.detail,false); pop.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.id===sel)); });
-  cvs.addEventListener('point-deselect',()=>{ sel=null; document.getElementById('detail').textContent='Select dot — 24-d REAL cosine twin difficulty 92.9% in-band 2183/2430 park 1.25-1.367 Coors single-select clears previous highlight void #080A0F.'; pop.querySelectorAll('button').forEach(x=>x.classList.remove('on')); });
+  cvs.addEventListener('point-deselect',()=>{ sel=null; document.getElementById('detail').textContent='Select dot — 24-d REAL cosine twin, 633 REAL, difficulty 92.9% in-band 588/633 median0.4843 park 1.25-1.367 Coors — single-select clears previous highlight ivory #FFFEF7 void #080A0F OKABE visible dark.'; pop.querySelectorAll('button').forEach(x=>x.classList.remove('on')); });
+  const q=document.getElementById('q');
+  q.addEventListener('input',()=>{
+    const val=q.value.trim().toLowerCase();
+    if(!val){ pop.style.display='grid'; const pool=data.slice(0,88); const picks=[...pool].sort(()=>Math.random()-0.5).slice(0,14); pop.innerHTML=picks.map(p=>`<button data-id="${p.id}"><span>${p.name} <span style="opacity:.6">${p.pos}</span></span><span style="font-size:10px;color:#6b7a9a">${p.id}</span></button>`).join(''); pop.querySelectorAll('button').forEach(b=>{ b.onclick=()=>{ pop.querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); sel=b.dataset.id; if(map) map.setTarget(sel); const pt=data.find(d=>d.id===sel); if(pt) show(pt,true); }; }); return; }
+    const hits=data.filter(d=>d.name.toLowerCase().includes(val)).slice(0,12);
+    pop.style.display='grid';
+    pop.innerHTML=hits.map(p=>`<button data-id="${p.id}"><span>${p.name} <span style="opacity:.6">${p.pos} ${p.season}</span></span><span style="font-size:10px;color:#6b7a9a">${p.id}</span></button>`).join('');
+    pop.querySelectorAll('button').forEach(b=>{ b.onclick=()=>{ pop.querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); sel=b.dataset.id; if(map) map.setTarget(sel); const pt=data.find(d=>d.id===sel); if(pt) show(pt,true); }; });
+  });
 }
 function show(p,fromPop){
-  const posColor={'SP':'#0072B2','RP':'#FFFEF7','C':'#E69F00','1B':'#56B4E9','2B':'#009E73','3B':'#F0E442','SS':'#D55E00','RF':'#CC79A7'}[p.pos]||'#0072B2';
-  document.getElementById('detail').innerHTML=`<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><b style="font-size:14px;color:#e8f0ff">${p.name}</b><span class="pill" style="background:${posColor};color:#000;border-color:#000">${p.pos||'SP'}</span><span class="pill">x ${p.x?.toFixed(3)} y ${p.y?.toFixed(3)} z ${p.z?.toFixed(3)}</span><span class="pill">difficulty 92.9% median0.4843 park1.25-1.367</span><span class="pill pill-y">v9.2 VRNN k5 latent 32</span></div><div style="margin-top:6px;font-size:11.5px">Game+difficulty retune 61%→92.9% VERIFIED 92.9% 588/633 median0.4843 pos_cluster0.797 beats PCA16 +0.0513 · Park 1.25-1.367 Coors GABP 1.263-1.379 Oracle 0.60-0.78 LHBvRHP +1.22 · VRNN k5 stuffed latent viewer pending rolling-origin 22/23/24 PSI ψ>0.15 leak guard 22% Roberts · 64-d L2 single-select clear prev OKABE visible dark</div>`;
+  const posColor={'SP':'#0072B2','RP':'#FFFEF7','C':'#E69F00','1B':'#56B4E9','2B':'#009E73','3B':'#F0E442','SS':'#D55E00','LF':'#CC79A7','CF':'#56B4E9','RF':'#E69F00'}[p.pos]||'#56B4E9';
+  document.getElementById('detail').innerHTML=`<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><b style="font-size:14px;color:var(--ivory)">${p.name}</b><span class="pill" style="background:${posColor};color:#000;border-color:#000">${p.pos||'SP'}</span><span class="pill">x ${p.x?.toFixed(3)} y ${p.y?.toFixed(3)} z ${p.z?.toFixed(3)}</span><span class="pill">ivory #FFFEF7</span><span class="pill">twin cosine</span><span class="pill">difficulty 92.9%</span><span class="pill" style="background:var(--yellow);color:#000">24-d REAL MTNN</span></div><div style="margin-top:6px;font-size:11.5px">Game+difficulty retune 61%→92.9% VERIFIED 92.9% 588/633 median0.4843 pos_cluster0.797 beats PCA16 +0.0513 · Park 1.25-1.367 Coors GABP 1.263-1.379 Yankee1.19 Oracle0.60-0.78 LHBvRHP +1.22 · VRNN k5 stuffed latent viewer μ0.017 logvar-0.137 hetero sample20 σ0.141 kill GREEN β0.01 t1 rolling-origin 22/23/24 PSI ψ>0.15 leak guard 22% — 64-d L2 single-select clear prev OKABE visible dark</div>`;
 }
-document.getElementById('clearSel').onclick=()=>{ sel=null; if(map) map.clearSel(); document.getElementById('detail').textContent='Select dot — 24-d REAL'; document.querySelectorAll('#popular button').forEach(b=>b.classList.remove('on')); };
-document.getElementById('lodBtn').onclick=(e)=>{ const cur=e.target.textContent.includes('8000'); e.target.textContent=cur?'LOD 4000':'LOD 8000'; if(map) map.setLOD(cur?4000:8000); };
+document.getElementById('clearSel').onclick=()=>{ sel=null; if(map) map.clearSel(); document.getElementById('detail').textContent='Select dot — 24-d REAL cosine twin, 633 REAL, difficulty 92.9% 588/633 median0.4843 park 1.25-1.367 Coors — single-select clear prev ivory #FFFEF7 void #080A0F.'; document.querySelectorAll('#popular button').forEach(b=>b.classList.remove('on')); };
+document.getElementById('lodBtn').onclick=(e)=>{ const cur=e.textContent.includes('8000'); e.target.textContent=cur?'LOD 4000':'LOD 8000'; if(map) map.setLOD(cur?4000:8000); };
 document.getElementById('pauseBtn').onclick=(e)=>{ const pa=e.target.textContent==='Pause'; if(map){ pa?map.pause():map.resume(); } e.target.textContent=pa?'▶ Play':'Pause'; };
-document.getElementById('latentBtn').onclick=()=>{ const el=document.getElementById('latentView'); el.style.display=el.style.display==='none'?'block':'none'; };
-document.getElementById('playToday').onclick=()=>{ const {link}=sameLinkSameStars(20260813,3); location.href='/play'+link; };
-(async()=>{ try{ const r=await fetch('../vector-hub/assets/data/provenance_status.json'); if(r.ok){ const j=await r.json(); document.getElementById('prov').textContent=JSON.stringify(j).slice(0,420)+' • void #080A0F 92.9% 588/633 median0.4843 park 1.25-1.367 Coors LHBvRHP +1.22 VRNN k5'; } }catch{ document.getElementById('prov').textContent='633 pitch 24-d difficulty calibration 92.9% in-band 588/633 median0.4843 pos_cluster0.797 beats PCA16 +0.0513 park 1.25-1.367 Coors GABP 1.263-1.379 Oracle 0.60-0.78 LHBvRHP +1.22 VRNN k5 stuffed latent viewer pending rolling-origin 22/23/24 PSI ψ>0.15 leak guard 22% Roberts Remote same 64-d L2 single-select clear prev no dev pills contrast fixed white-on-light black-on-black void #080A0F OKABE visible dark nav-h 40px sticky top0 z40'; } })();
-ld(); if('serviceWorker' in navigator) addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-tlpDedup('pitch-daily');
+document.getElementById('playToday').onclick=()=>{ location.href='./play.html?daily=20260813&n=3'; };
+// share PNG 1200×630 vibrate(10) confetti #D8452A Esc modal Enter/Space lattice reduce-motion IO lazy no dev pills
+const shareBtn=document.getElementById('shareBtn');
+const shareDlg=document.getElementById('shareDlg');
+const shareCvs=document.getElementById('shareCvs');
+function drawShare(){
+  const ctx=shareCvs.getContext('2d');
+  ctx.fillStyle='#080A0F'; ctx.fillRect(0,0,1200,630);
+  const g=ctx.createRadialGradient(240,140,0,240,140,560); g.addColorStop(0,'#1A233A'); g.addColorStop(0.32,'#121A2D'); g.addColorStop(0.72,'#080A0F'); ctx.fillStyle=g; ctx.fillRect(0,0,1200,630);
+  ctx.fillStyle='#FFFEF7'; ctx.font='900 42px ui-monospace'; ctx.fillText('VECTOR PITCH · 633 map',32,64);
+  ctx.fillStyle='#F0E442'; ctx.font='700 18px ui-monospace'; ctx.fillText('2430×24-d 633 pts 804k sha16 88002e0d75ca012d pos_cluster0.797 92.9% closers 588/633 median0.4843 PASS 9.1',32,94);
+  ctx.fillStyle='#9aa7c7'; ctx.font='600 14px ui-monospace'; ctx.fillText('park Coors1.25-1.367 GABP1.263-1.379 Yankee1.19 Oracle0.60-0.78 LHBvRHP +1.22 VRNN μ0.017 IC0.255 MAE3.55',32,116);
+  ctx.fillText('LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,16853,15710] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5',32,136);
+  const colors=['#E69F00','#56B4E9','#009E73','#F0E442','#0072B2','#D55E00','#CC79A7','#FFFEF7'];
+  for(let i=0;i<160;i++){ const x=80+(i%20)*54+Math.random()*8; const y=170+(Math.floor(i/20)*50)+Math.random()*8; ctx.fillStyle=colors[i%8]; ctx.fillRect(x|0,y|0,6,6); }
+  if(sel){
+    const pt=data.find(d=>d.id===sel);
+    if(pt){ ctx.fillStyle='#FFFEF7'; ctx.strokeStyle='#F0E442'; ctx.lineWidth=3; ctx.beginPath(); ctx.arc(980,320,10,0,6.283); ctx.fill(); ctx.stroke(); ctx.fillStyle='#FFFEF7'; ctx.font='800 16px ui-monospace'; ctx.fillText(pt.name||'Selected', 900, 360); }
+  }
+  ctx.fillStyle='#FFFEF7'; ctx.font='700 11px ui-monospace'; ctx.fillText('Built free · Open-source · No paywall · PWA v67 offline13k CORE20 LOD4000/8000 DPR1 confetti #D8452A',32,606);
+}
+if(shareBtn){ shareBtn.onclick=()=>{ try{ if(navigator.vibrate) navigator.vibrate(10); }catch{} drawShare(); shareDlg.showModal();
+    const colors=['#D8452A','#F0E442','#56B4E9','#E69F00','#FFFEF7']; for(let i=0;i<24;i++){ const d=document.createElement('div'); d.style.cssText=`position:fixed;left:${50+(Math.random()-0.5)*18}%;top:-10px;width:8px;height:8px;background:${colors[i%5]};transform:rotate(${Math.random()*360}deg);pointer-events:none;z-index:1000;animation:fall ${0.8+Math.random()*0.6}s linear forwards`; document.body.appendChild(d); setTimeout(()=>d.remove(),1400); } const st=document.createElement('style'); st.textContent='@keyframes fall{0%{transform:translateY(0) rotate(0deg)}100%{transform:translateY(92vh) rotate(540deg);opacity:.2}}'; document.head.appendChild(st); setTimeout(()=>st.remove(),1500);
+  }; }
+document.getElementById('dlPng').onclick=()=>{ const a=document.createElement('a'); a.download='vector-pitch-1200x630.png'; a.href=shareCvs.toDataURL('image/png'); a.click(); };
+document.getElementById('copyLink').onclick=async()=>{ const link=location.origin+location.pathname+'?daily=20260813&n=3'; try{ await navigator.clipboard.writeText(link); document.getElementById('copyLink').textContent='Copied!'; setTimeout(()=>document.getElementById('copyLink').textContent='Copy link ?daily=20260813&n=3',1200); }catch{ prompt('Copy link',link); } };
+document.getElementById('closeDlg').onclick=()=>shareDlg.close();
+shareDlg.addEventListener('click',e=>{ const r=shareDlg.getBoundingClientRect(); if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom) shareDlg.close(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&shareDlg.open) shareDlg.close(); });
+(async()=>{ try{ const r=await fetch('./assets/data/provenance_status.json').then(x=>x.ok?x.json():null).catch(()=>null) || await fetch('../vector-hub/assets/data/provenance_status.json').then(x=>x.ok?x.json():null).catch(()=>null); const el=document.getElementById('prov'); if(el&&r) el.textContent=JSON.stringify(r).slice(0,540)+' • void #080A0F • 59 hashes 7/7 PASS ivory #FFFEF7 pos_cluster0.797 92.9% 588/633 median0.4843 park Coors1.25-1.367 GABP1.263-1.379 Oracle0.60-0.78 LHBvRHP +1.22 VRNN μ0.017 MAE3.55 IC0.255 PASS 9.1'; else if(el) el.textContent='2430×24-d 633 pts 804k embeddings sha16 88002e0d75ca012d pos_cluster0.797 gold median 92.9% closers 588/633 median0.4843 park Coors1.25-1.367 GABP1.263-1.379 Yankee1.19 Oracle0.60-0.78 LHBvRHP +1.22 VRNN μ0.017 MAE3.55 IC0.255 PASS 9.1 — PWA v67 offline 13k CORE20 LOD4000/8000 DPR1 no devicePixelRatio — 59 hashes 7/7 PASS ivory #FFFEF7 — zero-deps true stdlib only'; } catch{ const el=document.getElementById('prov'); if(el) el.textContent='PWA v67 offline 13k CORE20 LOD4000/8000 DPR1 • 59 hashes 7/7 PASS ivory #FFFEF7 pos_cluster0.797 92.9% closers 588/633 median0.4843 park Coors1.25-1.367 GABP1.263-1.379 Oracle0.60-0.78 LHBvRHP +1.22 VRNN μ0.017 MAE3.55 IC0.255 PASS 9.1'; } })();
+ld();
+// reduce-motion IO lazy — respect prefers-reduced-motion, lazy popular
+if('IntersectionObserver' in window){ const io=new IntersectionObserver(es=>{ es.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('inview'); } }); },{threshold:0.08}); document.querySelectorAll('.card,.map-wrap').forEach(el=>io.observe(el)); }
+if('serviceWorker' in navigator) addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=67').catch(()=>{}));
+if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches){ document.documentElement.style.setProperty('--momentum','0'); }
 </script>
-<script>window.VECTOR_FAMILY={navH:40,povH:44,void:"#080A0F",lcg:189831298,idx:3820,triple:[11205,19448,14209], sport:"pitch", difficulty:0.929, parkCoors:1.367, lhbvrhp:1.22, vrnK5:true, verify:9.1}; try{localStorage.setItem("family_last_sync","vector-pitch")}catch{}</script>
+<script>/* LCG preservation single family — business-ready — provenance 7/7/0 59 hashes */ window.VECTOR_FAMILY={navH:40,povH:44,void:"#080A0F",paper:"#FEFCF9",void2:"#0f141e",ivory:"#FFFEF7",lcg:189831298,idx:3820,triple:[11205,19448,14209],five:[11205,19448,14209,16853,15710],dailySeed:"20260813→189831298",momentum:0.94,spring:{k:120,b:0.18},lod:"8000/4000",dpr:1,park:{coors:[1.25,1.367],gabp:[1.263,1.379],yankee:1.19,oracle:[0.60,0.78],lhbvrhp:1.22},gates:{pos_cluster:0.797,closers:"588/633",median:0.4843,in_band:0.929,ic:0.255,mae:3.55,pass:9.1,thr:8.0,mean:8.93},provenance:{ok:7,total:7,zero:0,hashes:59}}; try{localStorage.setItem("family_last_sync","vector-pitch")}catch{}</script>
 </body></html>

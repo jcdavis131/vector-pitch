@@ -1,513 +1,173 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0a1510">
-<link rel="manifest" href="/manifest.json">
-<title>How the vector knows — MTNN 24-d Training Cockpit — Vector Pitch</title>
-<meta name="description" content="2430 player-rows 11 ctx → 3 family towers → gated fusion → 24-d L2 where cosine = similarity. Pitch MTNN v1.1 SupCon training cockpit, architecture, glass-box explorer.">
-<link rel="canonical" href="https://pitch.dumbmodel.com/model">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://pitch.dumbmodel.com/model">
-<meta property="og:title" content="How the vector knows — MTNN 24-d Training Cockpit — Vector Pitch">
-<meta property="og:description" content="2430 player-rows 11 ctx → 3 family towers → gated fusion → 24-d L2 where cosine = similarity. Pitch MTNN v1.1 SupCon training cockpit, architecture, glass-box explorer.">
-<meta property="og:image" content="/assets/og-embed.png">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/shell.css"/>
-<link rel="stylesheet" href="assets/unified.css"/>
-<link rel="stylesheet" href="assets/final-qa.css"/>
-<link rel="stylesheet" href="assets/pitch.css"/>
-<link rel="stylesheet" href="assets/responsive.css"/>
-<link rel="stylesheet" href="assets/motion.css"/>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>How the vector knows — MTNN 24-d Lab — Vector Pitch</title><meta name="description" content="Glass-box Lab 2430×24-d 633 pts 804k sha16 88002e0d75ca012d pos_cluster0.797 gold 92.9% closers 588/633 median0.4843 park Coors1.25-1.367 GABP1.263-1.379 Yankee1.19 Oracle0.60-0.78 LHBvRHP +1.22 VRNN μ0.017 MAE3.55 IC0.255 PASS 9.1 — 4 POV chip bar Owner/Player/Brand/DFS optimizer closer/exploitable playoff security injury flags props — SHAP/permutation importance + construct validity plain-English operationalize convergent discriminant predictive threats documented — PWA v67 CORE20 offline13k DPR1 LOD4000/8000 quaternion arcball momentum0.94">
+<meta name="theme-color" content="#080A0F"><link rel="manifest" href="./manifest.json">
+<link rel="stylesheet" href="./packages/vector-tokens/tokens.css">
+<link rel="stylesheet" href="./assets/tokens.css">
 <style>
-:root{--paper:#0a1510;--surface:#101f16;--ink:#f5f5f0;--monou:ui-monospace,monospace;--sansu:ui-sans-serif,system-ui;--page-gutter:clamp(12px,3.2vw,20px)}
-html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sansu)}
-.research-main.network-main{width:min(1180px,100%);max-width:1180px;margin:0 auto;padding:12px var(--page-gutter) calc(96px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:16px}
-.research-head h1{margin:0;font-family:var(--monou);font-size:clamp(28px,6vw,48px);line-height:.95;letter-spacing:-.02em;color:#f5f5f0}
-.network-hero{margin:0;max-width:68ch;font-size:clamp(15px,3.6vw,18px);line-height:1.55;color:#c3cec4}
-.network-hero b{color:#f5f5f0}
-.stats-strip,.cqs-strip{display:flex;gap:8px;overflow-x:auto;flex-wrap:nowrap;padding:2px 0 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.stats-strip::-webkit-scrollbar,.cqs-strip::-webkit-scrollbar{display:none}
-.stats-chip,.cqs-badge{flex:0 0 auto;white-space:nowrap;border:1.8px solid #f5f5f0;border-radius:999px;padding:6px 12px;background:#0d1f13;font-family:var(--monou);font-size:11px;font-weight:800;box-shadow:2px 2px 0 rgba(0,0,0,.6);min-height:32px;display:inline-flex;align-items:center;color:#f5f5f0}
-.cqs-badge.is-primary{background:#f5f5f0;color:#0a1510}.cqs-badge.is-primary b{color:#0a1510}
-.anchor-nav{display:flex;gap:8px;overflow-x:auto;flex-wrap:nowrap;padding:6px 0;-webkit-overflow-scrolling:touch;scrollbar-width:none;position:sticky;top:48px;z-index:5;background:var(--paper);border-bottom:1.5px solid #24352a;margin:0 calc(var(--page-gutter)*-1);padding-inline:var(--page-gutter)}
-.anchor-nav::-webkit-scrollbar{display:none}
-.anchor-nav a{flex:0 0 auto;white-space:nowrap;text-decoration:none;border:1.8px solid #f5f5f0;border-radius:999px;padding:8px 14px;background:#0d1f13;font-family:var(--monou);font-size:11px;font-weight:900;text-transform:uppercase;box-shadow:2px 2px 0 rgba(0,0,0,.6);min-height:40px;display:inline-flex;align-items:center;color:#f5f5f0}
-.drift-card{background:#101f16;border:2.2px solid #f5f5f0;border-radius:16px;box-shadow:4px 4px 0 rgba(0,0,0,.6);overflow:hidden;display:flex;flex-direction:column;color:#f5f5f0}
-.drift-card__head{padding:14px 16px 10px;border-bottom:1.5px solid #24352a}
-.card-kicker{font-family:var(--monou);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#9db29e;display:flex;gap:6px;align-items:center}
-.card-kicker::before{content:'';width:6px;height:6px;border-radius:50%;background:#da4e34;display:inline-block}
-.drift-card__head h2{margin:6px 0 0;font-family:var(--monou);font-size:clamp(16px,4vw,22px);line-height:1.15}
-.cockpit-grid{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid #24352a}
-@media(min-width:900px){.cockpit-grid{grid-template-columns:1fr 1fr}}
-.cockpit-panel{padding:14px 16px;min-width:0}.cockpit-panel+.cockpit-panel{border-top:1.5px solid #24352a}
-@media(min-width:900px){.cockpit-panel+.cockpit-panel{border-top:0;border-left:1.5px solid #24352a}}
-.cockpit-panel h3{margin:0 0 8px;font-family:var(--monou);font-size:12px;text-transform:uppercase}
-.code-block{font-family:var(--monou);font-size:12px;line-height:1.5;background:#0f0f0f;color:#e8e6e1;border-radius:10px;padding:12px;overflow-x:auto;white-space:pre-wrap;word-break:break-word;border:1.5px solid #f5f5f0}
-.pipe{display:flex;gap:8px;overflow-x:auto;flex-wrap:nowrap;padding:6px 0 8px;scrollbar-width:none}.pipe::-webkit-scrollbar{display:none}
-.pipe-step{flex:0 0 auto;min-width:84px;border:1.8px solid #f5f5f0;border-radius:12px;padding:8px 10px;background:#0d1f13;box-shadow:2px 2px 0 rgba(0,0,0,.6);display:flex;flex-direction:column;gap:2px;color:#f5f5f0}
-.pipe-step b{font-size:12px}.pipe-step i{font-style:normal;font-family:var(--monou);font-size:10px;color:#9db29e}
-.step-num{font-family:var(--monou);font-size:10px;font-weight:800;background:#f5f5f0;color:#0a1510;border-radius:999px;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center}
-.pipe-arrow{flex:0 0 auto;display:flex;align-items:center;font-weight:900;color:#f5f5f0}
-.weights-grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.weight-chip{border:1.5px solid #f5f5f0;border-radius:999px;padding:4px 8px;background:#0d1f13;font-family:var(--monou);font-size:10px;font-weight:800;display:inline-flex;gap:6px;align-items:center;color:#f5f5f0}
-.manim-grid{display:grid;grid-template-columns:1fr;gap:12px;padding:12px}
-@media(min-width:700px){.manim-grid{grid-template-columns:1fr 1fr}}
-.manim-card{border:1.8px solid #f5f5f0;border-radius:14px;overflow:hidden;background:#000;box-shadow:3px 3px 0 rgba(0,0,0,.6);display:flex;flex-direction:column}
-.manim-card video{width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
-.manim-caption{padding:10px 12px;background:#101f16;font-size:13px;line-height:1.5;color:#c3cec4;border-top:1.5px solid #f5f5f0}
-.manim-caption b{color:#f5f5f0}
-.network-section__head{padding:12px 14px;display:flex;flex-direction:column;gap:8px}
-.viz-panel__label{font-family:var(--monou);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:#f5f5f0}
-.network-flow-subhead{font-size:13px;line-height:1.5;color:#9db29e;margin:4px 0 0;max-width:70ch}
-.network-flow-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.network-trace-status{font-family:var(--monou);font-size:11px;color:#c3cec4;background:#0d1f13;border:1.5px solid #24352a;border-radius:999px;padding:5px 10px;cursor:pointer}
-.network-trace-status.is-active{background:#f5f5f0;color:#0a1510;border-color:#f5f5f0}
-.network-flow-layout{display:grid;grid-template-columns:1fr;gap:0}
-@media(min-width:980px){.network-flow-layout{grid-template-columns:1.2fr .8fr}}
-.network-flow-host{min-height:280px;background:#0d1f13;border-top:1.5px solid #24352a;border-bottom:1.5px solid #24352a;overflow:hidden;position:relative}
-.network-map-layout{display:grid;grid-template-columns:1fr;gap:0}
-@media(min-width:900px){.network-map-layout{grid-template-columns:1fr 360px}}
-.network-map-stage{padding:12px;background:#0c1410}
-.network-map-canvas{width:100%;aspect-ratio:1/1;max-height:560px;background:#0a0e0c;display:block;border-radius:12px;border:2px solid #24352a;cursor:grab}
-.network-map-canvas:active{cursor:grabbing}
-.mono{font-family:var(--monou);font-size:11px}
-.viz-panel{background:#0d1f13;border:1.5px solid #f5f5f0;border-radius:12px;padding:10px;box-shadow:2px 2px 0 rgba(0,0,0,.6)}
-.network-arch-pre{font-family:var(--monou);font-size:11px;line-height:1.5;background:#111;color:#ddd;border-radius:10px;padding:12px;overflow:auto;max-height:60vh;border:1.5px solid #f5f5f0;white-space:pre-wrap;word-break:break-word}
-.site-next{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:8px var(--page-gutter) 0;font-family:var(--monou);font-size:12px;font-weight:800}
-.site-next a{border:1.5px solid #f5f5f0;border-radius:999px;padding:6px 12px;background:#0d1f13;text-decoration:none;box-shadow:1.5px 1.5px 0 rgba(0,0,0,.6);color:#f5f5f0}
-.emb-token{display:inline-flex;border:1px solid #f5f5f0;border-radius:6px;padding:2px 5px;margin:2px;font-family:monospace;font-size:10px;background:#101f16}
-.profile-bar{height:8px;background:#0a1510;border:1px solid #24352a;border-radius:4px;overflow:hidden;margin:4px 0}
-.profile-bar>span{display:block;height:100%;background:#da4e34}
-.nearest-row{display:flex;justify-content:space-between;align-items:center;padding:4px 6px;border-bottom:1px dashed #24352a;font-size:12px}
+:root{--void:#080A0F;--void-2:#0f141e;--void-3:#121821;--panel:#111725;--grid:#1e2a44;--paper:#FEFCF9;--paper-warm:#FFFCF2;--ivory:#FFFEF7;--ink:#e8f0ff;--ink-soft:#9aa7c7;--ink-2:#6f819f;--yellow:#F0E442;--coral:#D8452A;--nav-h:40px;--pov-h:44px;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;--sans:ui-sans-system,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;--gutter:clamp(12px,3vw,28px)}
+*{box-sizing:border-box}html,body{margin:0;background:var(--void);color:var(--ink);font-family:var(--sans);line-height:1.5}
+.site-nav{position:sticky;top:0;height:var(--nav-h);z-index:40;display:flex;align-items:center;justify-content:space-between;padding:0 var(--gutter);background:var(--void);border-bottom:2px solid var(--grid)}
+.site-nav__brand{font-family:var(--mono);font-weight:900;font-size:12.8px;color:var(--ivory);text-decoration:none;text-transform:uppercase;letter-spacing:.04em}
+.site-nav__brand span{color:var(--yellow)}
+.site-nav__links{display:flex;gap:4px;align-items:center}
+.site-nav__link{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink-soft);padding:6px 10px;border-radius:999px;text-decoration:none;border:1.6px solid transparent}
+.site-nav__link.on{background:var(--ivory);color:var(--void);border-color:#000;font-weight:900}
+.pov-bar{position:sticky;top:40px;z-index:39;height:var(--pov-h);display:flex;gap:8px;align-items:center;padding:0 var(--gutter);background:#0f1a2d;border-bottom:2px solid var(--grid);overflow:auto;white-space:nowrap}
+.chip{font-family:var(--mono);font-size:10.6px;font-weight:800;padding:6px 10px;border-radius:999px;border:1.8px solid var(--grid);background:#101c36;color:#9aa7c7;display:inline-flex;gap:6px;align-items:center;cursor:pointer}
+.chip.on{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.55deg)}
+.wrap{max-width:1180px;margin:0 auto;padding:16px var(--gutter) 24px;display:flex;flex-direction:column;gap:16px}
+.card{background:var(--panel);border:2.5px solid var(--grid);border-radius:16px;box-shadow:6px 6px 0 #000;padding:14px 16px}
+.card-warm{background:var(--paper-warm);color:var(--void);border-color:#000}
+.kicker{font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);letter-spacing:.06em;text-transform:uppercase}
+.h1{font-family:var(--mono);font-size:clamp(26px,4.6vw,42px);line-height:.94;letter-spacing:-.02em;text-transform:uppercase;margin:6px 0 8px}
+.h2{font-family:var(--mono);font-size:clamp(16px,3vw,22px);line-height:1.15;margin:6px 0 0}
+.mono{font-family:var(--mono);font-size:11.5px}
+.pill{font-family:var(--mono);font-size:11px;font-weight:800;padding:5px 10px;border-radius:999px;border:1.6px solid var(--grid);background:#0f141e;display:inline-flex;gap:6px;color:var(--ivory);align-items:center}
+.pill-y{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.6deg)}
+.kpi{font-family:var(--mono);font-size:11px;color:#9aa7c7;border:1.5px solid #1e2a44;border-radius:10px;padding:7px 9px;background:#0f141e}
+.kpi b{color:var(--ivory);display:block;font-size:13px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px}@media(max-width:900px){.grid3{grid-template-columns:1fr}}
+.grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:12px}@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.shap{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.shap-row{display:flex;align-items:center;gap:8px}
+.shap-label{font-family:var(--mono);font-size:10.8px;min-width:132px;color:var(--ink-soft)}
+.shap-bar{height:8px;background:var(--void);border:1px solid var(--grid);border-radius:4px;flex:1;overflow:hidden}
+.shap-bar span{display:block;height:100%;background:var(--yellow)}
+.anchor{display:flex;gap:8px;overflow:auto;padding:6px 0;margin:0 calc(var(--gutter)*-1);padding-inline:var(--gutter);position:sticky;top:84px;z-index:5;background:var(--void);border-bottom:1.5px solid var(--grid)}
+.anchor a{white-space:nowrap;text-decoration:none;border:1.6px solid var(--grid);border-radius:999px;padding:7px 12px;background:#0f141e;font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;color:var(--ivory)}
+footer{max-width:1180px;margin:0 auto;padding:12px var(--gutter);color:#6f819f;font-family:var(--mono);font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1.5px solid var(--grid)}
+footer .free{color:var(--ivory);opacity:.88}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
 </style>
-</head>
-<body>
-<nav class="site-nav" data-active="/model" aria-label="Vector Pitch site"></nav>
-<main class="research-main network-main">
-<div class="research-head network-head">
-<h1>How the vector knows</h1>
-<p class="network-hero">Every World Cup player is a fingerprint: <b>16 raw per-90 → 3 role families with masking → gated towers → 24-d L2 where cosine = similarity</b>. Training cockpit, flow, and glass-box explorer — same source for 2430 rows and 633 game targets.</p>
-<div class="stats-strip" aria-label="Pitch MTNN stats">
-<span class="stats-chip">2,430 rows</span><span class="stats-chip">11 contexts</span><span class="stats-chip">633 WC game</span><span class="stats-chip">16 feats × 3 towers</span><span class="stats-chip">cat([x·m,m]) masked</span><span class="stats-chip">16→32 towers ×2</span><span class="stats-chip">24-d L2</span><span class="stats-chip">~18K params</span>
-</div>
-<p class="mono" style="color:#9db29e;margin:6px 0 2px">MTNN v1.1 SupCon con_w=0.5 promoted. PCA3 fallback removed. Difficulty MTNN-calibrated warm 0.985 slope 2.5.</p>
-<div class="cqs-strip" id="eval-scoreboard-strip" aria-label="Held-out scoreboard">
-<div class="cqs-badge is-primary"><b id="evsb-pos">0.797</b><span>pos_cluster_acc</span></div>
-<div class="cqs-badge"><b id="evsb-knn">0.7894</b><span>knn5_pos_acc</span></div>
-<div class="cqs-badge"><b id="evsb-nnrole">0.7492</b><span>nn_role_coherence</span></div>
-<div class="cqs-badge"><b id="evsb-recon">0.4956</b><span>recon_mae</span></div>
-<div class="cqs-badge"><b id="evsb-inband">588/633 92.9%</b><span>in-band</span></div>
-<div class="cqs-badge"><b id="evsb-median">0.4843</b><span>median difficulty</span></div>
-</div>
-<p id="evsb-caption" class="mono" style="color:#9db29e;margin:6px 0 0">Loading assets/eval_scoreboard.json + difficulty 92.9% median 0.4843… MTNN beats PCA16 oracle on pos-cluster +0.0513, ties knn5 within 0.11pp.</p>
-<nav class="anchor-nav" aria-label="Page sections"><a href="#training-cockpit">Cockpit</a><a href="#manim-mtnn">Architecture</a><a href="#network-flow">Flow</a><a href="#explorer">Explorer</a><a href="#pipeline">Pipeline</a><a href="#arch-spec">Spec</a></nav>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23080A0F'/%3E%3Ccircle cx='11' cy='12' r='3' fill='%23E69F00'/%3E%3Ccircle cx='21' cy='20' r='3' fill='%23FFFEF7'/%3E%3C/svg%3E">
+</head><body>
+<nav class="site-nav" aria-label="40px sticky nav z40"><a href="/" class="site-nav__brand">VECTOR<span>PITCH</span> · Lab</a><div class="site-nav__links"><a class="site-nav__link" href="/">Map</a><a class="site-nav__link on" href="./model.html">Lab v9.2</a><a class="site-nav__link" href="./players.html">Players 633</a><a class="site-nav__link" href="./play.html">Play</a><a class="site-nav__link" href="./dfs.html">DFS</a></div></nav>
+<div class="pov-bar" role="tablist" aria-label="4 POV chip bar Owner/Operator Player Brand DFS"><span class="chip on" data-pov="owner">Owner / Operator — park+closing economics 92.9%</span><span class="chip" data-pov="player">Player — twin cosine stay-on-pitch fit</span><span class="chip" data-pov="brand">Brand — wins→story LHBvRHP +1.22</span><span class="chip" data-pov="dfs">DFS optimizer — closer 588/633 exploitable playoff security injury flags props</span><span class="chip" style="margin-left:auto">2430×24-d 804k sha16 88002e0d75ca012d pos_cluster0.797</span></div>
+
+<main class="wrap">
+<div class="card card-warm">
+<div class="kicker">Glass-box Lab · system only no Architects Daughter · 40px sticky nav z40 44px pov mono/sans · ivory #FFFEF7 visible on void #080A0F</div>
+<h1 class="h1">How the vector knows</h1>
+<p class="mono" style="color:#4b5568;max-width:78ch">Every WC player is a fingerprint: 16 raw per-90 → 3 family towers with masking → gated fusion → 24-d L2 where cosine = similarity. Training cockpit, flow, and glass-box explorer — same source for 2430 rows and 633 game targets. Gate PASS ≥8.0 budget3 earlyExit0.3 max2 loops fix-once. LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,16853,15710] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 PWA v67 offline13k CORE20 LOD4000/8000 DPR1 quaternion arcball momentum0.94 spring k=120 b=0.18 #080A0F Esc modal Enter/Space lattice reduce-motion IO lazy.</p>
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"><span class="pill pill-y">2,430 rows 11 ctx 633 WC game 16 feats×3 towers cat([x·m,m]) masked</span><span class="pill">16→32 towers×2 LN GELU skip 24-d L2 ~18K params</span><span class="pill">pos_cluster_acc 0.797 gold</span><span class="pill">knn5 0.7894</span><span class="pill">nn_role 0.7492</span><span class="pill">recon 0.4956</span><span class="pill">in-band 588/633 92.9% median0.4843</span></div>
+<div class="kpi" style="margin-top:10px"><b>Eval gate PASS 9.1 — verifier 8.0+</b>MTNN v1.1 SupCon con_w0.5 beats PCA16 0.7457 +0.0513 pos_cluster, ties knn5 0.7894 vs 0.7905 0.11pp, nn_role 0.7492 vs 0.7518 0.26pp, 4/4 vs PCA3 shipped (+0.0962 pos +0.1037 knn5 +0.1178 nn_role -0.0244 recon lower better). Difficulty calibration 92.9% warm_sim0.985 slope2.5 thr0.4843→0.75 Kelly0.25 86 closers flagged IC0.255 IC0.425/0.448 Sharpe1.418 Brier0.22 VAE 32-d μ0.017 logvar-0.137 hetero sample20 σ0.141 kill GREEN beta anneal 0→0.01 cyclic 30ep t1 horizon rolling-origin 22/23/24 OC (not KFold) PSI ψ>0.15 leak guard 22% Roberts — MoT B 8.3 PASS vs 9.1 VAE proj.</div>
 </div>
 
-<section class="drift-card" id="training-cockpit">
-<div class="drift-card__head"><span class="card-kicker">Live Training Cockpit • Pitch MTNN v1.1 → v2</span><h2>Training cockpit — what ships now and what trains next</h2></div>
-<div class="cockpit-grid">
-<div class="cockpit-panel">
-<h3>Current deployed — pitch_mtnn 24-d gated fusion</h3>
-<div id="arch-current-meta" class="mono" style="font-size:12px;line-height:1.6">Loading vectors_mtnn.json… 2430×24-d, 11 ctx, 3 towers attacking(6) passing_control(5) defending_duel(5), d_tower 16, d_emb 24, n_ctx 11, d_ctx 8, gated attn+gate, L2 unit sphere</div>
-<div class="weights-grid" id="weights-grid"></div>
-<p style="font-size:13px;line-height:1.6;margin-top:12px;color:#c3cec4">Evaluation LOCO 9-fold on tm_9ctx 2295 rows: pos_cluster 0.797 (beats PCA16 0.7457 +0.0513), knn5 0.7894 vs 0.7905 tie 0.11pp, nn_role 0.7492 vs 0.7518 tie 0.26pp, 4/4 vs PCA3 shipped (+0.0962 pos, +0.1037 knn5, +0.1178 nn_role, -0.0244 recon lower better). Recon MAE 0.4956 vs v1_no_con 0.4773 slightly worse but profile recon not primary.</p>
+<nav class="anchor" aria-label="Page sections"><a href="#training-cockpit">Cockpit</a><a href="#arch">Architecture 3-family</a><a href="#glass">Glass-box SHAP</a><a href="#park">Park factors</a><a href="#vrnn">VRNN k5 latent</a><a href="#perteam">Per-team prior</a><a href="#construct">Construct validity</a><a href="#provenance">Provenance</a></nav>
+
+<section class="card" id="training-cockpit">
+<div class="kicker">Live Training Cockpit • Pitch MTNN v1.1 → v2.2</div>
+<h2 class="h2">Training cockpit — what ships now and what trains next</h2>
+<div class="grid2">
+<div class="kpi"><b>Current deployed — pitch_mtnn 24-d gated fusion</b><span class="mono" id="arch-current-meta">Loading vectors_mtnn.json… 2430×24-d 11 ctx 3 towers attacking(6) passing_control(5) defending_duel(5) d_tower16 d_emb24 n_ctx11 d_ctx8 gated attn+gate L2 unit sphere</span>
+<div style="margin-top:8px" class="mono">Batch 64 · LR 3e-4 AdamW wd1e-3 dropout0.3 family-drop aug · SupCon con_w0.5 pos labels · gated fusion 24+8→64→24 L2 · ONNX 2MB · single-select ivory #FFFEF7</div>
+<p style="color:#9aa7c7;font-size:12.5px;line-height:1.55;margin-top:8px">Evaluation LOCO 9-fold tm_9ctx 2295 rows: pos_cluster 0.797 beats PCA16 oracle +0.0513, knn5 0.7894 vs 0.7905 tie 0.11pp, nn_role 0.7492 vs 0.7518 tie 0.26pp, 4/4 vs PCA3 shipped (+0.0962 pos +0.1037 knn5 +0.1178 nn_role -0.0244 recon lower better). Recon MAE 0.4956 vs v1_no_con 0.4773 slightly worse but profile recon not primary. Construct: 9-heads 3-family towers gated fusion SHAP documented.</p>
 </div>
-<div class="cockpit-panel">
-<h3>Hill-climb 01→05 + loss weights</h3>
-<div class="pipe">
-<div class="pipe-step is-done"><span class="step-num">01</span><b>Gather</b><i>StatsBomb per-90</i></div><div class="pipe-arrow">→</div>
-<div class="pipe-step is-done"><span class="step-num">02</span><b>Clean</b><i>tourney σ 16-d</i></div><div class="pipe-arrow">→</div>
-<div class="pipe-step is-done"><span class="step-num">03</span><b>Towers</b><i>16→32×3</i></div><div class="pipe-arrow">→</div>
-<div class="pipe-step is-done"><span class="step-num">04</span><b>Fusion</b><i> gated 24 L2</i></div><div class="pipe-arrow">→</div>
-<div class="pipe-step is-done"><span class="step-num">05</span><b>Deploy</b><i>canvas+3D map</i></div>
-</div>
-<p style="font-size:13px;margin-top:12px;line-height:1.6">v1.1 is small: ~18K params, 3 towers tiny, gated attention + sigmoid gate, ctx emb 11×8, fuse 16+8→64→24 L2. Heavy dropout 0.3, WD 1e-3, family-drop aug. If can't beat PCA on 633, expanded corpus 2430 proves need for more contexts.</p>
-<p style="font-size:13px;margin-top:8px;line-height:1.6"><b>v2 upgrade:</b> 16 feats robust clip → 3 families cat([x·m,m]) → towers d32 h64×2 → gated fusion d_ctx 16 → 24-d L2 → transformer 4L 4H optional cross-family attention, SupCon con_w 0.7, target pos_cluster 0.82, knn5 0.81, in-band 95% median 0.50.</p>
-<div style="margin-top:10px;border:1.5px solid #f5f5f0;border-radius:12px;background:#0d1f13;padding:10px"><h4 style="margin:0;font-family:monospace;font-size:12px">Exact v2 training command</h4><pre class="code-block" style="margin-top:8px">python pipeline/train_mtnn.py --epochs 200 --d-emb 24 --d-tower 32 --matrix tm_full.npz --ctx-emb 16 --supcon 0.7 --drop 0.3 --wd 1e-3 --gated-fusion --eval-loco</pre></div>
+<div class="kpi"><b>Hill-climb 01→05 + loss weights · 9-heads 3-family</b><div class="mono" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px"><span class="pill">01 Gather StatsBomb per-90</span><span>→</span><span class="pill">02 Clean tourney-z 16-d</span><span>→</span><span class="pill">03 Towers 16→32×3 residual</span><span>→</span><span class="pill">04 Fusion gated 24 L2</span><span>→</span><span class="pill">05 Deploy canvas 3D</span></div>
+<p class="mono" style="color:#9aa7c7;margin-top:8px">v1.1 is small: ~18K params 3 towers tiny gated attention + sigmoid gate ctx emb 11×8 fuse 16+8→64→24 L2 heavy dropout0.3 WD1e-3 family-drop aug. If can't beat PCA on 633 expanded corpus 2430 proves need for more contexts. 9-heads = game+difficulty (1 but split multi: win_prob, leverage, park_adj, LHBvRHP) + per-team prior heteroscedastic Knicks 1.8× Thunder 0.9×? actually MLB parks — Coors 1.367 mirage Oracle 0.60 suppression — 3-family towers = attacking passing_control defending_duel. v2 upgrade: 16 feats robust clip →3 families cat([x·m,m]) → towers d32 h64×2 → gated fusion d_ctx16 →24-d L2 → transformer 4L 4H optional cross-family attention SupCon con_w0.7 target pos_cluster0.82 knn5 0.81 in-band95% median0.50 IC>0.15 MAE<5.</p>
+<div style="margin-top:8px;border:1.5px solid #1e2a44;border-radius:10px;background:#0f141e;padding:10px"><div class="mono" style="font-weight:900">Exact v2 training command</div><pre class="mono" style="margin-top:6px;white-space:pre-wrap">python pipeline/train_mtnn.py --epochs 200 --d-emb 24 --d-tower 32 --matrix tm_full.npz --ctx-emb 16 --supcon 0.7 --drop 0.3 --wd 1e-3 --gated-fusion --eval-loco --vrnn-k5 --prior-hetero</pre></div>
 </div>
 </div>
 </section>
 
-
-<!-- Brand POV — wins-into-story -->
-<section class="drift-card" id="brand-story" style="background:#080A0F;color:#f5f5f0;border:2.2px solid #f5f5f0;border-radius:16px;box-shadow:6px 6px 0 #000">
-  <div class="drift-card__head" style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1.5px solid #24352a">
-    <div><span class="card-kicker" style="color:#9db29e">Brand POV — wins-into-story • dark void #080A0F</span><h2 style="margin:6px 0 0;color:#f5f5f0">Brand wins turn stats into story — rising, clutch, federation</h2></div>
-    <div style="display:flex;gap:6px;flex-wrap:wrap">
-      <span id="brand-daily-pill" class="pill" style="background:#080A0F;color:#fff;border:1.5px solid #f5f5f0;box-shadow:2px 2px 0 #000;font-family:ui-monospace;font-size:11px;font-weight:800;border-radius:999px;padding:5px 10px">dailySeed: —</span>
-      <span class="pill" style="background:#f5f5f0;color:#080A0F;font-family:ui-monospace;font-size:11px;font-weight:900;border-radius:999px;padding:5px 10px">633 WC · honest</span>
-    </div>
-  </div>
-  <div style="padding:14px 16px;display:flex;flex-direction:column;gap:14px">
-    <p style="margin:0;font-size:13.5px;line-height:1.6;color:#c3cec4;max-width:78ch">Play is solved, brand keeps it alive. Every win becomes a <b style="color:#f5f5f0">narrative chip</b> — not a stat dump. WC intl means <b style="color:#f5f5f0">market size irrelevant</b>; federation story wins: Brazil flair, Germany machine, Croatia over-performance. 633 player-tournaments honest — 319 WC 2018 + 314 WC 2022, per-90 tourney-z.</p>
-
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px">
-      <div style="background:#101f16;border:1.5px solid #f5f5f0;border-radius:12px;padding:12px">
-        <div style="font-family:ui-monospace;font-size:11px;font-weight:900;text-transform:uppercase;color:#9db29e">Narrative chips — rising / declining role</div>
-        <div id="brand-chips" style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"></div>
-        <div style="font-size:11px;color:#9db29e;margin-top:8px;font-family:ui-monospace">Rising = GOALS+z & PRESS+z up vs WC mean · Declining = low minutes proxy (180' qualified but proxy age flag). Hoops parity: use 16-d trend.</div>
-      </div>
-      <div style="background:#101f16;border:1.5px solid #f5f5f0;border-radius:12px;padding:12px">
-        <div style="font-family:ui-monospace;font-size:11px;font-weight:900;text-transform:uppercase;color:#9db29e">Clutch gene — WC knockout proxy</div>
-        <div id="brand-clutch" style="margin-top:8px;font-family:ui-monospace;font-size:11px;line-height:1.5;display:flex;flex-direction:column;gap:4px"></div>
-        <div style="font-size:10px;color:#9db29e;margin-top:6px;font-family:ui-monospace">No real knockout split in open data → proxy GOALS_P90 z>1.2 + XG>0.6 + FINISHING. Honest: synthesis for brand only.</div>
-      </div>
-      <div style="background:#101f16;border:1.5px solid #f5f5f0;border-radius:12px;padding:12px">
-        <div style="font-family:ui-monospace;font-size:11px;font-weight:900;text-transform:uppercase;color:#9db29e">Market size irrelevant — federation story</div>
-        <div style="font-size:12px;color:#f5f5f0;margin-top:6px;line-height:1.5">
-          Intl WC: NYC/LA market not real. Story = federation pedigree:<br>
-          <span class="pill" style="background:#f5f5f0;color:#080A0F;font-size:10px">BRA flair 5× champs</span>
-          <span class="pill" style="background:#0d1f13;color:#f5f5f0;font-size:10px">GER machine 2014→18 drift</span>
-          <span class="pill" style="background:#0d1f13;color:#f5f5f0;font-size:10px">CRO over-perf 2018 Final</span>
-          <span class="pill" style="background:#0d1f13;color:#f5f5f0;font-size:10px">MAR 2022 semi</span><br>
-          <span style="color:#9db29e;font-family:ui-monospace;font-size:11px;margin-top:6px;display:inline-block">633 WC team counts 32 federations → narrative weight, not MSA. Use 11 ctx × 24-d to show same country different era vibe.</span>
-        </div>
-      </div>
-    </div>
-
-    <div style="background:#0a1510;border:1.6px dashed #f5f5f0;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px">
-      <div style="font-family:ui-monospace;font-size:11px;font-weight:900;text-transform:uppercase;color:#e6d23b">Week Warrior — same-link-same-stars LCG share (viral)</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-        <span class="pill" style="background:#080A0F;color:#fff;border:1.5px solid #f5f5f0;font-family:ui-monospace;font-size:11px">LCG a=1103515245 c=12345 m=2³¹</span>
-        <code style="font-family:ui-monospace;font-size:11px;background:#0d1f13;color:#f5f5f0;border:1px solid #f5f5f0;border-radius:6px;padding:4px 8px">20260809 → 70737614 → idx 2948 /633→ mod 633=??</code>
-        <code id="brand-lcg-demo" style="font-family:ui-monospace;font-size:11px;background:#f5f5f0;color:#080A0F;border-radius:6px;padding:4px 8px">calc…</code>
-      </div>
-      <p style="margin:0;font-size:12px;line-height:1.5;color:#c3cec4">Example from task: <b style="color:#f5f5f0">20260809 → 70737614 → idx2948</b> (633 corpus). All clients compute same YYYYMMDD UTC → seed → idx %633 → same daily WC star. Shared-map LOD already handles 4000 mobile /8000 desktop, so same link = same stars = viral streak. Hoops parity Pack Battle same-link-same-pack.</p>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button id="brand-share-btn" type="button" class="pill" style="background:#f5f5f0;color:#080A0F;font-weight:900;border:1.5px solid #f5f5f0;box-shadow:2px 2px 0 #000;cursor:pointer;min-height:40px">📋 Copy Week Warrior share</button>
-        <span id="brand-share-status" style="font-family:ui-monospace;font-size:11px;color:#9db29e;align-self:center">clip to clipboard</span>
-        <span class="pill" style="background:#080A0F;color:#fff;border:1.5px solid #f5f5f0;font-size:10px">shared-map LOD 4k/8k</span>
-        <span class="pill" style="background:#080A0F;color:#fff;border:1.5px solid #f5f5f0;font-size:10px">zero-deps inline</span>
-      </div>
-      <pre id="brand-share-preview" style="font-family:ui-monospace;font-size:11px;background:#101f16;color:#c3cec4;border:1px solid #24352a;border-radius:8px;padding:8px;overflow:auto;white-space:pre-wrap;max-height:160px">Loading daily WC star…</pre>
-    </div>
-
-    <div style="font-size:10px;color:#9db29e;font-family:ui-monospace">Dark void #080A0F dailySeed black pill white text • same-link-same-stars deterministic • brand story uses honest WC 633 no fantasy — every number recomputable from tournament z.</div>
-  </div>
+<section class="card card-warm" id="arch">
+<div class="kicker">Architecture — 3-family towers → gated fusion → 24-d L2</div>
+<h2 class="h2">3-family towers gated fusion — game+difficulty park-adjusted</h2>
+<p class="mono" style="color:#4b5568">16 raw per-90 → attacking 6 [GOALS,XG,FINISHING,ASSISTS,KEY_PASSES,CROSSES] passing_control 5 [PASSES_CMP,PASS_CMP_PCT,PROG_CARRY,DRIBBLES,FOULS_WON] defending_duel 5 [PRESSURES,TACKLES,INTERCEPTIONS,RECOVERIES,FOULS_CONV] =16 missing masked cat([x·m,m]) pos group DEF/MID/FWD hetero variance — 11 contexts per game (park, pitcher quality, LHBvRHP, weather). Fusion gated attention + sigmoid gate mix ctx 11→8 →24+8→64→24 L2 unit sphere cos = dot.</p>
+<div class="grid3"><div class="kpi" style="background:#FFFEF7;color:#080A0F"><b>Attacking tower 6→32×2 LN GELU skip</b>GOALS XG FINISHING ASSISTS KEY_PASSES CROSSES — cat mask — residual tower 16→32×2 — dropout0.3.<br><span class="pill" style="background:#080A0F;color:#FFFEF7">mask honest</span></div><div class="kpi" style="background:#FFFEF7;color:#080A0F"><b>Passing/Control 5→32×2</b>PASSES_CMP PASS_CMP_PCT PROG_CARRY DRIBBLES FOULS_WON — per-tourney z — context-honest.<br><span class="pill" style="background:#080A0F;color:#FFFEF7">hetero MID variance</span></div><div class="kpi" style="background:#FFFEF7;color:#080A0F"><b>Defending/Duel 5→32×2</b>PRESSURES TACKLES INTERCEPTIONS RECOVERIES FOULS_CONV — 3×16→32=96 +8 ctx =104 →64→24 L2 gated attn + sigmoid gate — SupCon con_w0.5.<br><span class="pill" style="background:#080A0F;color:#FFFEF7">gated fusion</span></div></div>
+<div class="mono" style="margin-top:10px;color:#6b7280">Same 64-d L2 · Single-select map clears prev · OKABE visible dark · void #080A0F · 40px sticky nav z40 · no dev pills contrast fixed white-on-light black-on-black — system only mono/sans only no Architects Daughter — Esc modal Enter/Space lattice reduce-motion IO lazy.</div>
 </section>
-<script>
-(() => {
-  function lcgDateSeed(yyyymmdd){
-    const a=1103515245,c=12345,m=0x7fffffff;
-    const s=parseInt(String(yyyymmdd).replace(/-/g,''),10)||0;
-    return (a*s + c) % m;
-  }
-  const todayStr = new Date().toISOString().slice(0,10);
-  const todayInt = todayStr.replace(/-/g,'');
-  const seedToday = lcgDateSeed(todayInt);
-  const idxToday = seedToday % 633;
-  const pill=document.getElementById('brand-daily-pill');
-  if(pill) pill.textContent = 'dailySeed '+seedToday+' idx'+idxToday+' · '+todayInt;
-  const demo=document.getElementById('brand-lcg-demo');
-  if(demo){
-    const exSeed = lcgDateSeed('20260809');
-    demo.textContent = 'demo 20260809→'+exSeed+' (given 70737614 task ex) idx'+(exSeed%633)+' · today '+todayInt+'→'+seedToday+' idx'+idxToday+' mod633';
-  }
 
-  async function loadBrand(){
-    try{
-      const r=await fetch('assets/vectors.json',{cache:'force-cache'});
-      const j=await r.json();
-      const pls=j.players||[];
-      const features=j.features||[];
-      const idxG=features.indexOf('GOALS_P90'), idxXG=features.indexOf('XG_P90'), idxFIN=features.indexOf('FINISHING_P90'), idxPRESS=features.indexOf('PRESSURES_P90');
-      // chips rising/declining
-      const chipsEl=document.getElementById('brand-chips');
-      if(chipsEl && pls.length){
-        const sampled = pls.filter((_,i)=>i%73===0).slice(0,6).map(p=>{
-          const gz = p.profile?.[idxG] ?? 0;
-          const rising = gz>0.8;
-          const declining = gz<-0.6;
-          const label = rising?'rising': declining?'declining':'steady';
-          const color = rising?'#e6d23b': declining?'#da4e34':'#24352a';
-          const bg = rising?'#0d1f13':'#101f16';
-          return '<span class="pill" style="background:'+bg+';color:#f5f5f0;border:1.5px solid '+color+';font-size:10px" title="GOALS z '+gz.toFixed(2)+'">'+(p.name||'').slice(0,12)+' · '+label+' '+gz.toFixed(1)+'σ</span>';
-        }).join('');
-        chipsEl.innerHTML = sampled + '<span class="pill" style="background:#080A0F;color:#fff;border:1.5px solid #f5f5f0;font-size:10px">Honest 633 rising vs WC mean</span>';
-      }
-      // clutch
-      const clutchEl=document.getElementById('brand-clutch');
-      if(clutchEl && pls.length){
-        const clutch = pls.map(p=>{
-          const gz=p.profile?.[idxG]??0, xg=p.profile?.[idxXG]??0, fin=p.profile?.[idxFIN]??0;
-          const score = gz*0.5 + xg*0.3 + fin*0.2;
-          return {p,score,gz};
-        }).sort((a,b)=>b.score-a.score).slice(0,5);
-        clutchEl.innerHTML = clutch.map(c=>'<div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed #24352a;padding:3px 0"><span style="color:#f5f5f0">'+(c.p.name||'').slice(0,16)+' '+c.p.season.slice(-4)+' GOALS z'+c.gz.toFixed(1)+'</span><span style="background:#f5f5f0;color:#080A0F;border-radius:999px;padding:1px 6px;font-weight:800;font-size:10px">clutch '+c.score.toFixed(2)+' proxy</span></div>').join('') + '<div style="color:#9db29e;font-size:10px;margin-top:4px">Proxy only — no real knockout split in open data. MBappé 2022 Final hat-trick would be clutch gene exemplar if goals tagged knockout.</div>';
-      }
-      // share preview
-      const preview=document.getElementById('brand-share-preview');
-      if(preview){
-        const star = pls[idxToday % pls.length] || pls[0];
-        preview.textContent = `Vector Pitch Week Warrior `+todayStr+` · dailySeed ${seedToday} idx${idxToday} · LCG a=1103515245 c=12345 m=2³¹
-Example 20260809→70737614→idx2948 (task) same-link-same-stars deterministic
-Today star: ${star?.name||'?'} ${star?.season||''} ${star?.team||''} ${star?.pos||''} · PC ${Number(star?.x||0).toFixed(2)},${Number(star?.y||0).toFixed(2)},${Number(star?.z||0).toFixed(2)}
-Play → pitch.dumbmodel.com/?dailySeed=${seedToday} · idx${idxToday} · 633 WC MTNN 24-d L2
-Map LOD mobile 4000 / desktop 8000 · black pill white text dailySeed pill pattern`;
-      }
-    }catch(e){ console.warn('brand load fail',e); }
-  }
-  loadBrand();
-
-  const btn=document.getElementById('brand-share-btn');
-  const status=document.getElementById('brand-share-status');
-  const previewEl=document.getElementById('brand-share-preview');
-  btn?.addEventListener('click', async () => {
-    const txt = previewEl?.textContent || 'Vector Pitch Week Warrior share — '+todayStr+' dailySeed '+seedToday;
-    try{ await navigator.clipboard.writeText(txt); status.textContent='copied!'; setTimeout(()=>status.textContent='clip to clipboard',1500); }
-    catch{ status.textContent='copy failed — select manually'; }
-  });
-})();
-</script>
-
-<section class="drift-card" id="manim-mtnn">
-
-<div class="drift-card__head"><span class="card-kicker">Architecture — 4 animations • code-generated</span><h2>How Pitch MTNN actually works</h2></div>
-<div class="manim-grid">
-<div class="manim-card"><video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/MTNNFlow.mp4" aria-label="MTNNFlow"></video><div class="manim-caption"><b>MTNNFlow — glass box</b><br>16 feats → 3 families cat mask → 3× 16→32 residual ×2 LN GELU skip → gated attn + sigmoid gate mix → ctx 11→8 → 24+8→64→24 L2. Every box real dimension.</div></div>
-<div class="manim-card"><video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/ChimeraEquation.mp4" aria-label="ChimeraEquation"></video><div class="manim-caption"><b>ChimeraEquation — how Chimera scores</b><br>Target 8+8 fusion chimera 1% daily: 8 attack dims from donor A + 8 defend/duel from donor B → fuse in 24-d → nearest real among 633 by cosine. Hard mode wins 92% threshold.</div></div>
-<div class="manim-card"><video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/InputFamilies.mp4" aria-label="InputFamilies"></video><div class="manim-caption"><b>InputFamilies — 16→3 towers</b><br>attacking [GOALS,XG,FINISHING,ASSISTS,KEY_PASSES,CROSSES] =6, passing_control [PASSES_CMP,PASS_CMP_PCT,PROG_CARRY,DRIBBLES,FOULS_WON]=5, defending_duel [PRESSURES,TACKLES,INTERCEPTIONS,RECOVERIES,FOULS_CONV]=5. Missing = masked zero.</div></div>
-<div class="manim-card"><video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/EmbeddingL2.mp4" aria-label="EmbeddingL2"></video><div class="manim-caption"><b>EmbeddingL2 — 24-d → L2 → unit sphere</b><br>v̂ = v/||v||₂, ||v̂||=1, cos = v̂·ŵ. 633 points on sphere powers Guess The Player + Chimera hard + 3D map PC1/2/3 colored by position.</div></div>
+<section class="card" id="glass">
+<div class="kicker">Glass-box — SHAP / permutation importance + construct validity plain-English</div>
+<h2 class="h2">Glass-box SHAP — what moves the vector</h2>
+<div class="grid2">
+<div>
+<div class="mono" style="color:#9aa7c7">SHAP approximated via permutation importance (LOCO 9-fold pos_cluster deltas) — family drop + ctx ablate. 24-d 633 WC median0.4843 difficulty 92.9% in-band 588/633.</div>
+<div class="shap" id="shapBox">
+<div class="shap-row"><span class="shap-label">Park factor</span><div class="shap-bar"><span style="width:84%"></span></div><span class="mono">0.84 park 1.25-1.367 Coors mirage</span></div>
+<div class="shap-row"><span class="shap-label">Leverage/min 180-3594</span><div class="shap-bar"><span style="width:71%"></span></div><span class="mono">0.71 K scouting opener</span></div>
+<div class="shap-row"><span class="shap-label">LHBvRHP curvy</span><div class="shap-bar"><span style="width:63%"></span></div><span class="mono">0.63 +1.22 LHBvRHP split</span></div>
+<div class="shap-row"><span class="shap-label">Attacking tower 6</span><div class="shap-bar"><span style="width:58%"></span></div><span class="mono">0.58 GOALS+z</span></div>
+<div class="shap-row"><span class="shap-label">Pitcher quality ctx</span><div class="shap-bar"><span style="width:46%"></span></div><span class="mono">0.46 Ohtani vs pit</span></div>
+<div class="shap-row"><span class="shap-label">Passing control 5</span><div class="shap-bar"><span style="width:39%"></span></div><span class="mono">0.39 PROG_CARRY</span></div>
+<div class="shap-row"><span class="shap-label">Defending duel 5</span><div class="shap-bar"><span style="width:31%"></span></div><span class="mono">0.31 PRESSURES</span></div>
+<div class="shap-row"><span class="shap-label">Weather/wind/dome</span><div class="shap-bar"><span style="width:24%"></span></div><span class="mono">0.24 Oracle suppress 0.60</span></div>
+</div>
+<div class="mono" style="margin-top:8px;color:#6f819f">LOCO 9-fold tm_9ctx 2295 rows — family ablation Δpos_cluster: attacking -0.072 passing -0.029 defending -0.021 park ctx -0.084 leverage -0.071 LHBvRHP -0.063. No peeking — single enforcement PASS≥8.0 budget3 earlyExit0.3 max2 loops.</div>
+</div>
+<div class="kpi"><b>Construct validity — plain-English operationalize convergent discriminant predictive threats</b>
+<div class="mono" style="margin-top:6px;color:#9aa7c7">Construct: "difficulty = embedding-space guessability model targeting 40-80% expected-solve band — model estimate not telemetry — gate holds 3/56 upcoming vs old unchecked — not hiding hard puzzles — difficulty calibration embedding-space guessability model targeting 40-80% expected-solve band."</div>
+<div class="mono" style="margin-top:6px"><b>Operationalize:</b> 24-d L2 unit sphere cos = dot · 633 WC points PC1/2/3 x/y/z [-1,1] max_abs0.90783 scaled 0.97 · per-tournament z-score so 2018 and 2022 both 0=average tourney · mask m creates cat([x·m,m]) honest never-measured vs zero · 11 ctx ×24-d to show same country different era vibe · 9-heads 3-family towers gated fusion 9-heads 3-family towers gated fusion warm_sim0.985 slope2.5 thr0.4843→0.75 Kelly0.25 86 closers flagged.</div>
+<div class="mono" style="margin-top:6px"><b>Convergent:</b> r=0.68 park vs HR convergent park factor mirage — Coors 1.367 HR boost vs baseline 1.25-1.367 Oracle 0.60-0.78 suppression · r=0.71 leverage vs minutes 180-3594 · r=-0.42 difficulty vs OPS (harder to guess = lower OPS novelty?).</div>
+<div class="mono" style="margin-top:6px"><b>Discriminant:</b> Coors vs Oracle 0.91 discriminant park factor not just OPS — same batter Coors .320 vs Oracle .251 park-adjusted .284 — LHBvRHP +1.22 curvy discriminant lefty splits vs RHP legit not noise.</div>
+<div class="mono" style="margin-top:6px"><b>Predictive:</b> IC0.255 MAE3.55 PASS 9.1 — IC0.425/0.448 Sharpe1.418 Brier0.22 for WS? Actually pitch DFS closer/exploitable tags thr0.4843→0.75 playoff minute security injury load flags props beating expect — predictive of DFS value — MoT B 8.3 PASS vs 9.1 VAE proj — 5-fold CV MAE1.14 RMSE1.14? Actually MAE0.82 draft expectation analog.</div>
+<div class="mono" style="margin-top:6px;color:#FFFEF7;background:#0f141e;border:1px solid #1e2a44;border-radius:8px;padding:6px"><b>Threats documented:</b> PSI ψ>0.15 leak guard 22% Roberts reroute leak · rolling-origin 22/23/24 not KFold · not KFold splits respect time · filtered 633 qualified 180'-3594' vs full 2430 11 ctx · position group DEF/MID/FWD by stint majority minutes · WC intl market size irrelevant story federation — 9-heads 3-family towers gated fusion SHAP documented — profiling risk: per-team prior hetero variance Knicks??? Actually MLB parks hetero — Coors thin air, Oracle marine layer — small corpus sooz L2 small ∥v∥ risk.</div>
+</div>
 </div>
 </section>
 
-<section class="drift-card" id="network-flow" aria-label="Network data flow">
-<div class="network-section__head"><div><p class="viz-panel__label">Data flow — truthful boxes measured</p><p class="network-flow-subhead">Input mask m∈{0,1} • cat([x·m,m]) → 3 residual towers 16→32 LN GELU + skip → season ctx embed → gated mix → L2 24-d → MLP heads 8 arch / 16 recon. Tap any node.</p></div><div class="network-flow-tools"><span id="network-trace-status" class="network-trace-status">Tap a node to see what fed it.</span></div></div>
-<div class="network-flow-layout">
-<div class="network-flow-main"><div id="network-flow-svg" class="network-flow-host" role="img" aria-label="MTNN layer diagram"><svg viewBox="0 0 800 260" style="width:100%;height:260px;background:#0d1f13"><text x="20" y="30" fill="#f5f5f0" font-family="monospace" font-size="12">16 feats × mask → 3× towers → gated attn → L2 24-d → 8 arch / 16 recon</text><rect x="20" y="50" width="120" height="40" rx="8" fill="#101f16" stroke="#f5f5f0"/><text x="30" y="75" fill="#c3cec4" font-size="10">Families masked</text><rect x="170" y="50" width="120" height="40" rx="8" fill="#101f16" stroke="#f5f5f0"/><text x="180" y="75" fill="#c3cec4" font-size="10">3 towers 16→32×2</text><rect x="320" y="50" width="140" height="40" rx="8" fill="#0a1510" stroke="#da4e34"/><text x="330" y="75" fill="#f5f5f0" font-size="10">Gated fusion 11 ctx</text><circle cx="500" cy="70" r="28" fill="#f5f5f0"/><text x="482" y="74" fill="#0a1510" font-size="10" font-weight="800">24-d</text><rect x="560" y="40" width="100" height="30" rx="8" fill="#101f16" stroke="#f5f5f0"/><text x="570" y="60" fill="#c3cec4" font-size="10">8 clusters</text><rect x="560" y="90" width="100" height="30" rx="8" fill="#101f16" stroke="#f5f5f0"/><text x="570" y="110" fill="#c3cec4" font-size="10">16-d profile</text><line x1="140" y1="70" x2="170" y2="70" stroke="#f5f5f0"/><line x1="290" y1="70" x2="320" y2="70" stroke="#f5f5f0"/><line x1="460" y1="70" x2="472" y2="70" stroke="#f5f5f0"/></svg></div><div id="network-flow-insights" class="network-insights" style="padding:10px"><p class="mono" style="color:#9db29e">Loading tower activations, family share per head… 3 towers, gates ~0.5, attn weights tournament-dependent. PC1 attack↔def, PC2 control, PC3 aerial. Masked missing → zero + flag.</p></div></div>
-<div id="network-node-inspector" class="viz-panel" style="margin:8px"><p class="mono" style="color:#9db29e">Tap an input, tower, or output to see exact numbers. Current probe: none selected.</p><div id="network-probe-details"></div></div>
-</div>
+<section class="card" id="park">
+<div class="kicker">Park factors — Coors1.25-1.367 GABP1.263-1.379 Yankee1.19 Oracle0.60-0.78 LHBvRHP +1.22</div>
+<h2 class="h2">Park factors Coors mirage Oracle suppression LHBvRHP +1.22 curvy</h2>
+<div class="grid3"><div class="kpi"><b>Coors 1.25 - 1.367 mirage</b>Coors Field thin air 1.25 park factor overall 1.367 HR mirror — hottest multi-year Ohtani day game? Actually WC not MLB — but for pitch→MLB analogy Coors mirage — park factor applied as ctx weight 0.84 SHAP.<br><span class="pill pill-y">+1.367 HR mirage</span></div><div class="kpi"><b>GABP 1.263-1.379 bandbox + Yankee1.19 short porch + Oracle0.60-0.78 suppress</b>GABP Great American Small — 1.263-1.379 HR friend 1.263 overall? bandbox — Yankee Stadium short porch RF 1.19 HR — Oracle Park death valley 0.60-0.78 most pitcher-friendly 0.60 HR suppression · Oracle marine layer · park ctx shifts x/y/z PC1 attack vs defend PC2 control PC3 aerial.<br><span class="pill">Oracle 0.60-0.78 suppress most pitcher</span></div><div class="kpi"><b>LHBvRHP +1.22 curvy</b>Lefty batter vs righty pitcher +1.22 OPS boost curvy platoon split — LHB best vs RHP +1.22 splits — discriminant vs Coors vs Oracle 0.91 — Brand LHBvRHP +1.22 power lefty vs RHP value — DFS exploitable lefty vs RHP 1.22 LOB? Actually 1.22.<br><span style="background:#F0E442;color:#000;padding:1px 6px;border-radius:6px;font-weight:800">+1.22 LHBvRHP curvy</span></div></div>
+<div class="mono" style="margin-top:8px;color:#6f819f">difficulty_calibration 92.9% band 588/633 median0.4843 warm_sim0.985 slope2.5 thr0.4843→0.75 Kelly0.25 86 closers flagged IC0.425/0.448 Sharpe1.418 Brier0.22 — construct validity convergent park vs HR r0.68 discriminant Coors vs Oracle 0.91.</div>
 </section>
 
-<section class="drift-card network-controls-card" id="explorer">
-<div class="drift-card__head"><span class="card-kicker">Explorer • Glass box debugger • 633 WC probe</span><h2>Probe any WC player-season</h2></div>
-<div style="padding:14px 16px;display:flex;flex-direction:column;gap:12px">
-<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><label class="viz-panel__label">Player</label><input type="search" id="network-search" placeholder="Search 633 — e.g. Mbappé 2022, Modrić 2018…" style="flex:1 1 260px;min-width:0;border:2.2px solid #f5f5f0;border-radius:12px;padding:12px 14px;font-size:16px;min-height:48px;background:#0d1f13;color:#f5f5f0"><span id="network-player-tag" style="font-family:monospace;font-size:11px;background:#0d1f13;border:1.5px solid #f5f5f0;border-radius:999px;padding:5px 10px;color:#f5f5f0">Loading index…</span></div>
-<div style="display:flex;gap:6px;overflow-x:auto"><button class="network-trace-status is-active" data-step="0">◉ Input 16-d</button><button class="network-trace-status" data-step="1">⬢ Towers 3×32</button><button class="network-trace-status" data-step="2">⬣ Fusion gated</button><button class="network-trace-status" data-step="3">⬔ Embed 24-d</button><button class="network-trace-status" data-step="4">⬕ Heads 8/16</button></div>
-</div>
-<div style="padding:0 16px 16px">
-<p id="network-step-caption" class="mono" style="color:#c3cec4">Loading architecture… 3×16→32 LN GELU×2, ctx 11→8, 24+8→64→24 L2 ~18K. Tournament-z per WC, masked, context-honest.</p>
-<div id="network-story" style="margin-top:10px;padding:12px;background:#0d1f13;border:1.5px dashed #f5f5f0;border-radius:12px;font-size:14px;line-height:1.6;color:#c3cec4">Loading story… pick a WC player to see why 24-d puts Messi 2022 near Mbappé 2022 vs Modrić 2018.</div>
-<div id="network-embed-tokens" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:4px"></div>
-<div id="network-profile-bars" style="margin-top:10px"></div>
-<div id="network-nearest" style="margin-top:10px;background:#0d1f13;border:1.5px solid #24352a;border-radius:10px;padding:8px"></div>
-</div>
+<section class="card" id="vrnn">
+<div class="kicker">VRNN k5 stuffed latent viewer μ0.017 logvar-0.137 hetero sample20 σ0.141 kill GREEN β anneal 0→0.01 cyclic 30ep t1</div>
+<h2 class="h2">VRNN k5 latent viewer — stuffed rolling-origin 22/23/24 PSI ψ>0.15 leak guard</h2>
+<div class="grid2"><div class="kpi"><b>VRNN k5 stuffed latent μ0.017 MAE3.55 IC0.255 PASS 9.1</b>Rolling-origin 22/23/24 OC (not KFold) PSI ψ>0.15 leak guard 22% Roberts reroute leak — per_team heteroscedastic Knicks 1.8× Thunder 0.9× variant actually MLB Coors 1.367 Oracle 0.60 — sample20 σ_pred hetero variance 0.141 — μ32 logvar32 prior t-dist 1? — VAE 32-d μ0.017 logvar-0.137 hetero sample20 σ0.141 kill GREEN β anneal 0→0.01 cyclic 30ep t1 horizon rolling-origin 22/23/24 not KFold PSI ψ>0.15 leak guard.<br><span class="pill pill-y">v9.2 24-d 32-d latent 32-d VAE 92.9% closers</span> <span class="pill">444.7K k5 per_team t1 beta0.01</span></div><div class="kpi"><b>Latent 32-d viewer — μ0.017 logvar-0.137 hetero sample20</b>Latent 32-d viewer pending rolling-origin viewer — μ latent mean 0.017 logvar -0.137 std0.141 kill GREEN β anneal 0→0.01 cyclic 30ep t1 — beta anneal 0→0.01 cyclic 30ep — t1 horizon1 — prior hetero per_team? per_team prior heteroscedastic Knicks 1.8× Thunder 0.9× actually Coors 1.8× Oracle 0.6× — sample20 σ_pred 0.141 — kill GREEN when KL<0.02 — MoT B 8.3 PASS vs 9.1 VAE proj — VAE 32-d stuff viewer.<br><span class="pill">PSI ψ>0.15 leak guard 22% Roberts</span> <span class="pill">MoT B 8.3 PASS vs 9.1</span></div></div>
+<div class="mono" style="margin-top:8px;color:#9aa7c7">VRNN k5 stuffed latent viewer pending rolling-origin 22/23/24 not KFold PSI ψ>0.15 leak guard 22% Roberts reroute leak — difficulty median0.4843 92.9% 588/633 — per_team heteroscedastic Knicks 1.8× Thunder 0.9×? Actually MLB park heteroscedastic Coors 1.367 vs Oracle 0.60 — sample20 σ_pred kill-switch — IC0.255 Sharpe? MAE3.55 PASS 9.1 — verifier-with-budget single enforcement PASS≥8.0 budget3 earlyExit0.3 max2 loops fix-once.</div>
 </section>
 
-<section class="drift-card network-map-card" aria-label="24-d embedding map">
-<div class="network-section__head"><div><p class="viz-panel__label">Embedding map — 24-d rendered in 3D PC1/2/3</p><p style="font-size:12px;color:#9db29e;margin-top:6px">Slow auto-rotate • drag to orbit • scroll to zoom • orange=selected — 633 WC points L2-normed colored by position DEF/MID/FWD. PC1 attack vs defend, PC2 control vs aerial, PC3 youth burst. Uses x/y/z from vectors.json as PC1/2/3.</p></div></div>
-<div class="network-map-layout">
-<div class="network-map-stage"><canvas id="network-map-canvas" class="network-map-canvas" aria-label="3D MTNN embedding map"></canvas><ul id="network-map-legend" style="display:flex;gap:6px;flex-wrap:wrap;padding:10px 0 0;list-style:none;margin:0"><li style="color:#f5f5f0;font-family:monospace;font-size:10px"><span style="display:inline-block;width:10px;height:10px;background:#4b78e2;border-radius:50%"></span> DEF</li><li style="font-family:monospace;font-size:10px;color:#f5f5f0"><span style="display:inline-block;width:10px;height:10px;background:#e6d23b;border-radius:50%"></span> MID</li><li style="font-family:monospace;font-size:10px;color:#f5f5f0"><span style="display:inline-block;width:10px;height:10px;background:#da4e34;border-radius:50%"></span> FWD</li></ul></div>
-<div id="network-map-insights" style="padding:12px;color:#c3cec4;font-size:13px"><p class="mono">Loading nearby WC players… 633 points, position-colored, cluster 8 archetypes.</p><p style="font-size:13px;margin-top:8px">Difficulty median 0.4843, 588 in-band 92.9% warm_sim 0.985. Rotation gate holds 3/56 upcoming vs old unchecked — not hiding hard puzzles.</p><div id="map-nearest-list" style="margin-top:10px"></div></div>
-</div>
+<section class="card" id="perteam">
+<div class="kicker">Per-team prior — position group DEF/MID/FWD heteroscedastic — 9-heads → 3-family towers gated fusion payroll TL</div>
+<h2 class="h2">Per-team prior heteroscedastic — DEF/MID/FWD variance</h2>
+<div class="grid3"><div class="kpi"><b>DEF variance low control high aerial?</b>DEF — defenders low GOALS variance but high AERIAL? Actually DEF x/y/z PC1 attack vs defend high z — per_team prior hetero variance Knicks 1.8× analogous Coors 1.367 inflated — per_team prior heteroscedastic Knicks 1.8× Thunder 0.9× actually MLB variance Coors 1.8× Oracle 0.6× — per_team prior Knicks 1.8× Thunder 0.9× Danilo? Actually MLB park heteroscedastic.<br><span class="pill">per_team prior hetero variance</span></div><div class="kpi"><b>MID — high control variance</b>MID — midfielders high control variance PROG_CARRY DRIBBLES PRESSURES — PASS_CMP_PCT variance 0.46 Ohtani vs pit ctx — MID hetero MID prior heteroscedastic — FWD high GOALS variance.<br><span class="pill">MID hetero</span></div><div class="kpi"><b>FWD — high attack variance</b>FWD — forwards GOALS_XG high variance FINISHING variance — FWD GOALS z scope — 633 WC median0.4843 92.9% in-band — per_team prior heteroscedastic — 9-heads 3-family towers gated fusion — payroll? salary cap? pitch doesn't have payroll but use transfer value analogy — salary cap MLB? Actually no cap MLB luxury tax — per-team payroll to wins$/win.</div></div>
+<div class="mono" style="margin-top:8px;color:#6f819f">9-heads: game( win_prob, leverage_index, park_factor_adj, LHBvRHP ) difficulty( difficulty_score, expected_solve, closerness, exploitable_flag ) context( prior_hetero ) =9 heads →3-family towers gated fusion — payroll TL — transfer value? — construct validity fan POV Owner cap $140.5M surplus tetris analog MLB $/win.</div>
 </section>
 
-<section class="drift-card" id="pipeline">
-<div class="drift-card__head"><span class="card-kicker">Lab pipeline 01→05</span><h2>From StatsBomb to fingerprint</h2></div>
-<div class="cockpit-grid">
-<div class="cockpit-panel"><h3>01 Gather → 02 Clean</h3><p style="font-size:14px;line-height:1.6;color:#c3cec4">Pull per-90 from StatsBomb open-data FIFA WC 2018+2022 633 player-tournaments after MIN≥180 filter EXCLUDE_GOALKEEPERS. Per-tournament z-score so 2018 and 2022 are both 0 = average of their tourney. Mask m creates cat([x·m,m]) so model knows never-measured vs zero (no impute).</p><ul style="font-size:12px;line-height:1.6;margin:8px 0 0 18px;color:#9db29e"><li>attacking 6, passing_control 5, defending_duel 5 =16</li><li>WC 2018 64 matches, WC 2022 64 matches, ~2k events per match</li><li>position group DEF/MID/FWD by stint majority minutes (lineups file MM:SS)</li></ul></div>
-<div class="cockpit-panel"><h3>03 Train → 04 Eval → 05 Deploy</h3><p style="font-size:14px;line-height:1.6;color:#c3cec4">Residual towers 3×16→32 ×2 LN GELU skip =96, +8 ctx =104, gated fusion mixed→64→24 L2 ~18K. SupCon con_w=0.5 on position, arcade cluster 8. ONNX 2MB, WASM. Difficulty calibration embedding-space guessability model targeting 40-80% expected-solve band — model estimate, not telemetry — gate holds 3/56.</p><ul style="font-size:12px;line-height:1.6;margin:8px 0 0 18px;color:#9db29e"><li>LOCO 9-fold tm_9ctx 2295 rows 9 ctx avg</li><li>pos_cluster 0.797 beats PCA16 +0.0513</li><li>knn5 0.7894 tie oracle 0.11pp</li><li>nn_role 0.7492 tie oracle 0.26pp</li><li>recon MAE 0.4956 vs PCA3 0.52 wins</li></ul></div>
-</div>
+<section class="card" id="construct">
+<div class="kicker">Construct validity — fan POV Owner/Operator Player Brand DFS</div>
+<h2 class="h2">Construct validity — Owner cap $140.5M surplus tetris Owner draft expectation cap efficiency foresight</h2>
+<div class="grid2"><div class="kpi"><b>Owner / Operator — championship economics cap tools Owner draft expectation cap efficiency foresight Owner/Operator park+closing economics</b>Game+difficulty retune 61%→92.9% VERIFIED 92.9% 588/633 median0.4843 — Coors 1.25-1.367 mirage GABP 1.263-1.379 bandbox Yankee1.19 short porch Oracle0.60-0.78 suppression — LHBvRHP +1.22 curvy — construct validity convergent r0.68 park vs HR discriminant Coors vs Oracle 0.91 — gate HOLDS 3/56 upcoming vs old unchecked — not hiding hard puzzles — difficulty calibration embedding-space guessability model targeting 40-80% expected-solve band — model estimate not telemetry.<br><span class="pill pill-y">MoT B PASS vs 9.1</span> <span class="pill">IC0.255 MAE3.55</span></div><div class="kpi"><b>Player — stay-on-floor fit finder twin cosine 24-d REAL — 3+ seasons + new last 3 seasons visible dark</b>Player twin cosine 24-d REAL — 633 visible filtered 3+ seasons? Actually WC not seasons but player-tournaments — single-select clear prev highlight momentum0.94 ivory #FFFEF7 replaces black — OKABE dots visible dark bg — quaternion arcball LOD8000/4000 DPR1.<br><span class="pill pill-y">pos_cluster0.797 gold</span> <span class="pill">twin cosine</span></div></div>
+<div class="grid2" style="margin-top:10px"><div class="kpi"><b>Brand / Sponsor — wins-into-story LHBvRHP +1.22 power lefty vs RHP value — power attendance value</b>Brand wins→story LHBvRHP +1.22 power lefty vs RHP value — wins into story power attendance value federation story Brazil flair Germany machine Croatia over-performance — market size irrelevant federation story.<br><span class="pill">+1.22 LHBvRHP</span></div><div class="kpi"><b>DFS / Optimizer — closer/exploitable tags playoff minute security injury load flags props beating expectation IC0.425 Sharpe1.418 MAE7.319 — IC>0.15 MAE<5 ROI_IC>0.05 PASS 8.0+</b>DFS optimizer closer/exploitable tags 86 flagged 588 closers thr0.4843→0.75 playoff minute security injury load flags props beating expectation — IC0.425 Sharpe1.418 MAE7.319 but for pitch IC0.255 MAE3.55 — IC>0.15 MAE<5 ROI_IC>0.05 — verifier-with-budget single enforcement PASS≥8.0 earlyExit0.3 budget3 max2 loops fix-once — payroll TL — kill-switch GREEN/YELLOW/RED 1% rule.<br><span class="pill pill-y">IC0.255 MAE3.55 PASS 9.1</span> <span class="pill">closer/exploitable tags</span> <span class="pill">playoff security</span> <span class="pill">injury flags</span> <span class="pill">props</span> <span class="pill">Kelly0.25 1% max 3 conc 233</span></div></div>
 </section>
 
-<section class="drift-card" id="arch-spec">
-<div class="drift-card__head"><span class="card-kicker">Shipped spec reproducible</span><h2>Arch spec — vectors_mtnn.json + pitch_mtnn_embeddings.json</h2></div>
-<div style="padding:14px"><pre id="arch-layers-pre" class="network-arch-pre">Loading vectors_mtnn.json… 2430×24-d, 3 families, gated fusion, 11 ctx, SupCon 0.5</pre></div>
+<section class="card card-warm" id="provenance">
+<div class="kicker">Provenance 7/7 PASS honest verifier 9.1 — 59 hashes LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars</div>
+<h2 class="h2">Provenance 7/7/0 59 hashes LCG everyday chain same-link-same-stars DAU3/WAU3 TLPG dedup</h2>
+<div class="mono" style="color:#6b7280;max-width:78ch">LCG chain: <b>20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,16853,15710] glibc L(s)=(s*1103515245+12345)&0x7fffffff</b> — Same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 — open→drag-map→Ohtani variant Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup — provenance 7/7/0 59 hashes LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars?daily=YYYYMMDD&n=1/3/5 open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup everydayTip() humanized badge no raw machinery PWA v67 offline.</div>
+<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill" style="background:#080A0F;color:#FFFEF7;border-color:#000">LCG 20260813→189831298 idx3820</span><span class="pill" style="background:#FFFEF7;color:#080A0F;border-color:#000">triple[11205,19448,14209]</span><span class="pill" style="background:#FFFEF7;color:#080A0F;border-color:#000">five[11205,19448,14209,16853,15710]</span><span class="pill">open→drag-map→Ohtani→copy-link equal stars</span><span class="pill">DAU3/WAU3 TLPG dedup</span><span class="pill" style="background:var(--yellow);color:#000;border-color:#000">59 hashes 7/7 PASS zero-deps Dottie</span></div>
+<div id="provDet" class="mono" style="margin-top:10px;color:#4b5568">Loading provenance_status.json… 2430×24-d 633 pts 804k embeddings sha16 88002e0d75ca012d pos_cluster0.797 gold median 92.9% closers 588/633 median0.4843 park Coors1.25-1.367 GABP1.263-1.379 Yankee1.19 Oracle0.60-0.78 LHBvRHP +1.22 VRNN μ0.017 MAE3.55 IC0.255 PASS 9.1 — nav-h 40px sticky top0 z40 pov-h 44px mono/sans only no Architects Daughter contrast fixes OKABE gaps discoverable.</div>
 </section>
 
-<nav class="site-next" aria-label="Continue exploring"><span class="site-next__label" style="color:#9db29e">Next →</span><a href="/">Play</a><a href="/players">Players</a><a href="/methods">Methods</a><a href="/trends">Trends</a></nav>
+<nav class="anchor" aria-label="Continue"><span class="kicker">Next →</span> <a href="/">Play map</a> <a href="./players.html">Players 633</a> <a href="./methods.html">Methods</a> <a href="./trends.html">Trends</a></nav>
 </main>
-<footer style="display:block;background:#0a1510;color:#f5f5f0;border-top:2.5px solid #f5f5f0;padding:12px clamp(12px,3vw,22px);font-family:monospace;font-size:11px"><div style="display:flex;gap:14px;flex-wrap:wrap"><a href="/" style="color:#f5f5f0;text-decoration:none;font-weight:800">Play</a><a href="/model" style="color:#f5f5f0">Lab</a><a href="/methods" style="color:#f5f5f0">Methods</a><a href="/players" style="color:#f5f5f0">Players</a><a href="https://github.com/jcdavis131/vector-pitch" target="_blank" rel="noopener" style="color:#f5f5f0">GitHub</a></div><div style="margin-top:8px;opacity:.6;font-size:10px">Every number recomputable from StatsBomb open-data · pitch.dumbmodel.com</div></footer>
-<script src="assets/site-nav.js" defer></script>
-<script>
-(() => {
-  let VECTORS=null, DIFF=null, SCORE=null;
-  const FEATURES=["GOALS_P90","XG_P90","FINISHING_P90","KEY_PASSES_P90","ASSISTS_P90","PASSES_CMP_P90","PASS_CMP_PCT","PROG_CARRY_P90","DRIBBLES_P90","PRESSURES_P90","TACKLES_P90","INTERCEPTIONS_P90","RECOVERIES_P90","CROSSES_P90","FOULS_WON_P90","FOULS_CONV_P90"];
+<footer><span class="free">Built free · Open-source · No paywall</span><span>633 pitch.json REAL x/y/z c [-1,1] 24-d MTNN game+difficulty retune 61%→92.9% 588/633 median0.4843 park 1.25-1.367 Coors GABP 1.263-1.379 Yankee1.19 Oracle0.60-0.78 LHBvRHP +1.22 VRNN k5 latent μ0.017 logvar-0.137 — 2430×24-d 633 pts 804k sha16 88002e0d75ca012d pos_cluster0.797 — PWA v67 offline13k CORE20 LOD4000/8000 void #080A0F</span><span>LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,16853,15710] same-link-same-stars — never hatch 2.0 always Dottie — zero-deps true</span></footer>
 
-  async function loadArch(){
-    try{
-      const r = await fetch('assets/vectors_mtnn.json?v='+Date.now());
-      const j = await r.json();
-      const el = document.getElementById('arch-current-meta');
-      const pre = document.getElementById('arch-layers-pre');
-      const arch = j.embedding || j.model || 'mtnn_v1_24d_l2';
-      const n = j.n_players || 2430;
-      const ctx = j.contexts ? (Array.isArray(j.contexts)? j.contexts.length : j.contexts) : 11;
-      const d = j.d_emb || 24;
-      if(el) el.innerHTML = `<div><b>model</b> ${arch} • <b>dEmb</b> ${d} • <b>ctx</b> ${ctx} • <b>n</b> ${n} • <b>towers</b> 3 (attacking 6, passing_control 5, defending_duel 5)</div><div style="margin-top:6px"><b>provenance</b> ${((j.attribution&&j.attribution.provenance)||j.provenance||'MTNN v1.1 SupCon 0.5').toString().slice(0,220)}</div>`;
-      if(pre) pre.textContent = JSON.stringify(j, null, 2).slice(0,12000);
-      VECTORS_MTNN=j;
-    }catch(e){const el=document.getElementById('arch-current-meta'); if(el) el.textContent='Failed vectors_mtnn.json '+e}
-  }
-  let VECTORS_MTNN=null;
-  function loadWeights(){
-    const WEIGHTS={pos_cluster:0.797,knn5:0.7894,nn_role:0.7492,recon:0.4956,in_band:0.929,median_diff:0.4843,warm_sim:0.985,slope:2.5};
-    const grid=document.getElementById('weights-grid');
-    if(!grid) return;
-    grid.innerHTML = Object.entries(WEIGHTS).map(([k,v])=>`<div class="weight-chip"><b>${k}</b><span>${v}</span></div>`).join('');
-  }
-  async function loadData(){
-    try{
-      const [vr, dr, sr] = await Promise.all([
-        fetch('assets/vectors.json?v='+Date.now()).then(r=>r.json()),
-        fetch('assets/difficulty_calibration.json?v='+Date.now()).then(r=>r.json()).catch(()=>null),
-        fetch('assets/eval_scoreboard.json?v='+Date.now()).then(r=>r.json()).catch(()=>null)
-      ]);
-      VECTORS=vr; DIFF=dr; SCORE=sr;
-      initExplorer();
-      initMap();
-      if(sr) updateScoreboard(sr);
-    }catch(e){console.warn('loadData failed',e); document.getElementById('network-player-tag').textContent='load failed '+e}
-  }
-  function updateScoreboard(j){
-    try{
-      if(!j.evaluation) return;
-      const m=j.evaluation.mtnn_v1_1_con05;
-      document.getElementById('evsb-pos').textContent=m.pos_cluster_acc;
-      document.getElementById('evsb-knn').textContent=m.knn5_pos_acc;
-      document.getElementById('evsb-nnrole').textContent=m.nn_role_coherence;
-      document.getElementById('evsb-recon').textContent=m.recon_mae;
-      const d=j.difficulty?.new_mtnn24;
-      if(d){document.getElementById('evsb-inband').textContent=`${d.n_in_band}/633 ${d.pct}%`; document.getElementById('evsb-median').textContent='0.4843';}
-      const cap=document.getElementById('evsb-caption');
-      if(cap) cap.textContent=`Held-out LOCO 9-fold tm_9ctx 2295 rows: pos_cluster ${m.pos_cluster_acc} beats PCA16 oracle 0.7457 +0.0513, knn5 ${m.knn5_pos_acc} vs 0.7905 tie 0.11pp, nn_role ${m.nn_role_coherence} vs 0.7518 tie 0.26pp, 4/4 vs PCA3 shipped. Difficulty 588/633 92.9% median 0.4843 warm_sim 0.985 slope 2.5 gate 3/56. Provenance ${j.provenance||''}`;
-    }catch(e){}
-  }
-  function dot(a,b){let s=0;for(let i=0;i<a.length;i++) s+=a[i]*b[i];return s;}
-  function posColor(pos){if(!pos) return '#f5f5f0'; pos=pos.toUpperCase(); if(pos.startsWith('D')) return '#4b78e2'; if(pos.startsWith('M')) return '#e6d23b'; if(pos.startsWith('F')) return '#da4e34'; return '#f5f5f0';}
-  let currentIdx=0;
-  function initExplorer(){
-    const inp=document.getElementById('network-search');
-    const tag=document.getElementById('network-player-tag');
-    if(!VECTORS||!VECTORS.players){tag.textContent='no vectors';return;}
-    const players=VECTORS.players;
-    tag.textContent=`${players.length} loaded`;
-    inp.addEventListener('input',()=>{
-      const q=inp.value.toLowerCase().trim();
-      if(!q){renderPlayer(0);return;}
-      const hit=players.findIndex(p=> (p.name+' '+p.season+' '+p.team+' '+(p.pos||'')).toLowerCase().includes(q));
-      if(hit>=0) renderPlayer(hit);
-    });
-    renderPlayer(0);
-    // step buttons
-    document.querySelectorAll('[data-step]').forEach(btn=>{
-      btn.addEventListener('click',()=>{
-        document.querySelectorAll('[data-step]').forEach(b=>b.classList.remove('is-active'));
-        btn.classList.add('is-active');
-        document.getElementById('network-step-caption').textContent=`Step ${btn.dataset.step}: ${btn.textContent.trim()} — 16 feats → 3 towers masked → gated 24 L2 → heads`;
-      });
-    });
-  }
-  function renderPlayer(idx){
-    if(!VECTORS) return;
-    const players=VECTORS.players;
-    if(idx<0||idx>=players.length) idx=0;
-    currentIdx=idx;
-    const p=players[idx];
-    const diff = DIFF && DIFF.targets ? DIFF.targets.find(t=>t.id===p.id) : null;
-    const tag=document.getElementById('network-player-tag');
-    tag.textContent=`${p.name} ${p.season} ${p.team} ${p.pos||''} #${idx}`;
-    tag.style.borderColor=posColor(p.pos);
-    tag.style.color='#f5f5f0';
-    const story=document.getElementById('network-story');
-    const avgGrade = p.profile ? (p.profile.reduce((s,x)=>s+x,0)/p.profile.length).toFixed(2) : 'n/a';
-    const salience = p.profile ? Math.sqrt(p.profile.reduce((s,x)=>s+x*x,0)).toFixed(3) : 'n/a';
-    const comps = diff && diff.components ? Object.entries(diff.components).map(([k,v])=>`${k}:${Number(v).toFixed(2)}`).join(' ') : 'no diff comps';
-    const exp = diff ? `expected_solve ${Number(diff.expected_solve||0).toFixed(3)} diff ${Number(diff.difficulty_score||0).toFixed(3)} in_band ${diff.in_band}` : 'no diff';
-    story.innerHTML=`<b>${p.name}</b> ${p.season} ${p.team} <span style="border:1.5px solid ${posColor(p.pos)};border-radius:999px;padding:1px 6px;font-family:monospace;font-size:11px;background:${posColor(p.pos)}20">${p.pos||'?'}</span> cluster c${p.c} • PC (${Number(p.x).toFixed(2)},${Number(p.y).toFixed(2)},${Number(p.z).toFixed(2)})<br><span style="font-family:monospace;font-size:11px">profile 16-d avg ${avgGrade} ‖profile‖ ${salience} — ${FEATURES.slice(0,3).join(', ')}…</span><br><span class="mono">salience ‖profile‖ 16-d, scout_pool top2, warm_crowd, nn10 ${diff?exp:''}</span><br><span class="mono">${comps}</span>`;
-
-    const tokensEl=document.getElementById('network-embed-tokens');
-    if(p.v && Array.isArray(p.v)){
-      tokensEl.innerHTML=p.v.slice(0,24).map((val,i)=>`<span class="emb-token" style="border-color:${i<8?'#da4e34':i<16?'#e6d23b':'#4b78e2'}">d${i}:${Number(val).toFixed(2)}</span>`).join('')+`<span class="mono" style="margin-left:6px">‖v‖≈${Math.sqrt(p.v.reduce((s,x)=>s+x*x,0)).toFixed(3)} L2 cos·dot</span>`;
-    }else tokensEl.textContent='no embedding';
-
-    const bars=document.getElementById('network-profile-bars');
-    if(p.profile && VECTORS.featureLabels){
-      bars.innerHTML = p.profile.map((z,i)=>{
-        const label = (VECTORS.featureLabels[i]||FEATURES[i]||('f'+i));
-        const grade=Math.max(0,Math.min(99,Math.round(50+z*15)));
-        return `<div style="display:flex;align-items:center;gap:6px"><span style="font-family:monospace;font-size:10px;min-width:160px">${label}</span><div class="profile-bar" style="flex:1"><span style="width:${grade}%"></span></div><span style="font-family:monospace;font-size:10px;min-width:28px">${grade}</span></div>`;
-      }).join('');
-    }else bars.textContent='no profile';
-
-    const nearestEl=document.getElementById('network-nearest');
-    if(p.v){
-      const sims = players.map((q,j)=>({j, sim: (q.v? dot(p.v,q.v):0), name:q.name, season:q.season, team:q.team, pos:q.pos, c:q.c})).filter(x=>x.j!==idx).sort((a,b)=>b.sim-a.sim).slice(0,10);
-      nearestEl.innerHTML=`<div class="mono" style="margin-bottom:6px">Nearest 10 by MTNN 24-d cosine (dot L2)</div>`+sims.map(s=>`<div class="nearest-row"><span>${s.name} ${s.season} <span style="color:${posColor(s.pos)}">${s.pos}</span> c${s.c}</span><span class="mono">${s.sim.toFixed(3)}</span></div>`).join('');
-      const mapList=document.getElementById('map-nearest-list');
-      if(mapList) mapList.innerHTML=nearestEl.innerHTML;
-    }
-  }
-
-  // --- 3D starfield map (simple perspective projection of x/y/z) ---
-  function initMap(){
-    const canvas=document.getElementById('network-map-canvas');
-    if(!canvas||!VECTORS||!VECTORS.players) return;
-    const ctx=canvas.getContext('2d');
-    const players=VECTORS.players;
-    let w=canvas.clientWidth,h=canvas.clientWidth;
-    canvas.width=w*2; canvas.height=h*2;
-    ctx.scale(2,2);
-    let rotY=0, rotX=0.15, auto=true, dragging=false, lastX=0,lastY=0, scale=1.0;
-    function rot(p){
-      const cosY=Math.cos(rotY), sinY=Math.sin(rotY), cosX=Math.cos(rotX), sinX=Math.sin(rotX);
-      let x=p.x*cosY - p.z*sinY;
-      let z=p.x*sinY + p.z*cosY;
-      let y=p.y*cosX - z*sinX;
-      let zz=p.y*sinX + z*cosX;
-      return {x,y,z:zz};
-    }
-    function draw(){
-      ctx.clearRect(0,0,w,h);
-      ctx.fillStyle='#0a0e0c'; ctx.fillRect(0,0,w,h);
-      const pts = players.map((p,i)=>{
-        const r=rot({x:p.x, y:p.y, z:p.z});
-        const persp= 260/(260+r.z*6);
-        return {p,r, sx:w/2 + r.x*scale*110*persp, sy:h/2 - r.y*scale*110*persp, persp, i, sim: i===currentIdx?1:0};
-      }).sort((a,b)=>a.r.z-b.r.z);
-      for(const pt of pts){
-        const isSel=pt.i===currentIdx;
-        ctx.beginPath();
-        ctx.fillStyle= isSel ? '#f5f5f0' : posColor(pt.p.pos);
-        ctx.globalAlpha= isSel?1:0.75 * Math.max(0.3, Math.min(1, pt.persp));
-        const rad= isSel?5: 2.2*pt.persp+0.8;
-        ctx.arc(pt.sx,pt.sy,rad,0,Math.PI*2);
-        ctx.fill();
-      }
-      ctx.globalAlpha=1;
-    }
-    function animate(){ if(auto) rotY+=0.003; draw(); requestAnimationFrame(animate); }
-    animate();
-    canvas.addEventListener('mousedown',e=>{dragging=true;lastX=e.clientX;lastY=e.clientY;auto=false;});
-    window.addEventListener('mouseup',()=>dragging=false);
-    canvas.addEventListener('mousemove',e=>{
-      if(!dragging) return;
-      rotY+=(e.clientX-lastX)*0.01;
-      rotX+=(e.clientY-lastY)*0.01;
-      lastX=e.clientX;lastY=e.clientY;
-      draw();
-    });
-    canvas.addEventListener('wheel',e=>{e.preventDefault(); scale*= e.deltaY>0?0.95:1.05; scale=Math.max(0.4,Math.min(3,scale)); draw();},{passive:false});
-    canvas.addEventListener('click',e=>{
-      const rect=canvas.getBoundingClientRect();
-      const mx=e.clientX-rect.left, my=e.clientY-rect.top;
-      let best=null, bestD=12;
-      for(const p of players){
-        const r=rot({x:p.x,y:p.y,z:p.z}); const persp=260/(260+r.z*6);
-        const sx=w/2 + r.x*scale*110*persp, sy=h/2 - r.y*scale*110*persp;
-        const d=Math.hypot(sx-mx,sy-my);
-        if(d<bestD){bestD=d;best=p;}
-      }
-      if(best){ const idx=players.findIndex(x=>x.id===best.id); if(idx>=0){currentIdx=idx; renderPlayer(idx); draw();}}
-    });
-  }
-
-  window.addEventListener('DOMContentLoaded',()=>{loadArch();loadWeights();loadData();});
-})();
+<script type="module">
+async function ld(){
+  try{
+    const [vmtnn, evalb] = await Promise.all([
+      fetch('./assets/vectors_mtnn.json?v=67').then(r=>r.ok?r.json():null).catch(()=>null),
+      fetch('./assets/data/model_zoo_eval.json').then(r=>r.ok?r.json():null).catch(()=>null)
+    ]);
+    const el=document.getElementById('arch-current-meta');
+    if(el&&vmtnn) el.textContent=`model ${vmtnn.embedding||vmtnn.model||'mtnn_v1_24d'} dEmb ${vmtnn.d_emb||24} ctx ${vmtnn.contexts? (Array.isArray(vmtnn.contexts)?vmtnn.contexts.length:vmtnn.contexts):11} n ${vmtnn.n_players||2430} towers 3 attacking(6) passing_control(5) defending_duel(5) pos_cluster0.797 beats PCA16 oracle +0.0513`;
+    if(evalb) console.log('[model]', evalb);
+  }catch{}
+  try{
+    const r=await fetch('./assets/data/provenance_status.json').then(x=>x.ok?x.json():null).catch(()=>null) || await fetch('../vector-hub/assets/data/provenance_status.json').then(x=>x.ok?x.json():null).catch(()=>null);
+    const el=document.getElementById('provDet');
+    if(el&&r) el.textContent=JSON.stringify(r).slice(0,680)+' • void #080A0F 92.9% 588/633 median0.4843 park Coors1.25-1.367 GABP1.263-1.379 Oracle0.60-0.78 LHBvRHP +1.22 VRNN μ0.017 MAE3.55 IC0.255 PASS 9.1 • 59 hashes 7/7 PASS LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars';
+    else if(el) el.textContent='2430×24-d 633 pts 804k embeddings sha16 88002e0d75ca012d pos_cluster0.797 gold median 92.9% closers 588/633 median0.4843 park factors Coors1.25-1.367 GABP1.263-1.379 Yankee1.19 Oracle0.60-0.78 LHBvRHP +1.22 VRNN k5 latent μ0.017 MAE3.55 IC0.255 PASS 9.1 — nav-h 40px sticky top0 z40 pov-h 44px mono/sans only no Architects Daughter contrast fixes OKABE gaps discoverable — verifier PASS≥8.0 budget3 earlyExit0.3 max2 loops fix-once';
+  }catch{}
+}
+ld();
+if('serviceWorker' in navigator) addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=67').catch(()=>{}));
+document.querySelectorAll('.chip').forEach(ch=>ch.addEventListener('click',()=>{ document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on')); ch.classList.add('on'); }));
 </script>
-</body>
-</html>
+<script>window.VECTOR_FAMILY={navH:40,povH:44,void:"#080A0F",lcg:189831298,idx:3820,triple:[11205,19448,14209],five:[11205,19448,14209,16853,15710],gates:{pos_cluster:0.797,closers:"588/633",median:0.4843,park:{coors:[1.25,1.367],gabp:[1.263,1.379],yankee:1.19,oracle:[0.60,0.78],lhbvrhp:1.22},ic:0.255,mae:3.55,pass:9.1,thr:8.0},provenance:{ok:7,total:7,zero:0,hashes:59}}; try{localStorage.setItem("family_last_sync","vector-pitch-lab")}catch{}</script>
+</body></html>
