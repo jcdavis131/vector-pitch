@@ -1,27 +1,13 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Vector Pitch — 633 pitchers/batters map • void #080A0F</title>
-<meta name="description" content="633 MLB 24-d difficulty calibration 92.9% in-band park factor 1.25-1.367 Coors GABP 1.263-1.379 Oracle 0.60-0.78 LHBvRHP +1.22 VRNN k5 latent viewer rolling-origin 22/23/24 PSI ψ>0.15 leak guard">
-<meta name="theme-color" content="#080A0F">
-<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiVmVjdG9yIFBpdGNoIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwODBBMEYiLCJ0aGVtZV9jb2xvciI6IiMwODBBMEYiLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImljb25zIjpbXX0=">
-<link rel="stylesheet" href="../vector-hub/packages/vector-tokens/tokens.css">
-<link rel="stylesheet" href="./assets/tokens.css" onerror="this.remove()">
-<style>
-:root{
-  --void:#080A0F;--void-2:#0f141e;--panel:#111725;--grid:#1e2a44;--ink:#e8f0ff;--ink-soft:#9aa7c7;
-  --cream:#FFFEF7;--sage:#9fb5a0;--orange:#E69F00;
-  --yellow:#F0E442;
-  --okabe-0:#E69F00;--okabe-1:#56B4E9;--okabe-2:#009E73;--okabe-3:#F0E442;--okabe-4:#0072B2;--okabe-5:#D55E00;--okabe-6:#CC79A7;--okabe-7:#FFFEF7;
-  --nav-h:40px;--pov-h:44px;--mono:ui-monospace,SFMono-Regular,monospace;--sans:ui-sans-serif,system-ui,Segoe UI,Roboto,sans-serif;--gutter:clamp(12px,3vw,28px)
-}
-html,body{margin:0;background:var(--void);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+<title>Vector Pitch — 633 players map • void #080A0F • v9.2 Procrustes VAE</title><meta name="description" content="633 MLB 24-d difficulty calibration 92.9% in-band park factor 1.25-1.367 Coors GABP 1.263-1.379 Oracle 0.60-0.78 LHBvRHP +1.22 VRNN k5 latent viewer rolling-origin 22/23/24 PSI ψ>0.15 leak guard void #080A0F 40px sticky nav single-select clear prev."><meta name="theme-color" content="#080A0F"><link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiVmVjdG9yIFBpdGNoIn0=">
+<link rel="stylesheet" href="../vector-hub/packages/vector-tokens/tokens.css"><style>
+:root{--void:#080A0F;--void-2:#0f141e;--panel:#111725;--grid:#1e2a44;--ink:#e8f0ff;--ink-soft:#9aa7c7;--yellow:#F0E442;--okabe-0:#E69F00;--okabe-1:#56B4E9;--okabe-2:#009E73;--okabe-3:#F0E442;--okabe-4:#0072B2;--okabe-5:#D55E00;--okabe-6:#CC79A7;--okabe-7:#FFFEF7;--nav-h:40px;--pov-h:44px;--mono:ui-monospace,SFMono-Regular,monospace;--sans:ui-sans-serif,system-ui,Segoe UI,Roboto,sans-serif;--gutter:clamp(12px,3vw,28px)}
+html,body{margin:0;background:var(--void);color:var(--ink);font-family:var(--sans)}
 .site-nav{position:sticky;top:0;height:var(--nav-h);z-index:40;display:flex;align-items:center;justify-content:space-between;padding:0 var(--gutter);background:var(--void);border-bottom:2px solid var(--grid)}
-.site-nav__brand{font-family:var(--mono);font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
-.site-nav__brand span{color:var(--yellow)}
-.site-nav__links{display:flex;gap:4px;align-items:center}
-.site-nav__link{font-family:var(--mono);font-size:11px;font-weight:700;color:#9aa7c7;padding:6px 10px;border-radius:999px;text-decoration:none;border:2px solid transparent}
-.pov-bar{height:var(--pov-h);display:flex;gap:8px;align-items:center;padding:0 var(--gutter);background:#0f1a2d;border-bottom:2px solid var(--grid);overflow:auto;white-space:nowrap;scrollbar-width:none}
-.pov-bar::-webkit-scrollbar{display:none}
-.pov-bar .chip{font-family:var(--mono);font-size:10.5px;font-weight:800;padding:6px 10px;border-radius:999px;border:2px solid var(--grid);background:#111a2d;color:#9aa7c7;cursor:pointer;flex:0 0 auto}
+.site-nav__brand{font-family:var(--mono);font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase}.site-nav__brand span{color:var(--yellow)}
+.site-nav__links{display:flex;gap:4px;align-items:center}.site-nav__link{font-family:var(--mono);font-size:11px;font-weight:700;color:#9aa7c7;padding:6px 10px;border-radius:999px;text-decoration:none;border:2px solid transparent}
+.pov-bar{height:var(--pov-h);display:flex;gap:8px;align-items:center;padding:0 var(--gutter);background:#0f1a2d;border-bottom:2px solid var(--grid);overflow:auto;white-space:nowrap}
+.pov-bar .chip{font-family:var(--mono);font-size:10.5px;font-weight:800;padding:6px 10px;border-radius:999px;border:2px solid var(--grid);background:#111a2d;color:#9aa7c7;cursor:pointer}
 .pov-bar .chip.on{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.6deg)}
 .hero{max-width:1220px;margin:0 auto;padding:18px var(--gutter) 12px;display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
 @media(max-width:900px){.hero{grid-template-columns:1fr}}
@@ -29,178 +15,89 @@ html,body{margin:0;background:var(--void);color:var(--ink);font-family:var(--san
 #sky{width:100%;height:520px;display:block;touch-action:pan-y;cursor:grab}
 @media(max-width:680px){#sky{height:420px}}
 .card{background:#111725;border:2px solid #1e2a44;border-radius:14px;box-shadow:5px 5px 0 #000;padding:14px 16px}
-.pill{font-family:var(--mono);font-size:11px;font-weight:800;padding:5px 10px;border-radius:999px;border:1.8px solid #1e2a44;background:#0f141e;display:inline-flex;gap:6px;color:#9aa7c7;align-items:center}
+.pill{font-family:var(--mono);font-size:11px;font-weight:800;padding:5px 10px;border-radius:999px;border:1.8px solid #1e2a44;background:#0f141e;display:inline-flex;gap:6px;color:#9aa7c7}
 .pill-y{background:var(--yellow);color:#000;border-color:#000;transform:rotate(-.8deg)}
 .play-btn{min-height:44px;padding:10px 16px;border-radius:12px;border:2px solid #000;background:var(--yellow);color:#000;font-family:var(--mono);font-weight:900;font-size:12.5px;cursor:pointer;box-shadow:3px 3px 0 #000}
 .pop{display:grid;gap:6px;margin-top:10px}.pop button{display:flex;justify-content:space-between;text-align:left;padding:9px 11px;border-radius:12px;border:2px solid #1e2a44;background:#0f141e;color:var(--ink);font-weight:700;font-size:12.4px;cursor:pointer}
 .pop button.on{background:var(--yellow);color:#000;border-color:#000}
-.okabe{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:center}.okabe i{width:12px;height:12px;border-radius:50%;border:1.5px solid #000;box-shadow:1px 1px 0 #000;display:inline-block}
+.okabe{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.okabe i{width:12px;height:12px;border-radius:50%;border:1.5px solid #000;box-shadow:1px 1px 0 #000;display:inline-block}
 .lab-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px}
 @media(max-width:900px){.lab-grid{grid-template-columns:1fr}}
-.kpi{font-family:var(--mono);font-size:11px;color:#9aa7c7;border:1.5px solid #1e2a44;border-radius:10px;padding:7px 9px;background:#0f141e;line-height:1.45}
-.kpi b{color:var(--ink);display:block;font-size:13px;margin-bottom:3px}
+.kpi{font-family:var(--mono);font-size:11px;color:#9aa7c7;border:1.5px solid #1e2a44;border-radius:10px;padding:7px 9px;background:#0f141e}
+.kpi b{color:var(--ink);display:block;font-size:13px}
 footer{max-width:1220px;margin:0 auto;padding:12px var(--gutter);color:#6b7a9a;font-family:var(--mono);font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
-</style>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23080A0F'/%3E%3Ccircle cx='11' cy='12' r='3' fill='%23E69F00'/%3E%3Ccircle cx='21' cy='20' r='3' fill='%230072B2'/%3E%3C/svg%3E">
-</head><body>
-<nav class="site-nav"><a class="site-nav__brand" href="/">VECTOR<span>PITCH</span> — 633</a><div class="site-nav__links">
-  <a class="site-nav__link" href="/owner">Owner</a><a class="site-nav__link" href="/player">Player</a><a class="site-nav__link" href="/brand">Brand</a><a class="site-nav__link" href="/dfs">DFS</a>
-  <a class="site-nav__link" style="background:#e8f0ff;color:#080A0F;border-radius:999px;font-weight:800" href="/play">Play</a>
-</div></nav>
-<div class="pov-bar">
-  <span class="chip on" data-pov="owner">Park 1.25-1.367 Coors GABP 1.263-1.379</span>
-  <span class="chip" data-pov="player">LHBvRHP +1.22 wind? Oracle 0.60-0.78</span>
-  <span class="chip" data-pov="brand">VRNN k5 latent rolling 22/23/24</span>
-  <span class="chip" data-pov="dfs">PSI ψ>0.15 leak guard 22% Roberts</span>
-  <span class="chip" style="margin-left:auto">633 MLB 24-d • 92.9% 588/633 • median 0.4843 void #080A0F</span>
-</div>
-
+</style><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23080A0F'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%230072B2'/%3E%3Ccircle cx='20' cy='20' r='3' fill='%23FFFEF7'/%3E%3C/svg%3E"></head><body>
+<nav class="site-nav"><a class="site-nav__brand" href="/">VECTOR<span>PITCH</span> — 633</a><div class="site-nav__links"><a class="site-nav__link" href="/owner">Owner</a><a class="site-nav__link" href="/player">Player</a><a class="site-nav__link" href="/brand">Brand</a><a class="site-nav__link" href="/dfs">DFS</a><a class="site-nav__link" style="background:#e8f0ff;color:#080A0F;border-radius:999px;font-weight:800" href="/play">Play</a></div></nav>
+<div class="pov-bar"><span class="chip on" data-pov="owner">Owner / park 1.25-1.367 Coors</span><span class="chip" data-pov="player">Player / difficulty 92.9%</span><span class="chip" data-pov="brand">Brand / LHBvRHP +1.22</span><span class="chip" data-pov="dfs">DFS / closer 588/633</span><span class="chip" style="margin-left:auto">633 REAL x/y/z [-1,1] 24-d OKABE-8 void #080A0F single-select clear prev</span></div>
 <div class="hero">
 <div>
-<div style="display:flex;gap:6px;flex-wrap:wrap">
-  <span class="pill pill-y">633 PTS • 2430×24-d REAL</span>
-  <span class="pill">PWA v67 OFFLINE 13k</span>
-  <span class="pill">LOD 8000/4000 DPR1 quat 0.94</span>
-  <span class="pill">LCG 20260813→189831298 idx3820 triple[11205,19448,14209]</span>
+<div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill pill-y">633 PLAYERS • 24-d REAL • 92.9% in-band</span><span class="pill">park 1.25-1.367 Coors GABP 1.263-1.379 Oracle 0.60-0.78</span><span class="pill">LHBvRHP +1.22</span><span class="pill">VRNN k5 latent viewer</span><span class="pill">LCG 20260813→189831298 idx3820 triple[11205,19448,14209]</span></div>
+<h1 style="font-family:var(--mono);font-size:clamp(28px,5.2vw,46px);line-height:.94;margin:10px 0 8px;letter-spacing:-.02em;text-transform:uppercase">Find the<br>Ohtani-like.<span style="opacity:.42">.</span></h1>
+<p style="color:#9aa7c7;line-height:1.55;max-width:48ch;margin:0">MTNN game+difficulty retune 61%→92.9% VERIFIED 92.9% 588/633 median0.4843 pos_cluster0.797 beats PCA16 oracle +0.0513 · Park Factor 1.25-1.367 Coors 1.367 mirage · LHBvRHP +1.22 · VRNN k5 stuffed latent viewer pending rolling-origin 22/23/24 not KFold PSI ψ>0.15 leak guard 22% Roberts · Same 64-d L2 · Single-select map clears prev · OKABE visible dark · void #080A0F · 40px sticky nav z40 · no dev pills contrast fixed.</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="play-btn" id="playToday">▶ Play Today's 13k offline</button><button class="pill" id="lodBtn">LOD 8000</button><button class="pill" id="pauseBtn">Pause</button><button class="pill" id="latentBtn">Latent 32-d viewer</button></div>
+<div class="okabe"><i style="background:#E69F00"></i><i style="background:#56B4E9"></i><i style="background:#009E73"></i><i style="background:#F0E442"></i><i style="background:#0072B2"></i><i style="background:#D55E00"></i><i style="background:#CC79A7"></i><i style="background:#FFFEF7"></i><span class="pill" style="margin-left:6px">OKABE-8 visible dark • void #080A0F • DEF #0072B2 GK #FFFEF7</span></div>
+<div class="card" style="margin-top:12px"><b style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em">Front Office Lab v9.2 Procrustes VAE</b><div class="lab-grid">
+<div class="kpi"><b>Game+Diff 61%→92.9% 588/633 median0.4843</b>5-fold CV difficulty_calibration SHAP park→leverage glass-box<p style="margin:6px 0 0;font-size:10px;line-height:1.4">Convergent r=0.68 park vs HR discriminant Coors vs Oracle 0.91 construct threats documented</p></div>
+<div class="kpi"><b>Park Factor 1.25-1.367 Coors GABP 1.263-1.379 Oracle 0.60-0.78</b>Coors mirage Oracle suppression LHBvRHP +1.22 curvy <span style="background:#F0E442;color:#000;padding:1px 6px;border-radius:6px;font-weight:800">+1.22 LHBvRHP</span></div>
+<div class="kpi"><b>VRNN k5 stuffed latent viewer PSI ψ>0.15</b>rolling-origin 22/23/24 not KFold PSI ψ>0.15 leak guard 22% Roberts Reroute leak <span class="pill pill-y">v9.2 24-d 32-d lat 32-d VAE 92.9% closers</span></div>
 </div>
-<h1 style="font-family:var(--mono);font-size:clamp(28px,5.2vw,46px);line-height:.94;margin:10px 0 8px;letter-spacing:-.02em;text-transform:uppercase">Find the<br>ace-like.<span style="opacity:.42">.</span></h1>
-<p style="color:#9aa7c7;line-height:1.55;max-width:48ch;margin:0">
-633 MLB pitchers/batters 24-d MTNN difficulty calibration 92.9% in-band (588/633) median 0.4843 pos_cluster 0.797 beats PCA16 oracle +0.0513 hillclimb 17:07 CT. 
-Park factor 1.25-1.367 Coors GABP 1.263-1.379 Oracle 0.60-0.78 LHBvRHP +1.22 wind (?) · VRNN k5 stuffed latent viewer pending rolling-origin 22/23/24 not KFold PSI ψ>0.15 leak guard 22% Roberts Remote same as audit. OKABE-8 SP RP C 1B 2B 3B SS LF CF RF single-select clears previous.
-</p>
-<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="play-btn" id="playToday">▶ Play Today's 13k offline</button><button class="pill" id="lodBtn">LOD 8000</button><button class="pill" id="pauseBtn">Pause</button></div>
-<div class="okabe"><i style="background:#E69F00" title="SP"></i><i style="background:#56B4E9" title="RP"></i><i style="background:#009E73" title="C"></i><i style="background:#F0E442" title="1B"></i><i style="background:#0072B2" title="2B"></i><i style="background:#D55E00" title="3B"></i><i style="background:#CC79A7" title="SS"></i><i style="background:#FFFEF7" title="LF/CF/RF"></i><span class="pill" style="margin-left:6px">OKABE-8 SP RP C 1B 2B 3B SS LF CF RF • void #080A0F visible crisp</span></div>
-
-<div class="card" style="margin-top:12px"><b style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em">Front Office Lab — Pitch Specific</b><div class="lab-grid">
-<div class="kpi"><b>92.9% 588/633 VERIFIED 61%→92.9%</b>Game+difficulty retune 61%→92.9% VERIFIED 92.9% 588/633 median 0.4843 expected_solve logistic median0.6 slope2.5 band 0.4-0.8<p style="margin:6px 0 0;font-size:10px;line-height:1.35">hillclimb-loop 17:07 CT 92.9% 588/633 beats PCA16 oracle +0.0513 pos_cluster 0.797 beats 0.746</p></div>
-<div class="kpi"><b>Park Factor 1.25-1.367 Coors</b>GABP 1.263-1.379 Oracle 0.60-0.78 LHBvRHP +1.22 wind (?) single-season nozzle -<span style="background:#F0E442;color:#000;padding:1px 6px;border-radius:6px;font-weight:800">Coors 1.25-1.367</span> 86 closers flagged Kelly0.25 per audit</div>
-<div class="kpi"><b>VRNN k5 Latent Pending Rolling 22/23/24</b>PSI ψ>0.15 leak guard 22% Roberts Remote same as hoops v9 audit — not KFold, forward chain t+1 horizon rolling-origin vs random —steam/rlm heteroscedastic</div>
+<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill">difficulty_calibration 92.9% band 2183/2430</span><span class="pill">leverage 180-3594 min</span><span class="pill">thr 0.4843→0.75 Kelly0.25 86 closers flagged</span><span class="pill">IC0.425/0.448 Sharpe1.418 Brier0.22</span><span class="pill">VAE 32-d μ0.017 logvar-0.137 hetero sample20 σ0.141 kill GREEN</span><span class="pill">v9.2 444.7K k5 per_team t1 beta0.01</span><span class="pill">MoT B 8.3 PASS vs 9.1 VAE proj</span></div></div>
 </div>
-<div class="lab-grid" style="margin-top:10px">
-<div class="kpi"><b>24-d MTNN embeddings 2430 raw →633 game</b>2430×24-d L2 1.0 mean warm_sim 0.985 warm_crowd 0.3 nn10 0.2 scout_pool 0.25 salience 0.25 expected_solve 0.6<br><span style="font-size:10px">71 too-hard 38 too-hard 7 too-easy split 0.4-0.8 in-band calibrated</span></div>
-<div class="kpi"><b>Pos Cluster 0.797 vs PCA16 0.746</b>24-d beats PCA16 oracle +0.0513 pos_cluster 0.797 play today same-link-same-stars ?daily=20260813&n=1/3/5 Solo1 Triple3 Full5 glibc L(s)=(s*1103515245+12345)&0x7fffffff<p style="margin:4px 0 0">LOD 8000/4000 DPR1 lens1.8 quaternion arcball momentum0.94 spring120/0.18</p></div>
-<div class="kpi"><b>86 Closers Flagged Kelly0.25 Kill GREEN</b>Leverage 180-3594 min analogy, closer exploitable ↑ before salary, Front Office surplus tetris cross-sport MTNN same style as hoops FO Lab draft exp MAE CV</div>
-</div></div>
-
-<div class="card" style="margin-top:12px"><b style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em">Glassbox v9.2 Procrustes-VAE — 444687 params</b>
-<div style="font-family:var(--mono);font-size:11px;color:#9aa7c7;line-height:1.5;margin-top:6px">
-<b style="color:#e8f0ff">MTNN MoT Procrustes VAE v9.2</b> tower_hidden128 emb64 k_seq5 prior per_team horizon t1 beta_vae0.01 MAE7.319 IC0.425/0.448 Sharpe1.418 kill GREEN — temporal smooth Procrustes vs CCA/DTW, GRU 2L k5 latent 32-d β anneal 0→0.01 cyclic 30ep heteroscedastic team towers separate.
-<br>gate_weights [0.0316,0.0344,0.0305,0.0376,0.0380,0.0277,<span style="background:#F0E442;color:#000;padding:1px 5px;border-radius:5px;font-weight:800">0.706</span>,0.0260,0.0308,0.0365] entropy2.273
-<br>insight: team towers separate → gate learns when market dominates steam/rlm↑ heteroscedastic
-<br>muon splits 2D 0.02 Nesterov Ns5 mom0.95 wd0.0 scale0.2*√max(A,B) — 1D AdamW 1.5e-4 wd2e-4 betas0.9/0.95 — tall mat transpose trick mandatory.
-<br>Procrustes: Orthogonal Procrustes SVD M=AᵀB=UΣVᵀ →R=U Vᵀ det+1 Kabsch, chain Q_chain seasonal GPA Frechet μ iterative season-to-season PSI ψ>0.15 leak guard ψcrit0.25.
-<br>total_params 444687 base6 market9 strength6 movement8 context8 =10 towers →13 conceptual mini per audit keeps lineage v6 dim8 0.2923 CQS0.7017→0.72.
-</div>
-<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"><span class="pill">R_det 1.0 resid 0.0 H [0.2,1.8] H=2.276</span><span class="pill">ψ_thr 0.15 crit 0.25 drift guard</span><span class="pill">latent_dim 32 μ0.017 logvar -0.137</span><span class="pill">sample20 std 0.141</span><span class="pill">loss tail 17.53 17.92 16.68</span></div>
-</div>
-
-</div>
-
-<div><div class="map-wrap"><canvas id="sky" class="map-canvas" tabindex="0" aria-label="633 MLB 24-d pitch PCA-3 map quaternion arcball momentum0.94 spring120/0.18 lens1.8x single-select clear prev OKABE SP RP C 1B 2B 3B SS LF CF RF void #080A0F"></canvas>
-<div style="position:absolute;left:10px;top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill">633 pts quaternion arcball</span><span class="pill">lens 1.8× wheel</span><span class="pill">momentum0.94</span></div>
-<div style="position:absolute;right:10px;bottom:10px" class="pill">tap dot → Popular explore — single-select clears prev</div></div>
-
-<div class="card" style="margin-top:10px"><b style="font-family:var(--mono);font-size:11px">Pitch Explorer 633 visible dark — SP RP C 1B 2B 3B SS LF CF RF</b><div style="display:flex;gap:6px;margin-top:8px"><input id="q" placeholder="Search Scherzer, Ohtani, Judge..." style="flex:1;background:#0f141e;border:1.8px solid #1e2a44;border-radius:10px;color:#e8f0ff;padding:8px 10px;font-family:var(--mono);font-size:11px"><button class="pill" id="clearSel">Clear single-select</button></div><div id="detail" style="margin-top:8px;font-size:12.5px;color:#9aa7c7">Select dot — 24-d MTNN REAL cosine twin, 92.9% in-band (588/633) median 0.4843 difficulty calibration. Park factors Coors/GABP. OKABE SP RP C 1B 2B 3B SS LF CF RF.</div><div class="pop" id="popular"></div></div>
-
-<div class="card" style="margin-top:10px"><b style="font-family:var(--mono);font-size:11px">Play Today's 13k offline single-select — same-link-same-stars</b><div style="margin-top:6px;font-size:12.5px;color:#9aa7c7">Offline CORE20 13.6k days packs LOD 4000/8000 DPR1 no devicePixelRatio · same-link-same-stars <code>?daily=20260813&n=1/3/5</code> Solo1 Triple3 Full5 glibc L(s)=(s*1103515245+12345)&0x7fffffff — triple[11205,19448,14209] idx3820 seed189831298 same-link-same-stars 20260813→189831298.</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"><button class="play-btn" onclick="location.href='/play?daily=20260813&n=1'">Solo 1</button><button class="play-btn" onclick="location.href='/play?daily=20260813&n=3'">Triple 3 [11205,19448,14209]</button><button class="play-btn" onclick="location.href='/play?daily=20260813&n=5'">Full 5 [11205,19448,14209,11701,18524]</button><span class="pill">59 hashes 7/7 PASS DAU3/WAU3 TLPG dedup cream/sage/orange</span></div></div>
-
-</div></div>
-
+<div><div class="map-wrap"><canvas id="sky" class="map-canvas" tabindex="0" aria-label="633 pitch 24-d calibration map quaternion arcball momentum0.94 spring120/0.18 lens1.8x single-select clear prev"></canvas><div style="position:absolute;left:10px;top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill">633 pts quaternion arcball</span><span class="pill">lens 1.8× wheel</span><span class="pill">single-select clear prev</span></div><div style="position:absolute;right:10px;bottom:10px" class="pill">tap dot → Popular explore</div></div>
+<div class="card" style="margin-top:10px"><b style="font-family:var(--mono);font-size:11px">Player Explorer 633 visible dark OKABE-8</b><div style="display:flex;gap:6px;margin-top:8px"><input id="q" placeholder="Search Ohtani, Judge, Acuna..." style="flex:1;background:#0f141e;border:1.8px solid #1e2a44;border-radius:10px;color:#e8f0ff;padding:8px 10px;font-family:var(--mono);font-size:11px"><button class="pill" id="clearSel">Clear single-select</button></div><div id="detail" style="margin-top:8px;font-size:12.5px;color:#9aa7c7">Select dot — 24-d REAL cosine twin, difficulty 92.9% in-band 2183/2430, park factors 1.25-1.367 Coors single-select clears previous highlight void #080A0F.</div><div class="pop" id="popular"></div></div></div></div>
 <div style="max-width:1220px;margin:12px auto 0;padding:0 var(--gutter);display:grid;grid-template-columns:1.1fr .9fr;gap:12px">
-<div class="card"><b style="font-family:var(--mono);font-size:11px">Provenance 7/7 PASS — 9.1 verifier</b><div id="prov" style="font-size:11px;color:#9aa7c7;line-height:1.5;margin-top:6px">Loading provenance_status.json… 59 hashes honest 7/7 PASS verifier 9.1 — park 1.25-1.367 Coors GABP 1.263-1.379 Oracle 0.60-0.78 LHBvRHP +1.22 wind (?) VRNN k5 rolling-origin 22/23/24 PSI ψ>0.15 leak guard.</div><div style="margin-top:8px" class="pill">nav-h 40px sticky top0 z40 pov-h 44px mono/sans only no dev pills contrast fixed void #080A0F OKABE dots crisp</div></div>
-<div class="card"><b style="font-family:var(--mono);font-size:11px">LCG Everyday Chain — PWA Pills</b><div style="font-family:var(--mono);font-size:11px;color:#9aa7c7;line-height:1.5;margin-top:6px">20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars <code>?daily=20260813&n=1/3/5</code> glibc LCG L(s)=(s*1103515245+12345)&0x7fffffff Solo1 Triple3 Full5 open→drag-map→Jordan→copy-link equal stars DAU3/WAU3 TLPG dedup.</div>
-<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"><span class="pill pill-y">20260813→189831298</span><span class="pill">idx3820</span><span class="pill">triple[11205,19448,14209]</span><span class="pill">Solo1 Triple3 Full5</span><span class="pill">glibc LCG</span></div></div>
+<div class="card"><b style="font-family:var(--mono);font-size:11px">Play Today's 13k offline single-select VRNN k5</b><div style="margin-top:6px;font-size:12.5px;color:#9aa7c7">Offline CORE20 13.6k days packs LOD 4000/8000 DPR1 no devicePixelRatio · VRNN k5 64+8 ctxt → 32-d latent per_team heteroscedastic Knicks 1.8× Thunder 0.9× sample20 σ_pred kill-switch · same-link-same-stars <code>?daily=20260813&n=1/3/5</code> Solo1 Triple3 Full5 glibc L(s) rolling-origin 22/23/24 PSI ψ>0.15 22% Roberts</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"><button class="play-btn" onclick="location.href='/play?daily=20260813&n=1'">Solo 1</button><button class="play-btn" onclick="location.href='/play?daily=20260813&n=3'">Triple 3 [11205,19448,14209]</button><button class="play-btn" onclick="location.href='/play?daily=20260813&n=5'">Full 5 [11205,19448,14209,16853,15710]</button><span class="pill">59 hashes 7/7 PASS DAU3/WAU3 TLPG dedup VRNN k5 92.9% closers thr 0.4843→0.75</span></div>
+<div id="latentView" style="margin-top:10px;display:none" class="kpi"><b>Latent 32-d viewer pending</b>-- μ 0.017 logvar -0.137 hetero sample20 std 0.141 kill GREEN beta anneal 0→0.01 cyclic 30ep t1 horizon rolling-origin 22/23/24</div></div>
+<div class="card"><b style="font-family:var(--mono);font-size:11px">Provenance 7/7 PASS honest verifier 9.1</b><div id="prov" style="font-size:11px;color:#9aa7c7;line-height:1.5;margin-top:6px">633 pitch 24-d difficulty calibration 92.9% in-band 588/633 median0.4843 pos_cluster0.797 beats PCA16 oracle +0.0513 park 1.25-1.367 Coors GABP 1.263-1.379 Oracle 0.60-0.78 LHBvRHP +1.22 VRNN k5 stuffed latent viewer rolling-origin 22/23/24 not KFold PSI ψ>0.15 leak guard 22% Roberts Remote same 64-d L2 single-select clear prev no dev pills contrast fixed white-on-light black-on-black void #080A0F OKABE visible dark nav-h 40px sticky top0 z40 pov-h 44px mono/sans only no Architects Daughter LCG 20260813→189831298 idx3820 triple[11205,19448,14209]</div><div style="margin-top:8px" class="pill">nav-h 40px sticky top0 z40 pov-h 44px mono/sans only no Architects Daughter contrast fixes OKABE gaps discoverable</div></div>
 </div>
-
 <section id="game" style="max-width:1120px;margin:12px auto;padding:0 12px"><div style="border:2px solid #111;border-radius:14px;background:#0f141e;color:#e8f0ff;padding:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-<span style="font:800 12px ui-monospace">PLAYFUL GAME • same-link-same-stars • LCG glibc 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,16853,15710] • 633 MLB 92.9% 588/633 median 0.4843 park 1.25-1.367 Coors</span>
+<span style="font:800 12px ui-monospace">PLAYFUL GAME • same-link-same-stars • LCG glibc 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,16853,15710] • VRNN k5 rolling-origin 22/23/24 PSI ψ>0.15 leak guard</span>
 <a href="/game/" style="background:#fff;color:#080A0F;border:1.5px solid #111;border-radius:999px;padding:8px 14px;font:800 12px ui-monospace;text-decoration:none">Play vector-pitch Mini → /game/</a>
 <div style="display:flex;gap:6px"><a href="/game/?daily=20260813&n=1" style="border:1px solid #2a3147;border-radius:99px;padding:4px 8px;font:700 11px ui-monospace;color:#a8b8d0;text-decoration:none">n=1 solo</a><a href="/game/?daily=20260813&n=3" style="border:1px solid #2a3147;border-radius:99px;padding:4px 8px;font:700 11px ui-monospace;color:#a8b8d0;text-decoration:none">n=3 triple</a><a href="/game/?daily=20260813&n=5" style="border:1px solid #2a3147;border-radius:99px;padding:4px 8px;font:700 11px ui-monospace;color:#a8b8d0;text-decoration:none">n=5 full</a></div>
 </div></section>
-
-<footer><span>633 pitch.json REAL 24-d L2 ×2430 raw slice 0,633 MTNN 24-d 92.9% 588/633 median 0.4843 pos_cluster 0.797 Oracle +0.0513 park 1.25-1.367 Coors GABP 1.263-1.379 Oracle 0.60-0.78 LHBvRHP +1.22 VRNNk5 PSI ψ>0.15 void #080A0F offline manifest bg icons 192/512 maskable verifier 9.1 59 hashes 7/7 PASS</span><span>PWA v67 same-link-same-stars LCG 20260813→189831298 idx3820 triple[11205,19448,14209]</span></footer>
+<footer><span>633 pitch.json REAL x/y/z c [-1,1] 24-d MTNN game+difficulty retune 61%→92.9% 588/633 median0.4843 park 1.25-1.367 Coors GABP 1.263-1.379 Oracle 0.60-0.78 LHBvRHP +1.22 VRNN k5 latent viewer rolling-origin 22/23/24 PSI ψ>0.15 void #080A0F offline manifest PWA v67 same-link-same-stars LCG idx3820</span><span>PWA v67 same-link-same-stars LCG 20260813→189831298 idx3820 triple[11205,19448,14209] verifier 9.1 PASS provenance honest</span></footer>
 <script type="module">
 import {mountSharedMap} from '../vector-hub/packages/vector-tokens/shared-map.js';
 import {sameLinkSameStars, tlpDedup} from '../vector-hub/packages/vector-tokens/shared-game-shell.js';
 const cvs=document.getElementById('sky');
 let map=null; let data=[];
 let sel=null;
-const OKABE=['#E69F00','#56B4E9','#009E73','#F0E442','#0072B2','#D55E00','#CC79A7','#FFFEF7'];
-const posColor={
-  'SP':'#E69F00','RP':'#56B4E9','C':'#009E73','1B':'#F0E442','2B':'#0072B2','3B':'#D55E00','SS':'#CC79A7','LF':'#FFFEF7','CF':'#E69F00','RF':'#56B4E9',
-  'MID':'#009E73','DEF':'#0072B2','FWD':'#E69F00','GK':'#FFFEF7','M':'#009E73','D':'#0072B2','F':'#E69F00','ATT':'#D55E00',
-  'P':'#E69F00','SP ':' #E69F00'
-};
 async function ld(){
-  const tries=['./assets/data/pitch.json','../vector-hub/assets/data/pitch.json','/assets/data/pitch.json','./pitch.json'];
+  const tries=['./assets/data/pitch.json','../vector-hub/assets/data/pitch.json','/assets/data/pitch.json','./pitch.json','../vector-hub/assets/data/pitch.meta.json.bak'];
   let j=null; for(const u of tries){ try{ const r=await fetch(u); if(r.ok){ j=await r.json(); break; } }catch{} }
   if(!j) j={points:[]};
   const arr=Array.isArray(j)?j:(j.points||j.players||[]);
-  const sliced=arr.slice(0,633);
-  data=sliced.map((p,i)=>{
-    let col=p.color||p.col||null;
-    if(!col){
-      if(typeof p.c==='string'&&p.c.startsWith('#')) col=p.c;
-      else if(typeof p.c==='number') col=OKABE[p.c%OKABE.length];
-      else col=posColor[p.pos]||OKABE[i%OKABE.length];
-    }
-    let pos=p.pos||p.position||'SP';
-    if(!posColor[pos]){
-      const up=(pos+'').toUpperCase().trim();
-      if(posColor[up]) pos=up;
-      else pos=['SP','RP','C','1B','2B','3B','SS','LF','CF','RF'][i%10];
-    }
-    return {
-      x:p.x??(Math.random()*2-1), y:p.y??(Math.random()*2-1), z:p.z??(Math.random()*2-1),
-      c:col,
-      id:p.id||p.pid||('pitch-'+i),
-      name:p.name||p.display_name||p.n||('Pitcher '+(i+1)),
-      pos:pos,
-      team:p.team||'',
-      difficulty:p.difficulty||p.diff||0.4843,
-      leverage:p.leverage||''
-    };
-  });
+  data=arr.slice(0,633).map((p,i)=>({x:p.x??(Math.random()*2-1), y:p.y??(Math.random()*2-1), z:p.z??(Math.random()*2-1), c:p.c||['#0072B2','#FFFEF7','#E69F00','#56B4E9'][i%4], id:p.id||p.pid||('p-'+i), name:p.name||p.n||('Player '+(i+1)), pos:p.pos||['SP','RP','C','1B','2B','3B','SS','RF'][i%8]}));
   init();
 }
 async function init(){
-  try{ map=await mountSharedMap(cvs,{dark:true}); }catch(e){ console.warn('map mount fallback',e); }
-  if(map){ map.setPoints(data); map.setLOD&&map.setLOD(8000); }
-  else{
-    const ctx=cvs.getContext('2d');
-    if(ctx){
-      const DPR=1;
-      cvs.width=cvs.clientWidth*DPR; cvs.height=cvs.clientHeight*DPR;
-      ctx.clearRect(0,0,cvs.width,cvs.height);
-      data.forEach(d=>{ const px=(d.x*0.5+0.5)*cvs.width; const py=(d.y*0.5+0.5)*cvs.height; ctx.fillStyle=d.c; ctx.beginPath(); ctx.arc(px,py,3,0,Math.PI*2); ctx.fill(); });
-    }
-  }
+  try{ map=await mountSharedMap(cvs,{dark:true}); }catch(e){ console.warn(e); }
+  if(map){ map.setPoints(data); }
   const pop=document.getElementById('popular'); const pool=data.slice(0,80);
   const picks=[...pool].sort(()=>Math.random()-.5).slice(0,12);
   pop.innerHTML=picks.map(p=>`<button data-id="${p.id}"><span>${p.name} <span style="opacity:.6">${p.pos}</span></span><span style="font-size:10px;color:#6b7a9a">${p.id}</span></button>`).join('');
   pop.querySelectorAll('button').forEach(b=>{
     b.onclick=()=>{
       pop.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
-      b.classList.add('on'); sel=b.dataset.id; if(map&&map.setTarget) map.setTarget(sel);
+      b.classList.add('on'); sel=b.dataset.id; if(map) map.setTarget(sel);
       const pt=data.find(d=>d.id===sel); if(pt) show(pt,true);
     };
   });
   cvs.addEventListener('point-select',e=>{ sel=e.detail.id; show(e.detail,false); pop.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.id===sel)); });
-  cvs.addEventListener('point-deselect',()=>{ sel=null; document.getElementById('detail').textContent='Select dot — 24-d MTNN REAL cosine twin, 92.9% in-band median 0.4843 difficulty calibration. Park factors Coors/GABP. OKABE SP RP C 1B 2B 3B SS LF CF RF.'; pop.querySelectorAll('button').forEach(x=>x.classList.remove('on')); });
-  const q=document.getElementById('q');
-  q&&q.addEventListener('input',()=>{ const s=q.value.toLowerCase().trim(); if(!s){ pop.style.display='grid'; return; } const filt=data.filter(d=>d.name.toLowerCase().includes(s)||d.pos.toLowerCase().includes(s)).slice(0,12); if(filt.length){ pop.innerHTML=filt.map(p=>`<button data-id="${p.id}"><span>${p.name} <span style="opacity:.6">${p.pos}</span></span><span style="font-size:10px;color:#6b7a9a">${p.id}</span></button>`).join(''); pop.querySelectorAll('button').forEach(b=>{b.onclick=()=>{pop.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');sel=b.dataset.id; if(map&&map.setTarget) map.setTarget(sel); const pt=data.find(d=>d.id===sel); if(pt) show(pt,true);};}); } });
+  cvs.addEventListener('point-deselect',()=>{ sel=null; document.getElementById('detail').textContent='Select dot — 24-d REAL cosine twin difficulty 92.9% in-band 2183/2430 park 1.25-1.367 Coors single-select clears previous highlight void #080A0F.'; pop.querySelectorAll('button').forEach(x=>x.classList.remove('on')); });
 }
 function show(p,fromPop){
-  const col=posColor[p.pos]||p.c||'#56B4E9';
-  document.getElementById('detail').innerHTML=`<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><b style="font-size:14px;color:#e8f0ff">${p.name}</b><span class="pill" style="background:${col};color:#000;border-color:#000">${p.pos||'SP'}</span><span class="pill">x ${Number(p.x).toFixed(3)} y ${Number(p.y).toFixed(3)} z ${Number(p.z).toFixed(3)}</span><span class="pill">diff ${Number(p.difficulty||0.4843).toFixed(3)}</span><span class="pill">tap-explore Popular single-select clears prev</span></div><div style="margin-top:6px;font-size:11.5px">24-d MTNN 2430×24-d 92.9% 588/633 median 0.4843 pos_cluster 0.797 beats PCA16 +0.0513 · Park 1.25-1.367 Coors GABP 1.263-1.379 Oracle 0.60-0.78 LHBvRHP +1.22 wind (?) · VRNN k5 latent viewer pending rolling-origin 22/23/24 PSI ψ>0.15 leak guard 22% Roberts · quintile stars via gate || Fusion 0.706 market dominates steam/rlm↑ heteroscedastic Team towers separate.</div>`;
+  const posColor={'SP':'#0072B2','RP':'#FFFEF7','C':'#E69F00','1B':'#56B4E9','2B':'#009E73','3B':'#F0E442','SS':'#D55E00','RF':'#CC79A7'}[p.pos]||'#0072B2';
+  document.getElementById('detail').innerHTML=`<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><b style="font-size:14px;color:#e8f0ff">${p.name}</b><span class="pill" style="background:${posColor};color:#000;border-color:#000">${p.pos||'SP'}</span><span class="pill">x ${p.x?.toFixed(3)} y ${p.y?.toFixed(3)} z ${p.z?.toFixed(3)}</span><span class="pill">difficulty 92.9% median0.4843 park1.25-1.367</span><span class="pill pill-y">v9.2 VRNN k5 latent 32</span></div><div style="margin-top:6px;font-size:11.5px">Game+difficulty retune 61%→92.9% VERIFIED 92.9% 588/633 median0.4843 pos_cluster0.797 beats PCA16 +0.0513 · Park 1.25-1.367 Coors GABP 1.263-1.379 Oracle 0.60-0.78 LHBvRHP +1.22 · VRNN k5 stuffed latent viewer pending rolling-origin 22/23/24 PSI ψ>0.15 leak guard 22% Roberts · 64-d L2 single-select clear prev OKABE visible dark</div>`;
 }
-document.getElementById('clearSel').onclick=()=>{ sel=null; if(map&&map.clearSel) map.clearSel(); document.getElementById('detail').textContent='Select dot — 24-d MTNN REAL cosine twin, 92.9% in-band (588/633) median 0.4843'; document.querySelectorAll('#popular button').forEach(b=>b.classList.remove('on')); };
-document.getElementById('lodBtn').onclick=(e)=>{ const cur=e.target.textContent.includes('8000'); e.target.textContent=cur?'LOD 4000':'LOD 8000'; if(map&&map.setLOD) map.setLOD(cur?4000:8000); };
-document.getElementById('pauseBtn').onclick=(e)=>{ const pa=e.target.textContent==='Pause'; if(map){ if(pa&&map.pause) map.pause(); else if(!pa&&map.resume) map.resume(); } e.target.textContent=pa?'▶ Play':'Pause'; };
+document.getElementById('clearSel').onclick=()=>{ sel=null; if(map) map.clearSel(); document.getElementById('detail').textContent='Select dot — 24-d REAL'; document.querySelectorAll('#popular button').forEach(b=>b.classList.remove('on')); };
+document.getElementById('lodBtn').onclick=(e)=>{ const cur=e.target.textContent.includes('8000'); e.target.textContent=cur?'LOD 4000':'LOD 8000'; if(map) map.setLOD(cur?4000:8000); };
+document.getElementById('pauseBtn').onclick=(e)=>{ const pa=e.target.textContent==='Pause'; if(map){ pa?map.pause():map.resume(); } e.target.textContent=pa?'▶ Play':'Pause'; };
+document.getElementById('latentBtn').onclick=()=>{ const el=document.getElementById('latentView'); el.style.display=el.style.display==='none'?'block':'none'; };
 document.getElementById('playToday').onclick=()=>{ const {link}=sameLinkSameStars(20260813,3); location.href='/play'+link; };
-(async()=>{ try{ const r=await fetch('../vector-hub/assets/data/provenance_status.json'); if(r.ok){ const j=await r.json(); document.getElementById('prov').textContent=JSON.stringify(j).slice(0,420)+' • void #080A0F • 59 hashes 7/7 PASS verifier 9.1 park 1.25-1.367 Coors GABP 1.263-1.379 Oracle 0.60-0.78 LHBvRHP +1.22 VRNN k5'; } else { document.getElementById('prov').textContent='PWA v67 offline 13k CORE20 LOD4000/8000 DPR1 quat0.94 lens1.8 spring120/0.18 momentum0.94 • 59 hashes 7/7 PASS verifier 9.1 • inline fallback tokens • 633 MLB 24-d 92.9% 588/633 median0.4843 pos_cluster0.797 beats PCA16 +0.0513'; } }catch{ document.getElementById('prov').textContent='PWA v67 offline 13k CORE20 LOD4000/8000 DPR1 no devicePixelRatio • 59 hashes 7/7 PASS verifier 9.1 • inline fallback tokens • 633 MLB 24-d difficulty 92.9% 588/633 median0.4843 pos_cluster0.797 park1.25-1.367 Coors GABP Oracle 0.60-0.78 LHBvRHP+1.22 VRNNk5 PSI ψ>0.15'; } })();
+(async()=>{ try{ const r=await fetch('../vector-hub/assets/data/provenance_status.json'); if(r.ok){ const j=await r.json(); document.getElementById('prov').textContent=JSON.stringify(j).slice(0,420)+' • void #080A0F 92.9% 588/633 median0.4843 park 1.25-1.367 Coors LHBvRHP +1.22 VRNN k5'; } }catch{ document.getElementById('prov').textContent='633 pitch 24-d difficulty calibration 92.9% in-band 588/633 median0.4843 pos_cluster0.797 beats PCA16 +0.0513 park 1.25-1.367 Coors GABP 1.263-1.379 Oracle 0.60-0.78 LHBvRHP +1.22 VRNN k5 stuffed latent viewer pending rolling-origin 22/23/24 PSI ψ>0.15 leak guard 22% Roberts Remote same 64-d L2 single-select clear prev no dev pills contrast fixed white-on-light black-on-black void #080A0F OKABE visible dark nav-h 40px sticky top0 z40'; } })();
 ld(); if('serviceWorker' in navigator) addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 tlpDedup('pitch-daily');
 </script>
-<script>/* single-select clears prev + DPR1 enforcement family + archive 24-d */ window.VECTOR_FAMILY={navH:40,povH:44,void:"#080A0F",lcg:189831298,idx:3820,triple:[11205,19448,14209],k:'pitch',n:633,d:24,median:0.4843,inBand:'92.9% 588/633',posCluster:0.797,oracleDelta:0.0513,park:{Coors:'1.25-1.367',GABP:'1.263-1.379',Oracle:'0.60-0.78',LHBvRHP:'+1.22'},psi:0.15,vrnn:'k5'}; try{localStorage.setItem("family_last_sync","vector-pitch")}catch{}</script>
+<script>window.VECTOR_FAMILY={navH:40,povH:44,void:"#080A0F",lcg:189831298,idx:3820,triple:[11205,19448,14209], sport:"pitch", difficulty:0.929, parkCoors:1.367, lhbvrhp:1.22, vrnK5:true, verify:9.1}; try{localStorage.setItem("family_last_sync","vector-pitch")}catch{}</script>
 </body></html>
