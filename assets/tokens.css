@@ -1,129 +1,96 @@
-/* tokens.css — japandi sports books taste v2 — zero-deps — 10/10 masterclass */
+/* vector-pitch tokens.css — japandi tasteful v67.2 — matching hub — zero-deps */
 :root{
-  /* base japandi — warm minimal, natural materials, wabi-sabi low contrast calm */
-  --paper:#FEFCF9;       /* warm paper base — main bg */
-  --paper-2:#FFFEF7;      /* ivory — second */
-  --paper-3:#FFFCF2;      /* fallback warm */
-  --wood:#D6C7B3;         /* light oak / hinoki */
-  --wood-2:#E8D9C5;       /* lighter ash */
-  --wood-3:#C7B299;       /* deeper walnut trim */
-  --stone:#EAE3D8;        /* stone shelf */
-  --stone-2:#D9D0C3;
-  --ink:#1E1E1E;          /* sumi ink, not pure black #000 */
+  --paper:#FEFCF9;
+  --paper-2:#FFFEF7;
+  --wood:#D6C7B3;
+  --wood-2:#E8D9C5;
+  --stone:#EAE3D8;
+  --ink:#1E1E1E;
   --ink-soft:#5A544E;
-  --ink-muted:#8A847A;
-  --ink-faint:#B8B0A3;
-  --moss:#7A8A7B;         /* moss garden */
-  --moss-2:#A3B1A0;
-  --clay:#C9A88C;         /* clay / terracotta soft */
-  --clay-2:#E8C6A7;
-  /* layout — nav 40px sticky z40 safe-area */
+  --ink-muted:#8A847E;
+  --moss:#7A8A7B;
+  --clay:#C9A88C;
+  --shadow-book:3px 3px 0 #1E1E1E;
+  --void:#080A0F;
+  --void-2:#0f141e;
+  --void-3:#121821;
   --nav-h:40px;
   --pov-h:44px;
-  --rail-w:84px;
-  --shelf-h:4px;
-  /* dynamics — inertial map preserved momentum 0.94 DPR1 LOD8000/4000 quaternion arcball */
-  --momentum:0.94;
+  --radius-sm:8px;
+  --radius-md:12px;
+  --radius-lg:16px;
+  --radius-xl:18px;
+  --font-sans: ui-sans-system,-apple-system,Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  --font-mono: ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --z-nav:40;
+  --z-pov:39;
+  --z-tooltip:60;
+  --z-modal:80;
   --spring-stiff:120;
   --spring-damp:0.18;
-  --decay-raf:0.94;
-  --spring-k:120;
-  --spring-b:0.18;
-  --lod-desktop:8000;
-  --lod-mobile:4000;
-  --dpr:1;
-  /* OKABE-8 — vivid dots on dark map inset, also as book edge dots — visible 8px border 1.4px */
-  --ok-0:#0072B2;
-  --ok-1:#D55E00;
-  --ok-2:#009E73;
-  --ok-3:#F0E442;
-  --ok-4:#56B4E9;
-  --ok-5:#CC79A7;
-  --ok-6:#E69F00;
-  --ok-7:#FFFEF7;
-  --okabe-0:var(--ok-0);
-  --okabe-1:var(--ok-1);
-  --okabe-2:var(--ok-2);
-  --okabe-3:var(--ok-3);
-  --okabe-4:var(--ok-4);
-  --okabe-5:var(--ok-5);
-  --okabe-6:var(--ok-6);
-  --okabe-7:var(--ok-7);
-  /* accent — confetti kept, but muted */
-  --accent:#D8452A;
-  --accent-2:#C9A88C;
-  --ring:var(--clay);
-  /* fonts — system mono/sans only, no external fonts */
-  --font-sans: ui-sans-system, -apple-system, "Inter", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-  --font-serif: ui-serif, "Georgia", "Times New Roman", serif;
-  --radius:14px;
-  --radius-sm:10px;
-  --radius-pill:9999px;
-  /* shadows — soft japandi 2.5px tactile not brutalist — was 3px mapped to 2.5px for softer feel */
-  --shadow-soft: 0 1px 0 #1E1E1E0e, 0 6px 18px #1E1E1E10;
-  --shadow-book: 2.5px 2.5px 0 #1E1E1E, 0 2px 8px #1E1E1E10;
-  --shadow-cabinet: 2.5px 2.5px 0 #1E1E1E, 0 8px 22px #1E1E1E14;
-  --shadow-paper: 1.2px 1.2px 0 #1E1E1E, inset 0 1px 0 #fff;
-  /* wood grain texture via CSS gradients — tactile spines softer feel */
-  --wood-grain: repeating-linear-gradient(90deg, rgba(30,30,30,.05) 0 1px, transparent 1px 18px), linear-gradient(180deg, var(--wood-2) 0%, var(--wood) 100%);
-  --paper-fiber: repeating-linear-gradient(0deg, rgba(30,30,30,.015) 0 1px, transparent 1px 9px), repeating-linear-gradient(90deg, rgba(30,30,30,.018) 0 1px, transparent 1px 13px);
-  /* contrast 19.1:1 ivory #FFFEF7 on void #080A0F map only — paper contrast softer japonais */
-  --contrast-ivory-void: 19.1;
+  --momentum:0.94;
+  /* OKABE-8 — ivory #FFFEF7 replaces black visible dark 19.1:1 void only map-box */
+  --okabe-0:#E69F00;
+  --okabe-1:#56B4E9;
+  --okabe-2:#009E73;
+  --okabe-3:#F0E442;
+  --okabe-4:#0072B2;
+  --okabe-5:#D55E00;
+  --okabe-6:#CC79A7;
+  --okabe-7:#FFFEF7;
+  --okabe-7-repl:#FFFEF7;
+  --shadow-japanese:3px 3px 0 #000;
+  --frame-radius:14px;
+  --stone-border:1px solid var(--stone);
+  --paper-border:1.2px solid var(--ink);
+  /* PWA offline13k CORE20 — paper theme #FEFCF9 — void #080A0F only map-box 19.1:1 */
 }
-/* base — mono/sans only */
 *{box-sizing:border-box}
-html{margin:0;padding:0;background:var(--paper);color:var(--ink);color-scheme:light}
-body{margin:0;padding:0;background:var(--paper);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;scroll-behavior:smooth;min-height:100dvh;padding-top:env(safe-area-inset-top,0)}
-
-/* nav 40px sticky z40 thin paper mono/sans */
-.top-nav{
-  position:sticky;top:0;top:env(safe-area-inset-top,0);
-  height:var(--nav-h);min-height:var(--nav-h);z-index:40;
-  display:flex;align-items:center;justify-content:space-between;gap:10px;
-  padding:0 14px 0 calc(14px + env(safe-area-inset-left,0px));
-  background:var(--paper);color:var(--ink);
-  border-bottom:1.5px solid var(--ink);
-}
-.pov-bar{position:sticky;top:var(--nav-h);top:calc(var(--nav-h) + env(safe-area-inset-top,0));z-index:30;height:var(--pov-h);min-height:var(--pov-h)}
-
-/* footer — single subtle Built free · Open-source · No paywall */
-.footer-subtle{
-  display:flex;justify-content:center;align-items:center;gap:8px;
-  padding:16px 14px;font:600 11px var(--font-mono);
-  letter-spacing:.04em;text-transform:uppercase;
-  color:var(--ink-muted);background:var(--paper);
-  border-top:1.5px solid var(--ink);
-}
-.footer-subtle b{color:var(--ink);font-weight:700}
-
-/* okabe dots 8px visible */
-.okabe-dot{display:inline-block;width:8px;height:8px;border-radius:50%;border:1px solid var(--ink);box-shadow:0 0 0 1px #1E1E1E18}
-
-/* reduce-motion respects */
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}
-}
-
-/* japandi focus — ESC closes modal Enter/Space lattice */
-:focus-visible{outline:2px solid var(--clay);outline-offset:3px}
-::selection{background:#D6C7B3}
-
-/* wood grain utility — tactile book spines */
-.wood-grain{
-  background:
-    repeating-linear-gradient(90deg, rgba(30,30,30,.04) 0 1px, transparent 1px 18px),
-    linear-gradient(180deg, var(--wood-2) 0%, var(--wood) 100%);
-}
-
-/* edge wear — subtle imperfection wabi-sabi */
-.edge-wear{
-  position:relative;
-}
-.edge-wear::after{
-  content:"";
-  position:absolute;inset:-1px;
-  border-radius:inherit;
-  box-shadow:inset 0 1px 0 #FFFEF7, inset 0 -1px 0 rgba(30,30,30,.06);
-  pointer-events:none;
-}
+html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit;text-decoration:none}
+/* canonical sticky nav 40px thin UI height40 top0 z40 paper #FEFCF9 */
+.nav-sticky,.j-nav{position:sticky;top:0;top:env(safe-area-inset-top,0);height:var(--nav-h);min-height:var(--nav-h);z-index:var(--z-nav);display:flex;align-items:center;gap:12px;background:var(--paper);backdrop-filter:saturate(1.02);-webkit-backdrop-filter:saturate(1.02);border-bottom:1.5px solid var(--ink)}
+.pov-bar{position:sticky;top:var(--nav-h);height:var(--pov-h);min-height:var(--pov-h);z-index:var(--z-pov);display:flex;align-items:center;gap:8px;background:var(--paper-2);border-bottom:1.2px solid var(--ink)}
+.bg-void{background:var(--void)} /* only map-box uses void — 19.1:1 contrast */
+.bg-paper{background:var(--paper);color:var(--ink)}
+.bg-paper-warm{background:var(--paper-2);color:var(--ink)}
+.okabe-0{color:var(--okabe-0)} .bg-okabe-0{background:var(--okabe-0);color:#080A0F}
+.okabe-1{color:var(--okabe-1)} .bg-okabe-1{background:var(--okabe-1);color:#080A0F}
+.okabe-2{color:var(--okabe-2)} .bg-okabe-2{background:var(--okabe-2);color:#080A0F}
+.okabe-3{color:var(--okabe-3)} .bg-okabe-3{background:var(--okabe-3);color:#080A0F}
+.okabe-4{color:var(--okabe-4)} .bg-okabe-4{background:var(--okabe-4);color:#fff}
+.okabe-5{color:var(--okabe-5)} .bg-okabe-5{background:var(--okabe-5);color:#fff}
+.okabe-6{color:var(--okabe-6)} .bg-okabe-6{background:var(--okabe-6);color:#080A0F}
+.okabe-7{color:var(--okabe-7-repl)} .bg-okabe-7{background:var(--okabe-7-repl);color:#080A0F}
+.text-ink{color:var(--ink)}
+.text-ink-2{color:var(--ink-soft)}
+.text-void{color:var(--void)}
+.card-paper-warm{background:var(--paper-2);color:var(--ink);border:1.2px solid var(--ink);border-radius:var(--radius-md);box-shadow:var(--shadow-book)}
+.card-void{background:var(--void);color:#FFFEF7;border:1.6px solid var(--ink);border-radius:14px;box-shadow:3px 3px 0 #000} /* only map-box void */
+.glass{background:rgba(254,252,249,0.82);backdrop-filter:blur(12px) saturate(1.02);-webkit-backdrop-filter:blur(12px) saturate(1.02);border:1px solid var(--stone)}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media (max-width:640px){.grid-3{grid-template-columns:1fr}}
+.grid{display:grid;gap:18px}
+.gap-8{gap:8px}.gap-12{gap:12px}.gap-18{gap:18px}.gap-24{gap:24px}
+.rounded-sm{border-radius:var(--radius-sm)}
+.rounded-md{border-radius:var(--radius-md)}
+.rounded-lg{border-radius:var(--radius-lg)}
+.mono{font-family:var(--font-mono)}
+.canvas-dpr1{image-rendering:optimizeQuality}
+.canvas-void{background:var(--void);display:block;width:100%} /* only map-box */
+.cabinet{background:var(--void);border:1.6px solid var(--ink);border-radius:14px;box-shadow:3px 3px 0 #000;overflow:hidden}
+.cabinet-japanese-frame{border-radius:12px 16px;box-shadow:var(--shadow-japanese)}
+.j-pill{border:1.5px solid var(--ink);border-radius:9999px;padding:5px 11px;min-height:28px;background:#fff;display:inline-flex;align-items:center;font:700 11px var(--font-mono);text-transform:uppercase;letter-spacing:.04em;cursor:pointer;box-shadow:1.5px 1.5px 0 #1E1E1E18;transition:.12s}
+.j-pill.on{background:var(--ink);color:var(--paper-2);box-shadow:2px 2px 0 #1E1E1E}
+.j-pill.wood{background:var(--wood);color:var(--ink)}
+.chip{font:800 10.6px var(--font-mono);padding:6px 11px;border-radius:9999px;border:1px solid var(--stone);background:#FFFEF7;color:var(--ink-soft);display:inline-flex;gap:6px;align-items:center;cursor:pointer;user-select:none;transition:.12s;flex:0 0 auto;box-shadow:0.8px 0.8px 0 #1E1E1E12;transform:rotate(-0.18deg)}
+.chip.on{background:var(--ink);color:var(--paper-2);border-color:var(--ink);box-shadow:1.6px 1.6px 0 #1E1E1E}
+.book-card{background:linear-gradient(180deg,#FFFEF7 0%,#FEFCF9 100%);border:1.2px solid var(--ink);border-radius:10px;padding:10px 11px;box-shadow:1.8px 1.8px 0 #1E1E1E;position:relative}
+.book-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--wood);border-right:1.1px solid var(--ink);border-radius:10px 0 0 10px}
+.pick{background:linear-gradient(180deg,#FFFEF7 0%,#FEFCF9 100%);border:1px solid var(--ink);border-radius:10px;padding:9px 10px;box-shadow:1.6px 1.6px 0 #1E1E1E;transition:.12s;position:relative}
+.pick::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--moss);border-right:1px solid var(--ink);border-radius:10px 0 0 10px;opacity:.88}
+.park-muted{font:600 10.6px var(--font-mono);color:var(--ink-muted);background:var(--stone);border:1px solid var(--ink-soft);border-radius:9999px;padding:2px 7px;opacity:.86}
+.pill-stone{background:var(--stone);opacity:.86;border:1px solid var(--ink-soft);font:700 10.6px var(--font-mono);border-radius:9999px;padding:4px 9px}
+.paper-wrap{max-width:1240px;margin:0 auto;padding:0 14px}
+.footer-subtle{max-width:1240px;margin:0 auto;padding:12px 14px;color:var(--ink-muted);font:500 11px var(--font-mono);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1.2px solid var(--stone);background:var(--paper)}
+/* DPR1 LOD8000/4000 quaternion inertial 13.8k shared-map 32k momentum0.94 single-select clears prev — wabi-sabi Japandi — per_team_priors TRUE parietal 21 — SHAP muted moss/clay/stone */
