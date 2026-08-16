@@ -1,0 +1,37 @@
+{
+ "rows": 2430,
+ "features": 16,
+ "families": 3,
+ "dead_or_constant": [],
+ "redundant_pairs": [],
+ "within_family_redundancy": {
+  "attacking": {
+   "n_features": 6,
+   "mean_abs_r": 0.2489,
+   "max_abs_r": 0.7591
+  },
+  "defending_duel": {
+   "n_features": 5,
+   "mean_abs_r": 0.2187,
+   "max_abs_r": 0.4487
+  },
+  "passing_control": {
+   "n_features": 5,
+   "mean_abs_r": 0.3118,
+   "max_abs_r": 0.7023
+  }
+ },
+ "coverage_by_context": {
+  "Bundesliga 2015/2016": 1.0,
+  "Copa America 2024": 1.0,
+  "Euro 2020": 1.0,
+  "Euro 2024": 1.0,
+  "La Liga 2018/2019": 1.0,
+  "La Liga 2020/2021": 1.0,
+  "Ligue 1 2022/2023": 1.0,
+  "Premier League 2015/2016": 1.0,
+  "Serie A 2015/2016": 1.0,
+  "WC 2018": 1.0,
+  "WC 2022": 1.0
+ }
+}
