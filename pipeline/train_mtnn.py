@@ -608,7 +608,9 @@ def main() -> int:
     n_ctx = int(manifest["n_contexts"])
     np.array([POS_ORDER.get(m["pos"], 1) for m in meta])  # 0/1/2 -> DEF/MID/FWD
     pos_str = np.array([m["pos"] for m in meta])
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # auto: GPU on personal local, CPU in Hatch VM
+    device = torch.device(
+        "cuda" if torch.cuda.is_available() else "cpu"
+    )  # auto: GPU on personal local, CPU in Hatch VM
     print(f"matrix X={X.shape} | contexts={manifest['contexts']} | device={device}")
     print(f"families={list(fam_dims)} | d_emb={args.d_emb} | epochs={args.epochs}")
 

@@ -169,10 +169,10 @@ def days(d: date) -> int:
 # Phase A — fetch + per-match aggregation (cached to committed JSON)
 # --------------------------------------------------------------------------- #
 def _fetch(url: str, retries: int = 4) -> object:
-    req = urllib.request.Request(url, headers={"User-Agent": UA})  # noqa: S310
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
     for attempt in range(retries):
         try:
-            raw = urllib.request.urlopen(req, timeout=60).read()  # noqa: S310
+            raw = urllib.request.urlopen(req, timeout=60).read()
             return json.loads(raw)
         except Exception as e:
             if attempt == retries - 1:

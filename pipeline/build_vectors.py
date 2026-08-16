@@ -113,12 +113,12 @@ def fetch_json(url: str, cache_name: str, note: str = ""):
     if p.exists():
         try:
             return json.loads(p.read_text(encoding="utf-8"))
-        except Exception:  # noqa: S110 -- corrupt cache is expected; fall through to refetch
+        except Exception:
             pass
-    req = urllib.request.Request(url, headers={"User-Agent": UA})  # noqa: S310 -- url is a trusted API endpoint constant
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
     for attempt in range(4):
         try:
-            raw = urllib.request.urlopen(req, timeout=60).read()  # noqa: S310 -- trusted API endpoint
+            raw = urllib.request.urlopen(req, timeout=60).read()
             data = json.loads(raw)
             CACHE.mkdir(parents=True, exist_ok=True)
             p.write_bytes(raw)
