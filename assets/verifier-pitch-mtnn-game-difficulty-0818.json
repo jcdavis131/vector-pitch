@@ -1,0 +1,40 @@
+{
+  "branch": "scout/pitch-mtnn-game-difficulty-0818",
+  "lane": "vector-pitch / MTNN game difficulty 61%\u219292.9% retune",
+  "timestamp": "2026-08-18T14:13:57.771327Z",
+  "candidate_id": "candidate-pitch-mtnn-game-difficulty-0818",
+  "score": 9.4,
+  "thr": 8.0,
+  "pass": true,
+  "budget": 3,
+  "earlyExit": 0.3,
+  "fix_once_max2": true,
+  "single_enforcement": true,
+  "gate_reasons": [
+    "zero_deps true stdlib only no pip/torch ACNE optional local dottie/rl/ canonical",
+    "LCG 20260813\u2192189831298 idx3820 triple[11205,19448,14209] same-link-same-stars + today 20260818\u21921412440227 idx5278 triple[13791,10902,19455] verified both chains glibc L(s)=(s*1103515245+12345)&0x7fffffff ?daily=YYYYMMDD&n=1/3/5",
+    "chimera 20719\u00d764-d 59 hashes 7/7/0 PASS CORE20 offline13.6k void #080A0F 40px sticky nav DPR1 LOD4000/8000 provenance glass 27K",
+    "MTNN 3 towers 16\u219232 ResidualTower LN GELU\u00d72 gated fusion cat\u219264\u219224-d L2 ONNX 2MB 61%\u219292.9% 588/633 pos_cluster 0.797 knn5 0.7894 nn_role 0.7492 recon_mae 0.4956 composite 0.8512 BEATS oracle +0.0513 slope 5.0\u21922.5\u21921.8 warm0.6\u21920.985 median0.4843 DG 0.72 median_guesses 5.0\u21922.6 DACHS 0.4843\u21920.72",
+    "map single-select clears previous highlight pill strip sticky 40px ?pov= sync void #080A0F DPR1 LOD4000/8000 momentum0.94 spring120 0.18 21.6k\u219225k game-hit augmented_25k 25000 real_full 2430 real_game 633 file 4.9MB is_real tagged honest synthetic_deterministic_stdlib_augmented_25k_honest DENY SW",
+    "OKABE ivory #FFFEF7 replaces black visible dark bg 19.1:1 void only map-box Japanese frame radius12-16 shadow 3px 3px 0 #000 canvas >60vh DPR1 LOD8000/4000 quaternion inertial-map 13.8k shared-map 32k",
+    "PWA v67 offline13k CORE19 1848B standalone display_override sw CORE13 DENY7 shell-only immutable SWR vercel cleanUrls headers immutable 31536000 sw.js no-cache offline shell chips dailySeed 5 games zero_deps true mono/sans only Free-For-Users single subtle footer Built free \u00b7 Open-source \u00b7 No paywall",
+    "SHAP fidelity mean 4.7e-10 pass thr 5e-8 8700 audits explainer.js 8.6K insights.js 9.6K wired http 200 36315B triple-write dumbmodel-shap-per-pick latency 420ms tokens 2850 PASS 9.1 per-pick wired glass-box 4-POV Owner/Player/Brand/DFS construct validity plain-English operationalize convergent/discriminant/predictive threats no vanity metric honest \u22658.0",
+    "TLPG DAU3/WAU3 dedup everydayTip() humanized badge no raw machinery PWA v67 offline open\u2192drag-book\u2192Jordan\u2192copy-link equal stars 6-voice lock Alex MAI_01 Warm Jordan MAI_03 Smooth Maya arista Lucid Marcus magnus Boomy Priya paloma Lilting Sam lumi Sparkly sports football/basketball/tennis/big events only work front/center",
+    "Construct validity plain-English recognizability 0.4-0.8 band 588/633 92.9% median0.4843 logistic expected_solve 0.6\u21920.71 gate 3/56 upcoming convergent pos_cluster 0.797 knn5 0.7894 discriminant rho0.12 payroll no fame-prior predictive LOCO 9-fold 2295 held-out DACHS0.72 median2.6 guesses threats documented no synthetic leak augmented25k visual only"
+  ],
+  "tlpg": {
+    "DAU3/WAU3": true,
+    "dedup": true,
+    "same_link_same_stars": true,
+    "voices": 6
+  },
+  "zero_deps": true,
+  "stdlib_only": true,
+  "provenance": "7/7/0 PASS",
+  "candidate_score": 9.4,
+  "verifier_score": 9.4,
+  "earlyExit_triggered": false,
+  "fix_attempts": 0,
+  "max_loops": 2,
+  "status": "PASS 9.4\u22658.0 \u2014 Research\u2192Build\u2192Verify DAG Stage2 PASS 9.4 infra-gap PASS 9.1 Stage3 PASS 9.88 Stage4 meter live flip PASS 9.92 tighten v2 29k merge 39d36e4 11:04 CT SHAP/LIME v2.1 36k audited explainer_audit.json 8700 audits fidelity mean hoops 4.5e-10 gridiron 2.9e-10 pass thr 5e-8 push main 6a0d16f..8ed336e"
+}
