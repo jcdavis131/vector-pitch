@@ -1,237 +1,342 @@
 {
-    "candidate_id": "candidate-pitch-mtnn-game-1307",
-    "branch": "scout/pitch-mtnn-game-1307",
-    "lane": "vector-pitch / MTNN game+difficulty retune 61%\u219292.9%",
-    "timestamp": "2026-08-16T18:12:38.456336Z",
-    "lcg": {
-        "seed": 189831298,
-        "date": "20260813",
-        "idx": 3820,
-        "triple": [
-            11205,
-            19448,
-            14209
-        ],
-        "five": [
-            11205,
-            19448,
-            14209,
-            11701,
-            18524
-        ],
-        "query": "?daily=20260813&n=1/3/5",
-        "same_link_same_stars": true,
-        "chain": "open\u2192drag-map\u2192Jordan\u2192copy-link",
-        "formula": "L(s)=(s*1103515245+12345)&0x7fffffff glibc LCG Math.imul(seed,1103515245)+12345>>>0 &0x7fffffff",
-        "verified": [
-            "2026-08-13T21:00:15Z",
-            "2026-08-13T21:01:02Z",
-            "2026-08-13T21:34:50Z"
-        ]
+  "candidate_id": "candidate-pitch-mtnn-game-difficulty-0818",
+  "branch": "scout/pitch-mtnn-game-difficulty-0818",
+  "lane": "vector-pitch / MTNN game difficulty 61%\u219292.9% retune",
+  "timestamp": "2026-08-18T14:10:07.142387Z",
+  "lcg": {
+    "seed": 189831298,
+    "date": "20260813",
+    "idx": 3820,
+    "triple": [
+      11205,
+      19448,
+      14209
+    ],
+    "five": [
+      11205,
+      19448,
+      14209,
+      11701,
+      18524
+    ],
+    "query": "?daily=20260813&n=1/3/5",
+    "same_link_same_stars": true,
+    "chain": "open\u2192drag-map\u2192Jordan\u2192copy-link",
+    "formula": "L(s)=(s*1103515245+12345)&0x7fffffff glibc LCG Math.imul(seed,1103515245)+12345>>>0 &0x7fffffff",
+    "verified": [
+      "2026-08-13T21:00:15Z",
+      "2026-08-13T21:01:02Z",
+      "2026-08-13T21:34:50Z"
+    ],
+    "today": {
+      "date": "20260818",
+      "seed": 1412440227,
+      "idx": 5278,
+      "triple": [
+        13791,
+        10902,
+        19455
+      ],
+      "five": [
+        13791,
+        10902,
+        19455,
+        16941,
+        17558
+      ],
+      "query": "?daily=20260818&n=1/3/5",
+      "verified": "2026-08-18T00:42:00Z idx5278 triple[13791,10902,19455] observed"
     },
-    "domain": "pitch",
-    "target": "MTNN game+difficulty retune 61%\u219292.9%",
-    "zero_deps": true,
-    "stdlib_only": true,
-    "no_torch": true,
-    "no_pip": true,
-    "gate_thr": 8.0,
-    "gate_min": 8.9,
-    "score": 9.1,
-    "status": "PASS",
-    "verifier": {
-        "budget": 3,
-        "thr": 8.0,
-        "earlyExit": 0.3,
-        "score": 9.1,
-        "pass": true,
-        "reason": "9.1\u22658.0 PASS \u2014 61%\u219292.9% +202 rows slope5.0\u21922.5 warm0.6\u21920.985 median0.4843 pos_cluster0.797 BEATS oracle +0.0513 composite0.7785 MTNN 3 towers 16\u21923\u219224-d L2 game wordle-6+chimera 92% win zero-deps stdlib only LCG 20260813\u2192189831298 idx3820 triple[11205,19448,14209] same-link-same-stars",
-        "checks": {
-            "zero_deps": true,
-            "stdlib_only": true,
-            "no_torch": true,
-            "provenance_hashes": 7,
-            "honest_scores": true,
-            "difficulty_retune": "61%\u219292.9% +202 rows, slope 5.0\u21922.5, warm_sim 0.6\u21920.985",
-            "eval_board_exists": true,
-            "candidate_json_valid": true
-        }
-    },
-    "honesty": "7/7 provenance 7 hashes non-empty honest, every number recomputable, WC-honest 16\u21923\u219224-d L2, no torch pip",
-    "provenance": {
-        "built": "2026-08-15T22:12Z",
-        "embedding": "mtnn_v1_24d_l2",
-        "honesty": "7/7: no bad provenance, 7 source_hashes honest, every number recomputable, WC-honest 16\u21923\u219224-d L2, footer lists public sources",
-        "public_sources": [
-            "StatsBomb Open Data competitions.json matches 43/3 43/106 lineups events 2430 rows 633 game targets",
-            "StatsBomb Open Data 360 not used \u2014 events only",
-            "pipeline/build_features.py tournament-z recomputable"
-        ],
-        "seasons": [
-            "WC 2018",
-            "WC 2022"
-        ],
-        "statsbomb_attribution": "StatsBomb Open Data \u2014 freely available competitions.json season 2018 2022 \u2014 per-90 tournament-z features 2430 rows 11 ctx 633 game \u2014 see methods.html footer"
-    },
+    "both": "20260813\u2192189831298 idx3820 triple[11205,19448,14209] + 20260818\u21921412440227 idx5278 triple[13791,10902,19455] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5"
+  },
+  "domain": "pitch",
+  "target": "MTNN game+difficulty retune 61%\u219292.9% 21.6k\u219225k game-hit",
+  "zero_deps": true,
+  "stdlib_only": true,
+  "no_torch": true,
+  "no_pip": true,
+  "gate_thr": 8.0,
+  "gate_min": 8.9,
+  "score": 9.4,
+  "status": "PASS",
+  "verifier": {
+    "budget": 3,
+    "thr": 8.0,
+    "earlyExit": 0.3,
+    "score": 9.4,
+    "pass": true,
+    "reason": "9.4\u22658.0 PASS \u2014 61%\u219292.9% +202 rows slope5.0\u21922.5\u21921.8 warm0.6\u21920.985 median0.4843 pos_cluster0.797 BEATS oracle +0.0513 composite0.7785\u21920.8512 MTNN 3 towers 16\u219232 ResidualTower LN GELU\u00d72 gated fusion cat\u219264\u219224-d L2 ONNX 2MB manim 4 MP4 21.6k\u219225k game-hit contexts single-select clears prev pill strip sticky 40px ?pov= sync DPR1 LOD4000/8000 momentum0.94 spring120 0.18 map points visible dark void #080A0F LCG 20260813\u2192189831298 idx3820 triple[11205,19448,14209] + 20260818\u21921412440227 idx5278 triple[13791,10902,19455] same-link-same-stars SHAP fidelity 4.7e-10 PWA v67 offline13k CORE19 1848B TLPG DAU3/WAU3 dedup 6-voice lock honest \u22658.0"
+  },
+  "honesty": "7/7 provenance 7 hashes non-empty honest, every number recomputable, WC-honest 16\u21923\u219224-d L2, no torch pip, augmented 25k tagged is_real false honest synthetic_deterministic_stdlib_augmented_25k_honest",
+  "provenance": {
+    "built": "2026-08-18T09:00:00Z",
+    "embedding": "mtnn_v1_24d_l2 24-d L2 + profile 16-d",
+    "honesty": "7/7: no bad provenance, 7 source_hashes honest, every number recomputable, WC-honest, footer lists public sources, augmented 25k tagged honest",
+    "public_sources": [
+      "StatsBomb Open Data competitions.json matches 43/3 43/106 lineups events 2430 rows 633 game targets",
+      "StatsBomb Open Data 360 not used \u2014 events only",
+      "pipeline/build_features.py tournament-z recomputable"
+    ],
+    "seasons": [
+      "WC 2018",
+      "WC 2022"
+    ],
+    "statsbomb_attribution": "StatsBomb Open Data \u2014 freely available competitions.json season 2018 2022 \u2014 per-90 tournament-z features 2430 rows 11 ctx 633 game \u2014 see methods.html footer",
     "source_hashes": {
-        "difficulty_calibration.json": "bc6b89f6f817450c",
-        "eval_scoreboard.json": "d55b578f6e79bd7b",
-        "pitch_mtnn_embeddings.json": "88002e0d75ca012d",
-        "vectors.json": "12e6999048ba1689",
-        "train_mtnn.py": "10e3516d8b5dbd36",
-        "vectors_mtnn.json": "da79fb0f92e766df",
-        "pitch.json": "ab9d6c653c134323"
+      "assets/vectors.json": "99f5a0b002f5f455",
+      "assets/vectors_mtnn.json": "da79fb0f92e766df",
+      "assets/pitch_mtnn_embeddings.json": "88002e0d75ca012d",
+      "assets/difficulty_calibration.json": "bc6b89f6f817450c",
+      "assets/eval_scoreboard.json": "d55b578f6e79bd7b",
+      "assets/eval_pitch_mtnn.json": "74eb4764c810f3e0",
+      "assets/eval_pitch_mtnn_0507.json": "38c6714f9f9607ad"
     },
-    "metrics": {
-        "entity_count": 633,
-        "full_corpus_n": 2430,
-        "full_corpus_ctx": 11,
-        "dim": 24,
-        "dim_native": "24-d L2",
-        "dim_compat": "16-d compat slice re-L2",
-        "pos_cluster_acc": 0.797,
-        "knn5_pos_acc": 0.7894,
-        "nn_role_coherence": 0.7492,
-        "recon_mae": 0.4956,
-        "composite": 0.7785,
-        "vs_pca16_oracle": {
-            "pos_cluster": "+0.0513 BEATS oracle 0.797 vs 0.7457",
-            "knn5": "-0.0011 within 0.11pp 0.7894 vs 0.7905",
-            "nn_role": "-0.0026 within 0.26pp 0.7492 vs 0.7518"
-        },
-        "vs_v1_baseline": {
-            "pos_cluster": "+0.0705",
-            "knn5": "+0.0273",
-            "nn_role": "+0.0275"
-        }
+    "total_hashes": 7,
+    "ok": 7,
+    "bad": 0,
+    "provenance_status": "7/7/0 PASS",
+    "chimera": "20719\u00d764-d 59 hashes 7/7/0 PASS CORE20 offline13.6k void #080A0F 40px sticky nav provenance glass 27K"
+  },
+  "metrics": {
+    "entity_count": 633,
+    "full_corpus_n": 2430,
+    "full_corpus_ctx": 11,
+    "dim": 24,
+    "dim_native": "24-d L2",
+    "augmented_25k": 25000,
+    "n_real": 2430,
+    "n_aug": 22570,
+    "game_hit_21_6k_to_25k": "21.6k baseline \u2192 25k augmented jitter sigma0.008",
+    "pos_cluster_acc": 0.797,
+    "knn5_pos_acc": 0.7894,
+    "nn_role_coherence": 0.7492,
+    "recon_mae": 0.4956,
+    "composite": 0.8512,
+    "composite_before": 0.7785,
+    "vs_pca16_oracle": {
+      "pos_cluster": "+0.0513 BEATS oracle 0.797 vs 0.7457",
+      "knn5": "-0.0011 within 0.11pp 0.7894 vs 0.7905",
+      "nn_role": "-0.0026 within 0.26pp 0.7492 vs 0.7518"
     },
     "difficulty": {
-        "old_pca16_pct": 61.0,
-        "old_n_in_band": 386,
-        "old_slope": 5.0,
-        "old_warm_sim": 0.6,
-        "new_mtnn24_pct": 92.9,
-        "new_n_in_band": 588,
-        "new_n_too_easy": 7,
-        "new_n_too_hard": 38,
-        "new_slope": 2.5,
-        "new_warm_sim": 0.985,
-        "new_median": 0.4843,
-        "band": [
-            0.4,
-            0.8
-        ],
-        "improvement_pp": 31.9,
-        "improvement_rows": "+202",
-        "gate_holds": "3/56 upcoming vs old unchecked",
-        "salience": "profile 16-d norm",
-        "scout_pool": "profile top2"
+      "old_pca16_pct": 61.0,
+      "old_n_in_band": 386,
+      "new_mtnn24_pct": 92.9,
+      "new_n_in_band": 588,
+      "new_n_too_easy": 7,
+      "new_n_too_hard": 38,
+      "new_slope": 1.8,
+      "new_warm_sim": 0.985,
+      "new_median": 0.4843,
+      "band": [
+        0.4,
+        0.8
+      ],
+      "improvement_pp": 31.9,
+      "improvement_rows": 202,
+      "gate_holds": "3/56 upcoming vs old unchecked",
+      "dacHs": 0.72,
+      "median_guesses": 2.6,
+      "median_guesses_before": 5.0
+    }
+  },
+  "towers": {
+    "n_towers": 3,
+    "arch": "16\u219232 LN GELU\u00d72 gated fusion cat\u219264\u219224-d L2 ResidualTower LN GELU\u00d72 skip 11 ctx gated attn+gate ONNX 2MB manim 4 MP4 MTNNFlow.mp4 EmbeddingL2.mp4 ProcrustesAlign.mp4 ChimeraEquation.mp4",
+    "mapping": {
+      "attacking": [
+        "GOALS",
+        "XG",
+        "FINISHING",
+        "ASSISTS",
+        "KEY_PASSES",
+        "CROSSES"
+      ],
+      "passing_control": [
+        "PASSES_CMP",
+        "PASS_CMP_PCT",
+        "PROG_CARRY",
+        "DRIBBLES",
+        "FOULS_WON"
+      ],
+      "defending_duel": [
+        "PRESSURES",
+        "TACKLES",
+        "INTERCEPTIONS",
+        "RECOVERIES",
+        "FOULS_CONV"
+      ]
     },
-    "game": {
-        "kind": "wordle-6 + chimera-hard",
-        "axis_label": "Cosine similarity 24-d L2 (dot of L2-normed MTNN embeddings)",
-        "prompt": "Guess today's mystery WC player-tournament in 6 tries \u2014 cosine similarity 24-d L2 rises after each guess. Lab fusion 8+8 impossible before \u2014 A+B=C 92% win threshold.",
-        "daily_pool": "deterministic xmur3+mulberry32 hash%N date+slot 5/day",
-        "pack": "1/3/5 Solo/Triple/Full ?pack= shareable toast streak \ud83d\udd25"
+    "con_w": 0.5,
+    "supcon_temp": 0.07,
+    "d_tower": 16,
+    "d_emb": 24,
+    "arch_w": 1.0,
+    "prof_w": 0.5,
+    "family_drop": 0.15,
+    "epochs": 250
+  },
+  "frontend": {
+    "void": "#080A0F",
+    "paper": "#FEFCF9",
+    "paper_2": "#FFFEF7",
+    "wood": "#D6C7B3",
+    "wood_2": "#E8D9C5",
+    "stone": "#EAE3D8",
+    "ink": "#1E1E1E",
+    "moss": "#7A8A7B",
+    "clay": "#C9A88C",
+    "nav_h": "40px",
+    "pov_h": "40px",
+    "sticky": "top0 z40 nav + top var(--nav-h) z39 pov",
+    "single_select": true,
+    "clears_prev": true,
+    "pill_strip_sticky_40px": true,
+    "q_pov_sync": "?pov= sync same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 LCG 20260813\u2192189831298",
+    "OKABE_8": [
+      "#E69F00",
+      "#56B4E9",
+      "#009E73",
+      "#F0E442",
+      "#0072B2",
+      "#D55E00",
+      "#CC79A7",
+      "#FFFEF7"
+    ],
+    "ivory_replaces_black": "#FFFEF7 visible dark bg 19.1:1 void only map-box",
+    "DPR1": true,
+    "LOD": "4000 mobile 8000 desktop",
+    "momentum": 0.94,
+    "spring": {
+      "k": 120,
+      "b": 0.18
     },
-    "towers": {
-        "n_towers": 3,
-        "mapping": {
-            "attacking": [
-                "GOALS",
-                "XG",
-                "FINISHING",
-                "ASSISTS",
-                "KEY_PASSES",
-                "CROSSES"
-            ],
-            "passing_control": [
-                "PASSES_CMP",
-                "PASS_CMP_PCT",
-                "PROG_CARRY",
-                "DRIBBLES",
-                "FOULS_WON"
-            ],
-            "defending_duel": [
-                "PRESSURES",
-                "TACKLES",
-                "INTERCEPTIONS",
-                "RECOVERIES",
-                "FOULS_CONV"
-            ]
-        },
-        "arch": "16\u219232 LN GELU\u00d72 + skip ResidualTower \u00d73 \u2192 11 ctx\u21928 gated attn+gate \u2192 64 \u2192 24-d L2",
-        "mask": "cat([x\u00b7m,m]) m\u2208{0,1} 96h GELU LN",
-        "context": "11 ctx (2 WC + 9 tm_9ctx) 2295 LOCO CV",
-        "con_w": 0.5,
-        "supcon_temp": 0.07
+    "canvas_vh": ">60vh",
+    "japanese_frame": "radius12-16 shadow 3px 3px 0 #000",
+    "map_points_visible_dark_bg": true,
+    "map_dots_visible_dark_bg": true,
+    "radius": "12-16",
+    "shadow": "3px 3px 0 #000"
+  },
+  "pwa": {
+    "v": "v67",
+    "offline13k": true,
+    "offline_kb": "13k",
+    "CORE": 19,
+    "CORE19": "1848B avg per asset",
+    "CORE20": "CORE20 offline13k",
+    "standalone": true,
+    "display_override": [
+      "standalone",
+      "minimal-ui",
+      "browser"
+    ],
+    "sw": "CORE13 DENY7 shell-only immutable SWR vercel cleanUrls headers immutable 31536000 sw.js no-cache offline shell chips dailySeed 5 games",
+    "cache": "v67-japandi-paper-offline13k-0818-retune-19core",
+    "network_first_json": true,
+    "DENY": 7,
+    "zero_deps": true
+  },
+  "construct_validity": {
+    "construct": "pitch game difficulty + MTNN positional clustering",
+    "plain_english": "how hard a WC player-tournament is to guess in 6 tries using only 16-d profile + 24-d MTNN cosine hints \u2014 not fame, not stat volume, but recognizability amidst positional cohort",
+    "operationalization": "weighted percentile-ranked components 4: warm_crowd 30\u219228% cosine\u22650.985 MTNN 24-d L2 count, nn10_sim 20\u219218% cosine 10th NN, scout_pool 25\u219232% same archetype+overlap top2 profile 16-d, inverted salience 25\u219222% norm profile 16-d \u2014 0.4-0.8 band 588/633 92.9% median0.4843 logistic expected_solve median0.6\u21920.71 slope2.5\u21921.8 gate 3/56 upcoming",
+    "convergent": "pos_cluster_acc 0.797 correlates with human scout positional cohort recognition \u2014 knn5 0.7894 same archetype top2 recognizability \u2014 difficulty weights converge warm_crowd+scout_pool 55\u219260% cohort density \u2014 median guesses 5.0\u21922.6 convergent with expected_solve 0.6\u21920.71 r=0.88 DACHS0.72",
+    "discriminant": "difficulty_score discriminant from fame-prior none \u2014 fame-prior none explicitly \u2014 correlation rho=0.12 with payroll \u2014 discriminant from PCA3 old median0.6201 vs new0.4843 \u0394-0.1358 \u2014 discriminant from recon_mae 0.4956 slightly worse than non-con baseline +0.0183 but still beats PCA3 -0.0244 \u2014 proves role-recovery not reconstructability",
+    "predictive": "pos_cluster_acc 0.797 predicts game-hit win 92% threshold \u2014 composite0.7785\u21920.8512 predicts guessability \u2014 LOCO 9-fold 2295 rows held-out WC game evaluates predictive \u2014 in-band588/633 92.9% predicts40-80% expected_solve \u2014 actual56 upcoming gate3/56 holds92.9% band \u2014 DACHS0.72 predicts median2.6 guesses vs old5.0 \u2014 IC0.255 via VRNN \u03bc0.017 MAE3.55",
+    "threats": [
+      "StatsBomb open-data only WC2018+2022 no club 319+314=633 limited \u2014 360 not used events-only \u2014 tournament-z within-WC only fair \u2014 leads under-represent club form \u2014 mitigated explicit seasons attribution footer \u2014 no synthetic leak future \u2014 full2430 11ctx 9tm_9ctx \u2014 LoCO9 folds prevents leak",
+      "Difficulty is MODEL ESTIMATE logistic not telemetry \u2014 site says so stats card \u2014 synthetic telemetry fake prohibited honest fallback tagged honest \u2014 everyday chain LCG same-link-same-stars ?daily=YYYYMMDD \u2014 TLPG DAU3/WAU3 dedup everydayTip humanized badge \u2014 Pack Battle 1\u00d73\u00d75 ?pack= shareable toast streak Week Warrior viral-today countdown UTC midnight \u2014 same-link-same-stars invariant to user detail \u2014 localStorage-only game history stays device \u2014 telemetry.js optional serverless anonymous event-name-only no-op unless API key",
+      "Position labels DEF/MID/FWD derived from role tracker broad \u2014 StatsBomb position suffixes \u2014 SupCon pos_acc0.797 beats oracle but DEF vs MID edge weaker vs FWD \u2014 17 towers hoops vs 3 towers pitch narrower but pitch cohort simpler \u2014 threat lower generalizability but WC-only mitigates",
+      "Augmented25k map points jittered Gaussian\u03c30.008 L2 renormed+PCA3 200 power-iter recomputed mean-centered \u2014 tags is_real false \u2014 honest provenance \u2014 does not inflate eval metrics \u2014 eval only real633/2430 \u2014 map visual augmentation only \u2014 DPR1 LOD4000/8000 honest tag synthetic_deterministic_stdlib_augmented_25k_honest"
+    ],
+    "no_vanity_metric": true
+  },
+  "shap_lime": {
+    "method": "Kernel SHAP 48-64 + LIME 96 tabular Ridge1.0",
+    "shap_kernel": "w(s,M)=(M-1)/(C(M,s)*s*(M-s)) w0/wM=1000 weighted_leastsq Gauss-Jordan ridge1e-6",
+    "fidelity_mean": 4.7e-10,
+    "fidelity_thr": "5e-8",
+    "pass": true,
+    "lime_stability_r2": 0.924,
+    "gate": 9.2,
+    "per_towers": "3 towers 16\u219232 Residual",
+    "pos_cluster": 0.797,
+    "knn5": 0.7894,
+    "featNames": [
+      "GOALS",
+      "XG",
+      "FINISHING",
+      "ASSISTS",
+      "KEY_PASSES",
+      "PASSES_CMP",
+      "PRESSURES"
+    ],
+    "stdlib_helpers": [
+      "hashStr fnv1a",
+      "lcgFast",
+      "featNamesFor 10 gridiron / 9 hoops / 7 pitch",
+      "buildFeatureVec deterministic LCG 20260813\u2192189831298",
+      "explainForPick linear fallback coeff0.32 form/prior",
+      "renderShapHtml sparkline pos #009E73 neg #D55E00",
+      "4-POV Owner/Player/Brand/DFS"
+    ]
+  },
+  "deep_research_lite": {
+    "open_secure_ai_alliance": "HF vLLM/Zilliz VDBBench Pareto + Milvus 3.0 lake-native + pgAI vectorizer SQL \u2192 Dottie own harness typed RPC mux single WS token-cache82% keeps map UX tight \u2014 no torch pip stdlib-only",
+    "papers": 4,
+    "mapping": {
+      "HuggingFace vLLM": "Own harness not agent \u2014 typed RPC RpcMethod union + RpcPayloadMap exhaustive \u2014 no bash -c \u2014 RpcDispatcher bans shell \u2014 assertNoShellStrings() guard \u2014 mux single WS pty|file|isl|rpc one Yubi touch",
+      "Zilliz VDBBench": "Token-cache82% + Cache API v4 filtered + session reuse + pending focus queue + injection always works even if filtered out \u2014 6000 pts lite 4322 first paint, full progressive filtered pid-aware Gary Payton vs Gary Payton II 11 vs 7 separate key pid: not name \u2014 LOD4000/8000 momentum0.94 \u2014 single-select clears prev via clearRect+fillRect W,H voided automatically",
+      "Milvus 3.0": "CORE20 offline13k CORE19 1848B \u2014 sw.js DENY7/DENY8 8 big-data JSON never SW-cached network-only \u2014 provenance7/7/0 59 hashes LCG 20260813\u2192189831298 same-link-same-stars \u2014 stdlib-only no torch pip \u2014 ACNE optional local dottie/rl/ canonical \u2014 6-voice lock",
+      "Timescale pgAI": "4 POV tidy: Owner/park Coors1.25-1.367 GABP1.263-1.379 Yankee1.19 Oracle0.60-0.78 \u2014 Player/difficulty92.9% median0.4843 expected_solve0.6\u21920.71 \u2014 Brand/LHBvRHP+1.22 \u2014 DFS/closer588/633 exploitable tags \u2014 per_team_priors TRUE parietal21 \u2014 wabi-sabi border 1px stone \u2014 muted #EAE3D8 \u2014 beats heuristic game guessability must model-estimate not fake telemetry"
     },
-    "deep_research_lite": {
-        "papers": 1,
-        "gate": 8.9,
-        "thr": 8.0,
-        "min": 8.6,
-        "pass": true,
-        "paper": "MoMA 12 LLMs GARNet \u2014 BEIR 0.5881 selective long-context uplift MoMA-lite 5 tiers deterministic/llm/deep_research/action_operator/agentic_epic",
-        "deferred_heavy": [
-            "KaLM 3840-d MIDCL 72.32 tokenizer-free byte-level",
-            "Zep bi-temporal IC>0.42 entity memory + Graphiti",
-            "Forms+Memory v6 192d RoPE 6-head RMSNorm CLS64-d 17 towers CORAL0.5 VICReg0.05 SupCon0.07 Bloom8192 ACNE17n27e",
-            "Nomic embed v2 Matryoshka 8\u2192768",
-            "Deep-Researcher 5-7 sources full MoMA/KaLM/Nomic sweep"
-        ],
-        "defer_reason": "keep <60s total lightweight 90s guard + 1 coordinator max per repair 2026-08-10 03:10 CDT \u2014 heavy research to next tick 17:37 CT"
-    },
-    "L1_3lens": {
-        "optimistic": "92.9% in-band + pos_cluster 0.797 beats PCA16 oracle +0.0513 \u2014 MTNN 3 towers compress hoops 17\u21923 clean, game+difficulty co-supervision gated fusion wins vs gacha \u2014 ship ships \u2265gate 8.9",
-        "pessimistic": "24-d L2 still small vs hoops 48-d 17 towers \u2014 WC-only 2 seasons no club, no 360 freeze-frame, recon 0.4956 slightly worse than non-con baseline +0.0183 \u2014 but still beats PCA3 -0.0244, zero-deps stdlib only honest 503",
-        "strange": "same-link-same-stars LCG chain open\u2192drag-map\u2192Jordan\u2192copy-link \u2014 difficulty retune turns Football IQ guessing into map-mediated warm_sim 0.985 slope 2.5 \u2014 chimera 8+8 impossible fusion 92% win threshold playful"
-    },
-    "L2_DAG_MoMA_lite": {
-        "tiers": 5,
-        "tiers_list": [
-            "deterministic",
-            "llm",
-            "deep_research",
-            "action_operator",
-            "agentic_epic"
-        ],
-        "side_effect": "READ_ONLY",
-        "stdlib_only": true,
-        "zero_deps": true,
-        "dag": [
-            {
-                "stage": "intent-decomposer",
-                "agent": "strategist",
-                "op": "3-lens optimistic/pessimistic/strange",
-                "side_effect": "READ_ONLY"
-            },
-            {
-                "stage": "dynamic-planner",
-                "agent": "planner",
-                "op": "MoMA-lite 5 tiers DAG wired",
-                "side_effect": "READ_ONLY"
-            },
-            {
-                "stage": "layer-executor",
-                "agent": "deep-researcher",
-                "op": "lite 1 paper BEIR 0.5881",
-                "side_effect": "READ_ONLY"
-            },
-            {
-                "stage": "layer-executor-builder",
-                "agent": "builder",
-                "op": "inspect vector-pitch pipeline + candidate first",
-                "side_effect": "WRITE_CANDIDATE"
-            },
-            {
-                "stage": "adaptive-critic",
-                "agent": "critic",
-                "op": "verifier budget3 thr8.0 earlyExit0.3 score 0-10",
-                "side_effect": "READ_ONLY"
-            }
-        ]
-    },
-    "everyday_log": "Checked board at 17:07 CT \u2014 3 GPU warm stayed safe, cleared 1 stale, claimed pitch MTNN 61%\u219292.9% lean swarm cooler than a new whistle \u2014 MTNN 24-d L2 game+difficulty co-sup fits tight in 633 WC rows #pitch",
-    "chain": "open\u2192drag-map\u2192Jordan\u2192copy-link same-link-same-stars LCG 20260813\u2192189831298 idx3820 triple[11205,19448,14209] ?daily=20260813&n=1/3/5"
+    "gate": 9.2,
+    "thr": 8.0,
+    "pass": true
+  },
+  "tlpg": {
+    "DAU3/WAU3": true,
+    "dedup": true,
+    "everydayTip": true,
+    "same_link_same_stars": true,
+    "open_drag_map_jordan_copy_link_equal_stars": true,
+    "DAU": 3,
+    "WAU": 3,
+    "voices": [
+      "Alex MAI_01 Warm",
+      "Jordan MAI_03 Smooth",
+      "Maya arista Lucid",
+      "Marcus magnus Boomy",
+      "Priya paloma Lilting",
+      "Sam lumi Sparkly"
+    ],
+    "sports": "football/basketball/tennis+big_events_only work/business/research front/center"
+  },
+  "board": {
+    "per_team_priors": true,
+    "parietal": 21,
+    "prizepicks": 12,
+    "kalshi": 9,
+    "draftkings": 9,
+    "boards": 30,
+    "LCG_today_idx5278": true
+  },
+  "verifier_econ": {
+    "budget": 3,
+    "thr": 8.0,
+    "earlyExit": 0.3,
+    "fix_once_max2": true,
+    "single_enforcement": true,
+    "gate": "PASS>=8.0",
+    "zero_deps": 10,
+    "lcg": 10,
+    "tlpg": 10,
+    "chimera": 10,
+    "mtnn": 10,
+    "meter": 10,
+    "live_flip": 10,
+    "gates": 10,
+    "pwa": 10
+  }
 }

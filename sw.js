@@ -1,17 +1,20 @@
-/* pitch PWA v67.2 — Japandi — CORE20 offline13k LOD4000/8000 DPR1 fillRect #080A0F only map-box 19.1:1 — Japanese frame radius12-16 shadow 3px 3px 0 #000 canvas >60vh quaternion inertial-map 13.8k shared-map 32k momentum0.94 single-select clears prev — PWA v67 offline13k CORE20 network-first JSON DENY binary — provenance 7/7/0 59 hashes — LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,16853,15710] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 — per_team_priors TRUE parietal 21 — paper #FEFCF9 wood #D6C7B3 stone #EAE3D8 moss #7A8A7B clay #C9A88C — SHAP muted — zero-deps true stdlib only — verifier budget3 thr8.0 earlyExit0.3 max2 */
-const CACHE_NAME='vector-pitch-v67-japandi-paper-offline13k';
+/* pitch PWA v67.2 — Japandi — CORE20 offline13k LOD4000/8000 DPR1 fillRect #080A0F only map-box 19.1:1 — Japanese frame radius12-16 shadow 3px 3px 0 #000 canvas >60vh quaternion inertial-map 13.8k shared-map 32k momentum0.94 single-select clears prev — PWA v67 offline13k CORE20 network-first JSON DENY binary — provenance 7/7/0 59 hashes — LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] + today 20260818→1412440227 idx5278 triple[13791,10902,19455] glibc L(s)=(s*1103515245+12345)&0x7fffffff same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 — per_team_priors TRUE parietal 21 — paper #FEFCF9 wood #D6C7B3 stone #EAE3D8 moss #7A8A7B clay #C9A88C — SHAP muted — zero-deps true stdlib only — verifier budget3 thr8.0 earlyExit0.3 max2 — CORE19 1848B standalone display_override sw CORE13 DENY7 */
+const CACHE_NAME='vector-pitch-v67-japandi-paper-offline13k-0818-retune-19core';
 const CORE=[
 '/','/index.html','/manifest.json','/offline.html',
 '/assets/tokens.css','/assets/shared-map.js','/assets/inertial-map.js',
-'/assets/site-nav.js','/assets/shell.css','/assets/responsive.css',
+'/assets/site-nav.js','/assets/shell.css','/assets/responsive.css','/assets/pitch.css',
+'/assets/dashboard.css','/assets/motion.css','/assets/player-profile-v28.css',
 '/assets/icon-192.png','/assets/icon-512.png',
-'/assets/error-boundary.js','/assets/keyboard-a11y.js','/assets/explainer.js'
+'/assets/error-boundary.js','/assets/keyboard-a11y.js','/assets/explainer.js','/assets/game.js'
 ];
 const DENY=[
 '/assets/vectors.json','/assets/vectors_mtnn.json','/assets/pitch_mtnn_embeddings.json',
+'/assets/vectors_search_lite_pos.json','/assets/vectors_search_lite.json','/assets/vectors_map_lite.json',
 '/assets/data/pitch.json','/assets/data/pitch_win_totals.json','/assets/data/for_history.json',
 '/assets/data/boards_2026_08_18.json','/assets/data/boards_2026_08_17.json',
-'/assets/data/prop_edge_pitch.jsonl','/assets/data/mlb_win_totals.json'
+'/assets/data/prop_edge_pitch.jsonl','/assets/data/mlb_win_totals.json',
+'/assets/pitch_mtnn.onnx'
 ];
 function isDenied(p){ return DENY.some(x=> p.includes(x) || p.endsWith(x.split('/').pop())); }
 function isCore(p){ return CORE.includes(p) || CORE.includes(p.replace('/index.html','/')); }
