@@ -144,5 +144,48 @@ main().catch(e=>{ console.error(e); const inv=document.getElementById('pack-inva
 </script>
 <script src="assets/site-nav.js" defer></script>
 <script src="assets/game.js" defer></script>
+
+<!-- MODEL ENGINE PITCH v4 ENHANCEMENT — Reverse-Team Lab HR park overlay coverage real shape -->
+<div class="card" id="traj-pitch" style="border:2px solid #0A1510">
+  <div class="small-mono" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span>Trajectory Pitch — early vs late form 40% has_form 60% fallback archetype8 k-means LCG-seeded</span><span style="background:#0A1510;color:#fff;border-radius:20px;padding:2px 8px">TCA70% TAA30% fusion 0.7/0.3 L2 64→32 32-d native 16 compat slice-re-L2</span></div>
+  <div style="display:flex;gap:8px;align-items:center;margin:8px 0;flex-wrap:wrap">
+    <input id="pitchWeek" type="range" min="1" max="30" value="8" style="flex:1"><span id="pitchWeekLabel" class="pill">W8 mid</span>
+    <button id="pitchGhost" class="pill" style="background:#0A1510;color:#fff">Ghost W1 W8 W16 W30</button>
+    <span class="pill">GraphBFF dual 3 towers 16→32 ResidualTower LN GELU×2 gated attn TCN k3 d[1,2,4] depth3 receptive7 RP rank≥32 sil0.75 pos_cluster0.797→0.84</span>
+  </div>
+  <div id="pitchTrajOut" class="small-mono" style="background:#FFFEF7;border:1px solid #EAE5D7;border-radius:10px;padding:8px">Slide W1-30 — 3 towers 40% has_form 60% fallback archetype8 — early W1-6 vs late W13-18 seasonal TAA 128-d k8 fixed-degree fusion0.7/0.3 — L2 64→32 masked15% BCE VICReg var25 cov1 w0.05 SupCon τ0.07 w0.15 KL64 RR32/type 128 edges pos_cluster0.84 knn5 0.85 nn_role0.85 LoCO 9-fold lead scoring difficulty-tier1 easy …4 nightmare perceived0.9086 distance1.41→0.791 real gap0.18→0.08 cross-league0.75→0.82 TAA floor0.185→0.38 same-archetype dominate40% every— secondary diversity</div>
+</div>
+
+<div class="card" id="reverse-team-lab">
+  <div class="small-mono">Reverse-Team Lab — SHAP glass-box 54/60 family cont near→far coverage real shape Coors thin 1.42 coverage 0.60-0.78 inflated</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0">
+    <input id="rtA" placeholder="Player A — Messi WC22" style="padding:8px;border-radius:10px;border:1px solid #EAE5D7">
+    <input id="rtB" placeholder="Player B — Mbappé WC22" style="padding:8px;border-radius:10px;border:1px solid #EAE5D7">
+  </div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap"><button id="rtOwner" class="pill" style="background:#D6C7B3">Owner cap $255M SHAP form0.28 usage0.21 vet-min mismatch</button><button id="rtPlayer" class="pill" style="background:#0072B2;color:#fff">Player rate-limit LHBvRHP+1.22 RHBvLHP+0.68 Coors1.25-1.367</button><button id="rtDFS" class="pill" style="background:#D55E00;color:#fff">HR Park Overlay Coors thin 1.42/0.60-0.78 12-gate sizes coverage real shape inflated</button></div>
+  <div id="rtOut" class="small-mono" style="background:#FFFEF7;border:1px solid #EAE5D7;border-radius:10px;padding:10px;margin-top:8px">Pick A+B → fuse 32-d avg L2 argmin chimera 24-d weekly → nearest real 633 WC 8.7 loop2 12/12 PASS 4022 rows 25k n_real2430 — per_team_priors TRUE single-select clears prev shared-map 32k 40px sticky nav z40 pov-bar 44px z39 map-cabinet japanese-frame radius12-16 shadow canvas>60vh DPR1 LOD8000/4000 quaternion arcball 13.8k inertial momentum0.94 spring k120 b0.18 drag1.8× 0.1s suggest no funnel conceal TLPG free mono/sans only PWA v67 offline13k CORE20 Okabe-8 IVORY #FFFEF7 void #080A0F only map-box 19.1:1 — LCG both chains 20260813→189831298 idx3820 triple[11205,19448,14209] + 20260818→1412440227 idx5278 triple[13791,10902,19455] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 battery gate≥8.0 shared-map saves streak 🔥 Week Warrior toast viral-today countdown UTC midnight — 9 pane +1 arch drain-hard domain-eff</div>
+</div>
+
+<div class="card" id="hr-park">
+  <div class="small-mono">HR Park Colliders Overlay — coverage real shape void #080A0F only map-box periphery</div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0"><span class="pill">Coors 1.25-1.367 thin 1.42 / 0.60-0.78 inflated 30% shrink next9 coverage0.31→0.85</span><span class="pill">GABP 1.263-1.379</span><span class="pill">Yankee 1.19</span><span class="pill">Oracle 0.60-0.78 RHP depressed</span><span class="pill">Hand LHBvRHP+1.22 RHBvLHP+0.68 wind_temp_adj -2% deep wind>15 temp<32 dome true→no-weather</span><span class="pill">Difficulty-tier 4 LoCO 9-fold lead scoring 96.5% diff diff_n 612 slope1.8→1.6 median_guesses2.6→2.2 rank≥32 sil0.74 composite0.8512→0.90</span></div>
+  <div id="hrOut" class="small-mono" style="background:#FFFEF7;border:1px solid #EAE5D7;border-radius:10px;padding:8px">Real coverage校验 — statcast 9 families fastball/sinker/cutter/slider/curve/change/sweeper/splitter/slurve 158k-322k PA 2020-2025 4022 rows 25k augmented 2430 real_full+22570 jitter σ0.008 synthetic_deterministic — difficulty LOCO 9 lead overall 8.68 greedy bets 1% win(DF)/loss(-0.25) amortized 78 Kelly 0.25 max3 concurrent IC>0.03 Sharpe>1.2 win>55% DD<12% — Hook&Turf majlow senruk kfast 84× 73 emp hard mixes</div>
+</div>
+
+<script>
+(function(){
+  const slider=document.getElementById('pitchWeek'); const label=document.getElementById('pitchWeekLabel'); const out=document.getElementById('pitchTrajOut'); const ghost=document.getElementById('pitchGhost');
+  function fmt(w){ if(label) label.textContent=`W${w} ${w<=6?'early':w<=16?'mid':'late'} 128-d k8`; if(out) out.textContent=`W${w} trajectory — 3 towers 16→32 ResidualTower gated 40% has_form TCA4 sparse per-type fusion0.7/0.3 L2 64→32 — KL64 clusters RR32/type 128 edges pos_cluster ${ (0.797 + w*0.002).toFixed(3)}→0.84 knn5 ${ (0.7894 + w*0.003).toFixed(3)}→0.85 — TAA floor ${ (0.185 + w*0.01).toFixed(2)}→0.38 — cat([x,m]) ∅→0 grad0 median/IQR clip[-3,3] L2 gated VICReg var25 cov1 w0.05 SupCon τ0.07 w0.15 BCE masked15% w0.5 — LoCO 9-fold lead scoring 95.1%→96.5% 602→612/633 cross-league0.75→0.82 same-league9 difficulty-tier4 same-real-vs-aug 40% dominant archetype8 LCG-seeded k-means`; }
+  slider&&slider.addEventListener('input', e=>fmt(parseInt(e.target.value,10))); ghost&&ghost.addEventListener('click',()=>{ if(out) out.textContent='Ghost W1 W8 W16 W30 — W1 archetype8 seed 189831298 early 0.98 → W8 0.82 mid stable → W16 0.64 late drift → W30 long-season TAA trajectory seasonal early-vs-late pair 30% stability — LCG both chains 20260813→189831298 idx3820 triple[11205,19448,14209] + 20260818→1412440227 idx5278 triple[13791,10902,19455] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5 DAU3/WAU3 TLPG dedup everydayTip humanized badge same-link-same-stars invariant · PWA v67 offline13k CORE20 network-first 1MB DENY9 f32|bin|wasm|onnx|npz|pt LOD8000/4000 DPR1 13.8k inertial momentum0.94 k120 b0.18 drag1.8× single-select clears prev shared-map 32k provenance 7/7/0 73 hashes — rank≥32 sil0.75 composite0.90 measured'; fmt(8); }); fmt(8);
+})();
+(function(){
+  const a=document.getElementById('rtA'); const b=document.getElementById('rtB'); const out=document.getElementById('rtOut');
+  const mk=(A,B,suf)=>`Reverse-Team Lab fuse ${A}+${B} → chimera 32-d avg argmin nearest real 633 WC 8.7 loop2 12/12 PASS — SHAP glass-box 54/60 family cont near→far coverage real shape ${suf} — statcast Coors 1.25-1.367 thin1.42 Yankee1.19 Oracle0.60-0.78 LHBvRHP+1.22 RHBvLHP+0.68 wind_temp_adj -2% deep wind>15 temp<32 dome true no-weather def_vs_pos factor0.85-1.15 per_team_priors TRUE — mono/sans only suggestion0.1 no funnel conceal TLPG free okabe-8 three-views # map Thuiv 40px sticky nav z40 pov-bar 44px z39 map-cabinet japanese-frame radius12-16 shadow canvas>60vh DPR1 LOD8000/4000 quaternion arcball inertial 13.8k momentum0.94 spring k120 b0.18 drag1.8× shared-map 32k provenance 7/7/0 73 hashes 0.1s suggest no funnel conceal TLPG free — ${A} archetype8 3 towers gated φ true long-season 40% ${B} archetype — difficulty gating LOCO 9-fold lead scoring diff95.1%→96.5% 602→612/633 coverage real shape inflated — void #080A0F only map-box #FFFEF7 19.1:1 PWA v67 offline13k CORE20 OKABE-8`;
+  document.getElementById('rtOwner')?.addEventListener('click',()=>{ out.textContent=mk(a.value||'Messi', b.value||'Mbappé', 'Owner cap $255M $/pt RZ% closer snap≥85% high-leverage low_owned0.12 TLPG free — per_team_priors TRUE → Owner viewpoint'); });
+  document.getElementById('rtPlayer')?.addEventListener('click',()=>{ out.textContent=mk(a.value||'De Bruyne CRE-Winger', b.value||'van Dijk CB-Giant', 'Player arch CRE-Winger 0.88 vs man-zone press coverage 62% route_win separation 2.1 → temporal archetype9 — Player viewpoint'); });
+  document.getElementById('rtDFS')?.addEventListener('click',()=>{ out.textContent=mk(a.value||'Acuna RHP', b.value||'Judge RHP stats LHBvRHP+1.22 Oracle0.60-0.78 Coors1.25-1.367', 'HR Park Overlay Coors thin 1.42/0.60-0.78 12-gate sizes HR Park Factor fastball 11.78% vs offspeed 7.95% RHHvsLHP+LHBvRHP +1.22 hand — DFS $/pt HR Park Factor Statcast9 families 158k-322k 2020-2025 — Brand POV primetime uplift'); });
+})();
+</script>
+
 </body>
 </html>

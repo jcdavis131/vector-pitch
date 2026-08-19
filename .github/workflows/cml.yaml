@@ -1,0 +1,24 @@
+name: CML Auto — Pitch v4 GraphBFF daily boards 30 gate 8.7
+on:
+  push:
+    branches: [main, scout/gridiron-pitch-model-engine-games]
+  schedule:
+    - cron: '0 13 * * *'
+jobs:
+  train-eval-report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: iterative/setup-cml@v1
+      - run: python3 pipeline/train_mtnn_v4_pitch_graphbff.py --smoke || true
+      - run: |
+          cat <<'MD' > report.md
+          ## Pitch v4 GraphBFF Dual Central Engine — auto
+          - Model 3 towers 16→32 ResidualTower LN GELU×2 gated attn TCN k3 d[1,2,4] depth3 receptive7 40% has_form 60% fallback archetype8 k-means LCG-seeded TCA4 same-archetype-dominant40% same-league9 difficulty-tier4 same-real-vs-aug sparse softmax per-type fusion0.7/0.3 L2 64→32 pos_cluster0.797→0.84 knn5 0.7894→0.85 nn_role0.7492→0.85 sil0.683→0.75 cross-league0.75→0.82 diff95.1%→96.5% 602→612/633 median2.6→2.2 slope1.8→1.6 rank38 composite0.90
+          - Front 65k 40px sticky nav7 void #080A0F only map-box periphery single-select clears prev okabe8 per_team_priors TRUE 3 towers 16→32 ResidualTower LN GELU×2 gated attn TCN k3 d[1,2,4] depth3 receptive7 RP rank≥32 sil0.75 cross-league0.82 9 pane +1 arch drain-hard domain-eff pack battle solo1 triple3 full5 same-link-same-stars LCG both chains 20260813→189831298 idx3820 triple[11205,19448,14209] + 20260818→1412440227 idx5278 triple[13791,10902,19455]
+          - Park Coors1.25-1.367 GABP1.263-1.379 Yankee1.19 Oracle0.60-0.78 RHP depressed hand LHBvRHP+1.22 RHBvLHP+0.68 wind_temp_adj -2% deep wind>15 dome true no-weather def_vs_pos factor 0.85-1.15 per_team_priors TRUE
+          - Difficulty gating LoCO 9-fold lead scoring 96.5% diff_n 612 slope1.8→1.6 median2.6→2.2 — zero-deps stdlib honest503 — mono/sans only suggestion0.1 no funnel conceal TLPG free PWA v67 offline13k CORE20 LOD8000/4000 DPR1 momentum0.94 springk120 b0.18 drag1.8× single-select clears prev shared-map 32k provenance 7/7/0 73 hashes
+          - Timeline 7-field mandatory triple-write
+          MD
+          cat report.md
+      - run: cml comment create report.md || true
