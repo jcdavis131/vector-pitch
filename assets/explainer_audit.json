@@ -1,0 +1,659 @@
+{
+    "domain": "pitch",
+    "feature_names": [
+        "velo",
+        "break",
+        "spin",
+        "release",
+        "park_Coors",
+        "park_Oracle",
+        "LHBvRHP",
+        "VRNN_mu",
+        "form",
+        "usage",
+        "weather",
+        "vegas"
+    ],
+    "samples": [
+        {
+            "i": 0,
+            "prediction": 0.12084792900330876,
+            "baseline_value": 0.5,
+            "shap_values_sum": -0.37915206982644006,
+            "fidelity_error": 3.9018621666997433e-10,
+            "fidelity_rel": 3.2287105884015844e-09,
+            "shap": {
+                "velo": -0.5688792029266077,
+                "break": 0.20627714461814953,
+                "spin": -0.23250299003304753,
+                "release": 0.1626917612474561,
+                "park_Coors": 0.11439941071220297,
+                "park_Oracle": -0.06812705410751277,
+                "LHBvRHP": -0.02686470505325719,
+                "VRNN_mu": 0.0005431795836388516,
+                "form": -0.033853996605199825,
+                "usage": 0.03438128050704321,
+                "weather": 0.013407167030926261,
+                "vegas": 0.01937593519976797
+            },
+            "lime": {
+                "velo": 0.8529686898634172,
+                "break": -0.30130719230515535,
+                "spin": 0.23257505808188478,
+                "release": -0.1827698997797509,
+                "park_Coors": 0.19055255228027174,
+                "park_Oracle": -0.06686881707673488,
+                "LHBvRHP": 0.11070894368660261,
+                "VRNN_mu": -0.0904775769014646,
+                "form": 0.09659639087815375,
+                "usage": -0.12851200961378986,
+                "weather": 0.06643718113174223,
+                "vegas": -0.07687327008739675
+            },
+            "narrative": "This pick projects -0.38 vs baseline (0.50\u21920.12) because velo (SHAP -0.57), spin (SHAP -0.23), break (SHAP +0.21). LIME locally velo pushes up (+0.85). Ownership: projects -0.38 vs baseline because velo (SHAP -0.57), spin (SHAP -0.23), break (SHAP +0.21).",
+            "narrative_povs": {
+                "owner": "Ownership: projects -0.38 vs baseline because velo (SHAP -0.57), spin (SHAP -0.23), break (SHAP +0.21).",
+                "player": "Fit: LIME locally velo pushes up (+0.85) \u2014 secondary spin -0.23 situational.",
+                "brand": "Story: headline driver velo (-0.57) lifts brand when velo aligns.",
+                "dfs": "DFS: exploitable if velo faded \u2014 SHAP sum -0.38 \u2192 pred 0.12 vs base 0.50."
+            },
+            "tops": [
+                {
+                    "name": "velo",
+                    "val": -0.5688792029266077,
+                    "abs": 0.5688792029266077,
+                    "idx": 0
+                },
+                {
+                    "name": "spin",
+                    "val": -0.23250299003304753,
+                    "abs": 0.23250299003304753,
+                    "idx": 2
+                },
+                {
+                    "name": "break",
+                    "val": 0.20627714461814953,
+                    "abs": 0.20627714461814953,
+                    "idx": 1
+                }
+            ]
+        },
+        {
+            "i": 1,
+            "prediction": 0.2754069983948848,
+            "baseline_value": 0.5,
+            "shap_values_sum": -0.2245930009786414,
+            "fidelity_error": 2.0776547149381486e-10,
+            "fidelity_rel": 7.543915670739421e-10,
+            "shap": {
+                "velo": -0.28807243747544253,
+                "break": 0.32774706685471244,
+                "spin": -0.06964722709104103,
+                "release": -0.024351664962098837,
+                "park_Coors": -0.1751582031212934,
+                "park_Oracle": 0.008313119472421422,
+                "LHBvRHP": 0.002740402231427303,
+                "VRNN_mu": -0.030630995791652658,
+                "form": 0.020035408087557337,
+                "usage": 0.03565532578237797,
+                "weather": 0.006078090803336048,
+                "vegas": -0.03730188576894548
+            },
+            "lime": {
+                "velo": 0.811308318130998,
+                "break": -0.32909073594591176,
+                "spin": 0.2838026895975231,
+                "release": -0.09213493773909734,
+                "park_Coors": 0.09596367009806503,
+                "park_Oracle": -0.15331124793083595,
+                "LHBvRHP": 0.15089260566257673,
+                "VRNN_mu": -0.03044631733592312,
+                "form": 0.06765918710205407,
+                "usage": -0.12128230425112174,
+                "weather": 0.05330386346549237,
+                "vegas": -0.03990350917956965
+            },
+            "narrative": "This pick projects -0.22 vs baseline (0.50\u21920.28) because break (SHAP +0.33), velo (SHAP -0.29), park_Coors (SHAP -0.18). LIME locally velo pushes up (+0.81). Ownership: projects -0.22 vs baseline because break (SHAP +0.33), velo (SHAP -0.29), park_Coors (SHAP -0.18).",
+            "narrative_povs": {
+                "owner": "Ownership: projects -0.22 vs baseline because break (SHAP +0.33), velo (SHAP -0.29), park_Coors (SHAP -0.18).",
+                "player": "Fit: LIME locally velo pushes up (+0.81) \u2014 secondary velo -0.29 situational.",
+                "brand": "Story: headline driver break (+0.33) lifts brand when velo aligns.",
+                "dfs": "DFS: exploitable if break remains mispriced \u2014 SHAP sum -0.22 \u2192 pred 0.28 vs base 0.50."
+            },
+            "tops": [
+                {
+                    "name": "break",
+                    "val": 0.32774706685471244,
+                    "abs": 0.32774706685471244,
+                    "idx": 1
+                },
+                {
+                    "name": "velo",
+                    "val": -0.28807243747544253,
+                    "abs": 0.28807243747544253,
+                    "idx": 0
+                },
+                {
+                    "name": "park_Coors",
+                    "val": -0.1751582031212934,
+                    "abs": 0.1751582031212934,
+                    "idx": 4
+                }
+            ]
+        },
+        {
+            "i": 2,
+            "prediction": 1.2584756827324912,
+            "baseline_value": 0.5,
+            "shap_values_sum": 0.7584756831299929,
+            "fidelity_error": 2.349302974380407e-10,
+            "fidelity_rel": 1.8667830772036547e-10,
+            "shap": {
+                "velo": 0.9810886129376208,
+                "break": 0.125402105011229,
+                "spin": -0.2767447018085427,
+                "release": 0.09992444072225863,
+                "park_Coors": -0.19123800520046172,
+                "park_Oracle": -0.04558673868233443,
+                "LHBvRHP": -0.06532925697161986,
+                "VRNN_mu": 0.049345884821959056,
+                "form": 0.05069941574813007,
+                "usage": -0.024661844286909904,
+                "weather": 0.005787854961622808,
+                "vegas": 0.04978791587704111
+            },
+            "lime": {
+                "velo": 0.9121981195269848,
+                "break": -0.2788146505468452,
+                "spin": 0.23550796763712217,
+                "release": -0.1490800787387262,
+                "park_Coors": 0.10494444035921872,
+                "park_Oracle": -0.09604684704439136,
+                "LHBvRHP": 0.07956827345429793,
+                "VRNN_mu": -0.06880220178217442,
+                "form": 0.10860264073149922,
+                "usage": -0.05298860514089435,
+                "weather": 0.0873117351552545,
+                "vegas": -0.13408500467905066
+            },
+            "narrative": "This pick projects +0.76 vs baseline (0.50\u21921.26) because velo (SHAP +0.98), spin (SHAP -0.28), park_Coors (SHAP -0.19). LIME locally velo pushes up (+0.91). Ownership: projects +0.76 vs baseline because velo (SHAP +0.98), spin (SHAP -0.28), park_Coors (SHAP -0.19).",
+            "narrative_povs": {
+                "owner": "Ownership: projects +0.76 vs baseline because velo (SHAP +0.98), spin (SHAP -0.28), park_Coors (SHAP -0.19).",
+                "player": "Fit: LIME locally velo pushes up (+0.91) \u2014 secondary spin -0.28 situational.",
+                "brand": "Story: headline driver velo (+0.98) lifts brand when velo aligns.",
+                "dfs": "DFS: exploitable if velo remains mispriced \u2014 SHAP sum +0.76 \u2192 pred 1.26 vs base 0.50."
+            },
+            "tops": [
+                {
+                    "name": "velo",
+                    "val": 0.9810886129376208,
+                    "abs": 0.9810886129376208,
+                    "idx": 0
+                },
+                {
+                    "name": "spin",
+                    "val": -0.2767447018085427,
+                    "abs": 0.2767447018085427,
+                    "idx": 2
+                },
+                {
+                    "name": "park_Coors",
+                    "val": -0.19123800520046172,
+                    "abs": 0.19123800520046172,
+                    "idx": 4
+                }
+            ]
+        },
+        {
+            "i": 3,
+            "prediction": 1.4143014062859498,
+            "baseline_value": 0.5,
+            "shap_values_sum": 0.914301408073752,
+            "fidelity_error": 5.980402839611543e-10,
+            "fidelity_rel": 4.228517757610602e-10,
+            "shap": {
+                "velo": 0.43580602562490867,
+                "break": 0.08843144412385937,
+                "spin": 0.2697127172340651,
+                "release": 0.14002290669933218,
+                "park_Coors": -0.14222295168917998,
+                "park_Oracle": -0.0855781500319403,
+                "LHBvRHP": 0.13450908943936613,
+                "VRNN_mu": -0.0515995106977471,
+                "form": -0.04692460499538542,
+                "usage": 0.06206992417049575,
+                "weather": 0.0895374433132926,
+                "vegas": 0.02053707488268504
+            },
+            "lime": {
+                "velo": 0.8908928163049741,
+                "break": -0.3118286117151927,
+                "spin": 0.3112721828516935,
+                "release": -0.1727136850018909,
+                "park_Coors": 0.13400637609856692,
+                "park_Oracle": -0.02818100175236092,
+                "LHBvRHP": 0.16859626916787293,
+                "VRNN_mu": -0.05941707413307842,
+                "form": 0.07181944909928206,
+                "usage": -0.08716146280685656,
+                "weather": 0.13688647950417973,
+                "vegas": -0.02979215213022766
+            },
+            "narrative": "This pick projects +0.91 vs baseline (0.50\u21921.41) because velo (SHAP +0.44), spin (SHAP +0.27), park_Coors (SHAP -0.14). LIME locally velo pushes up (+0.89). Ownership: projects +0.91 vs baseline because velo (SHAP +0.44), spin (SHAP +0.27), park_Coors (SHAP -0.14).",
+            "narrative_povs": {
+                "owner": "Ownership: projects +0.91 vs baseline because velo (SHAP +0.44), spin (SHAP +0.27), park_Coors (SHAP -0.14).",
+                "player": "Fit: LIME locally velo pushes up (+0.89) \u2014 secondary spin +0.27 situational.",
+                "brand": "Story: headline driver velo (+0.44) lifts brand when velo aligns.",
+                "dfs": "DFS: exploitable if velo remains mispriced \u2014 SHAP sum +0.91 \u2192 pred 1.41 vs base 0.50."
+            },
+            "tops": [
+                {
+                    "name": "velo",
+                    "val": 0.43580602562490867,
+                    "abs": 0.43580602562490867,
+                    "idx": 0
+                },
+                {
+                    "name": "spin",
+                    "val": 0.2697127172340651,
+                    "abs": 0.2697127172340651,
+                    "idx": 2
+                },
+                {
+                    "name": "park_Coors",
+                    "val": -0.14222295168917998,
+                    "abs": 0.14222295168917998,
+                    "idx": 4
+                }
+            ]
+        },
+        {
+            "i": 4,
+            "prediction": 0.7946615393291214,
+            "baseline_value": 0.5,
+            "shap_values_sum": 0.29466153929973954,
+            "fidelity_error": 2.178335289926281e-10,
+            "fidelity_rel": 2.7412079746017706e-10,
+            "shap": {
+                "velo": 0.2519024092552182,
+                "break": 0.1580378387167674,
+                "spin": -0.132145414047468,
+                "release": -0.023152051859572816,
+                "park_Coors": 0.10062670061913817,
+                "park_Oracle": -0.013731603606284783,
+                "LHBvRHP": -0.08073009332358819,
+                "VRNN_mu": 0.061529840479278196,
+                "form": -0.05324275455811029,
+                "usage": -0.04315533614139166,
+                "weather": 0.07699052716542933,
+                "vegas": -0.008268523399676021
+            },
+            "lime": {
+                "velo": 0.8627310025613817,
+                "break": -0.3337963699836939,
+                "spin": 0.2753235858953739,
+                "release": -0.10622173416533583,
+                "park_Coors": 0.19927945272344486,
+                "park_Oracle": -0.06969435079398725,
+                "LHBvRHP": 0.0940260916342535,
+                "VRNN_mu": -0.12027114660521473,
+                "form": 0.09635437576642868,
+                "usage": -9.32836761594791e-05,
+                "weather": 0.1336567066635389,
+                "vegas": -0.03153974170132906
+            },
+            "narrative": "This pick projects +0.29 vs baseline (0.50\u21920.79) because velo (SHAP +0.25), break (SHAP +0.16), spin (SHAP -0.13). LIME locally velo pushes up (+0.86). Ownership: projects +0.29 vs baseline because velo (SHAP +0.25), break (SHAP +0.16), spin (SHAP -0.13).",
+            "narrative_povs": {
+                "owner": "Ownership: projects +0.29 vs baseline because velo (SHAP +0.25), break (SHAP +0.16), spin (SHAP -0.13).",
+                "player": "Fit: LIME locally velo pushes up (+0.86) \u2014 secondary break +0.16 situational.",
+                "brand": "Story: headline driver velo (+0.25) lifts brand when velo aligns.",
+                "dfs": "DFS: exploitable if velo remains mispriced \u2014 SHAP sum +0.29 \u2192 pred 0.79 vs base 0.50."
+            },
+            "tops": [
+                {
+                    "name": "velo",
+                    "val": 0.2519024092552182,
+                    "abs": 0.2519024092552182,
+                    "idx": 0
+                },
+                {
+                    "name": "break",
+                    "val": 0.1580378387167674,
+                    "abs": 0.1580378387167674,
+                    "idx": 1
+                },
+                {
+                    "name": "spin",
+                    "val": -0.132145414047468,
+                    "abs": 0.132145414047468,
+                    "idx": 2
+                }
+            ]
+        },
+        {
+            "i": 5,
+            "prediction": 0.2866956545174014,
+            "baseline_value": 0.5,
+            "shap_values_sum": -0.2133043448039085,
+            "fidelity_error": 3.1739821881870967e-10,
+            "fidelity_rel": 1.1070872778511784e-09,
+            "shap": {
+                "velo": -0.31816281987691175,
+                "break": -0.0008238649069200343,
+                "spin": 0.04110463508178457,
+                "release": -0.01076810373813896,
+                "park_Coors": -0.04876575162103482,
+                "park_Oracle": 0.006131685425007828,
+                "LHBvRHP": -0.07254359156591329,
+                "VRNN_mu": 0.02412826498667799,
+                "form": 0.11106357050049154,
+                "usage": -0.006888775345237498,
+                "weather": 0.057397504442142325,
+                "vegas": 0.004822901814143587
+            },
+            "lime": {
+                "velo": 0.8385743253867499,
+                "break": -0.23530061702576432,
+                "spin": 0.3289031793561168,
+                "release": -0.15559672869907804,
+                "park_Coors": 0.16041974139408507,
+                "park_Oracle": -0.12574825540436768,
+                "LHBvRHP": 0.07728763121856787,
+                "VRNN_mu": -0.06799698923026247,
+                "form": 0.13371506117382123,
+                "usage": -0.040922194925715166,
+                "weather": 0.11641909787811124,
+                "vegas": -0.05537749204161958
+            },
+            "narrative": "This pick projects -0.21 vs baseline (0.50\u21920.29) because velo (SHAP -0.32), form (SHAP +0.11), LHBvRHP (SHAP -0.07). LIME locally velo pushes up (+0.84). Ownership: projects -0.21 vs baseline because velo (SHAP -0.32), form (SHAP +0.11), LHBvRHP (SHAP -0.07).",
+            "narrative_povs": {
+                "owner": "Ownership: projects -0.21 vs baseline because velo (SHAP -0.32), form (SHAP +0.11), LHBvRHP (SHAP -0.07).",
+                "player": "Fit: LIME locally velo pushes up (+0.84) \u2014 secondary form +0.11 situational.",
+                "brand": "Story: headline driver velo (-0.32) lifts brand when velo aligns.",
+                "dfs": "DFS: exploitable if velo faded \u2014 SHAP sum -0.21 \u2192 pred 0.29 vs base 0.50."
+            },
+            "tops": [
+                {
+                    "name": "velo",
+                    "val": -0.31816281987691175,
+                    "abs": 0.31816281987691175,
+                    "idx": 0
+                },
+                {
+                    "name": "form",
+                    "val": 0.11106357050049154,
+                    "abs": 0.11106357050049154,
+                    "idx": 8
+                },
+                {
+                    "name": "LHBvRHP",
+                    "val": -0.07254359156591329,
+                    "abs": 0.07254359156591329,
+                    "idx": 6
+                }
+            ]
+        },
+        {
+            "i": 6,
+            "prediction": -0.387835865652868,
+            "baseline_value": 0.5,
+            "shap_values_sum": -0.8878358649469442,
+            "fidelity_error": 5.152699933397287e-10,
+            "fidelity_rel": 1.328574044843172e-09,
+            "shap": {
+                "velo": -0.7848069721576517,
+                "break": -0.24838318471934162,
+                "spin": 0.2555505137430838,
+                "release": -0.027815413327449173,
+                "park_Coors": 0.16735263230856573,
+                "park_Oracle": -0.09279759101581375,
+                "LHBvRHP": -0.11256453340372224,
+                "VRNN_mu": -0.07128546305830426,
+                "form": -0.07325815600615622,
+                "usage": 0.05157676852508092,
+                "weather": 0.01084837598152137,
+                "vegas": 0.037747158183243
+            },
+            "lime": {
+                "velo": 0.8104495592695341,
+                "break": -0.2578499192638599,
+                "spin": 0.2655106861133955,
+                "release": -0.1568338458724837,
+                "park_Coors": 0.2081572518888716,
+                "park_Oracle": -0.060103466078006304,
+                "LHBvRHP": 0.07792494554825437,
+                "VRNN_mu": -0.07827545810702745,
+                "form": 0.03583050312550283,
+                "usage": -0.08699808916027499,
+                "weather": 0.07952522732479268,
+                "vegas": -0.05636436519576738
+            },
+            "narrative": "This pick projects -0.89 vs baseline (0.50\u2192-0.39) because velo (SHAP -0.78), spin (SHAP +0.26), break (SHAP -0.25). LIME locally velo pushes up (+0.81). Ownership: projects -0.89 vs baseline because velo (SHAP -0.78), spin (SHAP +0.26), break (SHAP -0.25).",
+            "narrative_povs": {
+                "owner": "Ownership: projects -0.89 vs baseline because velo (SHAP -0.78), spin (SHAP +0.26), break (SHAP -0.25).",
+                "player": "Fit: LIME locally velo pushes up (+0.81) \u2014 secondary spin +0.26 situational.",
+                "brand": "Story: headline driver velo (-0.78) lifts brand when velo aligns.",
+                "dfs": "DFS: exploitable if velo faded \u2014 SHAP sum -0.89 \u2192 pred -0.39 vs base 0.50."
+            },
+            "tops": [
+                {
+                    "name": "velo",
+                    "val": -0.7848069721576517,
+                    "abs": 0.7848069721576517,
+                    "idx": 0
+                },
+                {
+                    "name": "spin",
+                    "val": 0.2555505137430838,
+                    "abs": 0.2555505137430838,
+                    "idx": 2
+                },
+                {
+                    "name": "break",
+                    "val": -0.24838318471934162,
+                    "abs": 0.24838318471934162,
+                    "idx": 1
+                }
+            ]
+        },
+        {
+            "i": 7,
+            "prediction": -0.5427903972116159,
+            "baseline_value": 0.5,
+            "shap_values_sum": -1.042790397480808,
+            "fidelity_error": 4.1064496247855686e-10,
+            "fidelity_rel": 7.565428718805952e-10,
+            "shap": {
+                "velo": -0.0943275196846306,
+                "break": -0.27617537931620645,
+                "spin": -0.27494563705027614,
+                "release": -0.04646977868307879,
+                "park_Coors": 0.0061130274458043865,
+                "park_Oracle": -0.08668712923462896,
+                "LHBvRHP": -0.13992467115798743,
+                "VRNN_mu": -0.07784056093147236,
+                "form": 0.03992764472919826,
+                "usage": -0.04952056226158804,
+                "weather": -0.07919483366107179,
+                "vegas": 0.03625500232513008
+            },
+            "lime": {
+                "velo": 0.844594664381778,
+                "break": -0.28219009949470925,
+                "spin": 0.25525700440231947,
+                "release": -0.15911538836348266,
+                "park_Coors": 0.15043539648623255,
+                "park_Oracle": -0.0800193743212006,
+                "LHBvRHP": 0.10514918960659841,
+                "VRNN_mu": -0.006031458189957902,
+                "form": 0.09318903131928073,
+                "usage": -0.061603997526655206,
+                "weather": 0.06297501301460356,
+                "vegas": -0.05444037794322835
+            },
+            "narrative": "This pick projects -1.04 vs baseline (0.50\u2192-0.54) because break (SHAP -0.28), spin (SHAP -0.27), LHBvRHP (SHAP -0.14). LIME locally velo pushes up (+0.84). Ownership: projects -1.04 vs baseline because break (SHAP -0.28), spin (SHAP -0.27), LHBvRHP (SHAP -0.14).",
+            "narrative_povs": {
+                "owner": "Ownership: projects -1.04 vs baseline because break (SHAP -0.28), spin (SHAP -0.27), LHBvRHP (SHAP -0.14).",
+                "player": "Fit: LIME locally velo pushes up (+0.84) \u2014 secondary spin -0.27 situational.",
+                "brand": "Story: headline driver break (-0.28) lifts brand when velo aligns.",
+                "dfs": "DFS: exploitable if break faded \u2014 SHAP sum -1.04 \u2192 pred -0.54 vs base 0.50."
+            },
+            "tops": [
+                {
+                    "name": "break",
+                    "val": -0.27617537931620645,
+                    "abs": 0.27617537931620645,
+                    "idx": 1
+                },
+                {
+                    "name": "spin",
+                    "val": -0.27494563705027614,
+                    "abs": 0.27494563705027614,
+                    "idx": 2
+                },
+                {
+                    "name": "LHBvRHP",
+                    "val": -0.13992467115798743,
+                    "abs": 0.13992467115798743,
+                    "idx": 6
+                }
+            ]
+        },
+        {
+            "i": 8,
+            "prediction": 1.7079141028796645,
+            "baseline_value": 0.5,
+            "shap_values_sum": 1.2079141028582825,
+            "fidelity_error": 1.4510947998758184e-10,
+            "fidelity_rel": 8.496293506797679e-11,
+            "shap": {
+                "velo": 0.9736259235508997,
+                "break": 0.031177129978867058,
+                "spin": 0.06686232603435599,
+                "release": 0.022411549897016204,
+                "park_Coors": 0.16604031721480592,
+                "park_Oracle": -0.017995241969844315,
+                "LHBvRHP": -0.032262156868957406,
+                "VRNN_mu": 0.06177846316041247,
+                "form": 0.07678417229103028,
+                "usage": -0.02953508720210301,
+                "weather": -0.0542859042984093,
+                "vegas": -0.056687388929791055
+            },
+            "lime": {
+                "velo": 0.9366097885656173,
+                "break": -0.3148901704355015,
+                "spin": 0.30504220376104113,
+                "release": -0.16728902208860413,
+                "park_Coors": 0.22008956033087912,
+                "park_Oracle": -0.12039996122466086,
+                "LHBvRHP": 0.12770385724137293,
+                "VRNN_mu": -0.11618283806581034,
+                "form": 0.1475499636074457,
+                "usage": -0.043507463031495254,
+                "weather": 0.06047663974589253,
+                "vegas": -0.017581969865533526
+            },
+            "narrative": "This pick projects +1.21 vs baseline (0.50\u21921.71) because velo (SHAP +0.97), park_Coors (SHAP +0.17), form (SHAP +0.08). LIME locally velo pushes up (+0.94). Ownership: projects +1.21 vs baseline because velo (SHAP +0.97), park_Coors (SHAP +0.17), form (SHAP +0.08).",
+            "narrative_povs": {
+                "owner": "Ownership: projects +1.21 vs baseline because velo (SHAP +0.97), park_Coors (SHAP +0.17), form (SHAP +0.08).",
+                "player": "Fit: LIME locally velo pushes up (+0.94) \u2014 secondary park_Coors +0.17 situational.",
+                "brand": "Story: headline driver velo (+0.97) lifts brand when velo aligns.",
+                "dfs": "DFS: exploitable if velo remains mispriced \u2014 SHAP sum +1.21 \u2192 pred 1.71 vs base 0.50."
+            },
+            "tops": [
+                {
+                    "name": "velo",
+                    "val": 0.9736259235508997,
+                    "abs": 0.9736259235508997,
+                    "idx": 0
+                },
+                {
+                    "name": "park_Coors",
+                    "val": 0.16604031721480592,
+                    "abs": 0.16604031721480592,
+                    "idx": 4
+                },
+                {
+                    "name": "form",
+                    "val": 0.07678417229103028,
+                    "abs": 0.07678417229103028,
+                    "idx": 8
+                }
+            ]
+        },
+        {
+            "i": 9,
+            "prediction": 0.15262901391903233,
+            "baseline_value": 0.5,
+            "shap_values_sum": -0.3473709851462018,
+            "fidelity_error": 2.1380547332583433e-10,
+            "fidelity_rel": 1.4008088437917234e-09,
+            "shap": {
+                "velo": -0.24118669906932755,
+                "break": 0.04616475350667862,
+                "spin": -0.24580940015752123,
+                "release": -0.036990692056511565,
+                "park_Coors": 0.09623033541040447,
+                "park_Oracle": -0.05760525857777638,
+                "LHBvRHP": -0.09984854202258628,
+                "VRNN_mu": 0.009119501048041918,
+                "form": 0.08986273925580868,
+                "usage": 0.018415832736429296,
+                "weather": 0.03632926755317009,
+                "vegas": 0.03794717722698811
+            },
+            "lime": {
+                "velo": 0.880167234539528,
+                "break": -0.29652149608276257,
+                "spin": 0.24812423834973404,
+                "release": -0.16627209997880923,
+                "park_Coors": 0.21241289996701532,
+                "park_Oracle": -0.06664477002684041,
+                "LHBvRHP": 0.10401793836491183,
+                "VRNN_mu": -0.09053805107705104,
+                "form": 0.1585802630435519,
+                "usage": -0.072585982830333,
+                "weather": 0.14830560434487147,
+                "vegas": -0.059591729051003434
+            },
+            "narrative": "This pick projects -0.35 vs baseline (0.50\u21920.15) because spin (SHAP -0.25), velo (SHAP -0.24), LHBvRHP (SHAP -0.10). LIME locally velo pushes up (+0.88). Ownership: projects -0.35 vs baseline because spin (SHAP -0.25), velo (SHAP -0.24), LHBvRHP (SHAP -0.10).",
+            "narrative_povs": {
+                "owner": "Ownership: projects -0.35 vs baseline because spin (SHAP -0.25), velo (SHAP -0.24), LHBvRHP (SHAP -0.10).",
+                "player": "Fit: LIME locally velo pushes up (+0.88) \u2014 secondary velo -0.24 situational.",
+                "brand": "Story: headline driver spin (-0.25) lifts brand when velo aligns.",
+                "dfs": "DFS: exploitable if spin faded \u2014 SHAP sum -0.35 \u2192 pred 0.15 vs base 0.50."
+            },
+            "tops": [
+                {
+                    "name": "spin",
+                    "val": -0.24580940015752123,
+                    "abs": 0.24580940015752123,
+                    "idx": 2
+                },
+                {
+                    "name": "velo",
+                    "val": -0.24118669906932755,
+                    "abs": 0.24118669906932755,
+                    "idx": 0
+                },
+                {
+                    "name": "LHBvRHP",
+                    "val": -0.09984854202258628,
+                    "abs": 0.09984854202258628,
+                    "idx": 6
+                }
+            ]
+        }
+    ],
+    "gate": {
+        "fidelity_mean": 3.2509839265060236e-10,
+        "stability": "SHAP additive error <0.2 PASS, fidelity rel <0.05 PASS",
+        "construct": "draft quality surplus"
+    },
+    "meta": {
+        "lcg": "20260813\u2192189831298 idx3820 triple[11205,19448,14209]",
+        "zero_deps": true,
+        "timestamp": "2026-08-16T15:06Z"
+    }
+}

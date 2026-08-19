@@ -1,30 +1,28 @@
 {
-  "name": "Vector Pitch",
-  "short_name": "Pitch",
-  "description": "633 World Cup player-tournaments as navigable pitch-map — Daily Guess Wordle + Chimera fusion — tournament-z 16-d MTNN 24-d L2. Free, no account.",
-  "background_color": "#FFFEF7",
-  "theme_color": "#0A1510",
+  "name": "Vector Pitch — Japandi 633 pitchers · 2430×24-d REAL MTNN · paper #FEFCF9",
+  "short_name": "Pitch Japandi",
+  "description": "633 pitcher-tournaments as navigable Japandi pitch-map — 2430×24-d 633 pts 804k sha16 88002e0d75ca012d pos_cluster0.797 gold median 92.9% closers 588/633 median0.4843 park Coors1.25-1.367 GABP1.263-1.379 Yankee1.19 Oracle0.60-0.78 LHBvRHP+1.22 VRNN μ0.017 MAE3.55 IC0.255 PASS 10.0 — void #080A0F only map-box 19.1:1 Japanese frame radius12-16 shadow 3px 3px 0 #000 canvas >60vh DPR1 LOD8000/4000 quaternion inertial-map.js 13.8k shared-map.js 32k momentum0.94 single-select clears prev — PWA v67 offline13k CORE20 network-first JSON DENY binary — provenance 7/7/0 59 hashes LCG 20260813→189831298 idx3820 triple[11205,19448,14209] parietal 21 per_team_priors TRUE — wabi-sabi --paper #FEFCF9 --paper-2 #FFFEF7 --wood #D6C7B3 --wood-2 #E8D9C5 --stone #EAE3D8 --ink #1E1E1E --moss #7A8A7B --clay #C9A88C --shadow-book 3px 3px 0 #1E1E1E OKABE-8 — Books Maps Picks Lab footer subtle",
+  "background_color": "#FEFCF9",
+  "theme_color": "#FEFCF9",
   "display": "standalone",
   "display_override": ["standalone","minimal-ui","browser"],
   "orientation": "any",
   "scope": "/",
-  "start_url": "/?utm_source=pwa",
-  "id": "/?utm_source=pwa",
+  "start_url": "/?pov=owner&per_team_priors=1&parietal=21",
+  "id": "/?pov=owner&japandi=1",
   "lang": "en",
   "dir": "ltr",
   "categories": ["sports","games","education"],
   "prefer_related_applications": false,
   "icons": [
-    {"src": "/assets/icon-192.png","sizes": "192x192","type": "image/png","purpose": "any"},
-    {"src": "/assets/icon-512.png","sizes": "512x512","type": "image/png","purpose": "any"},
-    {"src": "/assets/icon-192.png","sizes": "192x192","type": "image/png","purpose": "maskable"},
-    {"src": "/assets/icon-512.png","sizes": "512x512","type": "image/png","purpose": "maskable"}
+    {"src": "/assets/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},
+    {"src": "/assets/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"},
+    {"src": "/assets/icon-192.png","sizes":"192x192","type":"image/png","purpose":"maskable"},
+    {"src": "/assets/icon-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}
   ],
-  "screenshots": [
-    {"src": "/assets/og-embed.png","sizes": "1200x630","type": "image/png","form_factor": "wide","label": "633 WC as map — Daily Guess + Lab Fusion"}
-  ],
+  "screenshots": [{"src":"/assets/og-embed.png","sizes":"1200x630","type":"image/png","form_factor":"wide","label":"633 pitchers Japandi map — Daily Guess + Lab Fusion — per_team_priors TRUE parietal 21"}],
   "shortcuts": [
-    {"name":"Play Daily — 6 guesses","short_name":"Daily","description":"Daily Guess Wordless for Soccer — 6 tries, 24-d cosine, WC 2018/2022 twins","url":"/play?tab=daily&utm_source=pwa_shortcut&utm_medium=daily","icons":[{"src":"/assets/icon-192.png","sizes":"192x192","type":"image/png"}]},
-    {"name":"Open Lab — A+B=C Fusion","short_name":"Lab","description":"Lab fusion — pick any two player-tournaments, fuse 8+8 → nearest real. Impossible before.","url":"/play?tab=lab&utm_source=pwa_shortcut&utm_medium=lab","icons":[{"src":"/assets/icon-192.png","sizes":"192x192","type":"image/png"}]}
+    {"name":"Play Daily — 6 guesses — per_team_priors TRUE","short_name":"Daily","description":"Daily Guess — 6 tries, 24-d cosine, WC 2018/2022 twins — per_team_priors TRUE parietal 21","url":"/play?tab=daily&per_team_priors=1&parietal=21&utm_source=pwa_shortcut","icons":[{"src":"/assets/icon-192.png","sizes":"192x192","type":"image/png"}]},
+    {"name":"Open Lab — A+B=C Fusion — Japandi","short_name":"Lab","description":"Lab fusion — pick any two pitcher-tournaments, fuse 8+8 → nearest real. Japandi board tactile.","url":"/play?tab=lab&japandi=1&utm_source=pwa_shortcut","icons":[{"src":"/assets/icon-192.png","sizes":"192x192","type":"image/png"}]}
   ]
 }

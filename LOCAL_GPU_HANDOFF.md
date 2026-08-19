@@ -119,3 +119,26 @@ And Hatch will pick it up via `bundles/coordination/active-tasks.md` mirror.
 3. Log even no-op
 4. Provenance-honest numbers — cite source file in json
 
+
+## 3b) vector-pitch — MTNN 61%→92.9% game+difficulty retune DEFERRED (1307)
+
+**Frontend done in Hatch (1307):**
+- MTNN v1.1 3 towers attacking[6] passing_control[5] defending_duel[5] 16→32 LN GELU×2+skip →11 ctx→8 gated attn+gate →64→24-d L2 cosine=similarity
+- Difficulty MTNN-calibrated 588/633 92.9% median0.4843 warm_sim0.985 slope2.5 vs old PCA16 386/633 61% slope5.0 warm0.6 — +202 rows +31.9pp gate holds 3/56 salience profile16-d norm scout_pool profile top2
+- Game wordle-6 + chimera-hard 8+8 impossible 92% win threshold deterministic daily pool xmur3+mulberry32 hash%N 5/day Solo1 Triple3 Full5 ?pack= shareable toast streak 🔥
+- Pos_cluster 0.797 BEATS PCA16 oracle 0.7457 +0.0513 knn5 0.7894 vs 0.7905 -0.0011 nn_role 0.7492 vs 0.7518 -0.0026 composite0.7785 recon0.4956
+- VRNN μ0.017 MAE3.55 IC0.255 zero-deps JS inline — pitch equivalent of park factors Coors1.25-1.367 GABP1.263-1.379 Yankee1.19 Oracle0.60-0.78 LHBvRHP+1.22
+- LCG 20260813→189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,11701,18524] same-link-same-stars ?daily=20260813&n=1/3/5 open→drag-map→Jordan→copy-link DAU3/WAU3 TLPG dedup
+- Candidate 1307 PASS 9.1≥8.0 budget3 thr8.0 earlyExit0.3 single enforcement fix-once max2 — zero-deps true stdlib only no torch/pip provenance 7 hashes honest
+- Hidden_files: hillclimb-1307-*.json 5+2 lanes lite 90s max MoMA-lite 5 tiers GARNet max3/4 side-effect tagged READ_ONLY/WRITE_CANDIDATE
+
+**Heavy GPU deferred to LOCAL-GPU:**
+```bash
+cd vector-pitch
+pip install torch --index-url https://download.pytorch.org/whl/cu121
+python3 pipeline/train_mtnn_v7_pitch.py --epochs 60 --dim 24 --towers 3 --con-w 0.5 --supcon-temp 0.07 --w-coral 0.5 --w-vicreg 0.05 --grl-lambda 0.3 --grl-target 0.5 --grl-ramp 10 --mask cat-xm-m
+python3 pipeline/eval_mtnn.py --split tm_9ctx --out assets/eval_scoreboard_v7.json
+# target: pos_cluster 0.797→0.82 composite 0.7785→0.80 MAE 0.4956→0.45
+python -m json.tool assets/eval_scoreboard_v7.json > /dev/null && echo "report OK"
+```
+Only promote if composite wins + pos_cluster BEATS oracle + difficulty stays ≥92.5% + provenance 7 hashes honest. Keep zero-deps JS inline for game wiring — no torch in PWA.

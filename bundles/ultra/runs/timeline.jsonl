@@ -1,0 +1,12 @@
+{"nodeId":"hillclimb-loop","agentId":"strategist","attempt":1,"latency_ms":1247,"tokens_est":312,"status":"ok","errorClass":null}
+{"nodeId":"pitch-mtnn-game","agentId":"scout-prime","attempt":1,"latency_ms":4521,"tokens_est":4200,"status":"ok","errorClass":null}
+{"nodeId":"hillclimb-loop","agentId":"hillclimb-loop","attempt":1,"latency_ms":3890,"tokens_est":1840,"status":"ok","errorClass":null}
+{"nodeId": "hillclimb-loop", "agentId": "deep-researcher", "attempt": 1, "latency_ms": 1560, "tokens_est": 560, "status": "ok", "errorClass": null}
+{"nodeId": "hillclimb-loop", "agentId": "researcher", "attempt": 1, "latency_ms": 540, "tokens_est": 280, "status": "ok", "errorClass": null}
+{"nodeId": "hillclimb-loop", "agentId": "builder", "attempt": 1, "latency_ms": 1120, "tokens_est": 520, "status": "ok", "errorClass": null}
+{"nodeId": "hillclimb-loop", "agentId": "synthesist", "attempt": 1, "latency_ms": 780, "tokens_est": 380, "status": "ok", "errorClass": null}
+{"nodeId": "hillclimb-loop", "agentId": "critic", "attempt": 1, "latency_ms": 920, "tokens_est": 450, "status": "ok", "errorClass": null}
+{"nodeId": "pitch-mtnn-game", "agentId": "hillclimb-loop", "attempt": 1, "latency_ms": 3890, "tokens_est": 1840, "status": "ok", "errorClass": null}
+{"timestamp":"2026-08-16T18:13:18Z","nodeId":"pitch-mtnn-game-1307-triage","agentId":"researcher","attempt":1,"latency_ms":3200,"tokens_est":850,"status":"ok","errorClass":"none","lcg":"20260813->189831298 idx3820 triple[11205,19448,14209]","difficulty_pct":92.9,"pos_cluster":0.797,"composite":0.7785,"zero_deps":true,"gate":8.0,"score":9.1,"branch":"scout/pitch-mtnn-game-1307"}
+{"nodeId":"hillclimb-loop","agentId":"planner","attempt":1,"latency_ms":342,"tokens_est":820,"status":"ok","errorClass":null,"ts":"2026-08-16T13:12:40Z","branch":"scout/pitch-mtnn-game-1307","gate_thr":8.0,"zero_deps":true,"lcg":"20260813->189831298 idx3820 triple[11205,19448,14209]"}
+{"timestamp": "2026-08-16T18:15:18.645784Z", "nodeId": "hillclimb-1307-critic", "agentId": "critic", "attempt": 1, "latency_ms": 3420, "latency": 3.42, "tokens_est": 1840, "tokens": 1840, "status": "ok", "errorClass": "none", "pass": true, "verdict": "PASS", "score": 9.1, "gate_thr": 8.0, "branch": "scout/pitch-mtnn-game-1307", "lcg": "20260813->189831298 idx3820 triple[11205,19448,14209] same-link-same-stars", "checks": "difficulty 92.9% pos_cluster 0.797 composite 0.7785 VRNN 0.017/3.55/0.255", "budget": 3, "earlyExit": 0.3}
