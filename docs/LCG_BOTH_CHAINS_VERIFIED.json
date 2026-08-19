@@ -1,0 +1,44 @@
+{
+  "lcg_verified": true,
+  "chains": [
+    {
+      "date": "20260813",
+      "seed": 189831298,
+      "idx": 3820,
+      "triple": [
+        11205,
+        19448,
+        14209
+      ],
+      "five": [
+        11205,
+        19448,
+        14209,
+        16853,
+        15710
+      ],
+      "formula": "L(s)=(s*1103515245+12345)&0x7fffffff glibc",
+      "same_link_same_stars": "?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5"
+    },
+    {
+      "date": "20260818",
+      "seed": 1412440227,
+      "idx": 5278,
+      "triple": [
+        13791,
+        10902,
+        19455
+      ],
+      "five_ext": [
+        13791,
+        10902,
+        19455,
+        6944,
+        17544
+      ],
+      "formula": "same"
+    }
+  ],
+  "provenance": "verified 2026-08-19 both chains same-link-same-stars",
+  "checked_at": "2026-08-19T23:34:34.534560+00:00"
+}

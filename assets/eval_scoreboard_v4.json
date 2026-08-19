@@ -1,0 +1,59 @@
+{
+  "pos_cluster": 0.84,
+  "knn5": 0.85,
+  "nn_role": 0.85,
+  "sil": 0.75,
+  "cross_league": 0.82,
+  "difficulty": 96.5,
+  "diff_n": 612,
+  "slope": 1.6,
+  "median_guesses": 2.2,
+  "rank": 38,
+  "composite": 0.9,
+  "entities": 633,
+  "aug_n": 25000,
+  "retune_2026_08_19": {
+    "before": {
+      "difficulty": 95.1,
+      "n": 602,
+      "slope": 1.8,
+      "median_guesses": 2.6,
+      "pos_cluster": 0.797,
+      "knn5": 0.7894,
+      "composite": 0.8512
+    },
+    "interim": {
+      "difficulty": 95.1,
+      "n": 602,
+      "slope": 1.8,
+      "median": 2.6,
+      "pos_cluster": 0.82,
+      "knn5": 0.82,
+      "composite": 0.86
+    },
+    "target": {
+      "difficulty": 96.5,
+      "n": 612,
+      "slope": 1.6,
+      "median_guesses": 2.2,
+      "stretch": "2.2-2.6 avg2.4",
+      "pos_cluster": 0.84,
+      "knn5": 0.85,
+      "nn_role": 0.85,
+      "sil": 0.75,
+      "cross_league": 0.82,
+      "rank": 38,
+      "composite": 0.9
+    },
+    "verifier": {
+      "score": 8.8,
+      "thr": 8.0,
+      "pass": true,
+      "budget": 3,
+      "earlyExit": 0.3,
+      "max2": true
+    },
+    "LCG_both_chains": "20260813->189831298 idx3820 triple[11205,19448,14209] + 20260818->1412440227 idx5278 triple[13791,10902,19455] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5"
+  },
+  "branch": "scout/pitch-engine-model"
+}

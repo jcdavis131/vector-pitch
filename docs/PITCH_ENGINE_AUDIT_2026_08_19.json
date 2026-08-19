@@ -1,0 +1,84 @@
+{
+  "index_html": {
+    "path": "index.html",
+    "void": "#080A0F only map-box",
+    "nav_h": "40px",
+    "sticky": "z40 nav + z39 pov",
+    "LOD": "4000/8000",
+    "DPR1": true,
+    "single_select": true,
+    "clears_prev": true,
+    "pov_param": "?pov=",
+    "fps": "30/24",
+    "OKABE_8": 8,
+    "size": 65599
+  },
+  "game_index_html": {
+    "path": "game/index.html",
+    "exists": true,
+    "size": 2717,
+    "note": "Free-Kick xG Curve difficulty median0.52 92.9% closers \u2014 minimal prototype, front parity void #080A0F"
+  },
+  "play_html": {
+    "path": "play.html",
+    "size": 16618,
+    "title": "Daily Court 5\u00d7"
+  },
+  "shared_map_js": {
+    "path": "assets/shared-map.js",
+    "bytes": 28408,
+    "baseline": 22990,
+    "delta": 5418,
+    "reason": "comments + season filter v5 pid-aware + fast lite 4322 first paint + filtered progressive",
+    "LOD": "4000/8000",
+    "DPR1": true,
+    "momentum": 0.94,
+    "single_select": true
+  },
+  "embeddings": {
+    "pitch_mtnn_embeddings_json": 804295,
+    "vectors_mtnn_json": 874484,
+    "manifest": "pitch_mtnn_embeddings 24-d currently, target 32-d v4 via GraphBFF dual distill",
+    "n_real": 2430,
+    "ctx": 11,
+    "n_aug": 25000,
+    "aug_tag": "synthetic_deterministic_stdlib_augmented_25k_honest"
+  },
+  "candidate": {
+    "path": "candidate.json",
+    "verifier_score": 8.8,
+    "pass": true,
+    "branch": "scout/pitch-engine-model",
+    "dim": 32,
+    "archetype": 8,
+    "tcn_dilation": [
+      1,
+      2,
+      4
+    ],
+    "depth": 3,
+    "receptive": 7
+  },
+  "pwa": {
+    "version": "v67.2",
+    "cache_name": "vector-pitch-v67-japandi-paper-offline13k-0818-retune-19core",
+    "core_count": 20,
+    "core_avg_bytes": 14905,
+    "offline": "offline13k CORE20 1848B avg claim \u2014 actual avg 14905 due to game.js 72k includes full engine \u2014 CORE20 standalone display_override sw CORE13 DENY7",
+    "offline_html": 9612
+  },
+  "LCG": {
+    "chain1": "20260813->189831298 idx3820 triple[11205,19448,14209] five[11205,19448,14209,16853,15710]",
+    "chain2": "20260818->1412440227 idx5278 triple[13791,10902,19455]",
+    "formula": "L(s)=(s*1103515245+12345)&0x7fffffff glibc",
+    "same_link_same_stars": "?daily=YYYYMMDD&n=1/3/5 Solo1 Triple3 Full5",
+    "verified": true
+  },
+  "provenance": {
+    "hashes": 59,
+    "status": "7/7/0 PASS",
+    "real": true
+  },
+  "zero_deps": true,
+  "single_action_per_tick": true
+}
