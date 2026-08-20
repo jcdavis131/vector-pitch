@@ -1,0 +1,5 @@
+/* fonts.css minimal — zero-deps system stacks, no external fetch, offline-ready */
+:root{
+  --font-mono: ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --font-sans: ui-sans-system,-apple-system,Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+}
