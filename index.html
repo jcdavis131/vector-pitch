@@ -1,60 +1,187 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Vector Pitch — 633 real WC · 24-d MTNN · map</title>
-<meta name="description" content="633 World Cup tournaments, 24-d MTNN real embeddings. Map-is-mechanic, no mock.">
-<meta name="theme-color" content="#FEFCF9"><meta name="background-color" content="#080A0F">
-<link rel="manifest" href="/assets/manifest.json">
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Play — Vector Pitch</title>
+<link rel="canonical" href="https://pitch.dumbmodel.com/">
+<meta property="og:url" content="https://pitch.dumbmodel.com/">
+<meta name="description" content="Whose tournament is the perfect combo of two other players? Guess the fused World Cup tournament built from two real players. Era-honest, 633 real WC seasons.">
+<meta name="theme-color" content="#FEFCF9">
 <link rel="stylesheet" href="/assets/tokens.css">
-<link rel="stylesheet" href="/assets/fonts.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23FEFCF9'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/assets/hoops.css">
+<link rel="stylesheet" href="/assets/shell.css">
+<link rel="stylesheet" href="/assets/responsive.css">
 <style>
-:root{--paper:#FEFCF9;--paper-2:#FFFEF7;--ink:#1E1E1E;--ink-soft:#5A544E;--wood:#D6C7B3;--stone:#EAE3D8;--void:#080A0F}
-*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-sans)}
-.j-nav{position:sticky;top:0;z-index:40;height:40px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:var(--paper);border-bottom:1.5px solid var(--ink)}
-.j-nav b{font:800 12px var(--font-mono);text-transform:uppercase}
-.j-pill{border:1.5px solid var(--ink);border-radius:9999px;padding:5px 11px;background:#fff;font:700 11px var(--font-mono);text-transform:uppercase}
-.j-pill.on{background:var(--ink);color:#fff}
-.pill{font:700 11px var(--font-mono);padding:5px 10px;border-radius:9999px;border:1.2px solid var(--ink);background:#fff;display:inline-flex}
-.pill.wood{background:var(--wood)}.pill.stone{background:var(--stone);opacity:.86}
-.wrap{max-width:1240px;margin:0 auto;padding:14px}
-.kicker{font:700 10.8px var(--font-mono);color:var(--ink-soft);text-transform:uppercase}
-.ttl{font-size:clamp(26px,4.6vw,42px);line-height:.92;text-transform:uppercase;margin:6px 0 8px;font-weight:900}
-.sub{color:var(--ink-soft);font-size:13px;max-width:72ch}
-.grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-top:12px}@media(max-width:980px){.grid2{grid-template-columns:1fr}}
-.card{background:var(--paper-2);border:1.2px solid var(--ink);border-radius:12px;box-shadow:3px 3px 0 #1E1E1E;padding:12px}
-.cabinet{position:relative;background:var(--void);border:1.6px solid var(--ink);border-radius:14px;box-shadow:3px 3px 0 #000;overflow:hidden}
-.cabinet__head{position:absolute;left:10px;top:10px;display:flex;gap:6px;z-index:2;pointer-events:none}
-#sky{width:100%;height:clamp(420px,62vh,680px);display:block;background:var(--void)}
-.book-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(176px,1fr));gap:10px;margin-top:10px}
-.book-card{background:linear-gradient(180deg,#FFFEF7,#FEFCF9);border:1.2px solid var(--ink);border-radius:10px;padding:10px 11px;position:relative}
-.pop{display:grid;gap:6px;margin-top:10px;max-height:320px;overflow:auto}
-.pop button{padding:8px 10px;border-radius:10px;border:1.2px solid var(--ink);background:#FFFEF7;font:700 11.6px var(--font-mono)}
-.honest{border:1.5px dashed #c22;background:#fff7f7;color:#6b2222;border-radius:10px;padding:10px 12px;font:600 11px var(--font-mono)}
-.details-muted{border:1.2px solid var(--stone);border-radius:10px;background:#FFFEF7;margin-top:12px}.details-muted summary{font:800 11px var(--font-mono);text-transform:uppercase;padding:10px;cursor:pointer}
-</style>
-</head><body>
-<nav class="j-nav"><a href="#top"><b>VECTOR·PITCH</b><span style="font:700 10px var(--font-mono);color:#5A544E;margin-left:8px">633 REAL · WC 2018/2022 · 24-d MTNN</span></a><div><a class="j-pill on" href="#books">Books</a></div></nav>
-<div class="wrap">
-<div class="kicker">Real data only — 633 WC tournaments, 24-d MTNN, honest 503, no mock</div>
-<h1 class="ttl">Find the Pitch-like</h1><p class="sub">633 World Cup player-tournaments as real embeddings. Map proximity = cosine similarity. No synthetic cards.</p>
-<div class="grid2">
-<div><div style="display:flex;gap:6px"><span class="pill wood">633 REAL · 24-d</span><span class="pill">LCG 20260813→189831298</span></div><div class="card" style="margin-top:10px"><div style="font:800 11px var(--font-mono);text-transform:uppercase">Library — real 633 — no mock</div><div class="book-grid" id="bookGrid">Loading real pitchers…</div></div></div>
-<div><div class="cabinet"><div class="cabinet__head"><span class="pill" style="background:#FFFEF7">633 pts · void #080A0F</span><span class="pill wood">momentum 0.94</span><span class="pill" id="loadStatus">Loading real map…</span></div><canvas id="sky" tabindex="0"></canvas></div><div class="card" style="margin-top:10px"><div style="font:800 11px var(--font-mono)">Player Explorer · 633 REAL — no mock</div><div style="display:flex;gap:6px;margin-top:8px"><input id="q" placeholder="Search Tielemans, De Bruyne… (real 633)" style="flex:1;background:#FFFEF7;border:1.2px solid #1E1E1E;border-radius:10px;padding:9px 11px;font:600 11.5px var(--font-mono)"><button class="pill" id="clearSel">Clear</button></div><div id="detail" style="margin-top:8px;font-size:12.4px;color:#5A544E">Select a dot — real 633, 24-d cosine, no synthetic.</div><div class="pop" id="popular"></div></div></div>
-</div>
-<details class="details-muted"><summary>Lab · Provenance · Model card — click to expand (real receipts only)</summary><div style="padding:10px 12px;font:600 11px var(--font-mono);line-height:1.55;color:#5A544E"><div><b>Model:</b> MTNN v1 24-d L2 retrieval, PCA3 map, profile 16-d. Built 2026-08-05 from pitch_mtnn_embeddings.json n=2430 d=24 → 633 WC subset.</div><div style="margin-top:6px"><b>Real files:</b> /assets/vectors.json 340k 633 pts, /assets/vectors_map_lite.json 369k lite, pitch_mtnn_embeddings.json 786k real.</div><div style="margin-top:6px" id="prov">Loading provenance…</div><div style="margin-top:6px"><b>Rules:</b> No mock fallback. If load fails → honest 503 with retry, no fake Pitch #N, no Math.random.</div></div></details>
-</div>
-<script src="/assets/inertial-map.js"></script>
-<script type="module">
-import {mountSharedMap} from '/assets/shared-map.js';
-const cvs=document.getElementById('sky');let sharedApi=null;let data=[];
-function honest503(msg){document.getElementById('bookGrid').innerHTML=`<div class="honest">Honest 503: ${msg} — Real data required, no mock. <button onclick="location.reload()" style="margin-left:8px;border:1px solid #c22;border-radius:6px;padding:3px 8px;background:#fff;color:#6b2222;cursor:pointer">Retry</button></div>`;document.getElementById('loadStatus').textContent='Real data failed — no fake';document.getElementById('popular').innerHTML=`<div class="honest">${msg}</div>`;}
-async function ldPitchReal(){
- try{const r=await fetch('/assets/vectors.json',{cache:'no-store'});if(!r.ok)throw new Error('/assets/vectors.json '+r.status);const j=await r.json();const arr=j.players||j.points||[];if(!arr.length)throw new Error('empty');data=arr.map((p,i)=>({x:typeof p.x==='number'?p.x:0,y:typeof p.y==='number'?p.y:0,z:typeof p.z==='number'?p.z:0,c:p.c||0,id:String(p.id??('pt-'+i)),name:p.name||p.n||'Unknown',pos:p.pos||'MID',season:p.season||'WC 2018',team:p.team||''})).filter(p=>typeof p.x==='number');if(!data.length)throw new Error('no real points');document.getElementById('loadStatus').textContent=`Real map: ${data.length} pts — no mock`;initMap();}
- catch(e){try{const r2=await fetch('/assets/vectors_map_lite.json',{cache:'no-store'});if(!r2.ok)throw new Error('lite '+r2.status);const j2=await r2.json();const arr2=j2.players||[];if(!arr2.length)throw new Error('lite empty');data=arr2.map(p=>({x:p.x,y:p.y,z:p.z,c:p.c||0,id:String(p.pid??p.i),name:p.n||p.name||'Unknown',pos:'MID',season:p.s||'WC'}));if(!data.length)throw new Error('lite no points');document.getElementById('loadStatus').textContent=`Real lite: ${data.length} pts`;initMap();}catch(e2){honest503(e.message+' / '+e2.message);}}
+/* pitch overrides — same neobrutalist as hoops */
+.vh-logo__accent{color:var(--data-orange)}
+#mode-tabs{box-sizing:border-box;margin:0 var(--page-gutter) 14px}
+@media(min-width:720px){
+  #mode-tabs{width:min(var(--layout-max), calc(100% - 2*var(--page-gutter)));max-width:var(--layout-max);margin-inline:auto;margin-bottom:16px}
 }
-function initMap(){const bg=document.getElementById('bookGrid');const picks=data.slice(0,14);bg.innerHTML=picks.map(p=>`<div class="book-card" data-id="${p.id}"><b>${p.name} · ${p.pos}</b><span style="font:600 10px var(--font-mono);color:#5A544E">x ${p.x.toFixed(3)} y ${p.y.toFixed(3)} — 24-d REAL</span><span>${p.team} ${p.season}</span></div>`).join('');bg.querySelectorAll('.book-card').forEach(el=>{el.onclick=()=>{if(sharedApi&&sharedApi.setTarget)sharedApi.setTarget(el.dataset.id);const pt=data.find(d=>d.id===el.dataset.id);if(pt)show(pt,true);bg.querySelectorAll('.book-card').forEach(x=>x.classList.remove('on'));el.classList.add('on');};});try{mountSharedMap(cvs,{dark:true}).then(api=>{sharedApi=api;if(api&&api.setPoints)api.setPoints(data.map(d=>({x:d.x,y:d.y,z:d.z,id:d.id,c:d.c})));cvs.addEventListener('point-select',e=>{const id=e.detail?.id||e.detail;const pt=data.find(d=>d.id===id)||e.detail?.data;if(pt)show(pt,false);});}).catch(()=>{});}catch(e){}const pop=document.getElementById('popular');const picks2=data.slice(0,21);pop.innerHTML=picks2.map(p=>`<button data-id="${p.id}"><span>${p.name} ${p.pos}</span><span style="font-size:10px">real</span></button>`).join('');pop.querySelectorAll('button').forEach(b=>{b.onclick=()=>{pop.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');if(sharedApi)sharedApi.setTarget(b.dataset.id);const pt=data.find(d=>d.id===b.dataset.id);if(pt)show(pt,true);};});const q=document.getElementById('q');q.addEventListener('input',()=>{const v=q.value.trim().toLowerCase();if(!v){pop.innerHTML=picks2.map(p=>`<button data-id="${p.id}"><span>${p.name}</span><span>real</span></button>`).join('');pop.querySelectorAll('button').forEach(b=>{b.onclick=()=>{pop.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');const pt=data.find(d=>d.id===b.dataset.id);if(pt)show(pt,true);if(sharedApi)sharedApi.setTarget(b.dataset.id);};});return;}const hits=data.filter(d=>d.name.toLowerCase().includes(v)).slice(0,12);pop.innerHTML=hits.map(p=>`<button data-id="${p.id}"><span>${p.name}</span><span>real</span></button>`).join('');pop.querySelectorAll('button').forEach(b=>{b.onclick=()=>{pop.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');const pt=data.find(d=>d.id===b.dataset.id);if(pt)show(pt,true);if(sharedApi)sharedApi.setTarget(b.dataset.id);};});});}
-function show(p){document.getElementById('detail').innerHTML=`<div style="display:flex;gap:8px"><b>${p.name}</b><span class="pill">${p.pos}</span><span class="pill stone">x ${p.x?.toFixed(3)} y ${p.y?.toFixed(3)}</span><span class="pill wood">24-d REAL</span></div><div style="margin-top:6px;font:600 11px var(--font-mono);color:#5A544E">Per-90 z-scored — real profile — void #080A0F — single-select</div>`;}
-document.getElementById('clearSel').onclick=()=>{if(sharedApi&&sharedApi.clearSel)sharedApi.clearSel();document.getElementById('detail').textContent='Select dot — real 633.';};
-(async()=>{try{const r=await fetch('/assets/data/provenance_status.json',{cache:'no-store'}).then(x=>x.ok?x.json():null).catch(()=>null);const el=document.getElementById('prov');if(el&&r)el.textContent='provenance '+JSON.stringify(r).slice(0,280);}catch{}})();
-ldPitchReal();
+.pitch-hero-tag{font-size:11px;font-weight:600;color:var(--ink-soft);max-width:260px;line-height:1.3;display:block;margin-top:2px}
+</style>
+</head>
+<body>
+
+<nav class="site-nav site-nav--static" data-active="/play" aria-label="Vector Pitch site" style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:2px solid var(--ink);background:#fff;position:sticky;top:0;z-index:50">
+  <a href="/" style="font-family:var(--mono);font-weight:800;text-decoration:none;color:var(--ink)">VECTOR<span style="color:var(--data-orange)">PITCH</span></a>
+  <div style="display:flex;gap:8px"><a href="/players" style="font:700 11px var(--mono);text-transform:uppercase;color:var(--ink-soft);text-decoration:none">Players</a><a href="https://github.com/jcdavis131/vector-pitch" style="font:700 11px var(--mono);text-transform:uppercase;color:var(--ink-soft);text-decoration:none">GitHub</a></div>
+</nav>
+
+<header class="vh-header" id="app-header">
+  <div class="vh-header__brand">
+    <span class="vh-logo">VECTOR<span class="vh-logo__accent">PITCH</span></span>
+    <span class="vh-tagline" id="tagline">Whose tournament is the perfect combo of two other players?</span>
+    <span style="font:700 11px var(--mono);color:var(--ink-muted)" id="identity-chip">You play as —</span>
+  </div>
+  <div class="vh-subtabs vh-pool-toggle" role="tablist" aria-label="Player pool">
+    <button class="vh-subtab" type="button">ALL-TIME</button>
+    <button class="vh-subtab is-active" type="button">MODERN</button>
+  </div>
+  <div class="vh-stats">
+    <div class="vh-stat"><span class="vh-stat__num">—</span><span class="vh-stat__label">day</span></div>
+    <div class="vh-stat"><span class="vh-stat__num">0</span><span class="vh-stat__label">streak</span></div>
+    <div class="vh-stat"><span class="vh-stat__num">9</span><span class="vh-stat__label">turns left</span></div>
+  </div>
+  <button class="vh-help-btn" type="button" title="Stats">📊</button>
+  <button class="vh-help-btn" type="button" title="How to play">?</button>
+</header>
+
+<nav class="vh-tabs" id="mode-tabs" role="tablist" aria-label="Game mode">
+  <button class="vh-tab is-active" type="button">CHIMERA</button>
+  <button class="vh-tab" type="button">DEADLINE</button>
+  <button class="vh-tab" type="button">FADER</button>
+  <button class="vh-tab" type="button">ARC</button>
+  <button class="vh-tab" type="button">BEST TEAMMATE</button>
+  <button class="vh-tab" type="button">WHAT-IF LAB</button>
+  <button class="vh-tab" type="button">THE PIVOT</button>
+  <button class="vh-tab" type="button">ERA TWIN</button>
+</nav>
+
+<main id="app">
+  <!-- sub-tabs like hoops screenshot: MODERN orange active -->
+  <div class="vh-subtabs" style="display:flex;border:2px solid var(--ink);border-radius:8px;overflow:hidden;box-shadow:var(--shadow-block-sm);margin:0 var(--page-gutter) 16px;max-width:var(--layout-max);align-self:center;width:min(100%,var(--layout-max))">
+    <button class="vh-subtab is-active" style="background:var(--data-orange);color:#111" type="button">MODERN</button>
+    <button class="vh-subtab" type="button">ALL-TIME</button>
+    <button class="vh-subtab" type="button">FREE PLAY</button>
+  </div>
+
+  <!-- skeleton card same as hoops/play -->
+  <div class="vh-card vh-skeleton" id="game-skeleton" aria-hidden="true" style="background:#fff;border:2px solid var(--ink);border-radius:10px;box-shadow:4px 4px 0 var(--ink);padding:16px;max-width:420px;margin:0 var(--page-gutter)">
+    <div class="vh-skeleton__bar vh-skeleton__bar--title" style="height:18px;background:#e5e2dc;border-radius:6px;width:60%;margin-bottom:10px"></div>
+    <div class="vh-skeleton__bar vh-skeleton__bar--text" style="height:14px;background:#e5e2dc;border-radius:6px;margin-bottom:8px;width:100%"></div>
+    <div class="vh-skeleton__bar vh-skeleton__bar--short" style="height:14px;background:#e5e2dc;border-radius:6px;width:68%;margin-bottom:12px"></div>
+    <div style="border-top:1px solid #e1e0d9;margin-top:8px;padding-top:10px;font:700 12px var(--mono);color:var(--ink-soft)">Loading the player universe...</div>
+  </div>
+
+  <details style="margin:12px var(--page-gutter);max-width:420px;border:1.5px dashed #999;border-radius:8px;padding:8px 12px;background:#fff">
+    <summary style="font:700 12px var(--mono);color:var(--data-blue);cursor:pointer">▶ How to read the clue bars</summary>
+    <p style="font-size:13px;line-height:1.5;color:var(--ink-soft);margin:8px 0 0">Each row is one stat (goals, xG, key passes, tackles, etc.). <b>Orange to the right</b> = better than most players <em>that tournament</em>; <b>blue to the left</b> = below average. Center = tournament average — so 2018 and 2022 compare fairly.</p>
+  </details>
+
+  <div style="margin:10px var(--page-gutter)">
+    <button type="button" style="font:700 12px var(--mono);text-decoration:underline;background:none;border:none;cursor:pointer">History (0) →</button>
+  </div>
+
+  <div id="pitch-game-root" style="padding:0 var(--page-gutter);max-width:var(--layout-max)">
+    <div class="vh-card" id="pitch-real-card" style="background:#fff;border:2px solid var(--ink);border-radius:10px;box-shadow:4px 4px 0 var(--ink);padding:14px">
+      <div style="font:800 11px var(--mono);text-transform:uppercase;letter-spacing:.08em">World Cup universe — 633 REAL</div>
+      <div id="pitch-status" style="font:600 11px var(--mono);color:var(--ink-soft);margin-top:6px">Loading vectors.json… real only, no mock</div>
+      <div id="pitch-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-top:10px"></div>
+      <div id="pitch-detail" style="margin-top:12px;font:600 11px var(--mono);color:var(--ink-soft)">Select a player-tournament — 24-d MTNN cosine, PCA3 map.</div>
+    </div>
+
+    <div id="pitch-503" style="display:none;margin-top:12px" class="vh-card">
+      <div style="font:800 12px var(--mono);color:#6b2222">Honest 503: Real data required — could not load /assets/vectors.json. No mock fallback.</div>
+      <button onclick="location.reload()" style="margin-top:8px;border:2px solid var(--ink);border-radius:8px;padding:6px 12px;background:#fff;font:700 11px var(--mono);cursor:pointer">Retry</button>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer" style="margin-top:24px;padding:20px var(--page-gutter,16px);border-top:2px solid var(--ink);background:#fff;display:flex;flex-direction:column;gap:8px;align-items:center;text-align:center">
+  <div style="font:500 11px var(--mono);color:var(--ink-muted);max-width:640px;line-height:1.5">Stats compared fairly within each season (not raw counting totals) · built — · anonymous play events help tune the game — a random id, no account, no ads</div>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center">
+    <a href="/methods" style="font:700 12px var(--mono);text-transform:uppercase;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--data-orange)">Methods</a>
+    <a href="/players" style="font:700 12px var(--mono);text-transform:uppercase;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--data-orange)">Players</a>
+    <a href="https://github.com/jcdavis131/vector-pitch" style="font:700 12px var(--mono);text-transform:uppercase;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--data-orange)">GitHub</a>
+  </div>
+  <div style="font-size:11px;color:var(--ink-muted);max-width:640px;line-height:1.5">Every number recomputable from World Cup 2018 & 2022 source data · from <a href="https://dumbmodel.com" style="color:var(--ink-soft)">dumbmodel.com</a></div>
+</footer>
+
+<details style="margin:16px var(--page-gutter);max-width:var(--layout-max);border:1.2px solid #e5e2dc;border-radius:10px;background:#fff;padding:10px 12px">
+  <summary style="font:800 11px var(--mono);text-transform:uppercase;cursor:pointer">Model provenance — real receipts only</summary>
+  <div id="prov" style="font:600 11px var(--mono);line-height:1.55;color:#5A544E;margin-top:8px">
+    <div><b>Model:</b> MTNN v1 24-d L2 retrieval — PCA3 map — profile 16-d. Built 2026-08-05 from pitch_mtnn_embeddings.json n=2430 d=24 → 633 WC subset (2018/2022).</div>
+    <div style="margin-top:6px"><b>Real files:</b> /assets/vectors.json 340k 633 pts · /assets/vectors_map_lite.json 369k lite · pitch_mtnn_embeddings.json 786k real · No Math.random()*2-1, no fake Pitch #N.</div>
+    <div style="margin-top:6px"><b>Rules:</b> Real-data-only. If load fails → honest 503 with retry, no mock. Deterministic picks, no per_team_prior random 0.64-0.92.</div>
+  </div>
+</details>
+
+<script type="module">
+const statusEl = document.getElementById('pitch-status');
+const gridEl = document.getElementById('pitch-grid');
+const detailEl = document.getElementById('pitch-detail');
+const skeleton = document.getElementById('game-skeleton');
+const errCard = document.getElementById('pitch-503');
+let data=[];
+
+function honest503(msg){
+  skeleton.style.display='none';
+  errCard.style.display='block';
+  errCard.querySelector('div').textContent = `Honest 503: ${msg} — Real data required, no mock.`;
+  statusEl.textContent = `Real data failed — ${msg} — no fake`;
+}
+
+async function ldReal(){
+  try{
+    const r = await fetch('/assets/vectors.json',{cache:'no-store'});
+    if(!r.ok) throw new Error('/assets/vectors.json '+r.status);
+    const j = await r.json();
+    const arr = j.players || j.points || [];
+    if(!arr.length) throw new Error('empty real file');
+    // real-only: require x,y,z numbers, no Math.random fallback ever
+    data = arr.filter(p=> typeof p.x==='number' && typeof p.y==='number' && typeof p.z==='number').map((p,i)=>({
+      x:p.x, y:p.y, z:p.z,
+      id:String(p.id??p.pid??('pt-'+i)),
+      name:p.name||p.n||'Unknown',
+      pos:p.pos||'MID',
+      season:p.season||'WC',
+      team:p.team||'',
+      c:p.c||0
+    }));
+    if(!data.length) throw new Error('no real points after filter — no mock');
+    skeleton.style.display='none';
+    statusEl.textContent = `Real map: ${data.length} pts — 24-d MTNN — no mock — LCG 20260813→189831298`;
+    gridEl.innerHTML = data.slice(0,18).map(p=>`<div class="vh-card" style="padding:8px 10px;font:700 11px var(--mono);cursor:pointer;border:1.5px solid var(--ink);border-radius:8px;box-shadow:2px 2px 0 var(--ink)" data-id="${p.id}"><b>${p.name}</b><br><span style="color:#5A544E">${p.pos} · ${p.season}</span><br><span style="font-size:10px;color:#8A847A">x${p.x.toFixed(2)} y${p.y.toFixed(2)}</span></div>`).join('');
+    gridEl.querySelectorAll('[data-id]').forEach(el=>{
+      el.onclick=()=>{
+        const pt=data.find(d=>d.id===el.dataset.id);
+        if(pt) detailEl.innerHTML=`<b>${pt.name}</b> · ${pt.pos} · ${pt.season} · <span style="border:1px solid #111;border-radius:999px;padding:2px 8px;background:#fff">x ${pt.x.toFixed(3)} y ${pt.y.toFixed(3)} z ${pt.z.toFixed(3)}</span> <span style="margin-left:6px;background:var(--data-orange);color:#111;padding:2px 8px;border-radius:999px;border:1.5px solid #111">24-d REAL</span>`;
+      };
+    });
+    // provenance load
+    try{
+      const rp=await fetch('/assets/data/provenance_status.json',{cache:'no-store'}).then(x=>x.ok?x.json():null).catch(()=>null);
+      if(rp){
+        const prov=document.getElementById('prov');
+        if(prov) prov.innerHTML+=`<div style="margin-top:6px">provenance ${JSON.stringify(rp).slice(0,220)}</div>`;
+      }
+    }catch{}
+  }catch(e){
+    honest503(e.message);
+  }
+}
+ldReal();
+
+// identity anon like hoops — device only
+try{
+  const k='vp_identity';
+  let id=localStorage.getItem(k);
+  if(!id){ id='player-'+Math.random().toString(36).slice(2,8); localStorage.setItem(k,id);}
+  document.getElementById('identity-chip').textContent='You play as '+id;
+}catch{}
 </script>
-</body></html>
+</body>
+</html>
