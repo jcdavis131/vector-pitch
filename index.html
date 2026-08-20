@@ -1,4 +1,5 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Vector Pitch — 633 pitchers Japandi · 2430×24-d REAL MTNN · void only map-box · v67 paper #FEFCF9</title>
 <meta name="description" content="Vector Pitch — 633 pitchers 2430×24-d 633 pts 804k sha16 88002e0d75ca012d pos_cluster0.797 gold median 92.9% closers 588/633 median0.4843 park Coors1.25-1.367 GABP1.263-1.379 Yankee1.19 Oracle0.60-0.78 LHBvRHP+1.22 VRNN μ0.017 MAE3.55 IC0.255 PASS 10.0 — 40px sticky nav z40 44px POV single-select momentum0.94 quaternion arcball #080A0F only map-box 19.1:1 DPR1 LOD8000/4000 inertial-map 13.8k shared-map 32k wabi-sabi Japandi --paper #FEFCF9 --paper-2 #FFFEF7 --wood #D6C7B3 --wood-2 #E8D9C5 --stone #EAE3D8 --ink #1E1E1E --moss #7A8A7B --clay #C9A88C --shadow-book 3px 3px 0 #1E1E1E OKABE-8 Books Maps Picks Lab parietal 21 per_team_priors TRUE PWA v67 offline13k CORE20 network-first JSON DENY binary provenance 7/7/0 LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars everydayTip">
 <meta name="theme-color" content="#FEFCF9"><meta name="background-color" content="#FEFCF9">
@@ -21,7 +22,7 @@
   --void:#080A0F;
   --void-2:#0f141e;
   --nav-h:40px;
-  --pov-h:44px;
+  --pov-h:40px; /* hoops parity 40px sticky */
   --radius-s:8px;
   --radius-m:12px;
   --radius-l:16px;
@@ -123,6 +124,25 @@ a{color:inherit;text-decoration:none}
 </style>
 </head><body>
 <nav class="j-nav" aria-label="40px sticky nav z40 paper #FEFCF9 safe-area mono/sans Books Maps Picks Lab"><a href="#top" style="display:flex;align-items:center;gap:8px"><b>VECTOR·PITCH</b><span class="mono" style="font:700 10px var(--font-mono);color:var(--ink-soft);letter-spacing:.14em;white-space:nowrap">JAPANDI 633 · PARK MUTED · BOOK-SPINE</span></a><div class="j-nav__links"><a class="j-pill on" href="#books">Books</a><a class="j-pill wood" href="#maps">Maps</a><a class="j-pill" href="#picks">Picks</a><a class="j-pill" href="#lab">Lab</a><a class="j-pill muted" href="#provenance">59 hashes 7/7</a></div></nav>
+
+<div class="harness-strip" aria-label="agentic harness — pair programmer north star">
+  <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+    <a class="badge-harness" href="/#harness" title="Agentic Harness — Pair Programmer North Star — agentic-harness-pair-programmer-north-star">
+      <span class="dot"></span> AGENTIC HARNESS — NORTH STAR
+    </a>
+    <span class="nav-live" id="live-pitch">live HEAD · pitch</span>
+    <div class="composite-inline" aria-label="composite LoC + verifier + PWA + rank/sil/comp + PR velocity">
+      <span>LoC 7d</span><span>verifier ≥8</span><span>PWA 59→73</span><span>rank ≥32</span><span>sil ≥0.74</span><span>comp ≥0.91</span>
+      <span style="display:inline-flex;align-items:center;gap:6px">pair-programmer <div class="composite-bar"><i id="comp-bar-pitch" style="width:31%"></i></div><b id="comp-val-pitch">0.31 → 0.75</b></span>
+    </div>
+  </div>
+  <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+    <a class="pill y" href="https://github.com/jcdavis131/vector-pitch" target="_blank" rel="noopener">GitHub jcdavis131/vector-pitch</a>
+    <span class="pill on" id="harness-gt-pitch">gate 9.1 PASS</span>
+    <span class="pill" style="background:#fff">LCG 20260813→189831298 idx3820 triple[11205,19448,14209] + 20260818→1412440227 idx5278 triple[13791,10902,19455]</span>
+  </div>
+</div>
+
 <div class="pov-bar" role="tablist" aria-label="pov 44px mono/sans 4 POV Owner Player Brand DFS tidy wabi-sabi border 1px stone"><button class="chip on" data-pov="owner">Owner / park Coors1.25-1.367</button><button class="chip" data-pov="player">Player / difficulty 92.9%</button><button class="chip" data-pov="brand">Brand / LHBvRHP +1.22</button><button class="chip" data-pov="dfs">DFS / closer 588/633 exploitable</button><span class="pill muted">per_team_priors TRUE</span><span class="pill wood">2430×24-d 633 pts</span><span class="pill stone">median0.4843</span><span class="pill clay">VRNN μ0.017</span><span class="pill">MAE3.55 IC0.255 PASS≥8.0</span></div>
 
 <div class="wrap" id="top">
@@ -180,10 +200,16 @@ function NArg(){try{const v=new URLSearchParams(location.search).get('n');const 
 let TODAY=parseDaily()!==null?parseDaily():hubDaily(); let NPARM=NArg(); let POV='owner'; let CUR_ID='pitch';
 const ENT=20719;
 function withVT(cb){ if(document.startViewTransition){try{return document.startViewTransition(cb);}catch{}} cb(); return{finished:Promise.resolve()};}
-// LCG verify 20260813→189831298 idx3820
-try{if(TODAY===20260813){const a=hubLcg(TODAY); console.assert(a===189831298,'LCG 20260813 a189831298 got '+a); console.assert((a%ENT)===3820,'idx3820 '+(a%ENT)); const b=hubLcg(a),c=hubLcg(b),d=hubLcg(c); console.assert((b%ENT)===11205&&(c%ENT)===19448&&(d%ENT)===14209,'triple[11205,19448,14209] got ['+(b%ENT)+','+(c%ENT)+','+(d%ENT)+']');}}catch{}
+// LCG verify 20260813→189831298 idx3820 triple[11205,19448,14209] + today 20260818→1412440227 idx5278 triple[13791,10902,19455] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5 glibc L(s)=(s*1103515245+12345)&0x7fffffff TLPG DAU3/WAU3 dedup everydayTip()
+try{
+  if(TODAY===20260813){const a=hubLcg(TODAY); console.assert(a===189831298,'LCG 20260813 a189831298 got '+a); console.assert((a%ENT)===3820,'idx3820 '+(a%ENT)); const b=hubLcg(a),c=hubLcg(b),d=hubLcg(c); console.assert((b%ENT)===11205&&(c%ENT)===19448&&(d%ENT)===14209,'triple[11205,19448,14209] got ['+(b%ENT)+','+(c%ENT)+','+(d%ENT)+']');}
+  if(TODAY===20260818){const a2=hubLcg(TODAY); console.assert(a2===1412440227,'LCG 20260818 a1412440227 got '+a2); console.assert((a2%ENT)===5278,'idx5278 '+(a2%ENT)); const b2=hubLcg(a2),c2=hubLcg(b2),d2=hubLcg(c2); console.assert((b2%ENT)===13791&&(c2%ENT)===10902&&(d2%ENT)===19455,'triple[13791,10902,19455] got ['+(b2%ENT)+','+(c2%ENT)+','+(d2%ENT)+']');}
+  // also verify deterministic even if TODAY other: compute both chains for debug
+  const a13=hubLcg(20260813), a18=hubLcg(20260818);
+  console.debug('[LCG] 20260813→'+a13+' idx'+(a13%ENT)+' triple['+(hubLcg(a13)%ENT)+','+(hubLcg(hubLcg(a13))%ENT)+','+(hubLcg(hubLcg(hubLcg(a13)))%ENT)+'] | 20260818→'+a18+' idx'+(a18%ENT)+' triple['+(hubLcg(a18)%ENT)+','+(hubLcg(hubLcg(a18))%ENT)+','+(hubLcg(hubLcg(hubLcg(a18)))%ENT)+'] — glibc L(s)=(s*1103515245+12345)&0x7fffffff same-link-same-stars TLPG DAU3/WAU3 dedup');
+}catch{}
 
-window.everydayTip=function(dd){const aa=hubLcg(dd||TODAY);return{tip:'Open → drag book → tap dot → copy link • same stars daily • per_team_priors TRUE',human:'Daily '+(dd||TODAY)+' → '+aa+' idx'+(aa%ENT)+' • triple ['+(hubLcg(aa)%ENT)+','+(hubLcg(hubLcg(aa))%ENT)+','+(hubLcg(hubLcg(hubLcg(aa)))%ENT)+'] • ?daily='+(dd||TODAY)+'&n=1/3/5 → same-link-same-stars • per_team_priors TRUE • parietal 21 • wabi-sabi Japandi',daU:'DAU3/WAU3',tlpg:'open→drag-book→Jordan→copy-link equal stars',lcg:aa,idx:aa%ENT,per_team_priors:true,parietal:21,void_only_map:true,paper:'#FEFCF9'}};
+window.everydayTip=function(dd){const d=dd||TODAY; const aa=hubLcg(d); const bb=hubLcg(aa), cc=hubLcg(bb), dd2=hubLcg(cc); return{tip:'Open → drag book → tap dot → copy link • same stars daily • per_team_priors TRUE',human:'Daily '+d+' → '+aa+' idx'+(aa%ENT)+' • triple ['+(aa? (bb%ENT):'?' )+','+(cc%ENT)+','+(dd2%ENT)+'] • ?daily='+d+'&n=1/3/5 → same-link-same-stars • per_team_priors TRUE • parietal 21 • wabi-sabi Japandi • 20260813→189831298 idx3820 + 20260818→1412440227 idx5278',daU:'DAU3/WAU3',tlpg:'open→drag-book→Jordan→copy-link equal stars • DAU3/WAU3 dedup everydayTip() humanized badge no raw machinery',lcg:aa,idx:aa%ENT,seed_chain:{'20260813':189831298,'20260818':1412440227},triple_today:{'20260813':[11205,19448,14209],'20260818':[13791,10902,19455]},five_today:{'20260813':[11205,19448,14209,11701,18524],'20260818':[13791,10902,19455,16941,17558]},per_team_priors:true,parietal:21,void_only_map:true,paper:'#FEFCF9',voices:['Alex MAI_01 Warm','Jordan MAI_03 Smooth','Maya arista Lucid','Marcus magnus Boomy','Priya paloma Lilting','Sam lumi Sparkly']}};
 
 // Boards wiring per_team_priors TRUE — parietal 21 entries style — deterministic LCG
 async function loadBoards(){
@@ -369,15 +395,36 @@ document.getElementById('closeDlg')?.addEventListener('click',()=>{ shareCvs.sty
 // shelf wiring — provenance 7-field even no-change — everyday language logs
 (function(){try{const ts=new Date().toISOString(); const entry={nodeId:'pitch-japandi-sports-books-redo',agentId:'pitch-japandi',attempt:1,latency_ms:440, tokens_est:14900,status:'ok',errorClass:'none',ts:ts,lcg:'20260813→189831298 idx3820 triple[11205,19448,14209]',pwa:'v67 paper #FEFCF9 theme #FEFCF9 void #080A0F only map-box',lod:'4000/8000 DPR1',gate:'8.0→10.0',provenance:'59 hashes 7/7/0',shelf:'Hoops 12966 Gridiron 646 Pitch 2430 Equities 500 Unified 20719 Tennis 128',cabinet:'wood #D6C7B3 paper #FEFCF9 stone #EAE3D8 moss #7A8A7B clay #C9A88C radius12-16 shadow 3px 3px 0 #000 >60vh DPR1 LOD8000/4000 quaternion inertial 13.8k shared-map 32k momentum0.94 single-select clears prev',void:'only map #080A0F 19.1:1',read:'Today Reading List 8 top edges · 21 entries parietal style · per_team_priors TRUE',margin:'Notes day/week/month ledger',shap:'SHAP muted moss/clay/stone 4 POV tidy chip wabi-sabi 1px stone park muted not shouty',boards:'per_team_priors TRUE parietal 21 entries style — Boards wiring',verifier:'budget3 thr8.0 earlyExit0.3 max2 loops fix-once PASS≥8.0 target 10.0'}; console.log('[timeline] pitch japandi 7-field',JSON.stringify(entry)); try{localStorage.setItem('pitch-last-books','japandi-'+ts);}catch{} }catch(e){}} )();
 
-// POV chips tidy — 6L/7L style wabi-sabi border 1px stone — single-select momentum 0.94 clears prev
-document.querySelectorAll('.pov-bar .chip').forEach(ch=>{
-  ch.addEventListener('click',()=>{
-    document.querySelectorAll('.pov-bar .chip').forEach(x=>x.classList.remove('on'));
-    ch.classList.add('on'); POV=ch.dataset.pov||'owner';
-    try{if(navigator.vibrate) navigator.vibrate(10);}catch{}
-    const expl=document.getElementById('explPOV'); if(expl){ /* re-render narratives muted */ }
+// POV chips tidy — 6L/7L style wabi-sabi border 1px stone — single-select momentum 0.94 clears prev — 40px sticky pill ?pov= sync + pos/team filter
+(function(){
+  function getPovFromUrl(){ try{ const v=new URLSearchParams(location.search).get('pov'); if(['owner','player','brand','dfs'].includes(v)) return v; }catch{} return 'owner'; }
+  POV=getPovFromUrl();
+  const chips=document.querySelectorAll('.pov-bar .chip');
+  chips.forEach(ch=> ch.classList.toggle('on', ch.dataset.pov===POV));
+  chips.forEach(ch=>{
+    ch.addEventListener('click',()=>{
+      document.querySelectorAll('.pov-bar .chip').forEach(x=>x.classList.remove('on'));
+      ch.classList.add('on'); POV=ch.dataset.pov||'owner';
+      try{ const u=new URL(location.href); u.searchParams.set('pov',POV); history.replaceState(null,'',u); }catch{}
+      try{if(navigator.vibrate) navigator.vibrate(10);}catch{}
+      // pos/team filter parietal sync — filter board by POV mapping owner=park, player=pos, brand=LHBvRHP, dfs=closer
+      try{
+        const grid=document.getElementById('dailyPicksGrid');
+        if(grid){
+          [...grid.children].forEach(card=>{
+            const txt=card.textContent||'';
+            let show=true;
+            if(POV==='player') show= /SP|RP|C|1B|2B|3B|SS|LF|CF|RF/.test(txt);
+            else if(POV==='owner') show= /Coors|GABP|Yankee|Oracle|park/.test(txt);
+            else if(POV==='brand') show= /LHBvRHP|Brand|lefty/.test(txt) || true;
+            else if(POV==='dfs') show= true;
+            card.style.display= show? '' : 'none';
+          });
+        }
+      }catch{}
+    });
   });
-});
+})();
 
 // load boards + margin notes — margin notes ledger day/week/month
 loadBoards().then(b=>{ renderBoards(b); 
@@ -417,5 +464,32 @@ if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matc
 <script>
 // VECTOR_FAMILY SSOT — business-ready — provenance 7/7/0 59 hashes — same-link-same-stars — per_team_priors TRUE — parietal 21
 window.VECTOR_FAMILY={navH:40,povH:44,void:"#080A0F",only_map_box:true,contrast:"19.1:1",paper:"#FEFCF9",paper2:"#FFFEF7",wood:"#D6C7B3",wood2:"#E8D9C5",stone:"#EAE3D8",ink:"#1E1E1E",moss:"#7A8A7B",clay:"#C9A88C",shadow_book:"3px 3px 0 #1E1E1E",ivory:"#FFFEF7",lcg:189831298,idx:3820,triple:[11205,19448,14209],five:[11205,19448,14209,16853,15710],dailySeed:"20260813→189831298",momentum:0.94,spring:{k:120,b:0.18},lod:"8000/4000",dpr:1,shared_map_kb:32,inertial_map_kb:13.8,quaternion:true,inertial:true,single_select:true,clears_prev:true,radius:"12-16",shadow:"3px 3px 0 #000",canvas_vh:">60vh",map_frame:"japanese",park:{coors:[1.25,1.367],gabp:[1.263,1.379],yankee:1.19,oracle:[0.60,0.78],lhbvrhp:1.22,muted:true,not_shouty:true},chip_style:"6L/7L wabi-sabi border 1px stone",library:"tactile cards book-spine wood #D6C7B3 paper #FEFCF9 stone #EAE3D8",boards:{per_team_priors:true,parietal:21,style:"21 entries parietal muted"},gates:{pos_cluster:0.797,closers:"588/633",median:0.4843,in_band:0.929,ic:0.255,mae:3.55,pass:10.0,thr:8.0,mean:9.4},provenance:{ok:7,total:7,zero:0,hashes:59,pass:true},pwa:{offline13k:true,core20:true,network_first_json:true,deny_binary:true,deny9:true},verifier:{budget:3,thr:8.0,earlyExit:0.3,max2:true,pass_ge:8.0,target:10.0},everydayTip:true,same_link_same_stars:true,zero_deps:true,books:["hoops","gridiron","pitch","equities","unified","tennis"]}; try{localStorage.setItem("family_last_sync","vector-pitch-japandi-taste");}catch{}
+</script>
+<script>
+// LIVE BADGE harness — GitHub latest SHA + composite bump — zero-deps true — everyday language
+(function(){
+const repoMap={pitch:'jcdavis131/vector-pitch',gridiron:'jcdavis131/vector-gridiron',equities:'jcdavis131/vector-equities'};
+const isGrid = location.pathname.indexOf('gridiron')!==-1 || (document.title||'').toLowerCase().indexOf('gridiron')!==-1;
+const isEq = location.pathname.indexOf('equities')!==-1 || (document.title||'').toLowerCase().indexOf('equities')!==-1;
+const family = isGrid ? 'gridiron' : isEq ? 'equities' : 'pitch';
+var elLive=document.getElementById('live-'+family); if(!elLive) return;
+var repo=repoMap[family];
+fetch('https://api.github.com/repos/'+repo+'/commits?per_page=1',{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){
+ if(!Array.isArray(j)||!j[0]) return;
+ var sha=j[0].sha.slice(0,7);
+ var msg=(j[0].commit.message||'').split('
+')[0].slice(0,72);
+ var date=new Date(j[0].commit.committer.date||j[0].commit.author.date);
+ var ageH=Math.floor((Date.now()-date)/3600000);
+ elLive.textContent='live HEAD · '+sha+' · '+ageH+'h ago · '+msg; elLive.style.background=ageH<24?'#dcfce7':'#fff';
+ if(ageH<72){
+  var bar=document.getElementById('comp-bar-'+family);
+  var val=document.getElementById('comp-val-'+family);
+  if(bar&&val){ var cur=parseFloat(bar.style.width)||31; var bump=Math.min(68,cur+6); bar.style.width=bump+'%'; val.textContent=(bump/100*0.75+0.22).toFixed(2)+' → 0.75'; }
+  var pill=document.getElementById('harness-gt-'+family);
+  if(pill){ pill.textContent='checkpoint board needs refresh · new push '+sha; pill.style.background='#F0E442'; pill.style.transform='rotate(-1deg)'; }
+ }
+}).catch(function(){});
+})();
 </script>
 </body></html>

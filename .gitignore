@@ -1,9 +1,18 @@
-pipeline/cache/
-__pycache__/
-.vercel
 
 # Training matrices / checkpoints (regenerable); keep reports + manifests
+**/*_api_key
+**/dev_key
+*.log
+.DS_Store
+.env.local
+.scout/
+.vercel
+__pycache__/
+checkpoints/
+dev-api-audit.log
+node_modules/
+pipeline/cache/
+pipeline/data/*.log
 pipeline/data/*.npz
 pipeline/data/*.pt
-pipeline/data/*.log
 pipeline/data/_*/

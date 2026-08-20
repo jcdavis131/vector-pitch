@@ -1,0 +1,535 @@
+{
+  "built": "2026-08-17T05:07:00Z",
+  "lane": "scout/pitch-mtnn-game-0507",
+  "model": "PitchMTNN v1.1\u2192v1.2 retuned",
+  "embedding": "mtnn_v1_24d_l2 24-d L2 unit sphere cosine=dot",
+  "dimensions": 16,
+  "towers": 3,
+  "tower_groups": {
+    "attacking": 6,
+    "passing_control": 5,
+    "defending_duel": 5,
+    "mapping": {
+      "attacking": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "passing_control": [
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "defending_duel": [
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    }
+  },
+  "features": [
+    "GOALS",
+    "XG",
+    "FINISHING",
+    "ASSISTS",
+    "KEY_PASSES",
+    "CROSSES",
+    "PASSES_CMP",
+    "PASS_CMP_PCT",
+    "PROG_CARRY",
+    "DRIBBLES",
+    "FOULS_WON",
+    "PRESSURES",
+    "TACKLES",
+    "INTERCEPTIONS",
+    "RECOVERIES",
+    "FOULS_CONV"
+  ],
+  "featureLabels": [
+    "Goals \u03c3",
+    "xG \u03c3",
+    "Finishing \u03c3",
+    "Assists \u03c3",
+    "KeyPass \u03c3",
+    "Cross \u03c3",
+    "PassCmp \u03c3",
+    "Pass% \u03c3",
+    "ProgCarry \u03c3",
+    "Dribble \u03c3",
+    "FoulsWon \u03c3",
+    "Press \u03c3",
+    "Tackle \u03c3",
+    "Intercept \u03c3",
+    "Recover \u03c3",
+    "FoulConv \u03c3"
+  ],
+  "example_player": {
+    "id": 0,
+    "name": "Youri Tielemans WC 2018 Belgium MID c=7",
+    "profile": [
+      -0.573,
+      -0.5,
+      -0.241,
+      0.209,
+      4.0,
+      0.691,
+      0.789,
+      0.74,
+      0.006,
+      2.611,
+      2.943,
+      -0.027,
+      -0.022,
+      -0.522,
+      0.625,
+      1.269
+    ],
+    "baseline": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "x_xyz": [
+      -0.1629,
+      -0.2645,
+      -0.4897
+    ],
+    "pos": "MID",
+    "cluster": 7,
+    "season": "WC 2018",
+    "team": "Belgium"
+  },
+  "prediction": {
+    "task": "difficulty expected_solve / game-hit",
+    "prediction_expected_solve": 0.26214,
+    "baseline_pred": 0.41096,
+    "delta": -0.148822,
+    "difficulty_score": 0.4517,
+    "expected_solve_before": 0.6193,
+    "expected_solve_after_retune": 0.71,
+    "in_band": true,
+    "DACHS": 0.72,
+    "median_difficulty": 0.4843,
+    "median_guesses_before": 5.0,
+    "median_guesses_after": 2.6,
+    "game_hit_before": 0.61,
+    "game_hit_after": 0.929,
+    "composite_before": 0.7785,
+    "composite_after": 0.8512
+  },
+  "SHAP": {
+    "method": "Kernel SHAP 160 coalitions weighted least sq ridge 1e-4 Shapley kernel (M-1)/(C(M,s)s(M-s)) s=0,M\u21921000 \u2014 LCG deterministic seed 20260813\u2192189831298",
+    "num_coalitions": 160,
+    "kernel": "Shapley (M-1)/(comb(M,s)s(M-s))",
+    "values": [
+      {
+        "feature": "GOALS",
+        "label": "Goals \u03c3",
+        "idx": 0,
+        "value": -0.573,
+        "baseline": 0.0,
+        "shap": 0.028688,
+        "shap_abs": 0.028688,
+        "tower": "attacking",
+        "z_sigma": -0.573,
+        "grade": "D",
+        "narrative_owner": "Goals \u03c3 -0.57\u03c3 \u2014 below tournament mean; SHAP +0.029 pulls expected solve up (easier)",
+        "mechanics": "cat([x\u00b7m,m]) masked tower gated attn+gate 16\u219232 LN GELU \u00d72 skip"
+      },
+      {
+        "feature": "XG",
+        "label": "xG \u03c3",
+        "idx": 1,
+        "value": -0.5,
+        "baseline": 0.0,
+        "shap": 0.020861,
+        "shap_abs": 0.020861,
+        "tower": "attacking",
+        "z_sigma": -0.5,
+        "grade": "D",
+        "narrative_owner": "xG \u03c3 -0.50\u03c3 \u2014 below tournament mean; SHAP +0.021 pulls expected solve up (easier)",
+        "mechanics": "cat([x\u00b7m,m]) masked tower gated attn+gate 16\u219232 LN GELU \u00d72 skip"
+      },
+      {
+        "feature": "FINISHING",
+        "label": "Finishing \u03c3",
+        "idx": 2,
+        "value": -0.241,
+        "baseline": 0.0,
+        "shap": 0.008044,
+        "shap_abs": 0.008044,
+        "tower": "attacking",
+        "z_sigma": -0.241,
+        "grade": "C",
+        "narrative_owner": "Finishing \u03c3 -0.24\u03c3 \u2014 below tournament mean; SHAP +0.008 pulls expected solve up (easier)",
+        "mechanics": "cat([x\u00b7m,m]) masked tower gated attn+gate 16\u219232 LN GELU \u00d72 skip"
+      },
+      {
+        "feature": "ASSISTS",
+        "label": "Assists \u03c3",
+        "idx": 3,
+        "value": 0.209,
+        "baseline": 0.0,
+        "shap": -0.005813,
+        "shap_abs": 0.005813,
+        "tower": "attacking",
+        "z_sigma": 0.209,
+        "grade": "B",
+        "narrative_owner": "Assists \u03c3 +0.21\u03c3 \u2014 above tournament mean; SHAP -0.006 pulls expected solve down (harder)",
+        "mechanics": "cat([x\u00b7m,m]) masked tower gated attn+gate 16\u219232 LN GELU \u00d72 skip"
+      },
+      {
+        "feature": "KEY_PASSES",
+        "label": "KeyPass \u03c3",
+        "idx": 4,
+        "value": 4.0,
+        "baseline": 0.0,
+        "shap": -0.100132,
+        "shap_abs": 0.100132,
+        "tower": "attacking",
+        "z_sigma": 4.0,
+        "grade": "A+",
+        "narrative_owner": "KeyPass \u03c3 +4.00\u03c3 \u2014 above tournament mean; SHAP -0.100 pulls expected solve down (harder)",
+        "mechanics": "cat([x\u00b7m,m]) masked tower gated attn+gate 16\u219232 LN GELU \u00d72 skip"
+      },
+      {
+        "feature": "CROSSES",
+        "label": "Cross \u03c3",
+        "idx": 5,
+        "value": 0.691,
+        "baseline": 0.0,
+        "shap": -0.013454,
+        "shap_abs": 0.013454,
+        "tower": "attacking",
+        "z_sigma": 0.691,
+        "grade": "B",
+        "narrative_owner": "Cross \u03c3 +0.69\u03c3 \u2014 above tournament mean; SHAP -0.013 pulls expected solve down (harder)",
+        "mechanics": "cat([x\u00b7m,m]) masked tower gated attn+gate 16\u219232 LN GELU \u00d72 skip"
+      },
+      {
+        "feature": "PASSES_CMP",
+        "label": "PassCmp \u03c3",
+        "idx": 6,
+        "value": 0.789,
+        "baseline": 0.0,
+        "shap": -0.02414,
+        "shap_abs": 0.02414,
+        "tower": "passing_control",
+        "z_sigma": 0.789,
+        "grade": "B",
+        "narrative_owner": "PassCmp \u03c3 +0.79\u03c3 \u2014 above tournament mean; SHAP -0.024 pulls expected solve down (harder)",
+        "mechanics": "cat([x\u00b7m,m]) masked tower gated attn+gate 16\u219232 LN GELU \u00d72 skip"
+      },
+      {
+        "feature": "PASS_CMP_PCT",
+        "label": "Pass% \u03c3",
+        "idx": 7,
+        "value": 0.74,
+        "baseline": 0.0,
+        "shap": -0.016466,
+        "shap_abs": 0.016466,
+        "tower": "passing_control",
+        "z_sigma": 0.74,
+        "grade": "B",
+        "narrative_owner": "Pass% \u03c3 +0.74\u03c3 \u2014 above tournament mean; SHAP -0.016 pulls expected solve down (harder)",
+        "mechanics": "cat([x\u00b7m,m]) masked tower gated attn+gate 16\u219232 LN GELU \u00d72 skip"
+      },
+      {
+        "feature": "PROG_CARRY",
+        "label": "ProgCarry \u03c3",
+        "idx": 8,
+        "value": 0.006,
+        "baseline": 0.0,
+        "shap": -0.0001,
+        "shap_abs": 0.0001,
+        "tower": "passing_control",
+        "z_sigma": 0.006,
+        "grade": "C",
+        "narrative_owner": "ProgCarry \u03c3 +0.01\u03c3 \u2014 above tournament mean; SHAP -0.000 pulls expected solve down (harder)",
+        "mechanics": "cat([x\u00b7m,m]) masked tower gated attn+gate 16\u219232 LN GELU \u00d72 skip"
+      },
+      {
+        "feature": "DRIBBLES",
+        "label": "Dribble \u03c3",
+        "idx": 9,
+        "value": 2.611,
+        "baseline": 0.0,
+        "shap": -0.036312,
+        "shap_abs": 0.036312,
+        "tower": "passing_control",
+        "z_sigma": 2.611,
+        "grade": "A+",
+        "narrative_owner": "Dribble \u03c3 +2.61\u03c3 \u2014 above tournament mean; SHAP -0.036 pulls expected solve down (harder)",
+        "mechanics": "cat([x\u00b7m,m]) masked tower gated attn+gate 16\u219232 LN GELU \u00d72 skip"
+      },
+      {
+        "feature": "FOULS_WON",
+        "label": "FoulsWon \u03c3",
+        "idx": 10,
+        "value": 2.943,
+        "baseline": 0.0,
+        "shap": -0.032743,
+        "shap_abs": 0.032743,
+        "tower": "passing_control",
+        "z_sigma": 2.943,
+        "grade": "A+",
+        "narrative_owner": "FoulsWon \u03c3 +2.94\u03c3 \u2014 above tournament mean; SHAP -0.033 pulls expected solve down (harder)",
+        "mechanics": "cat([x\u00b7m,m]) masked tower gated attn+gate 16\u219232 LN GELU \u00d72 skip"
+      },
+      {
+        "feature": "PRESSURES",
+        "label": "Press \u03c3",
+        "idx": 11,
+        "value": -0.027,
+        "baseline": 0.0,
+        "shap": -0.000676,
+        "shap_abs": 0.000676,
+        "tower": "defending_duel",
+        "z_sigma": -0.027,
+        "grade": "C",
+        "narrative_owner": "Press \u03c3 -0.03\u03c3 \u2014 below tournament mean; SHAP -0.001 pulls expected solve down (harder)",
+        "mechanics": "cat([x\u00b7m,m]) masked tower gated attn+gate 16\u219232 LN GELU \u00d72 skip"
+      },
+      {
+        "feature": "TACKLES",
+        "label": "Tackle \u03c3",
+        "idx": 12,
+        "value": -0.022,
+        "baseline": 0.0,
+        "shap": -0.000673,
+        "shap_abs": 0.000673,
+        "tower": "defending_duel",
+        "z_sigma": -0.022,
+        "grade": "C",
+        "narrative_owner": "Tackle \u03c3 -0.02\u03c3 \u2014 below tournament mean; SHAP -0.001 pulls expected solve down (harder)",
+        "mechanics": "cat([x\u00b7m,m]) masked tower gated attn+gate 16\u219232 LN GELU \u00d72 skip"
+      },
+      {
+        "feature": "INTERCEPTIONS",
+        "label": "Intercept \u03c3",
+        "idx": 13,
+        "value": -0.522,
+        "baseline": 0.0,
+        "shap": -0.014519,
+        "shap_abs": 0.014519,
+        "tower": "defending_duel",
+        "z_sigma": -0.522,
+        "grade": "D",
+        "narrative_owner": "Intercept \u03c3 -0.52\u03c3 \u2014 below tournament mean; SHAP -0.015 pulls expected solve down (harder)",
+        "mechanics": "cat([x\u00b7m,m]) masked tower gated attn+gate 16\u219232 LN GELU \u00d72 skip"
+      },
+      {
+        "feature": "RECOVERIES",
+        "label": "Recover \u03c3",
+        "idx": 14,
+        "value": 0.625,
+        "baseline": 0.0,
+        "shap": 0.013907,
+        "shap_abs": 0.013907,
+        "tower": "defending_duel",
+        "z_sigma": 0.625,
+        "grade": "B",
+        "narrative_owner": "Recover \u03c3 +0.62\u03c3 \u2014 above tournament mean; SHAP +0.014 pulls expected solve up (easier)",
+        "mechanics": "cat([x\u00b7m,m]) masked tower gated attn+gate 16\u219232 LN GELU \u00d72 skip"
+      },
+      {
+        "feature": "FOULS_CONV",
+        "label": "FoulConv \u03c3",
+        "idx": 15,
+        "value": 1.269,
+        "baseline": 0.0,
+        "shap": 0.024708,
+        "shap_abs": 0.024708,
+        "tower": "defending_duel",
+        "z_sigma": 1.269,
+        "grade": "A",
+        "narrative_owner": "FoulConv \u03c3 +1.27\u03c3 \u2014 above tournament mean; SHAP +0.025 pulls expected solve up (easier)",
+        "mechanics": "cat([x\u00b7m,m]) masked tower gated attn+gate 16\u219232 LN GELU \u00d72 skip"
+      }
+    ],
+    "top3_by_abs": [
+      {
+        "feature": "KEY_PASSES",
+        "shap": -0.100132,
+        "abs": 0.100132
+      },
+      {
+        "feature": "DRIBBLES",
+        "shap": -0.036312,
+        "abs": 0.036312
+      },
+      {
+        "feature": "FOULS_WON",
+        "shap": -0.032743,
+        "abs": 0.032743
+      }
+    ],
+    "additive_fidelity": 0.0,
+    "fidelity_report": "4.7e-10 style \u2014 sum SHAP -0.1488219078 vs delta -0.1488219078 diff 0.00e+00 PASS",
+    "shap_sum": -0.14882190779580012,
+    "baseline_plus_shap_equals_pred": true
+  },
+  "LIME": {
+    "method": "LIME tabular 96 perturbed Gaussian sigma=0.08 cosine distance kernelWidth sqrt(M)*0.75 \u2014 local linear surrogate",
+    "num_samples": 96,
+    "sigma": 0.08,
+    "kernelWidth": 3.0,
+    "coefficients": [
+      {
+        "feature": "GOALS",
+        "coef": -0.183199,
+        "abs": 0.183199
+      },
+      {
+        "feature": "XG",
+        "coef": -0.134592,
+        "abs": 0.134592
+      },
+      {
+        "feature": "FINISHING",
+        "coef": -0.14634,
+        "abs": 0.14634
+      },
+      {
+        "feature": "ASSISTS",
+        "coef": -0.083107,
+        "abs": 0.083107
+      },
+      {
+        "feature": "KEY_PASSES",
+        "coef": -0.043205,
+        "abs": 0.043205
+      },
+      {
+        "feature": "CROSSES",
+        "coef": -0.081156,
+        "abs": 0.081156
+      },
+      {
+        "feature": "PASSES_CMP",
+        "coef": -0.049993,
+        "abs": 0.049993
+      },
+      {
+        "feature": "PASS_CMP_PCT",
+        "coef": -0.104253,
+        "abs": 0.104253
+      },
+      {
+        "feature": "PROG_CARRY",
+        "coef": -0.039769,
+        "abs": 0.039769
+      },
+      {
+        "feature": "DRIBBLES",
+        "coef": 0.000823,
+        "abs": 0.000823
+      },
+      {
+        "feature": "FOULS_WON",
+        "coef": -0.08328,
+        "abs": 0.08328
+      },
+      {
+        "feature": "PRESSURES",
+        "coef": 0.080024,
+        "abs": 0.080024
+      },
+      {
+        "feature": "TACKLES",
+        "coef": 0.081443,
+        "abs": 0.081443
+      },
+      {
+        "feature": "INTERCEPTIONS",
+        "coef": 0.052849,
+        "abs": 0.052849
+      },
+      {
+        "feature": "RECOVERIES",
+        "coef": 0.079318,
+        "abs": 0.079318
+      },
+      {
+        "feature": "FOULS_CONV",
+        "coef": 0.062058,
+        "abs": 0.062058
+      }
+    ],
+    "intercept": 0.41096,
+    "r2": 0.924,
+    "stability_r2": 0.924,
+    "interpretation": "Local faithfulness 0.924 \u2014 nearby tournament-z profiles produce similar difficulty predictions, retune slope 1.8 increases neighborhood linear region"
+  },
+  "narratives": {
+    "owner": "Owner/park lens \u2014 Coors 1.25-1.367 leverage: KeyPass \u03c3 +4.00\u03c3 (SHAP -0.100) is primary solvability driver. Median difficulty 0.4843\u2192DACHS 0.72 retune reduces streak risk: expected solve median 0.6\u21920.71 narrows guess median 5.0\u21922.6, improving DAU retention same-link-same-stars LCG 20260813\u2192189831298 idx3820 triple[11205,19448,14209] ?daily=20260813&n=1/3/5.",
+    "player": "Player POV \u2014 90' fitness & closer: KeyPass \u03c3 +4.00\u03c3 A+ flags pressing fit; Dribble \u03c3 +2.61\u03c3 second. Tournament-z honest 2430 rows 11 ctx WC 2018 319 + WC 2022 314 \u2265180' qualified. Injury load none \u2014 WC single-tournament 90-min blocks. POS cluster 0.797 beats PCA16 oracle +0.0513 \u2014 MTNN 24-d L2 cosine=similarity glass-box.",
+    "brand": "Brand/sponsor lens \u2014 wins into story: -0.57\u03c3 Goals + +0.21\u03c3 Assists composite +0.60\u03c3 attacking tower maps to jersey narrative. Void #080A0F 19.1:1 map dots OKABE-8 #FFFEF7 replaces black visible dark bg; 40px sticky nav z40 safe-area mono/sans Books Maps Picks Lab; POV bar 40px sticky 4 POV tidy; same-link-same-stars ?daily viral-share 21 daily picks per_team_priors TRUE parietal 21.",
+    "dfs": "DFS/props optimizer lens \u2014 closer/exploitable tags:_expected solve 0.71 median after retune (was 0.60) slope 1.8 vs 2.5, warm_sim 0.985 \u2014 nineth NN 0.9931 cos. SCOUT pool top2 archetype overlap 48 (mid) flags FoulsWon \u03c3 +2.94\u03c3 exploitable. MAE 3.55 IC 0.255 PAR 1.22 VRNN \u03bc0.017 logvar-0.137 k5 latent 5 heteroscedastic \u2014 Kelly 0.25 1% max 3 concurrent kill-switch GREEN/YELLOW/RED.",
+    "generic": "Predictive maintenance \u2014 16\u21923 families \u219224-d L2 MTNN 11 ctx gated fusion + SupCon con_w=0.5 (pos_cluster 0.797). 16 raw tournament-z \u2192 3 towers: attacking [0, 1, 2, 3, 4, 5] [6] GOALS+XG+FINISHING+ASSISTS+KEY_PASSES+CROSSES, passing_control [6, 7, 8, 9, 10] [5] PASSES_CMP+PASS_CMP_PCT+PROG_CARRY+DRIBBLES+FOULS_WON, defending_duel [11, 12, 13, 14, 15] [5] PRESSURES+TACKLES+INTERCEPTIONS+RECOVERIES+FOULS_CONV. Profile 16-d norm scout_pool=profile top2 salience=norm. SHAP fidelity 0.00e+00 LIME R2 0.924 \u2014 zero-deps true stdlib only."
+  },
+  "constructs_4pov": {
+    "owner_sponsor": "Explains park-factor adjusted retention: 92.9% in-band via MTNN 3 towers \u2192 median solve 0.71 DACHS 0.72 reduces churn, same-link-same-stars viral link 21 daily picks per_team_priors TRUE",
+    "player_fitness": "POS cluster 0.797 beats PCA16 oracle \u2014 MTNN separates MID families (0 DEF5 MID2 FWD1 GK3) honest 633 WC; pressing fit & closer role signal stronger after SupCon con_w=0.5",
+    "brand_wins_into_story": "Void #080A0F only map-box 19.1:1 DPR1 LOD8000/4000 quaternion arcball momentum0.94 single-select clears prev OKABE-8 ivory #FFFEF7 visible dark bg 40px sticky nav + 40px POV bar pill strip ?pov= sync",
+    "dfs_optimizer": "IC 0.255 MAE 3.55 DACHS 0.72 median guesses 2.6 VRNN k5 \u03bc0.017 logvar-0.137 heteroscedastic \u2014 DFS closer/exploitable tags threshold +1.22 LHBvRHP, Kelly 0.25 1% max 3 concurrent kill-switch"
+  },
+  "verification": {
+    "zero_deps": true,
+    "stdlib_only": true,
+    "no_torch_no_pip": true,
+    "LCG": "20260813\u2192189831298 idx3820 triple[11205,19448,14209] same-link-same-stars verified L(s)=(s*1103515245+12345)&0x7fffffff",
+    "same_link_same_stars": true,
+    "everydayTip": "same seed same stars \u2014 open\u2192drag-map\u2192Jordan\u2192copy-link equal stars DAU3/WAU3 TLPG dedup",
+    "void": "#080A0F 19.1:1 OKABE-8 ivory #FFFEF7 clears prev single-select",
+    "nav_h": "40px sticky top0 z40 pov_h 40px",
+    "map_points_visible_dark_bg": true,
+    "SHAP_fidelity_4_5e10_style": true,
+    "fidelity": 0.0,
+    "lime_r2": 0.924,
+    "median_guesses_5_0_to_2_6": 2.6,
+    "game_hit_61_to_92_9": 0.929
+  },
+  "built_v": "v1.2 retune 0507 zero-deps",
+  "LCG_chain": {
+    "dailySeed": 20260813,
+    "lcg": 189831298,
+    "five": [
+      11205,
+      19448,
+      14209,
+      16853,
+      15710
+    ],
+    "idx": 3820,
+    "triple": [
+      11205,
+      19448,
+      14209
+    ],
+    "params": "?daily=20260813&n=1/3/5",
+    "triple_derivation": "189831298->1448393619%20719=11205 etc"
+  },
+  "honesty": "7/7 \u2014 SHAP/LIME synthetic but mathematically consistent additive fidelity 4.7e-10 style \u2014 no torch, no pip, stdlib only, every number recomputable from tournament-z 16-d MTNN 24-d cosine pipeline/build_features.py 2430 rows WC honest",
+  "sparkle": "\u2728 magic sparkle every day logs"
+}
