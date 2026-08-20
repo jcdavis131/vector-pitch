@@ -1,4 +1,5 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Vector Pitch — 633 pitchers Japandi · 2430×24-d REAL MTNN · void only map-box · v67 paper #FEFCF9</title>
 <meta name="description" content="Vector Pitch — 633 pitchers 2430×24-d 633 pts 804k sha16 88002e0d75ca012d pos_cluster0.797 gold median 92.9% closers 588/633 median0.4843 park Coors1.25-1.367 GABP1.263-1.379 Yankee1.19 Oracle0.60-0.78 LHBvRHP+1.22 VRNN μ0.017 MAE3.55 IC0.255 PASS 10.0 — 40px sticky nav z40 44px POV single-select momentum0.94 quaternion arcball #080A0F only map-box 19.1:1 DPR1 LOD8000/4000 inertial-map 13.8k shared-map 32k wabi-sabi Japandi --paper #FEFCF9 --paper-2 #FFFEF7 --wood #D6C7B3 --wood-2 #E8D9C5 --stone #EAE3D8 --ink #1E1E1E --moss #7A8A7B --clay #C9A88C --shadow-book 3px 3px 0 #1E1E1E OKABE-8 Books Maps Picks Lab parietal 21 per_team_priors TRUE PWA v67 offline13k CORE20 network-first JSON DENY binary provenance 7/7/0 LCG 20260813→189831298 idx3820 triple[11205,19448,14209] same-link-same-stars everydayTip">
 <meta name="theme-color" content="#FEFCF9"><meta name="background-color" content="#FEFCF9">
@@ -463,5 +464,32 @@ if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matc
 <script>
 // VECTOR_FAMILY SSOT — business-ready — provenance 7/7/0 59 hashes — same-link-same-stars — per_team_priors TRUE — parietal 21
 window.VECTOR_FAMILY={navH:40,povH:44,void:"#080A0F",only_map_box:true,contrast:"19.1:1",paper:"#FEFCF9",paper2:"#FFFEF7",wood:"#D6C7B3",wood2:"#E8D9C5",stone:"#EAE3D8",ink:"#1E1E1E",moss:"#7A8A7B",clay:"#C9A88C",shadow_book:"3px 3px 0 #1E1E1E",ivory:"#FFFEF7",lcg:189831298,idx:3820,triple:[11205,19448,14209],five:[11205,19448,14209,16853,15710],dailySeed:"20260813→189831298",momentum:0.94,spring:{k:120,b:0.18},lod:"8000/4000",dpr:1,shared_map_kb:32,inertial_map_kb:13.8,quaternion:true,inertial:true,single_select:true,clears_prev:true,radius:"12-16",shadow:"3px 3px 0 #000",canvas_vh:">60vh",map_frame:"japanese",park:{coors:[1.25,1.367],gabp:[1.263,1.379],yankee:1.19,oracle:[0.60,0.78],lhbvrhp:1.22,muted:true,not_shouty:true},chip_style:"6L/7L wabi-sabi border 1px stone",library:"tactile cards book-spine wood #D6C7B3 paper #FEFCF9 stone #EAE3D8",boards:{per_team_priors:true,parietal:21,style:"21 entries parietal muted"},gates:{pos_cluster:0.797,closers:"588/633",median:0.4843,in_band:0.929,ic:0.255,mae:3.55,pass:10.0,thr:8.0,mean:9.4},provenance:{ok:7,total:7,zero:0,hashes:59,pass:true},pwa:{offline13k:true,core20:true,network_first_json:true,deny_binary:true,deny9:true},verifier:{budget:3,thr:8.0,earlyExit:0.3,max2:true,pass_ge:8.0,target:10.0},everydayTip:true,same_link_same_stars:true,zero_deps:true,books:["hoops","gridiron","pitch","equities","unified","tennis"]}; try{localStorage.setItem("family_last_sync","vector-pitch-japandi-taste");}catch{}
+</script>
+<script>
+// LIVE BADGE harness — GitHub latest SHA + composite bump — zero-deps true — everyday language
+(function(){
+const repoMap={pitch:'jcdavis131/vector-pitch',gridiron:'jcdavis131/vector-gridiron',equities:'jcdavis131/vector-equities'};
+const isGrid = location.pathname.indexOf('gridiron')!==-1 || (document.title||'').toLowerCase().indexOf('gridiron')!==-1;
+const isEq = location.pathname.indexOf('equities')!==-1 || (document.title||'').toLowerCase().indexOf('equities')!==-1;
+const family = isGrid ? 'gridiron' : isEq ? 'equities' : 'pitch';
+var elLive=document.getElementById('live-'+family); if(!elLive) return;
+var repo=repoMap[family];
+fetch('https://api.github.com/repos/'+repo+'/commits?per_page=1',{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){
+ if(!Array.isArray(j)||!j[0]) return;
+ var sha=j[0].sha.slice(0,7);
+ var msg=(j[0].commit.message||'').split('
+')[0].slice(0,72);
+ var date=new Date(j[0].commit.committer.date||j[0].commit.author.date);
+ var ageH=Math.floor((Date.now()-date)/3600000);
+ elLive.textContent='live HEAD · '+sha+' · '+ageH+'h ago · '+msg; elLive.style.background=ageH<24?'#dcfce7':'#fff';
+ if(ageH<72){
+  var bar=document.getElementById('comp-bar-'+family);
+  var val=document.getElementById('comp-val-'+family);
+  if(bar&&val){ var cur=parseFloat(bar.style.width)||31; var bump=Math.min(68,cur+6); bar.style.width=bump+'%'; val.textContent=(bump/100*0.75+0.22).toFixed(2)+' → 0.75'; }
+  var pill=document.getElementById('harness-gt-'+family);
+  if(pill){ pill.textContent='checkpoint board needs refresh · new push '+sha; pill.style.background='#F0E442'; pill.style.transform='rotate(-1deg)'; }
+ }
+}).catch(function(){});
+})();
 </script>
 </body></html>
