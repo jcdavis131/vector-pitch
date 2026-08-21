@@ -5,14 +5,14 @@
   "version": "v4 32-d archetype8 TCN+dil1,2,4 GraphBFF dual TCA4+TAA128",
   "changelog": "v3->v4 GraphBFF dual enhancement \u2014 keep 3 towers 16->32 ResidualTower LN GELU\u00d72 gated attn TCN causal k3 d[1,2]->d[1,2,4] depth3 receptive7 40% has_form 60% fallback \u2014 added TCA 4 heads same-archetype masked teammate 40% edges dominant + same-league 9 leagues + difficulty-tier 4 quartiles + same-real-vs-aug is_real \u2014 sparse softmax per type prevents high-degree hub drowning \u2014 TAA shared 128-d k=8 fixed-degree most recent 8 seasonal uniform without replacement \u2014 fusion 0.7/0.3 L2 unit sphere cosine=dot 64->32 retained \u2014 masked same-archetype 15% BCE link w0.5 VICReg var25 cov1 w0.05 anti-collapse rank32/64 SupCon tau0.07 w0.15 cross-league hit + temporal wins \u2014 KL 64 clusters league+formation order ascending KL(p_k||p_G) representative first + RR GPU 32/type 4*32=128 edges fixed \u2014 targets slope1.8->1.6 anneal median_guesses 2.6->2.2-2.6 stretch composite 0.8512->0.86->0.90 diff 95.1%->96.5% 602->612/633 pos_cluster0.797->0.84 knn5 0.7894->0.85 nn_role0.7492->0.85 sil0.683->0.75 cross-league0.75->0.82 rank12.4->>=32 \u2014 void #080A0F PWA v67 LOD4000/8000 \u2014 honest 503 fallback stdlib matmul LN GELU \u2014 LCG both chains \u2014 6-voice lock \u2014 proven honest 7/7/0 -> 73 hashes 14 edge-type counts \u2014 ONNX int8 2MB + attribs",
   "towers": {
-    "n_towers": 3,
+    "n_towers": 4,
     "d_tower_in": 16,
     "d_tower": 32,
     "d_model": 224,
     "n_tca_heads": 4,
     "d_taa": 128,
     "k_fixed": 8,
-    "fusion": "0.7/0.3 L2",
+    "fusion": "0.60*tca+0.25*taa+0.15*news L2",
     "arch_w": 1.0,
     "prof_w": 0.5,
     "con_w": 0.5,
@@ -38,7 +38,9 @@
       "causal": true,
       "has_form_pct": 40,
       "fallback": "96->64 no-TCN"
-    }
+    },
+    "d_news": 16,
+    "news_weight": 0.15
   },
   "batching": {
     "kl_clusters": 64,
@@ -204,5 +206,10 @@
     "frontend": "void #080A0F 40px sticky nav z40 44px POV z39 LOD4000/8000 DPR1 single-select ?pov= strip 30/24fps provenance 7/7 CLEAN",
     "zero_deps": true,
     "single_action_per_tick": true
+  },
+  "news_tower": {
+    "dim": 16,
+    "weight": 0.15,
+    "fusion": "0.60*tca+0.25*taa+0.15*news L2"
   }
 }
