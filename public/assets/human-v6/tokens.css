@@ -1,0 +1,19 @@
+/* Human-Centered v6 — Who Do We Design For? — Pitch */
+:root{
+  --paper:#FFFEFB; --paper-2:#FEFCF8; --paper-raised:#FFFEFB;
+  --ink:#0A0A0F; --ink-muted:#6B6B78; --ink-faint:#9A9AAF;
+  --hairline:#E6DED3; --stone-soft:#F3EEE6; --stone-line:#E6DED3;
+  --void:#080A0F; --void-2:#0F1220;
+  --human-blue:#2A5BD7; --human-blue-ink:#1E3FA8; --human-blue-wash:#E8EEFF;
+  --accent:#C17C60; --focus:#A4553D;
+  --font-serif: "Fraunces", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-sans: ui-sans-system, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, monospace;
+  --font-human: "Caveat", "Bradley Hand", "Segoe Script", cursive;
+  --text-xs:0.72rem; --text-sm:0.875rem; --text-base:1rem; --text-lg:1.18rem;
+  --text-xl:clamp(1.9rem,3.2vw,2.9rem); --text-display:clamp(2.6rem,6vw,5.2rem);
+  --space-1:0.25rem; --space-2:0.5rem; --space-3:0.75rem; --space-4:1rem; --space-6:1.5rem; --space-8:2rem; --space-12:3rem; --space-16:4rem;
+  --radius-control:8px; --radius-card:12px; --radius-panel:16px;
+  --shadow-raised:0 12px 32px rgb(10 10 15 / 0.08);
+  --nav-height:40px; --content-max:1180px; --reading-max:68ch;
+}

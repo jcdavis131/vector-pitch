@@ -1,0 +1,8 @@
+.hv6-individual{padding:18px 0 8px}
+.hv6-individual__meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.hv6-individual__signals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0}
+.hv6-signal{background:var(--paper-raised);border:1px solid var(--hairline);border-radius:12px;padding:12px 12px 10px}
+.hv6-signal__label{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted)}
+.hv6-signal__value{font-family:var(--font-serif);font-size:18px;font-weight:700;margin:4px 0 2px}
+.hv6-signal__meaning{font-family:var(--font-mono);font-size:11px;color:var(--ink-muted)}
+@media(max-width:760px){.hv6-individual__signals{grid-template-columns:1fr}}

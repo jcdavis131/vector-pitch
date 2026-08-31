@@ -1,0 +1,6 @@
+.hv6-peers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.hv6-peer{border:1px solid var(--hairline);border-radius:12px;padding:12px;background:#fff}
+.hv6-peer__name{font-family:var(--font-serif);font-weight:700;font-size:15px}
+.hv6-peer__meta{font-family:var(--font-mono);font-size:11px;color:var(--ink-muted);margin-top:4px}
+.hv6-peer__human{font-family:var(--font-human);color:var(--human-blue);font-size:13px;margin-top:6px}
+@media(max-width:900px){.hv6-peers{grid-template-columns:1fr}}

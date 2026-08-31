@@ -1,0 +1,2 @@
+.hv6-unavailable{padding:14px;border:1px dashed var(--hairline);border-radius:12px;background:var(--stone-soft);font-family:var(--font-mono);font-size:12px;color:var(--ink-muted)}
+.hv6-focus:focus{outline:2px solid var(--focus);outline-offset:2px}

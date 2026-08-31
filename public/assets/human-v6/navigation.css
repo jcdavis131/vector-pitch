@@ -1,0 +1,7 @@
+.hv6-nav{height:40px;position:sticky;top:0;z-index:40;background:rgba(255,254,251,.86);backdrop-filter:saturate(1.2) blur(10px);border-bottom:1px solid var(--hairline);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(14px,3.5vw,28px);font-family:var(--font-mono);font-size:12px}
+.hv6-nav__brand{font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-.01em}
+.hv6-nav__brand span{color:var(--human-blue);font-family:var(--font-human);font-size:15px;margin-left:4px}
+.hv6-nav__links{display:flex;gap:18px;align-items:center}
+.hv6-nav__link{color:var(--ink-muted);text-decoration:none;position:relative;padding:4px 0}
+.hv6-nav__link.is-active{color:var(--ink)}
+.hv6-nav__link.is-active:after{content:"";position:absolute;left:0;right:0;bottom:-7px;height:2px;background:var(--ink)}
