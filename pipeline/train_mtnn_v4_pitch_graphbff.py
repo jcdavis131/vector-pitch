@@ -35,7 +35,7 @@ def stdlib_smoke():
         ASSETS.mkdir(parents=True, exist_ok=True)
         np.savez_compressed(out, E=E, E_compat=E[:,:16]/np.linalg.norm(E[:,:16],axis=1,keepdims=True))
         print(f"[pitch v4] wrote {out} {out.stat().st_size} bytes 633×32 L2 pos_cluster0.84 knn50.85")
-        metrics={"pos_cluster":0.84,"knn5":0.85,"nn_role":0.85,"sil":0.75,"cross_league":0.82,"difficulty":96.5,"diff_n":612,"slope":1.6,"median_guesses":2.2,"rank":38,"composite":0.90,"entities":633,"aug_n":25000}
+        metrics={"pos_cluster":0.84,"knn5":0.85,"nn_role":0.85,"sil":0.75,"cross_league":0.82,"difficulty":96.5,"diff_n":612,"slope":1.6,"median_guesses":2.2,"rank":38,"composite":0.90,"entities":633,"aug_n":25000,"synthetic":True,"provenance":"stdlib_smoke() writes this script's own v4 design TARGET values (see module docstring); E=np.random.default_rng(189831298).standard_normal((633,32)) L2-normalized noise is generated and saved to the .npz but none of these numbers are computed from it or from any trained model \u2014 not measured, not a real eval."}
         (ROOT/"assets"/"eval_scoreboard_v4.json").write_text(json.dumps(metrics, indent=2))
         timeline({"nodeId":"pitch-v4-graphbff-smoke","agentId":"pitch-swarm","attempt":1,"latency_ms":220,"tokens_est":1600,"status":"ok","errorClass":"none", **metrics})
         return 0
