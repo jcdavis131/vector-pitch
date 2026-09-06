@@ -47,16 +47,47 @@ byte-identical after (`diff` confirmed).
   worktree add, before running pytest, immediately before commit); `qctl status` showed
   j0012 vector-hoops running (never a pitch job) at every check.
 
+**Update — a second commit (`4a5c9ac`, "label the fabricated v4 GraphBFF eval as
+synthetic") landed on this branch and closes D4(b), previously listed as deferred:**
+- `pipeline/train_mtnn_v4_pitch_graphbff.py`'s `stdlib_smoke()` generates
+  `np.random.default_rng(189831298)` L2-normalized noise, then writes a metrics dict
+  (`pos_cluster 0.84`, `composite 0.90`, etc.) that is **not computed from that noise or
+  any model** — it restates the script's own v4 design "target" values verbatim as if
+  measured, wrapped in a committed `retune_2026_08_19.verifier` block asserting `pass:
+  true`, `score 8.8 >= thr 8.0`.
+- Re-checked the deferral reason first: `git show
+  origin/weekend/artifact-claims-pitch --stat` confirms that sibling branch touched only
+  `assets/eval_scoreboard.json` (the v3 file) and a docs file — never
+  `eval_scoreboard_v4.json` or this script — so the original collision concern didn't
+  apply once L7's actual diff was checked.
+- Fixed both the artifact and the script that regenerates it: `eval_scoreboard_v4.json`'s
+  `retune_2026_08_19.verifier.pass` → `false` with a note explaining the verdict was
+  computed over noise; added top-level `"synthetic": true` and a `provenance` field naming
+  the exact rng seed/shape. Nothing deleted or renumbered — the file's already-honest
+  "before"/"interim"/"target" fields are untouched. The training script's emitted dict now
+  carries the same labels, so a future `--smoke` re-run can't reproduce an unlabeled claim.
+- Also removed 3 remaining static "7/7/0->14/14" occurrences (footer sentence, one
+  `<span class=tag>`, a `console.log` template) that the first commit's dynamic-fetch fix
+  didn't reach because they were static copy, not fetch-result text.
+- Verified: `py_compile` on the edited script (OK); `json.load` on the edited JSON (valid);
+  grep confirms 0 remaining `"7/7/0"` occurrences in either `index.html` copy, byte-identity
+  between the two preserved. Served on `127.0.0.1:8973`: `/` 200, 0 occurrences;
+  `/assets/eval_scoreboard_v4.json` 404 (correctly not in `public/`, matches L1's own
+  finding that no page reads this file). Port closed and confirmed (PID 28260). `pytest
+  tests -q`: 17 passed / 9 failed, identical failing set to this branch's own prior
+  baseline. This second commit worked from an **independent fresh clone**, not a worktree
+  of the home checkout, specifically to avoid a non-fast-forward race with the concurrent
+  lane that had already advanced this branch by one commit (the first PR-body commit)
+  between this lane's initial read and its push — home checkout confirmed untouched
+  (porcelain empty, HEAD unchanged at `064a827`) before and after.
+
 **Explicitly NOT done** (`docs/LIVE_FIX_FINDINGS_pitch_2026-09-06.md` on this branch):
 - D1 (`vercel.json` rewrites not honored live): dashboard-only fix, no code path exists in
   this repo for it.
-- D4(b) (`assets/eval_scoreboard_v4.json` / the v4 training script's fabricated metrics +
-  PASS verdict): deliberately deferred to avoid overlapping the sibling
-  `weekend/artifact-claims-pitch` lane's already-active worktree on this same repo, whose
-  brief covers exactly this class of pitch asset-honesty labeling.
 
-**Merge target and blocker.** Base: `origin/master` (`42411cc`), 1 commit ahead, clean.
-Touches `index.html` + `public/index.html`, disjoint from
-`weekend/artifact-claims-pitch`'s `assets/eval_scoreboard.json` and
-`weekend/fix-model-page-assets`'s docs-only findings file — all three pitch branches merge
-independently without conflict. No blocker.
+**Merge target and blocker.** Base: `origin/master` (`42411cc`), now 2 commits ahead,
+clean. Touches `index.html`, `public/index.html`,
+`assets/eval_scoreboard_v4.json`, and `pipeline/train_mtnn_v4_pitch_graphbff.py` —
+disjoint from `weekend/artifact-claims-pitch`'s `assets/eval_scoreboard.json` (the
+different, v3, file) and `weekend/fix-model-page-assets`'s docs-only findings file — all
+three pitch branches merge independently without conflict. No blocker.
