@@ -35,9 +35,9 @@ fix" below. Every claim here was verified by a command; the command list is inli
    decision two weeks old, not an accident — reversing it (making `/model` serve the cockpit
    again) is a call for the operator, not a bugfix.
 
-4. **Separately, the live deploy does not appear to be applying `vercel.json` at all.**
-   `origin/master:vercel.json` has a catch-all rewrite (`/(.*) → /index.html`) that should make
-   *every* path 200. It does not:
+4. **Separately, `vercel.json`'s `rewrites` are not taking effect in production, even though
+   its `headers` rule may be.** `origin/master:vercel.json` has a catch-all rewrite
+   (`/(.*) → /index.html`) that should make *every* path 200. It does not:
    ```
    curl -s -o /dev/null -w "%{http_code}" https://pitch.dumbmodel.com/nonexistent-route-xyz
    → 404
@@ -54,13 +54,21 @@ fix" below. Every claim here was verified by a command; the command list is inli
    | `/players` | 404 | 404 |
    | `/nonexistent-route-xyz` | 404 | 404 |
 
-   That match is the signature of "the deploy root is `public/` served flat, with
-   `vercel.json`'s `rewrites` not reaching production" — not a source bug. Grepped the repo for
-   an explicit mechanism (`vercel --prod`, a `Root Directory` note, a deploy script) and found
-   none (`git grep -i vercel -- '*.sh' '*.py' '*.yml' '*.md'` on `origin/master`: only docs
-   referencing the intent, no script that would explain a partial config). This is not
-   determinable from the repository; it needs the Vercel dashboard (Project → Settings → check
-   which deployment is aliased to `pitch.dumbmodel.com`, its Git ref, and whether Root
+   The precise statement, not a bigger claim than the evidence supports: the `rewrites` array
+   is ineffective in production — a catch-all pattern that cannot fail to match still 404s on
+   an arbitrary path. Whether the `headers` array is separately effective is not resolved
+   either way: the live root `200` does carry `x-content-type-options: nosniff` (from
+   `curl -sI https://pitch.dumbmodel.com/`), which matches what the `headers` rule would stamp
+   — but that header is also a plausible platform default on Vercel error/edge responses (it
+   appears on the live 404 too), so its presence doesn't distinguish "config applied" from
+   "platform default." Ruled out one candidate explanation: `.vercelignore` on `origin/master`
+   (`pipeline/`, `data/`, `*.npz`, …, checked verbatim) does not exclude `vercel.json` or any
+   `*.json`, so a `.vercelignore` swallowing the config is not what's happening. Grepped the
+   repo for an explicit deploy mechanism (`vercel --prod`, a `Root Directory` note, a deploy
+   script) and found none (`git grep -i vercel -- '*.sh' '*.py' '*.yml' '*.md'` on
+   `origin/master`: only docs referencing the intent, no script). **Cause not determinable from
+   the repository**; it needs the Vercel dashboard (Project → Settings → check which
+   deployment is aliased to `pitch.dumbmodel.com`, its Git ref, and whether Root
    Directory / ignored-build-step settings differ from `vercel.json`).
 
 ## Why no code fix was made
@@ -86,13 +94,33 @@ fix" below. Every claim here was verified by a command; the command list is inli
    — or restore per-page routing and copy those files + their assets into `public/`. Either is
    a real content decision.
 2. **Deploy mechanism**: find out why `pitch.dumbmodel.com` isn't honoring `vercel.json`'s
-   `rewrites` even though it's honoring `outputDirectory`/headers-shaped responses — check the
+   `rewrites` array (see §4 above for exactly what is and isn't established) — check the
    Vercel dashboard's Production deployment and Git integration settings directly; nothing in
    the repository explains it.
 
+## Existing test suite (unmodified, pre-existing on `origin/master`)
+
+`python -m pytest tests/ -q` from this worktree: **26 collected, 17 passed, 9 failed.** All 9
+failures pre-date this lane's commit (verified before the docs commit was made) and split into
+two unrelated causes:
+- 7 `UnicodeDecodeError` in `tests/test_parity.py` — `Path.read_text()` on Windows defaults to
+  the `cp1252` codec, and several HTML files contain UTF-8 bytes (em dashes, →) that cp1252
+  can't decode. Environment/encoding bug in the test helper, unrelated to this investigation.
+- 2 genuine content-mismatch failures — `test_eval_scoreboard_chips` and
+  `test_manim_autoplay` assert `model.html` contains `"eval_scoreboard"` / `"autoplay"` +
+  `"MTNNFlow"`. The current `model.html` (the "MTNN 24-d Lab" generation, see §3) contains
+  neither string — the test suite was written against an earlier generation of `model.html`
+  and was never updated through the later redesigns. Confirms §3 independently: this is not
+  the first time `model.html` changed shape without its route/tests catching up.
+
+Per this lane's guardrails (targeted fix only, no unrelated cleanup), none of these
+pre-existing failures were touched.
+
 ## Data actually backing the historical "v1.1, pos_cluster_acc 0.797" number
 
-Still real and still committed, just unreachable from the live site:
+Still real and still committed, just unreachable from the live site (every path below
+re-verified as tracked + valid JSON on `origin/master`/this worktree, not only on the stale
+home checkout):
 - `assets/eval_scoreboard.json` → `evaluation.mtnn_v1_1_con05.pos_cluster_acc = 0.797`,
   `.composite = 0.7785` (this file's own top-level `built`/`model` fields have since moved on
   to a newer v3 arch, `built: 2026-08-18T20:36Z`, `composite: 0.86` — the 0.797 row is retained
