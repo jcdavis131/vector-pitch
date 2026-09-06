@@ -17,18 +17,33 @@ contains the real measured v1.1 numbers untouched, at `evaluation.mtnn_v1_1_con0
 0.4956). What was NOT labeled: the file's own top-level `composite` (0.86), `embedding`
 ("mtnn_v3_32d_l2 archetype8"), and `model` ("PitchMTNN v3 ...") fields, which read as the file's
 current headline identity with no target qualifier — even though this same file's
-`evaluation.v3_target_8_metrics` says outright these are targets, and `assets/vectors.json` (the
-file the site actually serves for retrieval) has `embedding: "mtnn_v1_24d_l2"`, built
-2026-08-05, not the v3 32-d design.
+`evaluation.v3_target_8_metrics` says outright these are targets, and `assets/vectors.json`'s
+own `embedding` field is `"mtnn_v1_24d_l2"`, built 2026-08-05 — the repo's committed v1.1
+artifact, not the v3 32-d design.
+
+**Correction (caught by the advisor on review, before publishing): this document and the first
+commit message on this branch originally said `assets/vectors.json` is "what the site actually
+serves." That is false, and is exactly the local-vs-served conflation
+`SHIP_BRIDGE_HOOPS.md`'s own verifier flagged and fixed in its §1e for a different file.**
+`SHIPPED_MODELS.md:19` (already read in this session) states pitch.dumbmodel.com serves only
+`public/`, which holds index.html + a news file — no model asset. A fresh check this session
+confirms it directly: `curl -s -o /dev/null -w '%{http_code}' https://pitch.dumbmodel.com/assets/vectors.json`
+and the same for `assets/eval_scoreboard.json` both return **404** live, right now.
+`vectors.json` is the repo's committed v1.1 artifact (real, on disk, in git), not something a
+browser can currently fetch. This fix is about honesty in the repo's own committed data,
+independent of what currently reaches a visitor — the JSON's `v3_vs_shipped_note` field has been
+corrected to say this plainly, in a follow-up commit on this branch; the earlier commit message
+still carries the wrong phrasing in git history and is disclosed as such.
 
 Fix: renamed the three top-level fields to `composite_v3_target`, `embedding_v3_target`,
 `model_v3_target` (values unchanged), and added `composite_shipped` (0.7785),
 `pos_cluster_acc_shipped` (0.797), and `embedding_shipped` ("mtnn_v1_24d_l2") at the top level —
 all three restated from this same file's `evaluation.mtnn_v1_1_con05` object and from
 `assets/vectors.json`'s own `embedding` field, not invented. Added a `v3_vs_shipped_note`
-field citing both sources. The real v1.1 row was not touched or deleted; `composite_before`
-(0.8512, matching `evaluation.mtnn_v1_1_con05.composite_with_game_hit`) was left as-is since it
-was already honestly named as a "before" comparator, not presented as current.
+field citing both sources plus the live-404 caveat above. The real v1.1 row was not touched or
+deleted; `composite_before` (0.8512, matching
+`evaluation.mtnn_v1_1_con05.composite_with_game_hit`) was left as-is since it was already
+honestly named as a "before" comparator, not presented as current.
 
 No page or script reads the renamed top-level fields: `players.html` is the only consumer of this
 file (`grep -rn eval_scoreboard *.html assets/*.js` — no other repo file references it), and it
