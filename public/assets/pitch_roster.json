@@ -1,0 +1,200 @@
+{
+ "source": "assets/pitch_mtnn_embeddings.json",
+ "model": "PitchMTNN v1.1 (position SupCon)",
+ "selection": "per position, 4 player-seasons: the one nearest that position's mean 24-d embedding, then farthest-point sampling so the tiles span the position rather than resampling its centre",
+ "neighbour_rule": "for each tile, the closest player-season from a DIFFERENT competition by cosine in the 24-d embedding. Same-competition neighbours are close by construction because the features are z-scored within competition, so the cross-competition match is the one that means something",
+ "tiles": [
+  {
+   "name": "Rober",
+   "pos": "DEF",
+   "team": "Levante UD",
+   "season": "La Liga 2018/2019",
+   "x": -0.3703,
+   "y": -0.0758,
+   "pick": "most typical",
+   "nearest_other_competition": {
+    "name": "César Azpilicueta",
+    "pos": "DEF",
+    "team": "Spain",
+    "season": "Euro 2020",
+    "cosine": 0.9969
+   }
+  },
+  {
+   "name": "Yannick Carrasco",
+   "pos": "DEF",
+   "team": "Belgium",
+   "season": "WC 2018",
+   "x": 0.3605,
+   "y": -0.0639,
+   "pick": "spread 1",
+   "nearest_other_competition": {
+    "name": "Mitchell Weiser",
+    "pos": "MID",
+    "team": "Hertha Berlin",
+    "season": "Bundesliga 2015/2016",
+    "cosine": 0.9957
+   }
+  },
+  {
+   "name": "Youssouf Sabaly",
+   "pos": "DEF",
+   "team": "Senegal",
+   "season": "WC 2022",
+   "x": 0.079,
+   "y": 0.2153,
+   "pick": "spread 2",
+   "nearest_other_competition": {
+    "name": "Aaron Mooy",
+    "pos": "MID",
+    "team": "Australia",
+    "season": "WC 2018",
+    "cosine": 0.9955
+   }
+  },
+  {
+   "name": "Moussa Wagué",
+   "pos": "DEF",
+   "team": "Senegal",
+   "season": "WC 2018",
+   "x": -0.0055,
+   "y": -0.2593,
+   "pick": "spread 3",
+   "nearest_other_competition": {
+    "name": "Franck Honorat",
+    "pos": "MID",
+    "team": "Stade Brestois",
+    "season": "Ligue 1 2022/2023",
+    "cosine": 0.9901
+   }
+  },
+  {
+   "name": "Eric Maxim Choupo-Moting",
+   "pos": "FWD",
+   "team": "Cameroon",
+   "season": "WC 2022",
+   "x": 0.4223,
+   "y": -0.2516,
+   "pick": "most typical",
+   "nearest_other_competition": {
+    "name": "Luis Suárez",
+    "pos": "FWD",
+    "team": "Uruguay",
+    "season": "WC 2018",
+    "cosine": 0.9933
+   }
+  },
+  {
+   "name": "Ivan Perišić",
+   "pos": "FWD",
+   "team": "Croatia",
+   "season": "WC 2022",
+   "x": -0.2274,
+   "y": -0.0961,
+   "pick": "spread 1",
+   "nearest_other_competition": {
+    "name": "Jonathan Silva",
+    "pos": "DEF",
+    "team": "Leganés",
+    "season": "La Liga 2018/2019",
+    "cosine": 0.9944
+   }
+  },
+  {
+   "name": "Carlos Carbonero",
+   "pos": "FWD",
+   "team": "Sampdoria",
+   "season": "Serie A 2015/2016",
+   "x": 0.2668,
+   "y": 0.3142,
+   "pick": "spread 2",
+   "nearest_other_competition": {
+    "name": "Ander Herrera",
+    "pos": "MID",
+    "team": "Manchester United",
+    "season": "Premier League 2015/2016",
+    "cosine": 0.9994
+   }
+  },
+  {
+   "name": "Xherdan Shaqiri",
+   "pos": "FWD",
+   "team": "Switzerland",
+   "season": "WC 2018",
+   "x": 0.1727,
+   "y": 0.0161,
+   "pick": "spread 3",
+   "nearest_other_competition": {
+    "name": "Kevin De Bruyne",
+    "pos": "MID",
+    "team": "Belgium",
+    "season": "Euro 2020",
+    "cosine": 0.9963
+   }
+  },
+  {
+   "name": "Remo Freuler",
+   "pos": "MID",
+   "team": "Switzerland",
+   "season": "Euro 2020",
+   "x": 0.1729,
+   "y": 0.2451,
+   "pick": "most typical",
+   "nearest_other_competition": {
+    "name": "Alberto Grassi",
+    "pos": "MID",
+    "team": "Napoli",
+    "season": "Serie A 2015/2016",
+    "cosine": 0.9955
+   }
+  },
+  {
+   "name": "Ryder Matos",
+   "pos": "MID",
+   "team": "Carpi",
+   "season": "Serie A 2015/2016",
+   "x": 0.4725,
+   "y": -0.2807,
+   "pick": "spread 1",
+   "nearest_other_competition": {
+    "name": "Theo Walcott",
+    "pos": "FWD",
+    "team": "Arsenal",
+    "season": "Premier League 2015/2016",
+    "cosine": 0.9969
+   }
+  },
+  {
+   "name": "Carlos Sánchez",
+   "pos": "MID",
+   "team": "Colombia",
+   "season": "WC 2018",
+   "x": -0.3016,
+   "y": -0.0837,
+   "pick": "spread 2",
+   "nearest_other_competition": {
+    "name": "Shogo Taniguchi",
+    "pos": "DEF",
+    "team": "Japan",
+    "season": "WC 2022",
+    "cosine": 0.9985
+   }
+  },
+  {
+   "name": "Ismael Koné",
+   "pos": "MID",
+   "team": "Canada",
+   "season": "Copa America 2024",
+   "x": -0.097,
+   "y": 0.0488,
+   "pick": "spread 3",
+   "nearest_other_competition": {
+    "name": "Renato Sanches",
+    "pos": "MID",
+    "team": "Paris Saint-Germain",
+    "season": "Ligue 1 2022/2023",
+    "cosine": 0.9768
+   }
+  }
+ ]
+}
