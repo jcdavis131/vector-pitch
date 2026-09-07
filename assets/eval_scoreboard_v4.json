@@ -48,12 +48,15 @@
     "verifier": {
       "score": 8.8,
       "thr": 8.0,
-      "pass": true,
+      "pass": false,
       "budget": 3,
       "earlyExit": 0.3,
-      "max2": true
+      "max2": true,
+      "note": "Corrected 2026-09-06: this verdict was computed over stdlib_smoke()'s np.random.default_rng(189831298) noise output, not a trained v4 model -- nothing was actually verified. See top-level synthetic/provenance fields."
     },
     "LCG_both_chains": "20260813->189831298 idx3820 triple[11205,19448,14209] + 20260818->1412440227 idx5278 triple[13791,10902,19455] same-link-same-stars ?daily=YYYYMMDD&n=1/3/5"
   },
-  "branch": "scout/pitch-engine-model"
+  "branch": "scout/pitch-engine-model",
+  "synthetic": true,
+  "provenance": "Written by pipeline/train_mtnn_v4_pitch_graphbff.py:stdlib_smoke(). All top-level metrics (pos_cluster, knn5, nn_role, sil, cross_league, difficulty, diff_n, slope, median_guesses, rank, composite, entities, aug_n) are this script's own v4 design TARGET values restated verbatim from its docstring -- they are not computed from the E=np.random.default_rng(189831298).standard_normal((633,32)) noise the same function generates and saves to pitch_mtnn_v4_32d_graphbff.npz. Not a real eval; no page on pitch.dumbmodel.com reads this file (confirmed by L1's audit, 2026-09-06)."
 }
